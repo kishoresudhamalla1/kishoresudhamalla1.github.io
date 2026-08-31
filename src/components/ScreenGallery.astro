@@ -1,0 +1,166 @@
+---
+/**
+ * Click-through screen viewer.
+ *
+ * Replaces a vertical stack of screenshots with one stage the viewer drives:
+ * named tabs, prev/next, arrow keys, and a caption that swaps with the image.
+ * Every screen is still in the DOM with its full alt text, so nothing is lost
+ * for search or screen readers — only the scrolling is.
+ */
+
+interface Screen {
+  /** Still image. Ignored when `video` is given. */
+  src?: string;
+  /** Motion: base path without extension (.webm and .mp4 are both referenced). */
+  video?: string;
+  poster?: string;
+  name: string;
+  alt: string;
+  caption: string;
+}
+
+interface Props {
+  screens: Screen[];
+  id: string;
+}
+
+const { screens, id } = Astro.props;
+---
+
+<div class="gal" data-gal id={id}>
+  <div class="gal-tabs" role="tablist" aria-label="Screens">
+    {screens.map((s, i) => (
+      <button
+        type="button"
+        role="tab"
+        class="gal-tab"
+        data-i={i}
+        id={`${id}-tab-${i}`}
+        aria-controls={`${id}-panel-${i}`}
+        aria-selected={i === 0 ? "true" : "false"}
+        tabindex={i === 0 ? 0 : -1}
+      >
+        <span class="gal-tab-n">{String(i + 1).padStart(2, "0")}</span>
+        <span class="gal-tab-t">{s.name}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="gal-stage">
+    {screens.map((s, i) => (
+      <figure
+        class="gal-panel"
+        role="tabpanel"
+        id={`${id}-panel-${i}`}
+        aria-labelledby={`${id}-tab-${i}`}
+        data-i={i}
+        data-active={i === 0 ? "true" : undefined}
+      >
+        {s.video ? (
+          <video
+            autoplay loop muted playsinline
+            preload={i === 0 ? "auto" : "none"}
+            poster={s.poster}
+            aria-label={s.alt}
+          >
+            <source src={`${s.video}.webm`} type="video/webm" />
+            <source src={`${s.video}.mp4`} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src={s.src}
+            alt={s.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+          />
+        )}
+      </figure>
+    ))}
+  </div>
+
+  <div class="gal-foot">
+    <p class="gal-cap" aria-live="polite">
+      {screens.map((s, i) => (
+        <span class="gal-cap-i" data-i={i} data-active={i === 0 ? "true" : undefined}>
+          <strong>{s.name}</strong><Fragment set:html={s.caption} />
+        </span>
+      ))}
+    </p>
+
+    <div class="gal-nav">
+      <span class="gal-count"><b data-gal-cur>1</b> / {screens.length}</span>
+      <button type="button" class="gal-arrow" data-gal-prev aria-label="Previous screen">←</button>
+      <button type="button" class="gal-arrow" data-gal-next aria-label="Next screen">→</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initGalleries() {
+    document.querySelectorAll<HTMLElement>("[data-gal]").forEach((gal) => {
+      if (gal.dataset.ready) return;
+      gal.dataset.ready = "1";
+
+      const tabs = [...gal.querySelectorAll<HTMLElement>(".gal-tab")];
+      const panels = [...gal.querySelectorAll<HTMLElement>(".gal-panel")];
+      const caps = [...gal.querySelectorAll<HTMLElement>(".gal-cap-i")];
+      const cur = gal.querySelector<HTMLElement>("[data-gal-cur]");
+      let i = 0;
+
+      // Inactive panels are visibility:hidden, and the browser never treats
+      // those as visible, so a lazy image in one is never fetched — clicking
+      // its tab used to reveal an empty stage. Promote to eager the moment a
+      // screen is needed, and warm its neighbours so paging feels instant.
+      const load = (n: number) => {
+        const panel = panels[(n + panels.length) % panels.length];
+        const img = panel?.querySelector<HTMLImageElement>("img");
+        if (img && img.loading === "lazy") img.loading = "eager";
+        // Videos start at preload="none" so three recordings don't all fetch
+        // at once; promote and kick the one being shown, plus its neighbours.
+        const vid = panel?.querySelector<HTMLVideoElement>("video");
+        if (vid && vid.preload === "none") {
+          vid.preload = "auto";
+          vid.load();
+          vid.play?.().catch(() => {});
+        }
+      };
+
+      const show = (n: number, focusTab = false) => {
+        i = (n + panels.length) % panels.length;
+        load(i); load(i + 1); load(i - 1);
+        tabs.forEach((t, k) => {
+          t.setAttribute("aria-selected", k === i ? "true" : "false");
+          t.tabIndex = k === i ? 0 : -1;
+        });
+        // Panels are stacked in the same grid cell and toggled with
+        // visibility, so the stage never collapses mid-swap and the page
+        // below it doesn't jump.
+        panels.forEach((p, k) =>
+          k === i ? p.setAttribute("data-active", "true") : p.removeAttribute("data-active")
+        );
+        caps.forEach((c, k) =>
+          k === i ? c.setAttribute("data-active", "true") : c.removeAttribute("data-active")
+        );
+        if (cur) cur.textContent = String(i + 1);
+        if (focusTab) tabs[i]?.focus();
+      };
+
+      load(0); load(1);
+
+      tabs.forEach((t, k) => t.addEventListener("click", () => show(k)));
+      gal.querySelector("[data-gal-prev]")?.addEventListener("click", () => show(i - 1));
+      gal.querySelector("[data-gal-next]")?.addEventListener("click", () => show(i + 1));
+
+      gal.querySelector(".gal-tabs")?.addEventListener("keydown", (e) => {
+        const k = (e as KeyboardEvent).key;
+        if (k === "ArrowRight") { e.preventDefault(); show(i + 1, true); }
+        if (k === "ArrowLeft") { e.preventDefault(); show(i - 1, true); }
+        if (k === "Home") { e.preventDefault(); show(0, true); }
+        if (k === "End") { e.preventDefault(); show(panels.length - 1, true); }
+      });
+    });
+  }
+
+  initGalleries();
+  document.addEventListener("astro:page-load", initGalleries);
+</script>

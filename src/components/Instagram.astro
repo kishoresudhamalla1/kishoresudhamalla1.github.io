@@ -1,0 +1,117 @@
+---
+/*
+  To show real post thumbnails:
+  1. Export your carousel cover as a square JPG/PNG
+  2. Drop files in: public/images/instagram/post-01.jpg, post-02.jpg, post-03.jpg
+  3. The cards will automatically display them with the text overlay
+*/
+const posts = [
+  {
+    number: "01",
+    category: "UX Laws",
+    title: "5 cognitive biases that explain why users do the unexpected",
+    saves: "2.4k",
+    image: "/images/instagram/post-01.jpg",
+  },
+  {
+    number: "02",
+    category: "Product Thinking",
+    title: "Why most redesigns fail, and the questions teams never ask first",
+    saves: "3.1k",
+    image: "/images/instagram/post-02.jpg",
+  },
+  {
+    number: "03",
+    category: "AI & Design",
+    title: "What great AI UX actually looks like, and what most products get wrong",
+    saves: "4.8k",
+    image: "/images/instagram/post-03.jpg",
+  },
+];
+
+const handle = "productdesign_ax";
+const url = `https://www.instagram.com/${handle}/`;
+---
+
+<section class="border-t border-[var(--color-border)] sec-y">
+  <div class="container-pg">
+
+    <!-- Header -->
+    <div class="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-label mb-4 text-[var(--color-ink-3)]" data-reveal>@productdesign_ax</p>
+        <h2 class="text-display-sm max-w-lg" data-reveal data-delay="1">
+          Where I share what<br />I keep learning.
+        </h2>
+      </div>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex shrink-0 items-center rounded-full border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-ink-2)] no-underline transition-colors hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]"
+        data-reveal
+        data-delay="2"
+      >
+        Follow on Instagram ↗
+      </a>
+    </div>
+
+    <!-- Post cards, always dark, like real carousel covers -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {posts.map((post, i) => (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative flex aspect-square flex-col overflow-hidden rounded-2xl no-underline transition-opacity duration-300 hover:opacity-85"
+          style="background-color: #111110;"
+          data-reveal
+          data-delay={String(Math.min(i + 1, 4))}
+        >
+          <!-- Real screenshot (drop in public/images/instagram/) -->
+          <img
+            src={post.image}
+            alt={post.title}
+            class="absolute inset-0 h-full w-full object-cover"
+            onerror="this.style.display='none'"
+          />
+
+          <!-- Gradient overlay, always visible so text is readable -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
+
+          <!-- Content -->
+          <div class="relative flex h-full flex-col justify-between p-6">
+            <!-- Top: category + saves -->
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-semibold uppercase tracking-widest text-white/50">
+                {post.category}
+              </span>
+              <span class="text-[10px] text-white/35">
+                ♥ {post.saves} saves
+              </span>
+            </div>
+
+            <!-- Bottom: title + handle -->
+            <div>
+              <p class="mb-4 text-base font-semibold leading-snug text-white sm:text-lg">
+                {post.title}
+              </p>
+              <div class="flex items-center justify-between">
+                <p class="text-[10px] font-medium uppercase tracking-widest text-white/35">
+                  @{handle}
+                </p>
+                <span class="text-white/25 transition-colors duration-200 group-hover:text-white/70">↗</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Footer note -->
+    <p class="mt-8 text-sm text-[var(--color-ink-3)]" data-reveal>
+      UX breakdowns, design principles, and AI interaction patterns, one carousel at a time.
+    </p>
+
+  </div>
+</section>

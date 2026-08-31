@@ -1,0 +1,50 @@
+---
+import { DarkModeToggle } from "./DarkModeToggle";
+
+const links = [
+  { href: "/#cases", label: "Work" },
+  { href: "/#about", label: "About" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/resume", label: "Résumé" },
+];
+---
+
+<header
+  class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-md"
+>
+  <div class="container-pg flex h-14 items-center justify-between">
+    <a
+      href="/"
+      class="brand inline-flex items-center gap-2 text-[var(--color-ink)] no-underline hover:text-[var(--color-ink-2)]"
+    >
+      <span class="brand-dot" aria-hidden="true"></span>Kishore Sudhamalla
+    </a>
+
+    <nav class="hidden items-center gap-8 md:flex">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="text-label text-[var(--color-ink-2)] transition-colors hover:text-[var(--color-ink)] no-underline"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="mailto:build@kishoresudhamalla.com"
+        aria-label="Get in touch"
+        class="roll-btn text-label hidden rounded-full border border-[var(--color-border)] px-4 py-1.5 text-[var(--color-ink)] no-underline transition-colors hover:bg-[var(--color-ink)] hover:text-[var(--color-bg)] md:block"
+      >
+        <span class="roll" aria-hidden="true">
+          <span class="roll-copy">Get in touch</span>
+          <span class="roll-copy roll-copy--in">Get in touch</span>
+        </span>
+      </a>
+      <DarkModeToggle client:load />
+    </div>
+  </div>
+</header>

@@ -1,0 +1,264 @@
+---
+/**
+ * AI UX process.
+ *
+ * The layout carries the argument: one continuous spine runs through all four
+ * stages and never changes — that line is the design process. The AI-specific
+ * considerations sit on a separate plane above it, tethered by hairlines, so
+ * the picture says the same thing the headline says.
+ *
+ * Touchpoints are plain text with a small marker rather than bordered pills.
+ * Nineteen outlined chips read as tag soup; nineteen quiet lines read as
+ * something you can skim or ignore.
+ */
+
+const STAGES = [
+  {
+    n: "01",
+    stage: "Discover",
+    intent: "Understand the problem and find where AI adds value.",
+    points: ["User needs", "AI opportunity", "Research synthesis", "Patterns & signals"],
+  },
+  {
+    n: "02",
+    stage: "Define",
+    intent: "Define the human + AI system.",
+    points: ["AI role", "Human + AI responsibilities", "Data & context", "Autonomy & boundaries"],
+  },
+  {
+    n: "03",
+    stage: "Develop",
+    intent: "Design the AI experience and behaviour.",
+    points: ["AI behaviour", "Interaction models", "Prototype", "Uncertainty & failure", "Feedback & recovery"],
+  },
+  {
+    n: "04",
+    stage: "Deliver",
+    intent: "Validate the experience, the AI and the outcomes.",
+    points: ["AI quality", "Trust & control", "Usability", "Failure & recovery", "Outcomes", "Learn & improve"],
+  },
+];
+---
+
+<section id="ai-process" class="ap sec-y" data-reveal>
+  <div class="container-pg">
+    <p class="ap-eyebrow"><span class="ap-rule"></span>AI UX process</p>
+    <h2 class="ap-title">AI doesn't replace the process.<br />It changes what gets designed.</h2>
+    <p class="ap-lede">
+      The four stages are the ones every design team already uses. What changes with AI is
+      what has to be decided, evaluated and learned inside each one.
+    </p>
+
+    <div class="ap-diagram" data-ap>
+      <p class="ap-plane-k">What AI adds</p>
+
+      <div class="ap-grid">
+        {STAGES.map((s, i) => (
+          <div class="ap-col" style={`--i:${i}`}>
+            <ul class="ap-points">
+              {s.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+
+            <div class="ap-tether" aria-hidden="true"></div>
+            <div class="ap-node" aria-hidden="true"><span></span></div>
+
+            <div class="ap-foot">
+              <p class="ap-n">{s.n}</p>
+              <p class="ap-stage">{s.stage}</p>
+              <p class="ap-intent">{s.intent}</p>
+            </div>
+          </div>
+        ))}
+
+        <!-- the spine: one line, unchanged, running the full width -->
+        <div class="ap-spine" aria-hidden="true"></div>
+      </div>
+
+      <p class="ap-plane-k ap-plane-k--lower">The process, unchanged</p>
+    </div>
+
+    <p class="ap-note">
+      The AI-specific considerations draw on published guidance such as Google's
+      People + AI Guidebook and Microsoft's HAX Toolkit. The four stages are the
+      standard design process, not a framework of my own.
+    </p>
+  </div>
+</section>
+
+<script>
+  function initAIProcess() {
+    document.querySelectorAll<HTMLElement>("[data-ap]").forEach((el) => {
+      if (el.dataset.apReady) return;
+      el.dataset.apReady = "1";
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        el.classList.add("is-in");
+        return;
+      }
+      // Draw the spine and land the nodes once the diagram is actually in view.
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            el.classList.add("is-in");
+            io.unobserve(el);
+          });
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(el);
+    });
+  }
+  initAIProcess();
+  document.addEventListener("astro:page-load", initAIProcess);
+</script>
+
+<style>
+  .ap-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 1.25rem;
+  }
+  .ap-rule { width: 2.25rem; height: 1px; background: var(--color-ink-3); flex-shrink: 0; }
+
+  .ap-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4.4vw, 3.25rem);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.035em;
+    color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .ap-lede {
+    font-size: 1.0625rem; line-height: 1.7;
+    color: var(--color-ink-2); max-width: 44rem;
+    margin: 0 0 clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .ap-plane-k {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-ink-3); margin: 0 0 1.1rem;
+  }
+  .ap-plane-k--lower { margin: 1.25rem 0 0; }
+
+  .ap-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 1.5rem;
+    align-items: end;
+  }
+
+  .ap-col {
+    display: grid;
+    grid-template-rows: 1fr auto auto auto;
+    align-items: end;
+    justify-items: start;
+  }
+
+  /* the constant line, sitting exactly on the node row */
+  .ap-spine {
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 7.5rem;
+    height: 1px;
+    background: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .is-in .ap-spine { transform: scaleX(1); }
+
+  .ap-points {
+    list-style: none; margin: 0 0 0.9rem; padding: 0;
+    display: flex; flex-direction: column; gap: 0.45rem;
+  }
+  .ap-points li {
+    position: relative;
+    padding-left: 0.85rem;
+    font-size: 0.8125rem; line-height: 1.35;
+    color: var(--color-ink-2);
+    opacity: 0; transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--i) * 110ms + 260ms);
+  }
+  .is-in .ap-points li { opacity: 1; transform: none; }
+  .ap-points li::before {
+    content: ""; position: absolute; left: 0; top: 0.55em;
+    width: 4px; height: 1px; background: var(--color-ink-3);
+  }
+
+  .ap-tether {
+    width: 1px; height: 1.4rem;
+    background: var(--color-border);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 0.5s ease;
+    transition-delay: calc(var(--i) * 110ms + 200ms);
+  }
+  .is-in .ap-tether { transform: scaleY(1); }
+
+  .ap-node {
+    display: flex; align-items: center; justify-content: center;
+    width: 1rem; height: 1rem; margin-left: -0.5rem;
+    transform: scale(0);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition-delay: calc(var(--i) * 110ms + 320ms);
+  }
+  .is-in .ap-node { transform: scale(1); }
+  .ap-node span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--color-ink);
+  }
+
+  .ap-foot { padding-top: 1.1rem; min-height: 7.5rem; }
+  .ap-n {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; letter-spacing: 0.08em;
+    color: var(--color-ink-3); margin-bottom: 0.35rem;
+  }
+  .ap-stage {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 700; letter-spacing: -0.025em;
+    color: var(--color-ink); margin: 0 0 0.4rem;
+  }
+  .ap-intent {
+    font-size: 0.8438rem; line-height: 1.5;
+    color: var(--color-ink-3); margin: 0; max-width: 15rem;
+  }
+
+  .ap-note {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: 0.8125rem; line-height: 1.6;
+    color: var(--color-ink-3); max-width: 42rem;
+  }
+
+  /* Narrow: the spine turns vertical rather than cramming four columns. */
+  @media (max-width: 860px) {
+    .ap-grid { grid-template-columns: 1fr; gap: 0; }
+    .ap-spine {
+      left: 3px; right: auto; top: 0; bottom: 0;
+      width: 1px; height: auto;
+      transform: scaleY(0); transform-origin: top center;
+    }
+    .is-in .ap-spine { transform: scaleY(1); }
+    .ap-col {
+      grid-template-rows: none;
+      justify-items: stretch;
+      padding: 0 0 2rem 1.75rem;
+    }
+    .ap-tether { display: none; }
+    .ap-node { margin: 0 0 -0.35rem -2.25rem; }
+    /* the node marks where the stage begins, so it has to lead the block —
+       .ap-foot reorders to the top, and the node must come with it */
+    .ap-node { order: -2; }
+    .ap-foot { min-height: 0; padding-top: 0; order: -1; margin-bottom: 0.8rem; }
+    .ap-points { margin-bottom: 0; }
+    .ap-intent { max-width: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ap-spine, .ap-points li, .ap-tether, .ap-node { transition: none; }
+  }
+</style>

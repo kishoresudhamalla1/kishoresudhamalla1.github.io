@@ -1,0 +1,120 @@
+---
+/**
+ * Experience — a plain three-column ledger: dates, employer and role, summary.
+ *
+ * Content mirrors resume.astro exactly. If a date or title changes there, it
+ * has to change here too; nothing on this page is derived from anything else.
+ */
+
+const ROLES = [
+  {
+    period: "2017–Present",
+    company: "Darwinbox",
+    role: "Associate Director, UX",
+    note:
+      "Setting design direction across six product areas: Time Management, Core, Payroll, Benefits, Extensibility, and Workflows &amp; Journeys, while staying hands-on with the hardest product problems. Leading AI-native and agentic experience design across the platform, defining where AI should act on someone's behalf, where it should assist, and where humans need to remain in control.",
+  },
+  {
+    period: "2015–2017",
+    company: "WTA Studios",
+    role: "Product Designer",
+    note:
+      "Led end-to-end design for multiple web and mobile products. Introduced design thinking to cross-functional teams and began mentoring junior designers.",
+  },
+  {
+    period: "2009–2015",
+    company: "Earlier roles",
+    role: "UI/UX · Visual · Graphic Designer",
+    note:
+      "Wave Crest Group, Green Gold Animation and Anil Bhanu Core Design. Six years across every medium before specialising in product.",
+  },
+];
+---
+
+<section id="experience" class="xp" data-reveal>
+  <div class="container-pg">
+    <p class="xp-eyebrow"><span class="xp-rule"></span>Relevant experience</p>
+
+    <div class="xp-list">
+      {ROLES.map((r) => (
+        <div class="xp-row">
+          <p class="xp-period">{r.period}</p>
+          <div class="xp-who">
+            <p class="xp-company">{r.company}</p>
+            <p class="xp-role">{r.role}</p>
+          </div>
+          <p class="xp-note"><Fragment set:html={r.note} /></p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .xp {
+    padding: clamp(4rem, 9vw, 7rem) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .xp-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin-bottom: clamp(2rem, 5vw, 3.25rem);
+  }
+  .xp-rule {
+    width: 2.25rem;
+    height: 1px;
+    background: var(--color-ink-3);
+    flex-shrink: 0;
+  }
+
+  .xp-list { border-top: 1px solid var(--color-border); }
+
+  .xp-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem 2.5rem;
+    padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+    border-bottom: 1px solid var(--color-border);
+    align-items: start;
+  }
+  @media (min-width: 860px) {
+    .xp-row { grid-template-columns: 9rem 1fr 1.15fr; align-items: baseline; }
+  }
+
+  .xp-period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-3);
+    white-space: nowrap;
+  }
+
+  .xp-company {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    color: var(--color-ink);
+  }
+  .xp-role {
+    font-size: 0.875rem;
+    color: var(--color-ink-3);
+    margin-top: 0.3rem;
+  }
+
+  .xp-note {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+    max-width: 34rem;
+  }
+</style>

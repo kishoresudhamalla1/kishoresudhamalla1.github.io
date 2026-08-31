@@ -1,0 +1,577 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Résumé. Kishore Sudhamalla" description="Product Designer with 16+ years across design and nearly 9 years in enterprise HR technology.">
+
+<style>
+  /* ── Screen styles ───────────────────────────────────────────── */
+  .rs-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 5rem;
+    position: relative;
+  }
+
+  /* Download control — sits with the sheet; the page title and the name on the
+     résumé itself already say what this is, so the old label bar was noise. */
+  .dl-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-ink-2);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    padding: 0.45rem 0.95rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .dl-btn:hover { color: var(--color-ink); border-color: var(--color-ink); }
+  @media (max-width: 640px) { .dl-btn { position: static; margin-bottom: 1rem; } }
+
+  .sheet {
+    --color-ink: #0d0d0c;
+    --color-ink-2: #60605a;
+    --color-ink-3: #72726c;
+    --color-border: #e8e8e2;
+  }
+  .sheet {
+    background: #ffffff;
+    border: 0.5px solid var(--color-border);
+    border-radius: 16px;
+    padding: 3.5rem 3.5rem 3.5rem;
+    color: #0d0d0c;
+    font-family: 'Inter', ui-sans-serif, sans-serif;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+
+  /* Header */
+  .r-header {
+    display: grid;
+    /* Single column on phones: the fixed `1fr auto` pushed the contact block
+       past the right edge and made the whole page scroll sideways. */
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid #e8e8e2;
+  }
+  @media (min-width: 640px) {
+    .r-header { grid-template-columns: 1fr auto; align-items: end; gap: 2rem; }
+  }
+  .r-ident { display: flex; align-items: center; }
+  .r-name {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: #0d0d0c;
+    margin: 0 0 0.25rem;
+  }
+  .r-title {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #60605a;
+    letter-spacing: 0;
+  }
+  .r-contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+  .r-contact-line {
+    overflow-wrap: anywhere;
+    font-size: 0.6875rem;
+    color: #60605a;
+    text-decoration: none;
+    letter-spacing: 0;
+  }
+  .r-contact-line:hover { color: #0d0d0c; }
+
+  /* Philosophy */
+  .r-philosophy {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+    color: #0d0d0c;
+    margin-bottom: 1.75rem;
+    max-width: 560px;
+  }
+
+  /* Impact bar */
+  .r-impact {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 0.5px solid #e8e8e2;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .r-impact-cell {
+    padding: 0.875rem 1rem;
+    border-right: 0.5px solid #e8e8e2;
+  }
+  .r-impact-cell:last-child { border-right: none; }
+  .r-impact-num {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #0d0d0c;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+  .r-impact-label {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #72726c;   /* AA: 4.84:1 on white */
+    line-height: 1.4;
+  }
+
+  /* Section */
+  /* company context — one line, keeps the reader oriented without a paragraph */
+  .r-role-note {
+    font-size: 0.6875rem;
+    color: var(--color-ink-3);
+    margin-top: 0.2rem;
+  }
+  .r-role-text strong { font-weight: 600; color: var(--color-ink); }
+
+  .r-section {
+    margin-bottom: 2rem;
+  }
+  .r-section-label {
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #72726c;   /* AA: 4.84:1 on white */
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.5px solid #e8e8e2;
+  }
+
+  /* Role rows */
+  .r-role {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .r-role-meta {
+    padding-top: 0.1rem;
+  }
+  .r-role-company {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #0d0d0c;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.15rem;
+  }
+  .r-role-date {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #72726c;   /* AA: 4.84:1 on white */
+    text-transform: uppercase;
+  }
+  .r-role-body {}
+  .r-role-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #0d0d0c;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+  }
+  .r-role-text {
+    font-size: 0.75rem;
+    color: #4a4a45;   /* 8.91:1 */
+    line-height: 1.7;
+    margin: 0;
+  }
+  .r-role-divider {
+    height: 0.5px;
+    background: #e8e8e2;
+    margin: 0.75rem 0 1rem 8.5rem;
+  }
+
+  /* Sub-role (same company, different title) */
+  /* Sub-roles share the role grid so every date lands in the same column.
+     The nesting is shown by a rule on the body, not by indenting the row,
+     which previously pushed sub-roles 1rem out of alignment. */
+  .r-subrole {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .r-subrole .r-role-body {
+    padding-left: 1rem;
+    border-left: 1.5px solid #e8e8e2;
+  }
+
+  /* Skills + Education two-col */
+  .r-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .r-skills-group {
+    margin-bottom: 0.75rem;
+  }
+  .r-skills-group-name {
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #72726c;   /* AA: 4.84:1 on white */
+    margin-bottom: 0.3rem;
+  }
+  .r-skills-list {
+    font-size: 0.75rem;
+    color: #4a4a45;   /* 8.91:1 */
+    line-height: 1.7;
+  }
+
+  /* Personal note */
+  .r-personal {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid #e8e8e2;
+    font-size: 0.75rem;
+    color: #72726c;   /* AA: 4.84:1 on white */
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* ── Print styles ────────────────────────────────────────────── */
+  @media print {
+    @page {
+      size: A4;
+      margin: 1.4cm 1.5cm;
+    }
+
+    body { background: #fff !important; }
+
+    nav, footer, .dl-bar { display: none !important; }
+
+    .rs-wrap {
+      max-width: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sheet {
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    /* Measured content is ~1002px against a 1017px A4 text block, but Chromium
+       still spilled a hair onto page two. A small print-only scale removes the
+       rounding risk entirely and is imperceptible at reading size. */
+    /* Two pages by design — 16 years does not compress to one without
+       throwing away the evidence that does the work. */
+    .sheet { zoom: 1; }
+
+    .r-name { font-size: 1.35rem; }
+    .r-impact-num { font-size: 0.86rem; }
+
+    /* ── One page, on purpose ──────────────────────────────────────────
+       The screen layout is deliberately airy; print has a hard budget of
+       261mm. Everything below is spacing and type scale only — nothing is
+       hidden, so the PDF and the web page say exactly the same thing. */
+    .r-title        { font-size: 0.76rem; }
+    .r-philosophy   { font-size: 0.73rem; line-height: 1.42; margin: 0.4rem 0 0.45rem; }
+    .r-header       { margin-bottom: 0.3rem; padding-bottom: 0.3rem; }
+    .r-contact-line { font-size: 0.67rem; line-height: 1.38; }
+
+    .r-impact       { margin: 0.25rem 0; padding: 0.2rem 0; }
+    .r-impact-label { font-size: 0.55rem; line-height: 1.22; }
+
+    .r-section       { margin-top: 0.9rem; }
+    .r-section-label { font-size: 0.58rem; margin-bottom: 0.35rem; padding-bottom: 0.25rem; }
+
+    .r-role         { margin-bottom: 0.7rem; }
+    .r-subrole      { margin-top: 0.6rem; }
+    .r-role-company { font-size: 0.74rem; }
+    .r-role-date    { font-size: 0.68rem; }
+    .r-role-title   { font-size: 0.74rem; margin-bottom: 0.1rem; }
+    .r-role-text    { font-size: 0.78rem; line-height: 1.5; }
+    .r-role-divider { margin: 0.3rem 0; }
+
+    .r-bottom            { gap: 1.35rem; margin-top: 0.4rem; }
+    .r-skills-group      { margin-bottom: 0.35rem; }
+    .r-skills-group-name { font-size: 0.62rem; margin-bottom: 0.1rem; }
+    .r-skills-list       { font-size: 0.72rem; line-height: 1.5; }
+
+
+    a { color: inherit; text-decoration: none; }
+
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+
+<div class="rs-wrap">
+
+  <!-- Download bar -->
+  <button class="dl-btn no-print" onclick="window.print()">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M1.5 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Save as PDF
+  </button>
+
+  <!-- ══ Resume sheet ══════════════════════════════════════════ -->
+  <div class="sheet">
+
+    <!-- Header -->
+    <div class="r-header">
+      <div class="r-ident">
+        <div>
+          <h1 class="r-name">Kishore Sudhamalla</h1>
+          <p class="r-title">Product Designer · Complex Enterprise Systems · AI &amp; Agentic Experiences</p>
+        </div>
+      </div>
+      <div class="r-contacts">
+        <a class="r-contact-line" href="mailto:build@kishoresudhamalla.com">build@kishoresudhamalla.com</a>
+        <span class="r-contact-line">+91 99120 86069</span>
+        <a class="r-contact-line" href="https://linkedin.com/in/kishuxer" target="_blank">linkedin.com/in/kishuxer</a>
+        <a class="r-contact-line" href="https://kishoresudhamalla.com" target="_blank">kishoresudhamalla.com</a>
+      </div>
+    </div>
+
+    <!-- Philosophy statement -->
+    <p class="r-philosophy">
+      I design complex enterprise products and build what I design. Sixteen years of
+      making difficult systems usable, nine of them on a global HR platform, which is
+      where I learned to work with years of accumulated history, many user roles, and
+      business rules most people never see. That same systems thinking is now going into
+      AI and agentic experiences: what the system decides, what it suggests, and what
+      stays with a person.
+    </p>
+
+    <!-- Impact bar -->
+    <div class="r-impact" data-count-group>
+      <div class="r-impact-cell">
+        <div class="r-impact-num" data-count>16+ yrs</div>
+        <div class="r-impact-label">Design<br>experience</div>
+      </div>
+      <div class="r-impact-cell">
+        <div class="r-impact-num" data-count>~9 yrs</div>
+        <div class="r-impact-label">Enterprise<br>platform depth</div>
+      </div>
+      <div class="r-impact-cell">
+        <div class="r-impact-num" data-count>6</div>
+        <div class="r-impact-label">Product areas<br>owned</div>
+      </div>
+      <div class="r-impact-cell">
+        <div class="r-impact-num" data-count>Global</div>
+        <div class="r-impact-label">US · SEA · MENA<br>products shipped</div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="r-section">
+      <div class="r-section-label">Experience</div>
+
+      <!-- Darwinbox, the spine of the resume -->
+      <div class="r-role">
+        <div class="r-role-meta">
+          <div class="r-role-company">Darwinbox</div>
+          <div class="r-role-date">2017 – Present</div>
+          <div class="r-role-note">Global HCM platform</div>
+        </div>
+        <div class="r-role-body">
+          <div class="r-role-title">Associate Director, UX</div>
+          <p class="r-role-text">
+            Leading AI-native and agentic experience design across the platform, defining
+            where AI should act on someone's behalf, where it should assist, and where
+            humans need to remain in control. Designing the behaviours, interactions and
+            guardrails around autonomy, permissions, explainability, trust, failure and
+            recovery.
+          </p>
+          <p class="r-role-text">
+            Setting design direction across six product areas: Time Management, Core,
+            Payroll, Benefits, Extensibility, and Workflows &amp; Journeys, while staying
+            hands-on with the hardest product problems and shaping how an enterprise HR
+            platform evolves toward AI-native experiences.
+          </p>
+          <p class="r-role-text">
+            Lead and mentor designers across multiple product areas while partnering with
+            product and engineering leaders to shape product direction, resolve difficult
+            product problems and raise design quality across teams.
+          </p>
+        </div>
+      </div>
+
+      <div class="r-subrole">
+        <div class="r-role-meta"><div class="r-role-date">2021 – 2024</div></div>
+        <div class="r-role-body">
+        <div class="r-role-title">Senior UX Manager</div>
+        <p class="r-role-text">
+          Rebuilt Time Management, an eight-year-old enterprise module that had become
+          increasingly difficult to use as Darwinbox expanded across customers and markets.
+          Reorganised the experience around what managers need to understand and decide
+          first, rather than exposing the complexity of the underlying product structure.
+          Worked through complex workforce rules, configurations, permissions and global
+          requirements to create a clearer experience for different customer contexts.
+          Validated the new model with 8 enterprise clients across Southeast Asia before
+          global rollout. The work contributed to the evolution of Darwinbox's Workforce
+          Management product, which <strong>moved from 2.9 → 3.5 in the Gartner Magic
+          Quadrant for Workforce Management by 2025</strong>.
+        </p>
+        </div>
+      </div>
+
+      <div class="r-subrole">
+        <div class="r-role-meta"><div class="r-role-date">2017 – 2021</div></div>
+        <div class="r-role-body">
+        <div class="r-role-title">UX Manager · Senior Product Designer</div>
+        <p class="r-role-text">
+          Joined Darwinbox as an <strong>early founding member of the design team</strong>
+          and helped establish the foundations for product design as the company scaled
+          rapidly. Built the initial design language and style guide, introduced reusable
+          patterns and established a design review practice that helped the team maintain
+          product quality without losing the speed a startup needs.
+        </p>
+        <p class="r-role-text">
+          Led the design of Workflows &amp; Journeys, a platform layer connecting HR events
+          such as onboarding, transfers, promotions and exits to the systems that execute
+          them across country rules, business logic and role permissions. Designed for
+          complex enterprise scenarios spanning multiple products, user roles and
+          dependencies, and shipped the experience across 120+ countries. Worked closely
+          with product and engineering to turn a complex platform model into a framework
+          organisations could use to create and manage employee journeys.
+        </p>
+        <p class="r-role-text">
+          This period covered Darwinbox's evolution from an early-stage startup into a
+          unicorn, while the product, customer base and design organisation grew
+          significantly alongside the business.
+        </p>
+        </div>
+      </div>
+
+      <div class="r-role-divider"></div>
+
+      <!-- Earlier, compressed, enough to hold the 16-year line -->
+      <div class="r-role">
+        <div class="r-role-meta">
+          <div class="r-role-company">WTA Studios</div>
+          <div class="r-role-date">2015 – 2017</div>
+        </div>
+        <div class="r-role-body">
+          <div class="r-role-title">Product Designer</div>
+          <p class="r-role-text">
+            End-to-end design for web and mobile products. Introduced design thinking to
+            cross-functional teams and began mentoring junior designers.
+          </p>
+        </div>
+      </div>
+
+      <div class="r-role-divider"></div>
+
+      <div class="r-role">
+        <div class="r-role-meta">
+          <div class="r-role-company">Earlier roles</div>
+          <div class="r-role-date">2009 – 2015</div>
+        </div>
+        <div class="r-role-body">
+          <div class="r-role-title">UI/UX · Visual · Graphic Designer</div>
+          <p class="r-role-text">
+            Wave Crest Group (enterprise dashboards), Green Gold Animation (Chhota Bheem
+            franchise), Anil Bhanu Core Design. Six years across every medium before
+            specialising in product.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected build -->
+    <div class="r-section">
+      <div class="r-section-label">Designed and built solo</div>
+      <div class="r-role">
+        <div class="r-role-meta">
+          <div class="r-role-company">Design Ops</div>
+          <div class="r-role-date">2026</div>
+          <div class="r-role-note">Side project · in daily use</div>
+        </div>
+        <div class="r-role-body">
+          <div class="r-role-title">A delivery system for a design org, design through to working product</div>
+          <p class="r-role-text">
+            Jira reported tickets, not whether a team was on pace. I designed and built a tool
+            that syncs a live Jira board and reports delivery, capacity and slipped commitments, vanilla JavaScript, no framework, written in Claude Code. In daily use.
+          </p>
+          <p class="r-role-text">
+            Then added the layer I actually wanted to design: an AI that explains <em>why</em> a
+            commitment slipped, cites the changelog entries and comments it read, proposes one
+            action, and only writes to Jira after a person approves the exact record. It measures
+            whether the intervention held, and reports its own recommendations when they failed.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom grid: Skills + Education -->
+    <div class="r-bottom">
+      <div class="r-section">
+        <div class="r-section-label">Skills</div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">Complex systems</div>
+          <div class="r-skills-list">Enterprise UX · systems thinking · platform design · workflows &amp; journeys · multi-role permissions · global rollouts</div>
+        </div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">AI &amp; agentic UX</div>
+          <div class="r-skills-list">Human–AI responsibility models · explainability and evidence · confidence and uncertainty · human-in-the-loop approval · failure and recovery</div>
+        </div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">Research &amp; direction</div>
+          <div class="r-skills-list">Jobs to Be Done · card sorting · enterprise client validation · design sprints · stakeholder alignment</div>
+        </div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">Prototyping &amp; building</div>
+          <div class="r-skills-list">Claude Code · Figma · Figma MCP · Adobe CC</div>
+        </div>
+      </div>
+
+      <div class="r-section">
+        <div class="r-section-label">Education &amp; Certifications</div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">ISBM</div>
+          <div class="r-skills-list">Bachelor's in Visual Communications</div>
+        </div>
+        <div class="r-skills-group">
+          <div class="r-skills-group-name">Xperian · IBM</div>
+          <div class="r-skills-list">Digital Product Design · Enterprise Design Thinking · Essentials for AI</div>
+        </div>
+        <div class="r-skills-group" style="margin-top:1rem;">
+          <div class="r-skills-group-name">Recognition</div>
+          <div class="r-skills-list">Darwinbox named Gartner Challenger 2024 (WFM), following the Time Management redesign · Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal note -->
+    <p class="r-personal">
+      I've always learned by making, a product concept, a visual experiment, an
+      AI prototype, or a new tool I'm trying to understand. Always open to
+      conversations about complex products, enterprise systems, and AI-driven
+      product experiences.
+    </p>
+
+  </div>
+</div>
+
+</Base>

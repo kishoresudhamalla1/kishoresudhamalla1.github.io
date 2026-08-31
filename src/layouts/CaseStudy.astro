@@ -1,0 +1,141 @@
+---
+import Base from "./Base.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  meta: {
+    role: string;
+    team: string;
+    timeline: string;
+    tags: string[];
+    ai?: boolean;
+  };
+  prev?: { href: string; title: string };
+  next?: { href: string; title: string };
+}
+
+const { title, description, meta, prev, next } = Astro.props;
+---
+
+<Base
+  title={`${title}. Kishore Kumar Sudhamalla`}
+  description={description}
+>
+  <!-- Back -->
+  <div class="container-pg pt-8">
+    <a
+      href="/#cases"
+      class="text-label inline-flex items-center gap-2 text-[var(--color-ink-2)] no-underline transition-colors hover:text-[var(--color-ink)]"
+    >
+      ← All work
+    </a>
+  </div>
+
+  <!-- Header -->
+  <header class="container-pg py-16">
+    <div class="max-w-3xl">
+      <div class="mb-4 flex flex-wrap gap-2">
+        {
+          meta.tags.map((tag) => (
+            <span class="rounded-full border border-[var(--color-border)] px-3 py-1 text-xs text-[var(--color-ink-2)]">
+              {tag}
+            </span>
+          ))
+        }
+        {
+          meta.ai && (
+            <span class="rounded-full bg-[var(--color-ink)] px-3 py-1 text-xs text-[var(--color-bg)]">
+              AI
+            </span>
+          )
+        }
+      </div>
+      <h1 class="text-display mb-8">{title}</h1>
+
+      <!-- Meta strip -->
+      <div
+        class="grid grid-cols-2 gap-x-8 gap-y-4 border-t border-[var(--color-border)] pt-8 sm:grid-cols-4"
+      >
+        {
+          [
+            { label: "My role", value: meta.role },
+            { label: "Team", value: meta.team },
+            { label: "Timeline", value: meta.timeline },
+          ].map(({ label, value }) => (
+            <div>
+              <p class="text-label mb-1 text-[var(--color-ink-3)]">{label}</p>
+              <p class="text-sm font-medium text-[var(--color-ink)]">{value}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero image placeholder -->
+  <div class="container-pg mb-20">
+    <div
+      class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)]"
+    >
+      <!-- Browser chrome -->
+      <div
+        class="flex items-center gap-1.5 border-b border-[var(--color-border)] bg-[var(--color-bg)] px-4 py-3"
+      >
+        <span class="h-3 w-3 rounded-full bg-red-400/60"></span>
+        <span class="h-3 w-3 rounded-full bg-yellow-400/60"></span>
+        <span class="h-3 w-3 rounded-full bg-green-400/60"></span>
+        <div class="ml-3 flex-1 rounded-md bg-[var(--color-border)] px-3 py-1">
+          <div class="h-2 w-32 rounded-full bg-[var(--color-ink-3)]/40"></div>
+        </div>
+      </div>
+      <!-- Screenshot -->
+      <slot name="hero-image" />
+    </div>
+  </div>
+
+  <!-- Case study body -->
+  <div class="container-pg pb-32">
+    <div class="mx-auto max-w-2xl">
+      <slot />
+    </div>
+  </div>
+
+  <!-- Prev / Next navigation -->
+  {
+    (prev || next) && (
+      <nav class="border-t border-[var(--color-border)] py-12">
+        <div class="container-pg flex justify-between gap-8">
+          {prev ? (
+            <a
+              href={prev.href}
+              class="group flex flex-col no-underline"
+            >
+              <span class="text-label mb-1 text-[var(--color-ink-3)]">
+                ← Previous
+              </span>
+              <span class="text-base font-medium text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-ink-2)]">
+                {prev.title}
+              </span>
+            </a>
+          ) : (
+            <div />
+          )}
+          {next && (
+            <a
+              href={next.href}
+              class="group flex flex-col items-end no-underline"
+            >
+              <span class="text-label mb-1 text-[var(--color-ink-3)]">
+                Next →
+              </span>
+              <span class="text-base font-medium text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-ink-2)]">
+                {next.title}
+              </span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )
+  }
+</Base>

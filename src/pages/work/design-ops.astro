@@ -1,0 +1,1029 @@
+---
+import Base from '../../layouts/Base.astro';
+
+import ScreenGallery from "../../components/ScreenGallery.astro";
+import IntelligenceModel from "../../components/IntelligenceModel.astro";
+import LiveDemo from "../../components/LiveDemo.astro";
+import CaseHero from "../../components/CaseHero.astro";
+
+const IMG = "/images/work/design-ops";
+// BASE_URL is "/" at root but "/repo" (no trailing slash) when ASTRO_BASE is set,
+// so normalise it before concatenating or the path silently fuses: "/repodemo/".
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
+---
+
+<Base
+  title="From Design Operations to Design Intelligence. Kishore Sudhamalla"
+  description="Design work was visible; design health was not. A DesignOps system designed and built solo against a live Jira board, then extended with an evidence-cited intelligence layer."
+>
+
+<style>
+  .cs-label {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3);
+  }
+  .cs-h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.025em; color: var(--color-ink);
+  }
+  .cs-lede { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); }
+
+  .shot {
+    margin: 0; border: 1px solid var(--color-border); border-radius: 1rem;
+    overflow: hidden; background: var(--color-surface);
+  }
+  .shot img { width: 100%; height: auto; display: block; }
+  .shot figcaption {
+    padding: 0.7rem 1.1rem; font-size: 0.8125rem; color: var(--color-ink-2);
+    border-top: 1px solid var(--color-border); background: var(--color-bg);
+  }
+  .shot-grid { display: grid; gap: 1rem; }
+  @media (min-width: 900px) { .shot-grid--2 { grid-template-columns: 1fr 1fr; } }
+
+  /* numbered principle / bug rows */
+  .rows { border-top: 1px solid var(--color-border); }
+  .row {
+    display: grid; grid-template-columns: 1fr; gap: 0.4rem 2rem;
+    padding: 1.6rem 0; border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 800px) { .row { grid-template-columns: 15rem 1fr; } }
+  .row-t {
+    font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--color-ink);
+  }
+  .row-d { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); }
+
+  .cards { display: grid; gap: 1rem; }
+  @media (min-width: 800px) { .cards--3 { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    border: 1px solid var(--color-border); border-radius: 1rem;
+    padding: 1.6rem; background: var(--color-bg);
+  }
+  .card-k {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.7rem;
+  }
+  .card-t {
+    font-size: 1rem; font-weight: 600; letter-spacing: -0.015em;
+    color: var(--color-ink); margin-bottom: 0.5rem;
+  }
+  .card-b { font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); }
+
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--color-border); border: 1px solid var(--color-border);
+    border-radius: 1rem; overflow: hidden;
+  }
+  @media (min-width: 800px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat { background: var(--color-bg); padding: 1.6rem 1.4rem; }
+  .stat-n {
+    font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800;
+    letter-spacing: -0.04em; line-height: 1; color: var(--color-ink); margin-bottom: 0.4rem;
+  }
+  .stat-l { font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); }
+  .stat-s { font-size: 0.75rem; color: var(--color-ink-3); margin-top: 0.15rem; }
+
+  /* video */
+  .demo { border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden;
+    background: var(--color-surface); box-shadow: 0 30px 70px -40px rgba(0,0,0,.35); }
+  :global(.dark) .demo { box-shadow: 0 30px 70px -35px rgba(0,0,0,.8); }
+  .demo video { display: block; width: 100%; height: auto; }
+
+  .quote {
+    font-size: clamp(1.125rem, 2.2vw, 1.5rem); font-weight: 600; line-height: 1.45;
+    letter-spacing: -0.02em; color: var(--color-ink);
+    padding-left: 1.25rem; border-left: 2px solid var(--color-ink);
+  }
+
+  /* the eight rule flags */
+  .flags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .flag {
+    font-size: 0.8125rem; color: var(--color-ink-2);
+    border: 1px solid var(--color-border); border-radius: 0.4rem;
+    padding: 0.4rem 0.8rem; background: var(--color-surface);
+  }
+
+  /* rule-says / needed-to-know contrast */
+  .split { display: grid; gap: 1rem; }
+  @media (min-width: 800px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split-col {
+    border: 1px solid var(--color-border); border-radius: 1rem; padding: 1.75rem;
+    background: var(--color-bg);
+  }
+  .split-col--alt { border-color: var(--color-ink-3); }
+  .split-k {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.9rem;
+  }
+  .split-t {
+    font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--color-ink); margin-bottom: 0.7rem;
+  }
+  .split-b { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); }
+
+  /* AI layers */
+  .layers { display: grid; gap: 1rem; }
+  @media (min-width: 900px) { .layers { grid-template-columns: 1fr 1fr; } }
+  .layer {
+    border: 1px solid var(--color-border); border-radius: 1rem;
+    padding: 1.6rem 1.75rem; background: var(--color-bg);
+  }
+  .layer-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.1rem; }
+  .layer-n {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--color-ink-3);
+  }
+  .layer-t {
+    font-size: 1rem; font-weight: 600; letter-spacing: -0.015em;
+    color: var(--color-ink); flex: 1;
+  }
+  .layer-s {
+    font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; border-radius: 100px; padding: 0.25rem 0.6rem;
+    white-space: nowrap;
+  }
+  .layer-s--designed { color: #2f6b4a; background: #eef7f2; }
+  .layer-s--next     { color: #6b6b64; background: var(--color-surface); }
+  :global(.dark) .layer-s--designed { color: #8ecfab; background: rgba(90,170,124,.14); }
+  :global(.dark) .layer-s--next     { color: #95958f; background: rgba(255,255,255,.06); }
+
+  .layer-io { margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+  .layer-io > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 0.75rem; }
+  .layer-io dt {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--color-ink-3); padding-top: 0.1rem;
+  }
+  .layer-io dd {
+    margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2);
+  }
+
+  /* ── landscape table ── */
+  .land { border-top: 1px solid var(--color-border); }
+  .land-row {
+    display: grid; grid-template-columns: 1fr; gap: 0.35rem 1.5rem;
+    padding: 1.35rem 0; border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 880px) { .land-row { grid-template-columns: 14rem 1fr 1fr; } }
+  .land-n { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); }
+  .land-a { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2); }
+  .land-b { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-3); }
+  .land-h { display: none; }
+  @media (min-width: 880px) {
+    .land-head { display: grid; grid-template-columns: 14rem 1fr 1fr; gap: 1.5rem; padding-bottom: 0.7rem; }
+    .land-h {
+      display: block; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--color-ink-3);
+    }
+  }
+
+  /* ── signal derivability ── */
+  .sig {
+    display: grid; gap: 1px; background: var(--color-border);
+    border: 1px solid var(--color-border); border-radius: 1rem; overflow: hidden;
+  }
+  .sig-r {
+    background: var(--color-bg); padding: 1.15rem 1.35rem;
+    display: grid; grid-template-columns: 1fr; gap: 0.35rem 1.25rem; align-items: start;
+  }
+  @media (min-width: 840px) { .sig-r { grid-template-columns: 14rem 1fr 10rem; align-items: center; } }
+  .sig-n { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); }
+  .sig-d { font-size: 0.8438rem; line-height: 1.6; color: var(--color-ink-2); }
+  .sig-v {
+    font-size: 0.625rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.25rem 0.65rem; border-radius: 100px; border: 1px solid;
+    justify-self: start; text-align: center;
+  }
+  .v-now { color: #2f6b4a; border-color: #b9d9c7; background: #eef7f2; }
+  .v-src { color: #8a6410; border-color: #e8d6a8; background: #fdf8ea; }
+  .v-no  { color: #b4462f; border-color: #e7bdb2; background: #fdf1ee; }
+  :global(.dark) .v-now { color: #8ecfab; border-color: rgba(90,170,124,.35); background: rgba(90,170,124,.12); }
+  :global(.dark) .v-src { color: #dcc07a; border-color: rgba(220,180,80,.35); background: rgba(220,180,80,.12); }
+  :global(.dark) .v-no  { color: #e79a86; border-color: rgba(226,120,100,.35); background: rgba(226,120,100,.12); }
+
+  /* summary on-ramp */
+  .tldr {
+    border-left: 3px solid var(--color-ink);
+    padding: 0.35rem 0 0.35rem 1.6rem;
+    max-width: 44rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+  .tldr-k {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3);
+  }
+  .tldr-b {
+    font-size: 1.0625rem; line-height: 1.65; color: var(--color-ink);
+  }
+  .tldr-b em { font-style: italic; }
+
+
+  /* ── the one-way pipeline: rules produce truth, AI only annotates ── */
+  .pipe { margin: 0; }
+  .pipe-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  @media (min-width: 900px) {
+    .pipe-flow {
+      grid-auto-flow: column;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 0;
+    }
+  }
+  .pipe-node {
+    border: 1px solid var(--color-border); border-radius: 0.85rem;
+    padding: 1rem 1.15rem; background: var(--color-bg); min-width: 0;
+  }
+  .pipe-node--rule { border-color: var(--color-ink-3); }
+  .pipe-node--ai {
+    border-color: var(--color-ink); border-width: 1.5px;
+    background: var(--color-surface);
+  }
+  .pipe-n-t {
+    font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.015em;
+    color: var(--color-ink); margin-bottom: 0.2rem;
+  }
+  .pipe-n-s { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-3); }
+
+  /* Arrow: a rule plus a head, drawn in CSS so it inherits the ink colour.
+     Vertical on narrow, horizontal once the row lays out side by side. */
+  .pipe-arrow {
+    position: relative; display: block;
+    justify-self: center; align-self: center;
+    width: 1px; height: 1.4rem;
+    background: var(--color-ink-3);
+    margin: 0.1rem 0;
+  }
+  .pipe-arrow::after {
+    content: ""; position: absolute; left: 50%; bottom: 0;
+    width: 6px; height: 6px;
+    border-right: 1px solid var(--color-ink-3);
+    border-bottom: 1px solid var(--color-ink-3);
+    transform: translate(-50%, 1px) rotate(45deg);
+  }
+  @media (min-width: 900px) {
+    .pipe-arrow { width: 2rem; height: 1px; margin: 0 0.55rem; }
+    .pipe-arrow::after {
+      left: auto; right: 0; bottom: 50%;
+      transform: translate(1px, 50%) rotate(-45deg);
+    }
+  }
+  /* the step into the AI layer is the one that changes character */
+  .pipe-arrow--ai, .pipe-arrow--ai::after { border-color: var(--color-ink); }
+  .pipe-arrow--ai { background: var(--color-ink); }
+
+  .pipe-cap {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    margin-top: 1.5rem; max-width: 44rem;
+    font-size: 0.875rem; line-height: 1.65; color: var(--color-ink-2);
+  }
+  .pipe-cap-x {
+    flex-shrink: 0; font-size: 0.75rem; font-weight: 700;
+    color: var(--color-ink-3); line-height: 1.9;
+  }
+
+  .stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .stack span {
+    font-size: 0.75rem; color: var(--color-ink-2);
+    border: 1px solid var(--color-border); border-radius: 100px; padding: 0.35rem 0.85rem;
+  }
+</style>
+
+  <!-- Back -->
+  <div class="container-pg pt-8">
+    <a href="/#cases" class="cs-label inline-flex items-center gap-2 hover:text-[var(--color-ink)] transition-colors">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 2L3.5 7L8.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to work
+    </a>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <CaseHero
+    eyebrow="Enterprise DesignOps · 0 → 1"
+    title="From design operations<br />to design intelligence."
+    lede="Design work was visible. Design health was not. I designed and built the system that closes that gap, shipped against a live Jira board, then extended with an AI layer that explains why a commitment slipped and measures whether the fix held."
+    meta={[
+      { k: "Role", v: "UX designer, solo, end to end" },
+      { k: "Shipped", v: "In daily use, 2026" },
+      { k: "Scope", v: "Jira sync → intelligence layer" },
+      { k: "Users", v: "A working design org" },
+    ]}
+    img={`${IMG}/hero-window.webp`}
+    alt="Design Ops, delivery overview"
+    cards={[
+      {
+        eyebrow: "AI · root cause",
+        value: "High",
+        label: "Requirements weren't ready",
+        note: "Cited: two date changes, 27 days of slip, and the ticket's own note.",
+      },
+      {
+        eyebrow: "Verified",
+        value: "27d",
+        label: "The intervention did not hold",
+        note: "The loop measures its own advice, and reports when it failed.",
+      },
+    ]}
+  />
+
+  <section class="pb-4" data-reveal>
+    <div class="container-pg">
+      <!-- On-ramp: the payoff otherwise doesn't land until deep in the page. -->
+      <div class="tldr">
+        <p class="tldr-k">In short</p>
+        <p class="tldr-b">
+          A DesignOps system that reads a live Jira board and tells a design org what its
+          delivery actually looks like, extended with an AI layer that explains <em>why</em>
+          something slipped, cites the records it read, and measures whether the fix held.
+          Product thinking, interface and implementation, all mine.
+        </p>
+        <p class="tldr-b">
+          The weekly delivery review used to start by rebuilding the picture by hand from
+          a Jira export. It now starts from the decisions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WALKTHROUGH ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-3">Shipped, in daily use</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">First, the part that is real.</h2>
+      <p class="cs-lede max-w-2xl mb-8">
+        One minute on demo data: Jira setup, the team, planning, delivery tracking, the
+        board, the leadership view, and a drill-down into a commitment that has slipped.
+      </p>
+
+      <div class="demo" data-reveal>
+        <video
+          autoplay loop muted playsinline preload="metadata"
+          poster={`${IMG}/walkthrough-poster.jpg`}
+          aria-label="Screen recording of the Design Ops dashboard: the Jira setup wizard, pod configuration, the quarter planning pipeline, delivery tracking, the Kanban board grouped by designer, the executive summary, and a ticket detail drill-down"
+        >
+          <source src={`${IMG}/walkthrough.webm`} type="video/webm" />
+          <source src={`${IMG}/walkthrough.mp4`} type="video/mp4" />
+        </video>
+      </div>
+
+      <p class="cs-lede max-w-2xl mt-14 mb-6">
+        Or use it yourself. Switch the quarter, open a ticket that has slipped, regroup
+        the board by designer. Every view answers one question someone asked me in a
+        review, rather than displaying everything Jira knows.
+      </p>
+
+      <LiveDemo
+        {/* index.html explicitly: the dev server does not resolve directory indexes
+            under public/, and naming the file works on static hosts too. */}
+        src={`${BASE}demo/design-ops/index.html`}
+        title="Design Ops dashboard, live demo running on sample data"
+        hint="The real tool, running on sample data. Change the quarter, open a ticket, use the board."
+      />
+    </div>
+  </section>
+
+  <!-- ══ 01 PROBLEM ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="grid lg:grid-cols-[1fr_1.3fr] gap-16 items-start">
+        <div class="lg:sticky lg:top-24">
+          <p class="cs-label mb-4">01. The problem</p>
+          <h2 class="cs-h2 mb-6">Jira reports tickets.<br>It doesn't report a team.</h2>
+          <p class="text-[var(--color-ink-2)] leading-relaxed">
+            Running design delivery meant reconstructing the same picture by hand every
+            week, export, pivot, chase. The questions I needed answered weren't
+            questions Jira's own dashboards were built to answer.
+          </p>
+        </div>
+
+        <div class="rows">
+          {[
+            ["Are we actually on pace?", "Not “is anything moving”, is the delivery rate on track against what was committed, with working days and time off accounted for."],
+            ["Who is quietly overloaded?", "Capacity spread across a team, visible before someone burns out rather than after they miss a date."],
+            ["What has already slipped?", "Commitments that moved without anyone noticing, surfaced rather than discovered in a review."],
+            ["What genuinely changed?", "Which fields moved on a ticket, when, and by whom, the history behind a date, not just its current value."],
+            ["Are the estimates real?", "T-shirt sizes checked against actual working days, so planning is grounded in what the team has historically delivered."],
+          ].map(([t, d]) => (
+            <div class="row">
+              <p class="row-t">{t}</p>
+              <p class="row-d">{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p class="quote max-w-3xl mt-14">
+        Jira's native dashboards are either too generic to be useful or too heavy to
+        set up, and none of them speak design ops. No hi-fi commitments, no pods, no
+        T-shirt sizing, no adoption tracking.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 02 LANDSCAPE ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">02. Landscape</p>
+      <h2 class="cs-h2 mb-4 max-w-3xl">Before building anything, I checked whether this already existed.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        It mostly does, in pieces. What none of them does is treat the design workflow
+        itself as the unit of analysis. That gap is the only thing I set out to claim.
+      </p>
+
+      <div class="land-head">
+        <span class="land-h">Category</span>
+        <span class="land-h">What it optimises for</span>
+        <span class="land-h">What it leaves open</span>
+      </div>
+      <div class="land">
+        {[
+          ["Jira dashboards &amp; Advanced Roadmaps",
+           "Ticket state, sprint burn-down, plan against actual across a portfolio.",
+           "Treats a design ticket like any ticket. No concept of design stages, rework, or a skipped validation."],
+          ["Resource tools: Float, Runn, Mosaic, Asana, Adobe Workfront",
+           "Allocation and utilisation: who is booked, for how long, on which project.",
+           "Capacity as hours, not as context-switching or the balance of strategic against reactive work."],
+          ["Figma ↔ Jira integration",
+           "Connecting design files to delivery tickets so context travels with the work.",
+           "Linkage, not interpretation. Makes artefacts findable; says nothing about flow or health."],
+          ["Design-system analytics",
+           "Component adoption and detachment, where the system is and isn't used.",
+           "Scoped to the file. Silent on whether the workflow producing those files is working."],
+          ["AI DesignOps agents",
+           "Answering tooling and process questions from documented knowledge, at org scale.",
+           "Knowledge retrieval, not operational inference. Answers “how do I”, not “what is going wrong”."],
+        ].map(([n, a, b]) => (
+          <div class="land-row">
+            <p class="land-n"><Fragment set:html={n} /></p>
+            <p class="land-a"><Fragment set:html={a} /></p>
+            <p class="land-b"><Fragment set:html={b} /></p>
+          </div>
+        ))}
+      </div>
+
+      <p class="quote max-w-3xl mt-12">
+        Design Intelligence is not my idea, the DesignOps field has argued for it for
+        years. The need is well documented and the product is not. That is the gap I built into.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ THE MODEL, frames everything below it ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-3">The model</p>
+      <h2 class="cs-h2 mb-4 max-w-3xl">A dashboard reports the work. This reads it.</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        Most tools render the first two stages and stop. Everything after happens in a
+        human's head on a Sunday night. The design problem is everything to the right.
+      </p>
+
+      <IntelligenceModel />
+
+      <div class="cards cards--3 mt-10">
+        <div class="card">
+          <p class="card-k">Shipped</p>
+          <p class="card-t">Signal &amp; intelligence</p>
+          <p class="card-b">
+            Jira sync, a rule engine that flags risk deterministically, and the views
+            that make it legible. Running daily against a live board.
+          </p>
+        </div>
+        <div class="card" style="border-color:var(--color-ink)">
+          <p class="card-k" style="color:var(--color-ink)">Prototyped</p>
+          <p class="card-t">Interpretation &amp; recommendation</p>
+          <p class="card-b">
+            Root-cause explanation with cited evidence, and the weekly brief. Working
+            prototype on live data, the model call itself is stubbed.
+          </p>
+        </div>
+        <div class="card" style="border-color:var(--color-ink)">
+          <p class="card-k" style="color:var(--color-ink)">Prototyped</p>
+          <p class="card-t">Decision, action &amp; verify</p>
+          <p class="card-b">
+            Accept, approve the exact write, undo it, and measure whether the signal
+            actually moved afterwards. The loop is closed, see section 10.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 SHAPE OF THE BUILD ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">03. The build</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">Constraints chosen on purpose.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        No spec, no backend, no budget for tooling. Three decisions I'd defend rather
+        than apologise for.
+      </p>
+
+      <div class="cards cards--3">
+        <div class="card">
+          <p class="card-k">Decision 01</p>
+          <p class="card-t">No framework, no build step</p>
+          <p class="card-b">
+            Every screen is rendered by hand-written template functions. Anyone on the
+            team runs it with one command and zero setup, no CI, no deploy pipeline,
+            no dependency rot on an internal tool nobody is paid to maintain.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-k">Decision 02</p>
+          <p class="card-t">No database</p>
+          <p class="card-b">
+            State lives in memory, is overwritten wholesale by each Jira sync, and is
+            snapshotted to localStorage so a reload never silently reverts to demo
+            data. Single-machine is a real tradeoff, taken deliberately for zero
+            infrastructure cost.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-k">Decision 03</p>
+          <p class="card-t">The smallest possible backend</p>
+          <p class="card-b">
+            Jira's API won't accept browser calls. Rather than weaken browser security
+            or stand up real infrastructure, an 83-line local proxy replays the request
+            server-side. The token never leaves the machine.
+          </p>
+        </div>
+      </div>
+
+      <p class="text-sm text-[var(--color-ink-3)] mt-6 max-w-2xl">
+        Field mapping is wired to concepts, not to my instance's field IDs, a
+        three-step wizard fuzzy-matches each org's own Jira field names, so the tool
+        is portable rather than personal.
+      </p>
+    </div>
+  </section>
+  <!-- ══ 05 DEBUGGING ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">04. What actually took the time</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">The bug was never where the symptom was.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        Anyone can ship a dashboard that looks right in a screenshot. Every one of these
+        started as a design observation, a number that read wrong, and building it myself
+        meant following each back to the assumption underneath instead of reporting it.
+      </p>
+
+      <div class="rows">
+        {[
+          ["A frozen “today”", "The current date was a hardcoded constant that never updated. Nothing crashed, every date calculation just quietly reported “on track” forever. Found from an offhand comment about one overdue ticket."],
+          ["The same bug, found three times", "“Status says at risk, detail shows nothing” appeared in three views, each deriving risk from a different definition. Recognising it as one underlying problem rather than three unrelated fixes is what kept it from recurring a fourth time."],
+          ["Pagination double-counting", "Syncing pages sorted by last-updated meant a ticket edited mid-sync could shift between pages and be counted twice. Root-caused from a user saying “Jira says 74, this shows 84”, not from any error log."],
+        ].map(([t, d]) => (
+          <div class="row">
+            <p class="row-t">{t}</p>
+            <p class="row-d">{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 06 PRINCIPLES ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">05. Principles it enforced</p>
+      <h2 class="cs-h2 mb-12 max-w-2xl">Rules that survived contact with real data.</h2>
+
+      <div class="cards cards--3">
+        {[
+          ["Auto-create from real data", "Never hardcode an allowlist. Whoever Jira says is assigned gets created, designers, modules, team membership. A fixed seed list breaks the moment real usage diverges from demo data, which is immediately."],
+          ["Never fabricate history", "A week-by-week workload heatmap was cut once it was clear Jira dates change constantly, any reconstructed history would be untrustworthy data dressed up as fact. Replaced with forward-looking metrics that are always honest."],
+          ["Honest empty states", "“No module data, map this field in Settings” instead of a wall of zeros. A sync report that says exactly how many tickets dropped and why, instead of a spinner that ends in silence."],
+          ["Report, don't edit", "The ticket panel is read-only with a single “Open in Jira” link, one system of record, not two. Closing the loop (section 10) added the single exception, and kept the principle: it creates a new linked record on approval, and still never edits a ticket's own fields."],
+        ].map(([t, d]) => (
+          <div class="card">
+            <p class="card-t">{t}</p>
+            <p class="card-b">{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 07 THE CEILING OF RULES, the pivot ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">06. The ceiling</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">
+        Eight flags. Every one a symptom, none a cause.
+      </h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        The rule engine works, and it's auditable. But a year of real reviews exposed a
+        hard ceiling: it tells you <em>what</em> happened and structurally cannot tell
+        you <em>why</em>.
+      </p>
+
+      <div class="flags mb-10">
+        {["Overdue", "Scope Changed", "Blocked", "No Update 3w+", "Missing PRD", "Due Soon", "Stale 2w+", "Dates Drifted"]
+          .map(f => <span class="flag">{f}</span>)}
+      </div>
+
+      <div class="split">
+        <div class="split-col">
+          <p class="split-k">What the rule says</p>
+          <p class="split-t">“Dates Drifted”</p>
+          <p class="split-b">
+            This ticket's committed date moved three times. That's a true statement,
+            derived deterministically from the changelog. It is also where the
+            information stops.
+          </p>
+        </div>
+        <div class="split-col split-col--alt">
+          <p class="split-k">What I actually needed to know</p>
+          <p class="split-t">Why it moved three times</p>
+          <p class="split-b">
+            The PRD changed twice, and the third move was this designer quietly
+            absorbing someone else's work. One of those is a product problem, one is
+            a capacity problem, and they need completely different conversations.
+          </p>
+        </div>
+      </div>
+
+      <p class="quote max-w-3xl mt-12">
+        The answer was never in the fields. It was sitting in the comment thread and
+        the changelog, prose, which no threshold can read.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 08 THE AI LAYER ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">07. The AI layer</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">
+        Rules decide what's true. AI explains what it means.
+      </h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        AI never decides whether something is at risk. It reads what the rules have
+        already flagged and adds judgement and language on top. That ordering is the
+        whole architecture.
+      </p>
+
+      <!-- The ordering, drawn. The prose above describes it; this makes the
+           one-way boundary visible at a glance. -->
+      <figure class="pipe" data-reveal>
+        <div class="pipe-flow">
+          <div class="pipe-node">
+            <p class="pipe-n-t">Jira</p>
+            <p class="pipe-n-s">System of record</p>
+          </div>
+          <span class="pipe-arrow" aria-hidden="true"></span>
+          <div class="pipe-node pipe-node--rule">
+            <p class="pipe-n-t">Deterministic rules</p>
+            <p class="pipe-n-s">Same input, same output, every run</p>
+          </div>
+          <span class="pipe-arrow" aria-hidden="true"></span>
+          <div class="pipe-node pipe-node--rule">
+            <p class="pipe-n-t">Flags &amp; counts</p>
+            <p class="pipe-n-s">What is true</p>
+          </div>
+          <span class="pipe-arrow pipe-arrow--ai" aria-hidden="true"></span>
+          <div class="pipe-node pipe-node--ai">
+            <p class="pipe-n-t">AI layer</p>
+            <p class="pipe-n-s">What it means, and why</p>
+          </div>
+        </div>
+        <figcaption class="pipe-cap">
+          <span class="pipe-cap-x" aria-hidden="true">✕</span>
+          <span>
+            No arrow points back. AI reads the flags and never sets one, so a wrong
+            model output can change the wording of a risk, never its existence.
+          </span>
+        </figcaption>
+      </figure>
+
+      <div class="split mt-12">
+        <div class="split-col">
+          <p class="split-k">Stays rule-based, permanently</p>
+          <p class="split-t">Anything you'd defend in a review</p>
+          <p class="split-b">
+            Whether a date has passed. Whether scope changed. Capacity and working-day
+            maths. Whether something was delivered. Same answer every run, and a human
+            can trace exactly how.
+          </p>
+        </div>
+        <div class="split-col split-col--alt">
+          <p class="split-k">Becomes AI</p>
+          <p class="split-t">Anything requiring judgement or language</p>
+          <p class="split-b">
+            Why something slipped. What to say about it. What's unusual for a particular
+            person. Questions where the honest deterministic answer is “I can't tell you
+            from the fields”.
+          </p>
+        </div>
+      </div>
+
+      <p class="text-sm text-[var(--color-ink-3)] mt-6 mb-14 max-w-2xl">
+        Every AI output is attributable: it cites the ticket, comment or date change it
+        read. An explanation you can't verify is worse than no explanation, because it
+        gets repeated in a review.
+      </p>
+
+      <div class="layers">
+        {[
+          {
+            n: "01",
+            t: "Root-cause classification",
+            status: "Designed",
+            reads: "Description, comment thread, changelog, existing flags",
+            gives: "A cause, blocked on a dependency, scope crept, under-resourced, review stalled, requirements unclear, with the line of evidence it drew from",
+            why: "The signal lives in unstructured prose. No threshold can read “waiting on legal since Tuesday”.",
+          },
+          {
+            n: "02",
+            t: "The weekly narrative",
+            status: "Designed",
+            reads: "The same aggregates the exec summary already computes",
+            gives: "The one paragraph a design lead writes by hand before every leadership sync, what changed, what it means, what needs a decision",
+            why: "A templated sentence reads like mail-merge. The value is in knowing what to leave out.",
+          },
+          {
+            n: "03",
+            t: "Ask the board a question",
+            status: "Designed",
+            reads: "The in-memory ticket and designer state, through defined functions rather than free query access",
+            gives: "An answer plus the exact filtered set it used, so the answer is checkable",
+            why: "The question space is open-ended. Every real question can't be a pre-built filter.",
+          },
+        ].map(l => (
+          <div class="layer">
+            <div class="layer-head">
+              <span class="layer-n">{l.n}</span>
+              <p class="layer-t">{l.t}</p>
+              <span class={`layer-s layer-s--${l.status.toLowerCase()}`}>{l.status}</span>
+            </div>
+            <dl class="layer-io">
+              <div><dt>Reads</dt><dd>{l.reads}</dd></div>
+              <div><dt>Gives</dt><dd>{l.gives}</dd></div>
+              <div><dt>Why not a rule</dt><dd>{l.why}</dd></div>
+            </dl>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-sm text-[var(--color-ink-3)] mt-8 max-w-3xl">
+        <span class="font-semibold text-[var(--color-ink-2)]">Designed but not built:</span>
+        semantic field mapping, so an org's own Jira names map by meaning rather than
+        keyword; per-person cadence anomalies, because one “no update in 3 weeks”
+        threshold is wrong for everybody; and probabilistic landing, because
+        straight-line extrapolation assumes the back half of a quarter behaves like the
+        front.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 10 THE AI LAYER, RUNNING ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-3">08. The layer, running</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">Same board. Now it explains itself.</h2>
+      <p class="cs-lede max-w-2xl mb-8">
+        A working prototype of the first three layers, running on the same demo data:
+        a flagged ticket explaining <em>why</em> it slipped and citing the evidence,
+        the weekly paragraph drafted from the numbers already on screen, and plain
+        questions answered against the same in-memory state.
+      </p>
+
+      <div class="demo mb-4" data-reveal>
+        <video
+          autoplay loop muted playsinline preload="metadata"
+          poster={`${IMG}/ai-explain.webp`}
+          aria-label="Screen recording of the AI layer: opening a slipped ticket to see a root-cause explanation with cited evidence, the weekly narrative on the executive summary, and asking the board who is overloaded and what has drifted"
+        >
+          <source src={`${IMG}/ai-walkthrough.webm`} type="video/webm" />
+          <source src={`${IMG}/ai-walkthrough.mp4`} type="video/mp4" />
+        </video>
+      </div>
+      <p class="text-sm text-[var(--color-ink-3)] mb-12 max-w-2xl">
+        Prototype. The interaction, the output shape and the evidence citations are
+        real and run on live ticket data, the model call itself is stubbed, so what
+        you're seeing is the design of the feature rather than a benchmark of a model.
+      </p>
+
+      <ScreenGallery
+        id="ai-screens"
+        screens={[
+          {
+            src: `${IMG}/ai-explain.webp`,
+            name: "Root cause",
+            alt: "A ticket detail panel with an AI block reading: requirements weren't ready, high confidence, citing two date changes with the reasons PRD not ready and PM delayed brief, a 27 day cumulative slip, concurrent load, and the ticket note",
+            caption: "the verdict, the recommended move, and every record it read, shown so it can be argued with.",
+          },
+          {
+            src: `${IMG}/ai-narrative.webp`,
+            name: "Weekly paragraph",
+            alt: "The executive summary with an AI-drafted paragraph summarising delivery, items at risk, commitments that have moved, and the decision leadership needs to make this week",
+            caption: "drafted from the same numbers in the tables below it, ending on the decision that's actually needed.",
+          },
+          {
+            src: `${IMG}/ai-ask.webp`,
+            name: "Ask the board",
+            alt: "An ask bar at the bottom of the dashboard answering who is overloaded, naming the designer with the most open work and listing the exact ticket rows used to reach that answer",
+            caption: "the answer, plus the rows it used, so it can be checked rather than trusted.",
+          },
+        ]}
+      />
+
+      <p class="quote max-w-3xl mt-12">
+        Note what didn't change: the flags, the counts and the dates are still computed
+        by the same rules. The AI never touched them. It only read what they produced.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 11 WHAT IS DERIVABLE ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">09. What is actually derivable</p>
+      <h2 class="cs-h2 mb-4 max-w-3xl">The hard part isn't the AI. It's the data you don't have.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        It is easy to draw a product with a design-health score on it. It is harder to
+        say where that number comes from. I took every signal I wanted and sorted it by
+        whether the data behind it actually exists. This cut the concept down by half,
+        and made what survived defensible.
+      </p>
+
+      <div class="sig">
+        {[
+          ["Delivery risk", "Blocked duration, dependency age, date changes against commitment, overdue reviews, all present in the Jira changelog.", "Derivable now", "v-now"],
+          ["Capacity load", "Concurrent open items per designer, weighted by recorded effort. Shipped and running.", "Derivable now", "v-now"],
+          ["Workflow bottleneck", "Time between stage transitions, where stages map to statuses. Real, but only as good as the team's status discipline.", "Derivable now", "v-now"],
+          ["Scope deviation", "Items added after the sprint baseline, with the reason recorded on the change.", "Derivable now", "v-now"],
+          ["Skipped validation", "Initiatives that reached handoff without passing a research or validation status.", "Derivable now", "v-now"],
+          ["Design-system deviation", "Needs component adoption data from Figma. Meaningful, but a second integration and a second data model.", "Needs a source", "v-src"],
+          ["Alignment risk", "Requires linking initiatives to product priorities and engineering commitments. That link rarely exists without deliberate tagging.", "Needs a source", "v-src"],
+          ["Research coverage", "Needs a repository with initiatives tagged to studies. Rare, and rarely current.", "Needs a source", "v-src"],
+          ["Strategic vs reactive mix", "There is no field for this. It needs a person to classify intent per initiative, a process change, not a feature.", "Not without process change", "v-no"],
+          ["Design debt", "No agreed definition, no consistent tagging. Any number here would be invented, so the system doesn't offer one.", "Not without process change", "v-no"],
+        ].map(([n, d, v, cls]) => (
+          <div class="sig-r">
+            <p class="sig-n">{n}</p>
+            <p class="sig-d">{d}</p>
+            <span class={`sig-v ${cls}`}>{v}</span>
+          </div>
+        ))}
+      </div>
+
+      <p class="quote max-w-3xl mt-12">
+        Five signals I wanted did not survive this table. Cutting them is the part of
+        this work I would defend hardest, a system that invents two of its numbers
+        cannot be trusted on the other eight.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 12 THE CLOSED LOOP ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">10. Closing the loop</p>
+      <h2 class="cs-h2 mb-4 max-w-3xl">A recommendation nobody measures is just a confident opinion.</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        The system could explain a slip and propose a move, then nothing. No record of
+        what was decided, no way to know whether it helped. So I built the rest: decision,
+        approved write-back, and verification against a baseline captured at decision time.
+      </p>
+
+      <ScreenGallery
+        id="loop-screens"
+        screens={[
+          {
+            src: `${IMG}/loop-decide.webp`,
+            name: "Decide",
+            alt: "A ticket panel showing the AI explanation followed by a decision bar offering accept, investigate or dismiss, with a note that nothing is written to Jira until the exact record is approved",
+            caption: "the recommendation now ends in a decision, accept, investigate, or dismiss with a reason that is recorded against the pattern.",
+          },
+          {
+            src: `${IMG}/loop-approve.webp`,
+            name: "Approve the write",
+            alt: "An approval step listing precisely what will be created: the ticket key and title, the owner, what it links to, and the body text, with approve and cancel buttons",
+            caption: "the only step that writes, and it shows the exact record first, key, owner, link and body. Nothing happens on silence.",
+          },
+          {
+            src: `${IMG}/loop-log.webp`,
+            name: "Verify",
+            alt: "A decision log panel listing three past decisions with the baseline captured at decision time and a computed verdict for each: one slipped further, one held, one still monitoring",
+            caption: "every decision, its baseline, and whether the signal actually moved, including the one where the intervention failed.",
+          },
+        ]}
+      />
+
+      <div class="cards cards--3 mt-12">
+        <div class="card">
+          <p class="card-k">Rule 01</p>
+          <p class="card-t">Nothing writes without approval</p>
+          <p class="card-b">
+            The approval step names the exact record, key, owner, link, body, before
+            anything is created. No hidden side effects, and every write is undoable.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-k">Rule 02</p>
+          <p class="card-t">The baseline is captured, not remembered</p>
+          <p class="card-b">
+            At decision time the system records the signal as of that date, reconstructed
+            from the changelog. Later verification compares against the record, not
+            against anyone's memory of it.
+          </p>
+        </div>
+        <div class="card" style="border-color:var(--color-ink)">
+          <p class="card-k" style="color:var(--color-ink)">Rule 03</p>
+          <p class="card-t">It must be able to say it was wrong</p>
+          <p class="card-b">
+            A verdict is only worth something if the other verdict was possible. The log
+            reports failed interventions in the same voice as successful ones.
+          </p>
+        </div>
+      </div>
+
+      <p class="quote max-w-3xl mt-12">
+        Building this forced a fix I would have missed: the first version declared
+        “Held” the moment a decision was made, because nothing had moved yet. A system
+        that reports its own success before any time has passed is worse than one that
+        stays quiet, it now says “too early to judge” and waits.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ CLOSE: outcome and reflection, one beat ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">11. What it changed</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">An operations problem, solved with a dashboard.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        The same picture used to get rebuilt by hand every week. The dashboard didn't
+        make that faster. It removed the need to do it.
+      </p>
+
+      <div class="cards cards--3">
+        <div class="card">
+          <p class="card-k">01</p>
+          <p class="card-t">Reviews stopped starting from scratch</p>
+          <p class="card-b">
+            The weekly review used to begin with assembling the picture. It now begins
+            with the decisions, the assembly happens on load.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-k">02</p>
+          <p class="card-t">Slips surface when they happen</p>
+          <p class="card-b">
+            Commitments that move quietly are flagged as they move, rather than being
+            discovered in the review where it's already too late to act on them.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card-k">03</p>
+          <p class="card-t">One version of the number</p>
+          <p class="card-b">
+            The status reported upward and the board designers work from are generated
+            from the same data, so the conversation isn't about whose sheet is right.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-2xl mt-20">
+        <p class="cs-label mb-4">Reflection</p>
+        <h2 class="cs-h2 mb-8">What building it taught me.</h2>
+        <div class="space-y-6 text-[var(--color-ink-2)] leading-relaxed">
+          <p>
+            I've spent years on the design side of the triad, and for most of that time
+            the build was something that happened after I was done. Here it didn't.
+            What that changed was my sense of where the cost actually sits: most of the
+            elapsed time wasn't layout or visual design, it was making sure two views
+            couldn't disagree with each other, and that a number meant what it appeared
+            to mean. I had always known that work existed. I ask for it differently now.
+          </p>
+          <p>
+            I built it in Claude Code, which is worth saying plainly. Prototyping at that
+            speed is why this exists at all, the version of me who had to file a ticket
+            and wait for engineering capacity would never have got past the spreadsheet.
+            It was not a substitute for knowing which problem was worth solving, deciding
+            what to cut, or recognising that three separate bugs were the same bug.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PREV / NEXT ══ -->
+  <div class="border-t border-[var(--color-border)]">
+    <div class="container-pg py-12 flex justify-between items-center gap-8">
+      <a href="/work/workflows-journeys" class="flex items-center gap-3 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 3L5 9L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><p class="cs-label mb-0.5">Previous</p><p class="font-medium text-sm">Workflows &amp; Journeys</p></div>
+      </a>
+      <a href="/work/time-management-system" class="flex items-center gap-3 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors text-right">
+        <div><p class="cs-label mb-0.5">Next</p><p class="font-medium text-sm">Time Management</p></div>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 3L13 9L7 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+</Base>

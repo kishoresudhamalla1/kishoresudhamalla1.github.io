@@ -1,0 +1,59 @@
+---
+const principles = [
+  {
+    number: "01",
+    title: "Understand the system",
+    detail:
+      "I start by understanding how the product actually works: users, rules, workflows, dependencies, permissions and constraints.",
+  },
+  {
+    number: "02",
+    title: "Find the real complexity",
+    detail:
+      "The visible UX problem is often a symptom. I spend time understanding where the underlying complexity comes from before deciding what to change.",
+  },
+  {
+    number: "03",
+    title: "Create clarity",
+    detail:
+      "I use flows, models, prototypes and conversations to help teams understand the problem, compare options and align on direction.",
+  },
+  {
+    number: "04",
+    title: "Make the important decisions visible",
+    detail:
+      "Good product design is often about making trade-offs explicit. I try to surface what we are optimising for, what we are giving up and why.",
+  },
+  {
+    number: "05",
+    title: "Stay close to execution",
+    detail:
+      "I work with designers, product managers and engineers through the details, because many of the most important product decisions happen during execution.",
+  },
+];
+---
+
+<section id="thinking" class="border-t border-[var(--color-border)] sec-y md:sec-y">
+  <div class="container-pg">
+    <p class="text-label mb-4 text-[var(--color-ink-3)]" data-reveal>How I think</p>
+    <h2 class="text-display-sm mb-14 max-w-xl" data-reveal data-delay="1">
+      How I approach product problems.
+    </h2>
+
+    <div class="grid gap-0 divide-y divide-[var(--color-border)] md:grid-cols-2 md:gap-x-16 md:gap-y-0 md:divide-y-0">
+      {principles.map((p, i) => (
+        <div
+          class="py-8 md:border-t md:border-[var(--color-border)] md:py-10"
+          data-reveal
+          data-delay={String(Math.min(i + 1, 4))}
+        >
+          <p class="mb-3 text-xs font-semibold tracking-[0.08em] text-[var(--color-ink-3)]">{p.number}</p>
+          <h3 class="mb-2.5 text-lg font-semibold leading-snug tracking-tight text-[var(--color-ink)]">
+            {p.title}
+          </h3>
+          <p class="text-sm leading-relaxed text-[var(--color-ink-2)]">{p.detail}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

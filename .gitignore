@@ -1,0 +1,37 @@
+# Build output & dependencies
+dist/
+node_modules/
+.astro/
+
+# Environment / local config
+.env
+.env.*
+*.local
+
+# OS
+.DS_Store
+
+# ─── Working files — kept locally, never published ──────────────────
+# Third-party resumes used only as design reference. These are other
+# people's personal documents and must not go into a public repo.
+Resumes for Inspiration/
+
+# Raw source screenshots — the versions actually used by the site live
+# in public/images/work/time-management/
+Time management/
+
+# Scratch / source images superseded by the processed versions in public/
+kishore image for portfolio.png
+ChatGPT Image*.png
+
+# Internal working notes
+CONTEXT.md
+SESSION_CONTEXT.md
+
+# Recovered draft of the Workflows & Journeys case study, kept locally as
+# source material for when it gets written. Not part of the site.
+workflows-journeys.original-draft.astro.bak
+
+# Jira sync config. Placeholders today, but this file is served publicly from
+# public/, so a real API token pasted here would be published.
+public/demo/design-ops/jira-config.js

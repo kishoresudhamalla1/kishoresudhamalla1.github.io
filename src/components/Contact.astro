@@ -1,0 +1,121 @@
+---
+/**
+ * Contact — the closing statement of the page.
+ *
+ * Deliberately the loudest thing on the site: one line of intent, the address
+ * set large enough to read as a headline rather than a footnote, and nothing
+ * else competing with it.
+ */
+
+const EMAIL = "build@kishoresudhamalla.com";
+const SITE = "kishoresudhamalla.com";
+const LINKS = [
+  { label: "LinkedIn", href: "https://linkedin.com/in/kishuxer" },
+  { label: "Résumé", href: "/resume" },
+];
+---
+
+<section id="contact" class="ct" data-reveal>
+  <div class="container-pg">
+    <p class="ct-eyebrow">Contact</p>
+
+    <h2 class="ct-head">
+      Let's build<br />something
+    </h2>
+
+    <a class="ct-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+
+    <div class="ct-foot">
+      <a class="ct-site" href={`https://${SITE}`} target="_blank" rel="noopener">{SITE}</a>
+      <div class="ct-links">
+        {LINKS.map((l) => (
+          <a
+            class="ct-link"
+            href={l.href}
+            target={l.href.startsWith("http") ? "_blank" : undefined}
+            rel={l.href.startsWith("http") ? "noopener" : undefined}
+          >
+            {l.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ct {
+    padding: clamp(5rem, 12vw, 9rem) 0 clamp(4rem, 9vw, 7rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ct-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  /* The one genuinely large thing on the site. */
+  .ct-head {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 11vw, 8.5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    color: var(--color-ink);
+    margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .ct-mail {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 4.2vw, 3.1rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--color-ink);
+    text-decoration: none;
+    /* underline drawn as a background so it can animate independently of the text */
+    background-image: linear-gradient(var(--color-ink), var(--color-ink));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 100% 1px;
+    transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
+    word-break: break-word;
+  }
+  .ct-mail:hover {
+    background-size: 0 1px;
+    background-position: 100% 100%;
+    color: var(--color-ink-2);
+  }
+
+  .ct-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ct-site,
+  .ct-link {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .ct-site:hover,
+  .ct-link:hover { color: var(--color-ink); }
+
+  .ct-links { display: flex; gap: 1.75rem; }
+</style>

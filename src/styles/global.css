@@ -1,0 +1,529 @@
+@import "tailwindcss";
+
+/* ─── Variant: dark mode via .dark class on <html> ─────────────────────── */
+@variant dark (&:where(.dark, .dark *));
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Display face for headlines and the wordmark; body stays Inter for reading. */
+  --font-display: "Schibsted Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Pure white light palette */
+  --color-bg:       #ffffff;
+  --color-surface:  #f8f8f6;
+  --color-ink:      #0d0d0c;
+  --color-ink-2:    #60605a;
+  --color-ink-3:    #72726c;   /* WCAG AA: 4.84:1 on bg, 4.55:1 on surface */
+  --color-border:   #e8e8e2;
+  --color-accent:   #0d0d0c;
+
+  --spacing-page-x: 1.5rem;
+}
+
+/* ─── Base resets ────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color-scheme: light;
+  }
+  html.dark { color-scheme: dark; }
+
+  body {
+    /* Light mode: pure white — gradient only lives in hero via HeroParallax */
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  /* Dark mode: subtle fixed indigo gradient across whole page */
+  .dark body {
+    --color-bg:      #0f0f0e;
+    --color-surface: #171715;
+    --color-ink:     #f5f5f0;
+    --color-ink-2:   #95958f;
+    --color-ink-3:   #80807a;  /* WCAG AA: 4.83:1 on bg, 4.52:1 on surface */
+    --color-border:  #262622;
+    --color-accent:  #f5f5f0;
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(ellipse 110% 45% at 50% -10%, rgba(99,102,241,0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 30% at 92% 108%, rgba(139,92,246,0.1) 0%, transparent 60%);
+    background-attachment: fixed;
+    color: var(--color-ink);
+  }
+
+  @media (pointer: coarse) {
+    .dark body { background-attachment: scroll; }
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-display {
+    font-size: clamp(2.75rem, 5.2vw, 4.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+  }
+  .text-display-sm {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+  .text-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .container-pg {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-page-x);
+  }
+  @media (min-width: 640px)  { .container-pg { --spacing-page-x: 2.5rem; } }
+  @media (min-width: 1024px) { .container-pg { --spacing-page-x: 4rem; } }
+}
+
+/* ─── Hero entrance animation ─────────────────────────────────────────────── */
+@keyframes hero-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-item {
+  opacity: 0;
+  animation-name: hero-up;
+  animation-duration: 0.65s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+}
+
+/* ─── Scroll-reveal system ───────────────────────────────────────────────── */
+/*
+ * Add data-reveal to any element to opt into scroll-triggered reveal.
+ * Add data-delay="1|2|3|4" for stagger offsets.
+ * Toggled by IntersectionObserver in Base.astro.
+ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal][data-delay="1"] { transition-delay:  90ms; }
+[data-reveal][data-delay="2"] { transition-delay: 180ms; }
+[data-reveal][data-delay="3"] { transition-delay: 270ms; }
+[data-reveal][data-delay="4"] { transition-delay: 360ms; }
+
+/* ─── Gradient orb drift animations ──────────────────────────────────────── */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
+  20%       { transform: translate(70px, -55px)  scale(1.09); }
+  45%       { transform: translate(-35px, 75px)  scale(0.93); }
+  65%       { transform: translate(90px, 45px)   scale(1.07); }
+  80%       { transform: translate(-55px, -25px) scale(0.97); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
+  30%       { transform: translate(-75px, 45px)  scale(1.08); }
+  55%       { transform: translate(55px, -65px)  scale(0.94); }
+  80%       { transform: translate(45px, 55px)   scale(1.05); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
+  40%       { transform: translate(50px, 35px)   scale(1.12); }
+  70%       { transform: translate(-45px, -35px) scale(0.88); }
+}
+
+/* ─── Circular badge spin ─────────────────────────────────────────────────── */
+@keyframes badge-spin {
+  to { transform: rotate(360deg); }
+}
+.animate-badge-spin {
+  animation: badge-spin 22s linear infinite;
+}
+
+@keyframes dot-vibrate {
+  0%, 82%, 100% { transform: translate(0, 0); }
+  84%  { transform: translate(-1.5px, 0); }
+  86%  { transform: translate(1.5px,  0); }
+  88%  { transform: translate(-1px,   0); }
+  90%  { transform: translate(1px,    0); }
+  92%  { transform: translate(0,      0); }
+}
+.animate-dot-vibrate {
+  animation: dot-vibrate 4.5s ease-in-out infinite;
+}
+
+/* ─── Noise grain overlay ─────────────────────────────────────────────────── */
+/*
+ * Light mode: multiply — darkens where noise has dark pixels, visible on white.
+ * Dark mode:  overlay  — standard grain on dark bg.
+ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+.dark body::before {
+  opacity: 0.065;
+  mix-blend-mode: overlay;
+}
+
+/* ─── Focus ring ──────────────────────────────────────────────────────────── */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+}
+
+/* ─── Projects timeline (ProjectsTimeline.tsx) ─────────────────────────────
+ * Scroll-driven horizontal rail. Lives here rather than in a React <style>
+ * tag because React SSR escapes quotes inside style content, which breaks
+ * hydration on selectors like [aria-current="true"].
+ */
+.pt-rail {
+  display: flex;
+  gap: 1.75rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  padding-block: 2.5rem 3rem;
+  --pt-card-w: clamp(280px, 80vw, 440px);
+  --pt-gutter: 1.5rem;
+  padding-inline: max(var(--pt-gutter), calc(50% - var(--pt-card-w) / 2));
+}
+@media (min-width: 640px)  { .pt-rail { --pt-gutter: 2.5rem; } }
+@media (min-width: 1024px) { .pt-rail { --pt-gutter: 4rem; } }
+.pt-rail::-webkit-scrollbar { display: none; }
+.pt-rail:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; }
+
+.pt-card {
+  flex: 0 0 var(--pt-card-w);
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  text-decoration: none;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: border-color .25s ease, box-shadow .35s ease;
+}
+.pt-card:hover { border-color: var(--color-ink-3); }
+.pt-card[aria-current=true] { box-shadow: 0 24px 70px -30px rgba(0,0,0,.42); }
+.dark .pt-card[aria-current=true] { box-shadow: 0 24px 70px -28px rgba(0,0,0,.85); }
+
+.pt-visual { aspect-ratio: 16 / 10; overflow: hidden; }
+.pt-body { display: flex; flex-direction: column; flex: 1; padding: 1.75rem; }
+
+.pt-ruler {
+  position: relative;
+  height: 30px;
+  border-top: 1px solid var(--color-border);
+}
+.pt-ticks { position: absolute; inset: 0; display: flex; justify-content: space-between; }
+.pt-tick { width: 1px; height: 6px; background: var(--color-border); }
+.pt-tick--major { height: 12px; background: var(--color-ink-3); }
+
+.pt-playhead {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2px;
+  height: 18px;
+  background: var(--color-ink);
+  border-radius: 1px;
+  transition: left .18s cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-rail { scroll-behavior: auto; }
+  .pt-playhead { transition: none; }
+}
+
+/* ─── Rolling-label buttons ────────────────────────────────────────────────
+ * Hover animation modelled on motion.dev's nav/CTA buttons: two stacked
+ * copies of the label inside an overflow-hidden box. At rest the outgoing
+ * copy sits at 0% and the incoming copy is parked above at -100%; on hover
+ * both shift down 100%, so the label rolls over to a fresh copy.
+ *
+ * Pure CSS rather than a Motion component so it works identically in .astro
+ * files and React islands with no hydration cost.
+ *
+ * Markup:
+ *   <a class="roll-btn" aria-label="See the work">
+ *     <span class="roll" aria-hidden="true">
+ *       <span class="roll-copy">See the work ↓</span>
+ *       <span class="roll-copy roll-copy--in">See the work ↓</span>
+ *     </span>
+ *   </a>
+ */
+.roll {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.roll-copy {
+  display: block;
+  white-space: nowrap;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  transform: translateY(0%);
+  transition: transform .44s cubic-bezier(.22, 1, .36, 1);
+}
+.roll-copy--in {
+  position: absolute;
+  inset: 0;
+  transform: translateY(-100%);
+}
+
+/* trigger from the button/link, so the whole control is the hover target */
+.roll-btn:hover .roll-copy,
+.roll-btn:focus-visible .roll-copy { transform: translateY(100%); }
+.roll-btn:hover .roll-copy--in,
+.roll-btn:focus-visible .roll-copy--in { transform: translateY(0%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-copy { transition: none; }
+}
+
+/* ─── Print ───────────────────────────────────────────────────────────────
+ * Astro scopes a component's <style> to that component's own elements, so a
+ * `header, footer { display:none }` rule written inside resume.astro never
+ * matched the layout's header and footer — they were silently printing and
+ * pushing the résumé onto a second page. These live here because global.css
+ * is not scoped.
+ */
+@media print {
+  body > header,
+  body > footer,
+  .no-print,
+  astro-dev-toolbar { display: none !important; }
+
+  html, body { background: #fff !important; }
+}
+
+/* ─── Screen gallery (ScreenGallery.astro) ────────────────────────────────
+ * The component has no <style> of its own — Astro would scope it, and the
+ * gallery's markup is generated, so these live here deliberately.
+ * (Restored after an over-broad cleanup removed them alongside the
+ * now-deleted hero switcher.)
+ */
+/* Gallery root. This rule was lost in an earlier CSS cleanup: the child
+   selectors survived but the custom property they depend on did not, so
+   .gal-stage resolved border-radius to an invalid value and rendered square
+   against neighbouring media blocks that are all rounded. */
+.gal { --gal-r: 1.25rem; }
+.gal-tabs { flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;display:flex }
+.gal-tab { border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-ink-3);cursor:pointer;border-radius:100px;align-items:baseline;gap:.5rem;padding:.5rem .9rem;font-size:.8125rem;line-height:1;transition:color .2s,border-color .2s,background-color .2s;display:inline-flex }
+.gal-tab:hover { color:var(--color-ink);border-color:var(--color-ink-3) }
+.gal-tab-n { font-variant-numeric:tabular-nums;opacity:.6;font-size:.6875rem }
+.gal-tab-t { font-weight:500 }
+.gal-tab[aria-selected=true] { background:var(--color-ink);border-color:var(--color-ink);color:var(--color-bg) }
+.gal-tab[aria-selected=true] .gal-tab-n { opacity:.55 }
+.gal-stage { border:1px solid var(--color-border);border-radius:var(--gal-r);background:var(--color-surface);display:grid;position:relative;overflow:hidden }
+.gal-panel { opacity:0;visibility:hidden;grid-area:1/1;margin:0;transition:opacity .34s,transform .34s,visibility .34s;transform:scale(1.008) }
+.gal-panel[data-active] { opacity:1;visibility:visible;transform:none }
+.gal-panel img { width:100%;height:auto;display:block }
+.gal-foot { justify-content:space-between;align-items:flex-start;gap:1.5rem;margin-top:.9rem;display:flex }
+.gal-cap { color:var(--color-ink-2);max-width:46rem;margin:0;font-size:.875rem;line-height:1.6;display:grid }
+.gal-cap strong { color:var(--color-ink);font-weight:600 }
+.gal-cap-i { visibility:hidden;opacity:0;grid-area:1/1;transition:opacity .3s,visibility .3s }
+.gal-cap-i[data-active] { visibility:visible;opacity:1 }
+.gal-nav { flex-shrink:0;align-items:center;gap:.4rem;display:flex }
+.gal-count { color:var(--color-ink-3);font-variant-numeric:tabular-nums;margin-right:.4rem;font-size:.75rem }
+.gal-count b { color:var(--color-ink);font-weight:600 }
+.gal-arrow { border:1px solid var(--color-border);background:var(--color-bg);width:2.25rem;height:2.25rem;color:var(--color-ink-2);cursor:pointer;border-radius:100px;justify-content:center;align-items:center;font-size:.875rem;transition:color .2s,border-color .2s,background-color .2s;display:inline-flex }
+.gal-arrow:hover { background:var(--color-ink);border-color:var(--color-ink);color:var(--color-bg) }
+/* These five were authored inside media queries. My recovery from the built
+   bundle stripped the wrappers, so a mobile-only rule hid the tab labels at
+   every width and a reduced-motion rule disabled the panel fade for everyone.
+   Re-scoped to the conditions they were written for. */
+@media (max-width: 640px) {
+  .gal-foot { flex-direction: column; gap: .75rem; }
+  .gal-tab-t { display: none; }
+  .gal-tab { padding: .5rem .75rem; }
+  .gal-tab-n { opacity: 1; font-size: .75rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gal-panel { transition: none; transform: none; }
+}
+
+/* ─── Display type ────────────────────────────────────────────────────────
+ * Schibsted Grotesk carries the headlines and the wordmark; Inter keeps the
+ * body, where it reads better at small sizes. JetBrains Mono is reserved for
+ * the small tracked labels ("SELECTED WORK", "01 / 2025").
+ */
+h1, h2, h3,
+.text-display, .text-display-sm, .cs-h2, .r-name {
+  font-family: var(--font-display);
+  font-feature-settings: "ss01" 1;
+}
+.text-label, .cs-label, .land-h, .card-k, .split-k, .layer-n, .r-section-label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+/* ─── Wordmark ────────────────────────────────────────────────────────────
+ * Sentence case rather than the previous all-caps tracking, with a small
+ * mark before it — the name should read as a name, not a label.
+ */
+.brand {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.brand:hover .brand-dot { background: var(--color-ink-3); }
+
+/* ─── Vertical rhythm ─────────────────────────────────────────────────────
+ * Section padding was fixed (py-20 = 80px top AND bottom), so adjacent
+ * sections stacked to 160px of dead space — and because it was fixed, a
+ * 390px phone got exactly the same 160px as a 1440px desktop. This scale
+ * is fluid: ~44px of padding on a phone, up to 80px on a wide screen.
+ */
+.sec-y { padding-block: clamp(2.75rem, 6vw, 5rem); }
+.gal-panel video { display: block; width: 100%; height: auto; }
+
+/* ─── Hero ────────────────────────────────────────────────────────────────
+ * The headline is the focus, so it sits below the old display size: three
+ * lines of strong type rather than two of oversized type. The proof strip is
+ * a hairline row, not a card, so it reads as evidence under the statement
+ * rather than a second object competing with it.
+ */
+.hero-head {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  max-width: 18ch;
+}
+
+.hero-proof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 2rem;
+  margin: 2.5rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  max-width: 34rem;
+}
+@media (min-width: 640px) {
+  .hero-proof { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+}
+.hero-proof dt {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-bottom: 0.25rem;
+}
+.hero-proof dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--color-ink-3);
+}
+
+/* Ground behind the hero portrait. The cutout overlaps its top edge, so it
+   reads as a figure standing in front of a surface rather than a photo card. */
+/* Hero portrait.
+
+   No frame and no clipping wrapper. The plate has its own studio background,
+   so the photograph is the object rather than something sitting inside one.
+
+   Depth comes from two independent motions: this element drifts with the
+   scroll (Framer Motion, inline transform) and the image inside floats on a
+   slow loop (CSS keyframes). They have to stay on separate elements, because
+   an inline transform overrides an animated one. */
+.hero-photo {
+  flex: 0 0 auto;
+  align-self: center;
+  width: clamp(240px, 26vw, 360px);
+  /* the copy column is capped at max-w-xl, so without this the photo floats in
+     the middle of the leftover space instead of holding the right margin */
+  margin-left: auto;
+}
+
+.hero-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.86 / 1;
+  object-fit: cover;
+  /* biased upward so the crop sits under the chin, not across it */
+  object-position: 50% 24%;
+  border-radius: 16px;
+  box-shadow: 0 22px 54px rgb(20 14 8 / 0.22);
+  animation: heroFloat 7s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+/* The plate is light grey: it glares against a dark page, so it gets a slight
+   grade down and a shadow that reads on black rather than on paper. */
+.dark .hero-portrait {
+  filter: brightness(0.88) contrast(1.04);
+  box-shadow: 0 22px 54px rgb(0 0 0 / 0.55);
+}
+
+@media (max-width: 767px) {
+  .hero-photo { width: min(72vw, 300px); align-self: center; margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait { animation: none; }
+}

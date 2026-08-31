@@ -1,0 +1,113 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Shell refinements — navigation focus mode and ask-bar placement.
+
+   Kept out of ai-layer.css on purpose: none of this is AI. It is the frame
+   the AI surfaces sit inside, and the two should stay separable.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* ── 1. Collapsible left nav ──────────────────────────────────────────────
+   The nav is only ever used to change page, so it earns its width only while
+   you are navigating. Collapsing hands the whole viewport to the content —
+   the same trade Jira makes with its sidebar. --sidebar-w is the single
+   source of truth: #main's offset and the ask bar both read it, so they
+   follow the nav without any of them knowing about each other. */
+/* The nav needs a width of its own, separate from the layout offset. Driving
+   both from --sidebar-w meant collapsing set the nav's width to 0 as well, so
+   translateX(-100%) resolved to -100% of 0 — a no-op — and the nav's children
+   simply overflowed across the content. --nav-w keeps the panel its real size
+   while --sidebar-w drops to 0 for everything that positions against it. */
+:root { --nav-w: 200px; }
+#sidebar {
+  width: var(--nav-w);
+  transition: transform .34s cubic-bezier(.4, 0, .2, 1);
+}
+#main {
+  transition: margin-left .34s cubic-bezier(.4, 0, .2, 1);
+}
+body.nav-collapsed { --sidebar-w: 0px; }
+body.nav-collapsed #sidebar { transform: translateX(-100%); }
+
+/* The collapse control lives on the nav's trailing edge, revealed on hover
+   of the nav itself so it never competes with the page content. */
+.nav-toggle {
+  position: absolute; top: 22px; right: -13px; z-index: 260;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #1e2330; color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, .16);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, .35);
+  cursor: pointer; padding: 0; font-size: 12px; line-height: 1;
+  opacity: 0; transform: scale(.85);
+  transition: opacity .2s ease, transform .2s ease, background .2s ease;
+}
+#sidebar:hover .nav-toggle,
+.nav-toggle:focus-visible { opacity: 1; transform: scale(1); }
+.nav-toggle:hover { background: #2b3444; color: #fff; }
+
+/* When collapsed the nav is gone, so the control has to live on the page. */
+.nav-restore {
+  position: fixed; top: 12px; left: 12px; z-index: 260;
+  width: 30px; height: 30px; border-radius: 8px;
+  display: none; align-items: center; justify-content: center;
+  background: #fff; color: #475569;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, .12);
+  cursor: pointer; padding: 0; font-size: 13px; line-height: 1;
+}
+body.nav-collapsed .nav-restore { display: flex; }
+.nav-restore:hover { color: #0f172a; border-color: #94a3b8; }
+
+/* ── 2. Ask bar: centred on the content, not the window ───────────────────
+   Anchoring to the viewport centre put the bar visibly off-centre against
+   the white column it belongs to. Anchoring the left edge to --sidebar-w
+   centres it on the content instead, and keeps it centred when the nav
+   collapses. */
+#ai-ask {
+  /* #main carries zoom:1.12, which scales its own margin-left, so the content
+     actually starts at sidebar-w × 1.12 — not sidebar-w. Matching that keeps
+     the bar exactly centred instead of 12px light. */
+  left: calc(var(--sidebar-w) * 1.12); right: 0; bottom: 22px;
+  width: auto; transform: none;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 24px;
+  pointer-events: none;                 /* only the controls are clickable */
+  transition: left .34s cubic-bezier(.4, 0, .2, 1),
+              opacity .22s ease, transform .22s ease;
+}
+#ai-ask > * { pointer-events: auto; }
+
+/* ── 3. Compact until it's being used ────────────────────────────────────
+   At rest the bar is a prompt, not a form; it only needs to be wide enough
+   to read. Focus expands it to full width for the answer. */
+.ai-ask-inner {
+  width: 372px; max-width: 100%;
+  transition: width .42s cubic-bezier(.2, .8, .2, 1),
+              box-shadow .35s ease, border-color .35s ease;
+}
+.ai-ask-inner:focus-within,
+.ai-ask-inner.is-typing { width: 620px; }
+#ai-ask-out { width: 620px; max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar, #main, #ai-ask, .ai-ask-inner { transition: none; }
+}
+
+/* ── 4. The ask bar must never sit on top of the ticket panel ────────────
+   The panel is a focused reading surface; a floating bar across it reads as
+   a rendering bug. While the panel is open the bar steps out of the way. */
+body.panel-open #ai-ask {
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+/* ── 5. Breathing room for the AI block inside the ticket panel ──────────
+   The panel's own sections are inset; the injected block was running edge to
+   edge against the drawer wall. */
+#ticket-panel .ai-block {
+  margin: 16px 18px;
+}
+
+/* The restore control is fixed to the top-left corner, which is exactly where
+   the topbar puts its title. Give the bar room for it while collapsed. */
+body.nav-collapsed #topbar { padding-left: 52px; }

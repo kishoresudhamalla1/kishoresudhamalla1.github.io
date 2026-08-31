@@ -1,0 +1,43 @@
+---
+interface Props {
+  label: string;
+  heading?: string;
+}
+const { label, heading } = Astro.props;
+---
+
+<section class="mt-16 border-t border-[var(--color-border)] pt-10">
+  <p class="text-label mb-3 text-[var(--color-ink-2)]">{label}</p>
+  {heading && (
+    <h2 class="mb-6 text-xl font-semibold leading-snug tracking-tight text-[var(--color-ink)]">
+      {heading}
+    </h2>
+  )}
+  <div class="prose-section">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .prose-section :global(p) {
+    color: var(--color-ink-2);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .prose-section :global(ul) {
+    color: var(--color-ink-2);
+    font-size: 1rem;
+    line-height: 1.75;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+    margin-bottom: 1rem;
+  }
+  .prose-section :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  .prose-section :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+</style>

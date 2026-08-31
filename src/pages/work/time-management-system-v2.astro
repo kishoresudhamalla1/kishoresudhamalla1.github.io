@@ -1,0 +1,527 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Time Management System. Kishore Sudhamalla" description="Rebuilding Darwinbox's most-complained-about module into a unified, insight-driven time management experience used by 1.16M employees.">
+
+<style>
+  .v2-wrap {
+    --v2-bg: #ffffff;
+    --v2-navy: #13111f;
+    --v2-navy-2: #1c1a2b;
+    --v2-purple: #6f62d6;
+    --v2-purple-ink: #4c41a8;
+    --v2-purple-soft-bg: #eeecfb;
+    --v2-purple-soft-text: #5b4fc4;
+    --v2-ink: #17162a;
+    --v2-ink-2: #56546c;
+    --v2-ink-3: #8b899d;
+    --v2-card: #f6f5fa;
+    --v2-border: #e7e5f1;
+    --v2-serif: var(--font-sans);
+    background: var(--v2-bg);
+    color: var(--v2-ink);
+  }
+  :global(.dark) .v2-wrap {
+    --v2-bg: #0c0b14;
+    --v2-navy: #100e1c;
+    --v2-navy-2: #1a1829;
+    --v2-purple: #9186e8;
+    --v2-purple-ink: #c3bcf5;
+    --v2-purple-soft-bg: rgba(145, 134, 232, 0.16);
+    --v2-purple-soft-text: #b3aaf2;
+    --v2-ink: #f1f0f7;
+    --v2-ink-2: #b3b1c4;
+    --v2-ink-3: #726f88;
+    --v2-card: #151321;
+    --v2-border: #262438;
+  }
+
+  .v2-container { max-width: 52rem; margin-inline: auto; padding-inline: 1.5rem; }
+  @media (min-width: 640px) { .v2-container { padding-inline: 2rem; } }
+
+  .v2-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--v2-purple);
+  }
+  .v2-h1 {
+    font-family: var(--font-sans);
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: #f5f4fb;
+  }
+  .v2-h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(1.625rem, 3.4vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--v2-ink);
+  }
+  .v2-h2-onDark { color: #f5f4fb; }
+  .v2-body { font-size: 1rem; line-height: 1.75; color: var(--v2-ink-2); }
+
+  /* Hero */
+  .v2-hero {
+    background: var(--v2-navy);
+    padding: 5rem 0 8rem;
+    text-align: center;
+  }
+  .v2-hero-sub {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: #b5b2c9;
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+  .v2-divider {
+    width: 48px;
+    height: 2px;
+    background: var(--v2-purple);
+    margin: 1.75rem auto;
+  }
+  .v2-eyebrow-dark {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8b87a8;
+  }
+
+  /* Meta card — overlaps hero */
+  .v2-meta-card {
+    background: var(--v2-card);
+    border: 0.5px solid var(--v2-border);
+    border-radius: 20px;
+    margin-top: -5rem;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    position: relative;
+    z-index: 2;
+  }
+  @media (min-width: 640px) { .v2-meta-card { grid-template-columns: repeat(4, 1fr); } }
+  .v2-meta-label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--v2-purple);
+    margin-bottom: 0.4rem;
+  }
+  .v2-meta-value { font-size: 0.9375rem; font-weight: 500; color: var(--v2-ink); }
+
+  /* Stat card */
+  .v2-stat-card {
+    background: var(--v2-card);
+    border: 0.5px solid var(--v2-border);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  .v2-stat-num {
+    font-family: var(--font-sans);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--v2-ink);
+    line-height: 1;
+  }
+  .v2-stat-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--v2-purple);
+    display: block;
+    margin-top: 0.3rem;
+  }
+  .v2-stat-desc { font-size: 0.875rem; line-height: 1.55; color: var(--v2-ink-2); }
+
+  /* Quote card */
+  .v2-quote-card {
+    border: 0.5px solid var(--v2-border);
+    border-radius: 16px;
+    padding: 1.75rem 2rem;
+    background: var(--v2-bg);
+  }
+  .v2-quote-mark { color: var(--v2-purple); font-size: 1.75rem; font-family: var(--font-sans); font-weight: 800; line-height: 1; }
+  .v2-quote-text {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1.1875rem;
+    letter-spacing: -0.015em;
+    line-height: 1.5;
+    color: var(--v2-ink);
+    margin: 0.75rem 0 1rem;
+  }
+  .v2-quote-name { font-size: 0.875rem; font-weight: 600; color: var(--v2-ink); }
+  .v2-quote-role { font-size: 0.8125rem; color: var(--v2-ink-3); }
+
+  /* Dark section */
+  .v2-dark-section { background: var(--v2-navy); padding: 5rem 0; }
+
+  /* Problem numbered card (on dark) */
+  .v2-problem-card {
+    background: var(--v2-navy-2);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .v2-problem-num { font-family: var(--font-sans); font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; color: var(--v2-purple); }
+  .v2-problem-title { font-family: var(--font-sans); font-size: 1.125rem; font-weight: 700; letter-spacing: -0.015em; color: #f5f4fb; margin: 0.5rem 0 0.5rem; }
+  .v2-problem-desc { font-size: 0.875rem; line-height: 1.6; color: #a8a5bd; }
+
+  /* Principle pill card (on dark) */
+  .v2-principle-card { background: var(--v2-navy-2); border-radius: 16px; padding: 1.75rem; }
+  .v2-pill {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--v2-purple-soft-text);
+    background: var(--v2-purple-soft-bg);
+    border-radius: 100px;
+    padding: 0.3rem 0.85rem;
+    margin-bottom: 0.9rem;
+  }
+  .v2-principle-title { font-family: var(--font-sans); font-size: 1.125rem; font-weight: 700; letter-spacing: -0.015em; color: #f5f4fb; margin-bottom: 0.5rem; }
+  .v2-principle-desc { font-size: 0.875rem; line-height: 1.6; color: #a8a5bd; }
+
+  /* Frame */
+  .v2-frame {
+    border: 0.5px solid var(--v2-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--v2-card);
+  }
+  .v2-frame img { width: 100%; display: block; }
+  .v2-frame-label {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-bottom: 0.5px solid var(--v2-border);
+    color: var(--v2-ink-2);
+  }
+  .v2-stage {
+    background: #0c0b14;
+    border-radius: 20px;
+    padding: 2rem 2rem 1.25rem;
+  }
+  .v2-stage img { border-radius: 10px; width: 100%; box-shadow: 0 24px 60px rgba(0,0,0,0.45); }
+
+  .v2-section { padding: 5rem 0; }
+</style>
+
+<div class="v2-wrap">
+
+  <!-- Back link -->
+  <div class="v2-container" style="padding-top:2rem;">
+    <a href="/work/time-management-system" class="v2-label" style="color: var(--v2-ink-3); text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem;">
+      ← Back to editorial version
+    </a>
+  </div>
+
+  <!-- ══════ HERO ══════ -->
+  <section class="v2-hero" data-reveal>
+    <div class="v2-container">
+      <p class="v2-eyebrow-dark" style="margin-bottom:1.25rem;">UX Case Study</p>
+      <h1 class="v2-h1">Time Management,<br>rebuilt for the world.</h1>
+      <p class="v2-hero-sub" style="margin-top:1.5rem;">
+        Darwinbox's most-complained-about module, fragmented, 8 years old, used
+        daily by over a million people. We rebuilt it from scratch.
+      </p>
+      <div class="v2-divider"></div>
+      <p class="v2-eyebrow-dark">Darwinbox HCM</p>
+    </div>
+  </section>
+
+  <!-- ══════ META CARD ══════ -->
+  <div class="v2-container">
+    <div class="v2-meta-card" data-reveal>
+      <div>
+        <p class="v2-meta-label">My role</p>
+        <p class="v2-meta-value">Associate Director, UX</p>
+      </div>
+      <div>
+        <p class="v2-meta-label">Timeline</p>
+        <p class="v2-meta-value">2023 – 2024</p>
+      </div>
+      <div>
+        <p class="v2-meta-label">Team</p>
+        <p class="v2-meta-value">3 Designers · Product · Eng</p>
+      </div>
+      <div>
+        <p class="v2-meta-label">Platform</p>
+        <p class="v2-meta-value">Web + Mobile</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ COVER IMAGE ══════ -->
+  <div class="v2-container" style="padding-top:3.5rem;">
+    <div class="v2-stage" data-reveal>
+      <img src="/images/work/time-management/image-1783857427121.webp" alt="Time Management Revamp. Darwinbox cover" />
+    </div>
+  </div>
+
+  <!-- ══════ THE CONTEXT ══════ -->
+  <section class="v2-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">The Context</p>
+      <h2 class="v2-h2" style="margin-bottom:1.25rem;">8 years old. Zero redesign. Daily pain.</h2>
+      <p class="v2-body">
+        Time management was split across attendance, leave, timesheets, and shift
+        scheduling, all separate modules. Managers couldn't see their team without
+        jumping screens. Employees couldn't understand why requests were rejected.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════ RESEARCH & DISCOVERY ══════ -->
+  <section class="v2-section" style="padding-top:0;" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">Research &amp; Discovery</p>
+      <h2 class="v2-h2" style="margin-bottom:1.25rem;">We listened before we designed.</h2>
+      <p class="v2-body" style="margin-bottom:2.5rem;">
+        Primary research with TVS, Bigbasket, and Licious. Secondary analysis across
+        Kronos, Workday, BambooHR, ZingHR, and Jibble. Card sorting to understand
+        mental models.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:1rem; margin-bottom:2.5rem;">
+        <div class="v2-stat-card" data-reveal data-delay="1">
+          <div>
+            <p class="v2-stat-num">3</p>
+            <span class="v2-stat-tag">enterprise clients</span>
+          </div>
+          <p class="v2-stat-desc">Primary research sessions with TVS, Bigbasket, and Licious to map real workflows.</p>
+        </div>
+        <div class="v2-stat-card" data-reveal data-delay="2">
+          <div>
+            <p class="v2-stat-num">5</p>
+            <span class="v2-stat-tag">competitors</span>
+          </div>
+          <p class="v2-stat-desc">Benchmarked against Kronos, Workday, BambooHR, ZingHR, and Jibble.</p>
+        </div>
+        <div class="v2-stat-card" data-reveal data-delay="3">
+          <div>
+            <p class="v2-stat-num">8</p>
+            <span class="v2-stat-tag">SEA clients</span>
+          </div>
+          <p class="v2-stat-desc">Validated the direction with clients across Singapore, the Philippines, and Thailand before rollout.</p>
+        </div>
+      </div>
+
+      <div class="v2-quote-card" data-reveal data-delay="2">
+        <span class="v2-quote-mark">"</span>
+        <p class="v2-quote-text">No central place to track employee data. If I had a magic wand, I'd consolidate everything into one view.</p>
+        <p class="v2-quote-name">Manager</p>
+        <p class="v2-quote-role">Enterprise client</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ THE PROBLEM, dark ══════ -->
+  <section class="v2-dark-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="text-align:center; margin-bottom:1rem;">The Problem</p>
+      <h2 class="v2-h2 v2-h2-onDark" style="text-align:center; max-width:32rem; margin:0 auto 2.5rem;">
+        Users felt the fragmentation every day.
+      </h2>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        {[
+          { n: "01", t: "Complex navigation", d: "Actions buried three levels deep, even for routine tasks." },
+          { n: "02", t: "Module switching", d: "Basic tasks like approving leave required jumping between screens." },
+          { n: "03", t: "Low discoverability", d: "Features existed but most users never found them." },
+          { n: "04", t: "No centralised data", d: "No single view of team status, attendance, or insights." },
+        ].map((p, idx) => (
+          <div class="v2-problem-card" data-reveal data-delay={String(idx + 1)}>
+            <p class="v2-problem-num">{p.n}</p>
+            <p class="v2-problem-title">{p.t}</p>
+            <p class="v2-problem-desc">{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ DESIGN PRINCIPLES, dark ══════ -->
+  <section class="v2-dark-section" style="padding-top:0;" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="text-align:center; margin-bottom:1rem;">Design Principles</p>
+      <h2 class="v2-h2 v2-h2-onDark" style="text-align:center; max-width:28rem; margin:0 auto 2.5rem;">
+        Five principles that guided every decision.
+      </h2>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        {[
+          { name: "Simplicity", desc: "Reduce steps to the fewest that still make sense." },
+          { name: "Efficiency", desc: "Get people to a decision faster, not just to more data." },
+          { name: "Consistency", desc: "One set of patterns across every module." },
+          { name: "Aesthetics", desc: "A modern feel that matches the rest of the platform." },
+          { name: "Scalability", desc: "Built to hold new markets and edge cases without breaking." },
+        ].map((p, idx) => (
+          <div class="v2-principle-card" data-reveal data-delay={String(Math.min(idx + 1, 4))}>
+            <span class="v2-pill">{p.name}</span>
+            <p class="v2-principle-desc">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ THE OLD EXPERIENCE ══════ -->
+  <section class="v2-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">The Old Experience</p>
+      <h2 class="v2-h2" style="margin-bottom:1.25rem;">A cluttered, fragmented interface.</h2>
+      <p class="v2-body" style="margin-bottom:2rem;">
+        The existing experience spread attendance, leave, and timesheets across
+        eight-plus sub-modules with no shared visual language and no guidance for
+        either employees or managers.
+      </p>
+      <div class="v2-frame" data-reveal data-delay="1">
+        <div class="v2-frame-label">Before, fragmented across 8+ sub-modules</div>
+        <img src="/images/work/time-management/slide-before.png" alt="Time Management old interface, complex navigation, fragmented modules" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ THE SOLUTION ══════ -->
+  <section class="v2-section" style="padding-top:0;" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">The Solution</p>
+      <h2 class="v2-h2" style="margin-bottom:1.25rem;">One unified experience, two personas.</h2>
+      <p class="v2-body" style="margin-bottom:2.5rem;">
+        Attendance, leave, timesheets, and requests, consolidated into a single,
+        insight-driven overview. Proactive nudges surface what needs attention.
+        Clock-in is always visible.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:2rem;">
+        <div data-reveal data-delay="1">
+          <div class="v2-frame">
+            <div class="v2-frame-label">Employee view, after</div>
+            <img src="/images/work/time-management/slide-after-employee.png" alt="Upgraded employee experience, unified overview" />
+          </div>
+        </div>
+        <div data-reveal data-delay="2">
+          <div class="v2-frame">
+            <div class="v2-frame-label">Manager view, after</div>
+            <img src="/images/work/time-management/slide-after-manager.png" alt="Upgraded manager experience, team overview and approvals" />
+          </div>
+        </div>
+        <div data-reveal data-delay="3">
+          <p class="v2-label" style="margin-bottom:0.75rem;">The real product</p>
+          <div class="v2-stage">
+            <img src="/images/work/time-management/image-1783857511392.webp" alt="Darwinbox Manager Dashboard, real product screenshot" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ VALIDATION ══════ -->
+  <section class="v2-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">Validation</p>
+      <h2 class="v2-h2" style="margin-bottom:1.25rem;">Taken to 8 clients across Southeast Asia.</h2>
+      <p class="v2-body" style="margin-bottom:2.5rem;">
+        Before global rollout, we ran a UX roadshow across Singapore, the
+        Philippines, and Thailand, presenting to Busy Bees, Singlife, Toyota,
+        Security Bank, JG Summit, Cebu Pacific, and BPI. Real clients, real
+        feedback, before a single line of production code.
+      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        {[
+          { t: "Consolidated view", d: "\"Finally, everything in one place.\"" },
+          { t: "Manager overview", d: "Team context at a glance." },
+          { t: "Clock-in widget", d: "Placement felt natural." },
+          { t: "Leave lineup", d: "Who's out, who's in." },
+        ].map((c, idx) => (
+          <div class="v2-stat-card" style="grid-template-columns:1fr;" data-reveal data-delay={String(Math.min(idx + 1, 4))}>
+            <div>
+              <span class="v2-stat-tag" style="margin-top:0;">{c.t}</span>
+              <p class="v2-stat-desc" style="margin-top:0.4rem; font-style:italic;">{c.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ IMPACT, dark ══════ -->
+  <section class="v2-dark-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">Impact</p>
+      <h2 class="v2-h2 v2-h2-onDark" style="margin-bottom:1.25rem;">Darwinbox became a Gartner Challenger.</h2>
+      <p style="color:#a8a5bd; font-size:1.0625rem; line-height:1.7; max-width:34rem; margin-bottom:2.5rem;">
+        The WFM score climbed from 2.9 to 3.5 by 2025, the highest it has ever been. Time
+        management was cited as a key driver. Over a million employees now use
+        what we built.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div class="v2-problem-card" data-reveal data-delay="1">
+          <p class="v2-stat-num" style="color:#f5f4fb;">3.5</p>
+          <p class="v2-problem-desc">Gartner WFM score by 2025, up from 2.9.</p>
+        </div>
+        <div class="v2-problem-card" data-reveal data-delay="2">
+          <p class="v2-stat-num" style="color:#f5f4fb;">1.16M</p>
+          <p class="v2-problem-desc">Dashboard plays across employees and managers.</p>
+        </div>
+        <div class="v2-problem-card" data-reveal data-delay="3">
+          <p class="v2-stat-num" style="color:#f5f4fb;">73.1%</p>
+          <p class="v2-problem-desc">Manager play rate, the highest on the platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ REFLECTION ══════ -->
+  <section class="v2-section" data-reveal>
+    <div class="v2-container">
+      <p class="v2-label" style="margin-bottom:1rem;">Reflection</p>
+      <h2 class="v2-h2" style="margin-bottom:1.5rem;">What I'd do differently.</h2>
+      <div style="display:flex; flex-direction:column; gap:1.25rem;">
+        <p class="v2-body">
+          The biggest lesson: commit to the data earlier. The card sorting was
+          unambiguous about a 2-column layout from week one. We spent too long
+          exploring a 3-column version because it <em>felt</em> more flexible.
+          Trust the research.
+        </p>
+        <p class="v2-body">
+          The SEA roadshow should have happened at wireframe stage, not
+          near-final. The leave-only dashboard request from Busy Bees was valid, we added it to the backlog instead of building it in.
+        </p>
+        <p class="v2-body">
+          The Gartner uplift validated the direction. But the 1.16M plays and
+          73.1% engagement rate are what I'm proudest of, people are genuinely
+          using what we built.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ PREV/NEXT ══════ -->
+  <div style="border-top: 0.5px solid var(--v2-border);">
+    <div class="v2-container" style="padding-top:2.5rem; padding-bottom:2.5rem; display:flex; justify-content:space-between; align-items:center; gap:2rem;">
+      <a href="/work/time-management-system" class="v2-label" style="color: var(--v2-ink-3); text-decoration:none;">
+        ← Editorial version
+      </a>
+      <a href="/work/workflows-journeys" style="display:flex; align-items:center; gap:0.75rem; text-decoration:none; color:var(--v2-ink);">
+        <div style="text-align:right;">
+          <p class="v2-label" style="margin-bottom:0.15rem;">Next</p>
+          <p style="font-size:0.875rem; font-weight:500;">Workflows &amp; Journeys</p>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+</Base>

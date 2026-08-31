@@ -1,0 +1,77 @@
+---
+/**
+ * AI Product Practice.
+ *
+ * Establishes hands-on AI fluency without turning the page into a tools
+ * showcase. The tools are named once, in a supporting line, because they are
+ * evidence of how the work happens rather than the work itself.
+ */
+---
+
+<section id="ai-practice" class="pr sec-y" data-reveal>
+  <div class="container-pg">
+    <div class="pr-grid">
+      <div>
+        <p class="pr-eyebrow"><span class="pr-rule"></span>AI product practice</p>
+        <h2 class="pr-title">Learning by building.</h2>
+      </div>
+
+      <div class="pr-body">
+        <p>
+          I explore how AI can become part of real enterprise products through hands-on
+          experiments with agentic workflows, tool use, MCP, AI prototyping and
+          evaluation. I use tools such as Claude Code to move quickly from an idea to a
+          working prototype, test interaction models, and understand the technical
+          possibilities and constraints behind AI experiences.
+        </p>
+        <p>
+          My focus is not the tools themselves. It is understanding how AI changes the
+          product experience: from intent and context to planning, permissions, human
+          approval, execution, trust and recovery.
+        </p>
+        <p class="pr-stance">
+          I understand enterprise complexity because I've spent years designing it.
+          Now I'm applying that experience to AI and agentic interaction.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pr-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 900px) {
+    .pr-grid { grid-template-columns: 1fr 1.35fr; gap: 4rem; }
+  }
+
+  .pr-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 1.25rem;
+  }
+  .pr-rule { width: 2.25rem; height: 1px; background: var(--color-ink-3); flex-shrink: 0; }
+
+  .pr-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    font-weight: 700; line-height: 1.02; letter-spacing: -0.035em;
+    color: var(--color-ink); margin: 0;
+  }
+
+  .pr-body {
+    display: flex; flex-direction: column; gap: 1.25rem;
+    font-size: 1rem; line-height: 1.75; color: var(--color-ink-2);
+    max-width: 42rem;
+  }
+  .pr-body p { margin: 0; }
+
+  /* the one line that states the position, given a little more weight */
+  .pr-stance {
+    color: var(--color-ink);
+    font-weight: 600;
+    border-left: 2px solid var(--color-ink);
+    padding-left: 1.1rem;
+  }
+</style>

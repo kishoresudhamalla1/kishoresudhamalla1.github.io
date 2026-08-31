@@ -1,0 +1,159 @@
+---
+/**
+ * Live product embed.
+ *
+ * Static screenshots of a tool prove it was drawn. Letting someone click
+ * through it proves it works — so the case study ships the actual application,
+ * running on demo data, rather than pictures of it.
+ *
+ * The tool is plain HTML/CSS/JS with no backend (the only server call is the
+ * Jira proxy, which demo data never reaches), so it hosts as static files and
+ * runs anywhere the portfolio does.
+ */
+
+interface Props {
+  src: string;
+  title: string;
+  /** Shown before the reader interacts, so nobody mistakes it for a picture. */
+  hint?: string;
+}
+
+const { src, title, hint = "This is the real tool, running on demo data. Click anything." } =
+  Astro.props;
+---
+
+<figure class="ld" data-ld>
+  <figcaption class="ld-bar">
+    <span class="ld-live"><span class="ld-dot"></span>Live</span>
+    <span class="ld-hint">{hint}</span>
+    <div class="ld-actions">
+      <button type="button" class="ld-btn" data-ld-full aria-label="Expand to fullscreen">
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M5 1H1v4M9 1h4v4M9 13h4V9M5 13H1V9" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Fullscreen
+      </button>
+      <a class="ld-btn ld-btn--go" href={src} target="_blank" rel="noopener">
+        Open in new tab
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M5 2H2v10h10V9M8.5 1.5H12.5V5.5M12 2L6.5 7.5" stroke="currentColor"
+                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </figcaption>
+
+  <div class="ld-frame">
+    <iframe
+      src={src}
+      title={title}
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    ></iframe>
+  </div>
+</figure>
+
+<script>
+  function initLiveDemos() {
+    document.querySelectorAll<HTMLElement>("[data-ld]").forEach((fig) => {
+      if (fig.dataset.ready) return;
+      fig.dataset.ready = "1";
+
+      const btn = fig.querySelector<HTMLButtonElement>("[data-ld-full]");
+      btn?.addEventListener("click", () => {
+        // Fullscreen the whole figure, not the iframe, so the toolbar (and the
+        // way back out) stays reachable.
+        if (document.fullscreenElement) document.exitFullscreen();
+        else fig.requestFullscreen?.().catch(() => window.open(
+          fig.querySelector("iframe")?.src || "", "_blank", "noopener"
+        ));
+      });
+
+      document.addEventListener("fullscreenchange", () => {
+        const on = document.fullscreenElement === fig;
+        fig.classList.toggle("is-full", on);
+        if (btn) btn.lastChild!.textContent = on ? " Exit fullscreen" : " Fullscreen";
+      });
+    });
+  }
+
+  initLiveDemos();
+  document.addEventListener("astro:page-load", initLiveDemos);
+</script>
+
+<style>
+  .ld {
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.35);
+  }
+  :global(.dark) .ld { box-shadow: 0 30px 70px -35px rgba(0, 0, 0, 0.8); }
+
+  .ld-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.65rem 0.75rem 0.65rem 1.1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+    flex-wrap: wrap;
+  }
+
+  .ld-live {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.625rem; font-weight: 700; letter-spacing: 0.09em;
+    text-transform: uppercase; color: #2f6b4a;
+    background: #eef7f2; border: 1px solid #b9d9c7;
+    border-radius: 100px; padding: 0.2rem 0.6rem; white-space: nowrap;
+  }
+  :global(.dark) .ld-live {
+    color: #8ecfab; background: rgba(90,170,124,.12); border-color: rgba(90,170,124,.35);
+  }
+  .ld-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: currentColor;
+    animation: ld-pulse 2s ease-in-out infinite;
+  }
+  @keyframes ld-pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+  @media (prefers-reduced-motion: reduce) { .ld-dot { animation: none } }
+
+  .ld-hint {
+    font-size: 0.8125rem; color: var(--color-ink-2);
+    flex: 1; min-width: 12rem;
+  }
+
+  .ld-actions { display: flex; gap: 0.45rem; margin-left: auto; }
+  .ld-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font: inherit; font-size: 0.75rem; font-weight: 600;
+    padding: 0.4rem 0.8rem; border-radius: 0.5rem; cursor: pointer;
+    color: var(--color-ink-2); background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    text-decoration: none; white-space: nowrap;
+    transition: border-color .15s, color .15s, background .15s;
+  }
+  .ld-btn:hover { color: var(--color-ink); border-color: var(--color-ink); }
+  .ld-btn--go {
+    color: var(--color-bg); background: var(--color-ink); border-color: var(--color-ink);
+  }
+  .ld-btn--go:hover { opacity: 0.88; color: var(--color-bg); }
+
+  /* The app is a desktop tool; give it a desktop-shaped window and let it
+     scroll internally rather than stretching the page. */
+  .ld-frame { position: relative; background: #fff; }
+  .ld-frame iframe {
+    display: block; width: 100%; height: 78vh; min-height: 520px; max-height: 860px;
+    border: 0;
+  }
+
+  .ld.is-full { border-radius: 0; border: 0; }
+  .ld.is-full .ld-frame iframe { height: calc(100vh - 3.1rem); max-height: none; }
+
+  @media (max-width: 640px) {
+    .ld-hint { display: none; }
+    .ld-frame iframe { height: 62vh; min-height: 420px; }
+  }
+</style>

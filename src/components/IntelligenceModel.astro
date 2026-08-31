@@ -1,0 +1,104 @@
+---
+/**
+ * The intelligence model — the case study's centrepiece diagram.
+ *
+ * One chain from raw Jira activity to a verified outcome, with two annotations
+ * that carry the argument: where existing tools stop, and where the loop closes.
+ * Drawn as inline SVG (not an image) so it stays sharp at any zoom and inherits
+ * the page's theme tokens in both light and dark.
+ */
+
+const stages = [
+  { t: "Operational", b: "signal",        x: 30,   emph: false },
+  { t: "Design",      b: "intelligence",  x: 192,  emph: false },
+  { t: "AI",          b: "interpretation",x: 354,  emph: true  },
+  { t: "Recommendation", b: "",           x: 516,  emph: true  },
+  { t: "Human",       b: "decision",      x: 678,  emph: true  },
+  { t: "Action",      b: "",              x: 840,  emph: false },
+  { t: "Outcome",     b: "",              x: 1002, emph: false },
+];
+const W = 140, H = 74, Y = 112;
+---
+
+<figure class="im">
+  <div class="im-scroll">
+    <svg viewBox="0 0 1180 300" role="img"
+         aria-label="A seven-stage chain: operational signal becomes design intelligence, which AI interprets, which produces a recommendation, which a human decides on, which becomes an action, which produces an outcome. A verify loop returns from outcome to signal. Existing tools stop after the first two stages; the value sits in interpretation through decision.">
+
+      <!-- bracket: where most tools stop -->
+      <path d="M 30 88 L 30 78 L 332 78 L 332 88" fill="none"
+            stroke="var(--color-ink-3)" stroke-width="1" opacity=".55" />
+      <text x="181" y="68" text-anchor="middle" class="im-note">Where most tools stop</text>
+
+      <!-- bracket: where the value is -->
+      <path d="M 354 198 L 354 208 L 818 208 L 818 198" fill="none"
+            stroke="var(--color-ink)" stroke-width="1.25" />
+      <text x="586" y="226" text-anchor="middle" class="im-note im-note--on">Where the value is</text>
+
+      {stages.map((s, i) => (
+        <>
+          <rect x={s.x} y={Y} width={W} height={H} rx="10"
+                fill="var(--color-bg)"
+                stroke={s.emph ? "var(--color-ink)" : "var(--color-border)"}
+                stroke-width={s.emph ? "1.75" : "1"} />
+          <text x={s.x + W / 2} y={s.b ? Y + 32 : Y + 43} text-anchor="middle" class="im-t">{s.t}</text>
+          {s.b && <text x={s.x + W / 2} y={Y + 50} text-anchor="middle" class="im-t">{s.b}</text>}
+          {i < stages.length - 1 && (
+            <path d={`M ${s.x + W + 4} ${Y + H / 2} L ${s.x + W + 16} ${Y + H / 2}`}
+                  stroke="var(--color-ink-3)" stroke-width="1.25" marker-end="url(#im-arrow)" />
+          )}
+        </>
+      ))}
+
+      <!-- verify loop -->
+      <path d="M 1072 190 L 1072 262 Q 1072 272 1062 272 L 110 272 Q 100 272 100 262 L 100 194"
+            fill="none" stroke="var(--color-ink-3)" stroke-width="1.25"
+            stroke-dasharray="4 4" marker-end="url(#im-arrow)" />
+      <text x="586" y="266" text-anchor="middle" class="im-note">
+        Verify, did the signal actually move?
+      </text>
+
+      <defs>
+        <marker id="im-arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--color-ink-3)" />
+        </marker>
+      </defs>
+    </svg>
+  </div>
+  <figcaption>
+    Each stage narrows activity into something decidable. The dashed return is the
+    part most systems omit, without it there is no evidence that any of the advice worked.
+  </figcaption>
+</figure>
+
+<style>
+  .im {
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  /* Wide diagram: scroll inside its own box rather than forcing the page wide. */
+  .im-scroll { overflow-x: auto; padding: 1.5rem; }
+  .im-scroll svg { display: block; width: 100%; min-width: 46rem; height: auto; }
+
+  .im-t {
+    font-size: 13px; font-weight: 600; letter-spacing: -0.01em;
+    fill: var(--color-ink);
+    font-family: inherit;
+  }
+  .im-note {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
+    fill: var(--color-ink-3); font-family: inherit;
+  }
+  .im-note--on { fill: var(--color-ink); }
+
+  .im figcaption {
+    padding: 0.9rem 1.5rem 1.1rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+    font-size: 0.8125rem; line-height: 1.6; color: var(--color-ink-2);
+  }
+</style>

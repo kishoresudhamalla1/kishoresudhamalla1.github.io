@@ -1,0 +1,16 @@
+---
+interface Props {
+  number: string;
+  decision: string;
+  rationale: string;
+}
+const { number, decision, rationale } = Astro.props;
+---
+
+<div class="rounded-2xl border border-[var(--color-border)] p-6">
+  <p class="text-label mb-3 text-[var(--color-ink-3)]">Decision {number}</p>
+  <h4 class="mb-3 text-base font-semibold text-[var(--color-ink)]">
+    {decision}
+  </h4>
+  <p class="text-sm leading-relaxed text-[var(--color-ink-2)]">{rationale}</p>
+</div>

@@ -1,0 +1,27 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[var(--color-border)] py-12">
+  <div class="container-pg flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-label text-[var(--color-ink-2)]">
+      &copy; {year} Kishore Kumar Sudhamalla: Hyderabad, India
+    </p>
+    <div class="flex gap-6">
+      <a
+        href="mailto:build@kishoresudhamalla.com"
+        class="text-label text-[var(--color-ink-2)] no-underline transition-colors hover:text-[var(--color-ink)]"
+      >
+        Email
+      </a>
+      <a
+        href="https://linkedin.com/in/kishoresudhamalla"
+        target="_blank"
+        rel="noreferrer"
+        class="text-label text-[var(--color-ink-2)] no-underline transition-colors hover:text-[var(--color-ink)]"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</footer>

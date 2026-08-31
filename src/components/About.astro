@@ -1,0 +1,123 @@
+---
+const journey = [
+  { stage: "Visual design", detail: "Learning craft, communication and visual problem solving." },
+  { stage: "UX & product design", detail: "Moving from communicating information to understanding users, workflows and product problems." },
+  { stage: "Startup product design", detail: "Learning to design with speed, ambiguity and limited resources." },
+  { stage: "Darwinbox, early design team", detail: "Helping establish product design foundations while the company scaled from startup to unicorn." },
+  { stage: "Enterprise product design", detail: "Complex workflows, business rules, permissions, configurations and global product requirements." },
+  { stage: "Design leadership", detail: "Leading designers and product areas while influencing product direction and staying close to execution." },
+  { stage: "AI & agentic product design", detail: "Applying years of enterprise systems experience to products that can understand intent, reason, act and collaborate with people." },
+]
+---
+
+<section id="about" class="border-t border-[var(--color-border)] sec-y md:sec-y">
+  <div class="container-pg">
+
+    <!-- ── 01 Story ───────────────────────────────────── -->
+    <p class="text-label mb-12 text-[var(--color-ink-3)]" data-reveal>01. About me</p>
+
+    <div class="grid gap-16 md:grid-cols-[1.3fr_1fr] md:gap-16 lg:gap-24">
+
+      <!-- Opening hook -->
+      <div>
+        <h2 class="text-display-sm mb-10 leading-tight" data-reveal data-delay="1">
+          I found my way into
+          product design
+          by making things.
+        </h2>
+
+        <div class="space-y-6 text-base leading-relaxed text-[var(--color-ink-2)]">
+          <p data-reveal data-delay="2">
+            I started my career as a self-taught graphic designer and gradually found my
+            way into UX and product design. Over the last 16+ years I've worked across
+            visual design, startups, services and product teams, eventually spending
+            nearly nine years designing enterprise HR technology.
+          </p>
+          <p data-reveal data-delay="3">
+            I joined Darwinbox early in its journey and became part of the founding design
+            team, helping establish the design foundations as the company grew from a
+            startup into a unicorn. Since then my work has moved from individual product
+            design into leading multiple product areas and helping teams solve
+            increasingly complex problems.
+          </p>
+          <p data-reveal data-delay="3">
+            Today I lead design across Time Management, Core, Payroll, Benefits,
+            Extensibility and Workflows &amp; Journeys. Much of my work involves products
+            with years of history, multiple user roles, business rules, configurations,
+            permissions and dependencies. I enjoy getting into that complexity,
+            understanding how the system actually works and finding ways to make the
+            experience clearer.
+          </p>
+          <p data-reveal data-delay="4">
+            My role has evolved from designing screens to shaping product direction,
+            working with product and engineering leaders and helping designers navigate
+            difficult product problems. I still like staying close to the work, whether
+            that means mapping a workflow, questioning an interaction, reviewing a
+            prototype or exploring a new product idea.
+          </p>
+          <p data-reveal data-delay="4">
+            More recently I've been exploring AI-native and agentic experiences for
+            enterprise products. I'm particularly interested in what happens when AI moves
+            beyond chat and becomes part of real workflows, decisions and actions. I care
+            about simple experiences, thoughtful product decisions and teams that
+            understand the problem before jumping into solutions.
+          </p>
+
+          <!-- Links -->
+          <div class="flex flex-wrap gap-3 pt-4" data-reveal data-delay="4">
+            <a
+              href="/resume"
+              aria-label="Résumé"
+              class="roll-btn inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-ink)] no-underline transition-colors hover:border-[var(--color-ink)]"
+            >
+              <span class="roll" aria-hidden="true">
+                <span class="roll-copy">Résumé ↓</span>
+                <span class="roll-copy roll-copy--in">Résumé ↓</span>
+              </span>
+            </a>
+            <a
+              href="https://linkedin.com/in/kishuxer"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              class="roll-btn inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-[var(--color-ink-2)] no-underline transition-colors hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]"
+            >
+              <span class="roll" aria-hidden="true">
+                <span class="roll-copy">LinkedIn ↗</span>
+                <span class="roll-copy roll-copy--in">LinkedIn ↗</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career as evolution -->
+      <div data-reveal data-delay="2" class="md:sticky md:top-24 md:self-start">
+        <p class="text-label mb-8 text-[var(--color-ink-3)]">My career journey</p>
+        <div class="space-y-6">
+          {journey.map((step, i) => (
+            <div
+              data-reveal
+              data-delay={String(Math.min(i + 2, 4))}
+              class="border-l-2 border-[var(--color-border)] pl-5"
+            >
+              <p class="text-sm font-semibold text-[var(--color-ink)]">{step.stage}</p>
+              <p class="mt-1 text-sm leading-relaxed text-[var(--color-ink-2)]">{step.detail}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 02 Beyond work ─────────────────────────────── -->
+    <div class="mt-14 border-t border-[var(--color-border)] pt-12">
+      <p class="text-label mb-8 text-[var(--color-ink-3)]" data-reveal>02. Still making things</p>
+
+      <p class="max-w-2xl text-base leading-relaxed text-[var(--color-ink-2)]" data-reveal data-delay="1">
+        I've always learned by making, a product concept, a visual experiment,
+        a new tool I'm trying to understand. Curiosity is still most of how I work.
+      </p>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <rect width="1200" height="675" fill="#f0f0eb"/>
+  <!-- Top nav bar -->
+  <rect x="0" y="0" width="1200" height="52" fill="#fff" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="24" y="18" width="100" height="14" rx="7" fill="#222"/>
+  <rect x="900" y="16" width="80" height="18" rx="9" fill="#111"/>
+  <rect x="992" y="16" width="80" height="18" rx="9" fill="#f5f5f0" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="1086" y="16" width="90" height="18" rx="9" fill="#f5f5f0" stroke="#e0e0db" stroke-width="1"/>
+
+  <!-- Left sidebar -->
+  <rect x="0" y="52" width="220" height="623" fill="#fff" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="20" y="80" width="100" height="8" rx="4" fill="#bbb"/>
+  <rect x="20" y="104" width="160" height="36" rx="8" fill="#f5f5f0"/>
+  <rect x="36" y="117" width="80" height="8" rx="4" fill="#333"/>
+  <rect x="20" y="148" width="160" height="36" rx="8" fill="none"/>
+  <rect x="36" y="161" width="100" height="8" rx="4" fill="#bbb"/>
+  <rect x="20" y="192" width="160" height="36" rx="8" fill="none"/>
+  <rect x="36" y="205" width="90" height="8" rx="4" fill="#bbb"/>
+  <rect x="20" y="236" width="160" height="36" rx="8" fill="none"/>
+  <rect x="36" y="249" width="110" height="8" rx="4" fill="#bbb"/>
+
+  <!-- Main calendar grid -->
+  <rect x="240" y="70" width="700" height="36" rx="8" fill="#fff" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="260" y="82" width="60" height="10" rx="5" fill="#222"/>
+  <rect x="780" y="79" width="50" height="18" rx="9" fill="#f5f5f0" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="840" y="79" width="50" height="18" rx="9" fill="#f5f5f0" stroke="#e0e0db" stroke-width="1"/>
+
+  <!-- Calendar days header -->
+  <rect x="240" y="118" width="700" height="32" rx="0" fill="#f5f5f0"/>
+  {["M","T","W","T","F","S","S"].map((_, i) => (
+    <rect key={i} x={240 + i * 100} y={118} width={100} height={32} fill="none" stroke="#e0e0db" stroke-width="0.5"/>
+  ))}
+
+  <!-- Calendar rows -->
+  {[0,1,2,3,4].map((row) => (
+    <g key={row}>
+      <rect x={240} y={150 + row * 72} width={700} height={72} fill={row === 1 ? "#f9f9f6" : "#fff"} stroke="#e0e0db" stroke-width="0.5"/>
+      <!-- Day numbers -->
+      <rect x={260} y={162 + row * 72} width={20} height={10} rx={5} fill="#bbb"/>
+      <rect x={360} y={162 + row * 72} width={20} height={10} rx={5} fill="#bbb"/>
+      <rect x={460} y={162 + row * 72} width={20} height={10} rx={5} fill="#bbb"/>
+      <rect x={560} y={162 + row * 72} width={20} height={10} rx={5} fill="#bbb"/>
+      <rect x={660} y={162 + row * 72} width={20} height={10} rx={5} fill="#bbb"/>
+    </g>
+  ))}
+
+  <!-- Leave events on calendar -->
+  <rect x="340" y="186" width="220" height="22" rx="6" fill="#111"/>
+  <rect x="356" y="193" width="100" height="7" rx="3" fill="#fff" opacity="0.7"/>
+
+  <rect x="540" y="258" width="120" height="22" rx="6" fill="#e0e0db"/>
+  <rect x="556" y="265" width="80" height="7" rx="3" fill="#666"/>
+
+  <rect x="240" y="330" width="200" height="22" rx="6" fill="#f0f0eb" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="256" y="337" width="120" height="7" rx="3" fill="#888"/>
+
+  <!-- Right panel — status detail -->
+  <rect x="960" y="70" width="220" height="560" rx="12" fill="#fff" stroke="#e0e0db" stroke-width="1"/>
+  <rect x="980" y="90" width="120" height="10" rx="5" fill="#222"/>
+  <rect x="980" y="110" width="80" height="8" rx="4" fill="#bbb"/>
+
+  <!-- Status badge — APPROVED -->
+  <rect x="980" y="132" width="100" height="24" rx="12" fill="#111"/>
+  <rect x="1000" y="140" width="60" height="8" rx="4" fill="#fff" opacity="0.8"/>
+
+  <rect x="980" y="170" width="180" height="1" fill="#e0e0db"/>
+  <rect x="980" y="182" width="80" height="7" rx="3" fill="#bbb"/>
+  <rect x="980" y="196" width="160" height="7" rx="3" fill="#333"/>
+  <rect x="980" y="218" width="80" height="7" rx="3" fill="#bbb"/>
+  <rect x="980" y="232" width="140" height="7" rx="3" fill="#333"/>
+  <rect x="980" y="254" width="80" height="7" rx="3" fill="#bbb"/>
+  <rect x="980" y="268" width="120" height="7" rx="3" fill="#333"/>
+
+  <!-- Reason for status — the key design decision -->
+  <rect x="980" y="296" width="180" height="60" rx="8" fill="#f5f5f0"/>
+  <rect x="994" y="308" width="60" height="6" rx="3" fill="#888"/>
+  <rect x="994" y="320" width="152" height="6" rx="3" fill="#555"/>
+  <rect x="994" y="332" width="130" height="6" rx="3" fill="#555"/>
+
+  <text x="600" y="580" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#aaaaaa">🔴 Replace with real screenshot — /public/images/work/time-mgmt-preview.svg</text>
+</svg>

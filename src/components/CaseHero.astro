@@ -1,0 +1,300 @@
+---
+/**
+ * Case study hero — layered parallax.
+ *
+ * Three planes moving at different rates as the page scrolls: the product
+ * window travels slowest, the headline block faster, and the insight cards
+ * fastest. The separation is what reads as depth — the cards appear to float
+ * above the screenshot rather than sit on it.
+ *
+ * Written as vanilla JS on purpose. An earlier React counter in this project
+ * broke hydration by mutating island DOM, and a hero is the worst place to
+ * risk that; here nothing hydrates and there is no island to tear down.
+ */
+
+interface Card {
+  eyebrow: string;
+  label: string;
+  value: string;
+  note: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  meta: { k: string; v: string }[];
+  /** Still image for the window. Ignored when `video` is supplied. */
+  img?: string;
+  /** Motion for the window — base path without extension; .webm and .mp4
+   *  are both referenced, with `poster` as the first frame. A recording of
+   *  the real product reads as a product; a static export reads as a slide. */
+  video?: string;
+  poster?: string;
+  alt: string;
+  cards?: Card[];
+}
+
+const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astro.props;
+---
+
+<section class="ch" data-ch>
+  <div class="ch-inner container-pg">
+    <!-- plane 1, copy, travels fastest of the two text planes -->
+    <div class="ch-copy" data-ch-layer data-ch-speed="-0.14">
+      <p class="ch-eyebrow"><span class="ch-rule"></span>{eyebrow}</p>
+      <h1 class="ch-title" set:html={title} />
+      <p class="ch-lede">{lede}</p>
+
+      <dl class="ch-meta">
+        {meta.map((m) => (
+          <div>
+            <dt>{m.k}</dt>
+            <dd>{m.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <!-- plane 2, the product window, slowest -->
+    <div class="ch-stage">
+      <div class="ch-window" data-ch-layer data-ch-speed="-0.05">
+        <div class="ch-chrome">
+          <span class="ch-dot"></span><span class="ch-dot"></span><span class="ch-dot"></span>
+          <span class="ch-url">{alt}</span>
+        </div>
+        {video ? (
+          <video
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+            poster={poster}
+            aria-label={alt}
+          >
+            <source src={`${video}.webm`} type="video/webm" />
+            <source src={`${video}.mp4`} type="video/mp4" />
+          </video>
+        ) : (
+          <img src={img} alt={alt} fetchpriority="high" decoding="async" />
+        )}
+      </div>
+
+      <!-- plane 3, insight cards, fastest -->
+      {cards.map((c, i) => (
+        <figure
+          class={`ch-card ch-card--${i + 1}`}
+          data-ch-layer
+          data-ch-speed={i === 0 ? "-0.26" : "-0.19"}
+        >
+          <figcaption class="ch-card-top">
+            <span class="ch-card-eyebrow">{c.eyebrow}</span>
+            <span class="ch-card-value" data-count>{c.value}</span>
+          </figcaption>
+          <p class="ch-card-label">{c.label}</p>
+          <p class="ch-card-note">{c.note}</p>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initCaseHero() {
+    document.querySelectorAll<HTMLElement>("[data-ch]").forEach((root) => {
+      if (root.dataset.chReady) return;
+      root.dataset.chReady = "1";
+
+      const layers = [...root.querySelectorAll<HTMLElement>("[data-ch-layer]")];
+      if (!layers.length) return;
+
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let raf = 0;
+
+      const apply = () => {
+        raf = 0;
+        const rect = root.getBoundingClientRect();
+        // 0 while the hero fills the screen, growing as it scrolls away.
+        const progress = Math.max(0, -rect.top);
+        layers.forEach((el) => {
+          const speed = parseFloat(el.dataset.chSpeed || "0");
+          // translate3d keeps each plane on its own compositor layer
+          el.style.transform = `translate3d(0, ${(progress * speed).toFixed(2)}px, 0)`;
+        });
+      };
+
+      const onScroll = () => {
+        if (!raf) raf = requestAnimationFrame(apply);
+      };
+
+      const enable = () => {
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", onScroll);
+        apply();
+      };
+      const disable = () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+        if (raf) cancelAnimationFrame(raf);
+        layers.forEach((el) => (el.style.transform = ""));
+      };
+
+      if (reduce.matches) disable();
+      else enable();
+      reduce.addEventListener?.("change", (e) => (e.matches ? disable() : enable()));
+
+      // Reveal once laid out, so nothing flashes at its un-parallaxed position.
+      requestAnimationFrame(() => root.classList.add("is-ready"));
+    });
+  }
+
+  initCaseHero();
+  document.addEventListener("astro:page-load", initCaseHero);
+</script>
+
+<style>
+  .ch {
+    position: relative;
+    padding: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(2rem, 5vw, 3.5rem);
+    overflow: hidden;               /* planes translate; never widen the page */
+  }
+
+  .ch-inner { position: relative; }
+
+  /* ── copy ── */
+  .ch-copy {
+    position: relative;
+    z-index: 3;
+    max-width: 46rem;
+    will-change: transform;
+  }
+
+  .ch-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 1.5rem;
+  }
+  .ch-rule { width: 2.25rem; height: 1px; background: var(--color-ink-3); flex-shrink: 0; }
+
+  .ch-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 700; line-height: 0.98; letter-spacing: -0.04em;
+    color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+  .ch-lede {
+    font-size: clamp(1rem, 1.6vw, 1.1875rem);
+    line-height: 1.65; color: var(--color-ink-2);
+    max-width: 38rem; margin: 0;
+  }
+
+  .ch-meta {
+    display: flex; flex-wrap: wrap; gap: 1.25rem 3rem;
+    margin: clamp(2rem, 4vw, 3rem) 0 0;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .ch-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 0.35rem;
+  }
+  .ch-meta dd {
+    margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--color-ink);
+  }
+
+  /* ── product window ── */
+  .ch-stage {
+    position: relative;
+    margin-top: clamp(1.75rem, 4.5vw, 3rem);
+  }
+
+  .ch-window {
+    position: relative;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: 0 40px 90px -50px rgba(0, 0, 0, 0.45);
+    will-change: transform;
+  }
+  :global(.dark) .ch-window { box-shadow: 0 40px 90px -45px rgba(0, 0, 0, 0.9); }
+
+  .ch-chrome {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .ch-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--color-border); flex-shrink: 0;
+  }
+  .ch-url {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; color: var(--color-ink-3);
+    margin-left: 0.75rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .ch-window img,
+  .ch-window video {
+    display: block; width: 100%; height: auto;
+    max-height: 34rem; object-fit: cover; object-position: top center;
+    background: var(--color-surface);
+  }
+
+  /* ── insight cards ── */
+  .ch-card {
+    position: absolute;
+    z-index: 4;
+    width: min(19rem, 74vw);
+    margin: 0;
+    padding: 1.1rem 1.25rem;
+    border-radius: 0.875rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 24px 50px -28px rgba(0, 0, 0, 0.4);
+    will-change: transform;
+  }
+  :global(.dark) .ch-card { box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.85); }
+
+  .ch-card--1 { right: -1.5rem; top: 16%; }
+  .ch-card--2 { left: -1.75rem; bottom: 12%; }
+
+  .ch-card-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 1rem; margin-bottom: 0.55rem;
+  }
+  .ch-card-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .ch-card-value {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 700; letter-spacing: -0.03em;
+    color: var(--color-ink); font-variant-numeric: tabular-nums;
+  }
+  .ch-card-label {
+    font-size: 0.9375rem; font-weight: 600;
+    color: var(--color-ink); margin: 0 0 0.3rem;
+  }
+  .ch-card-note {
+    font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0;
+  }
+
+  /* Cards overlap the window on wide screens only; below that they would
+     cover the very thing they annotate, so they stack underneath instead. */
+  @media (max-width: 900px) {
+    .ch-card { position: static; width: auto; margin-top: 1rem; box-shadow: none; }
+    .ch-window img, .ch-window video { max-height: 22rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ch-copy, .ch-window, .ch-card { will-change: auto; }
+  }
+</style>

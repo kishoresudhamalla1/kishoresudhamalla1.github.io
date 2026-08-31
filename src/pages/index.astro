@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import { HeroSection } from "../components/HeroSection";
+import Marquee from "../components/Marquee.astro";
+import WhatIWorkOn from "../components/WhatIWorkOn.astro";
+import ProjectList from "../components/ProjectList.astro";
+import ProductThinking from "../components/ProductThinking.astro";
+import Experience from "../components/Experience.astro";
+import AIExploration from "../components/AIExploration.astro";
+import AIProcess from "../components/AIProcess.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+---
+
+<Base
+  title="Kishore Sudhamalla. Product Designer"
+  description="Product Designer with 16+ years across design and nearly 9 years in enterprise HR technology. I make complex products easier to understand and use."
+>
+  <HeroSection client:load />
+  <Marquee />
+  <WhatIWorkOn />
+  <ProjectList />
+  <ProductThinking />
+  <AIExploration />
+  <AIProcess />
+  <About />
+  <Experience />
+  <Contact />
+</Base>

@@ -1,0 +1,112 @@
+/* The closed loop — deliberately quieter than the AI block it sits under.
+   Inference is indigo; decisions and outcomes are neutral, because a verdict
+   about what happened is not a suggestion and shouldn't look like one. */
+
+.vf-bar, .vf-approve {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid #e5e7ff;
+}
+.vf-k {
+  font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: #818cf8; margin: 0 0 8px;
+}
+.vf-btns { display: flex; gap: 7px; flex-wrap: wrap; }
+.vf-b {
+  font: inherit; font-size: 12px; font-weight: 600;
+  padding: 6px 13px; border-radius: 7px; cursor: pointer;
+  background: #fff; color: #374151; border: 1px solid #d1d5db;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.vf-b:hover { border-color: #6b7280; color: #111827; }
+.vf-b--accept { background: #1e1b4b; border-color: #1e1b4b; color: #fff; }
+.vf-b--accept:hover { background: #312e81; border-color: #312e81; color: #fff; }
+.vf-note { font-size: 11px; line-height: 1.5; color: #9ca3af; margin: 9px 0 0; }
+
+/* approval — the only step that writes */
+.vf-rec {
+  border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;
+  margin-bottom: 11px; background: #fafafa;
+}
+.vf-rec > div {
+  display: grid; grid-template-columns: 78px 1fr; gap: 10px;
+  padding: 7px 11px; font-size: 12px; border-bottom: 1px solid #eef0f2;
+}
+.vf-rec > div:last-child { border-bottom: 0; }
+.vf-rec span { color: #9ca3af; font-size: 10px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; padding-top: 2px; }
+.vf-rec b { color: #1f2937; font-weight: 600; line-height: 1.5; }
+
+.vf-in {
+  width: 100%; font: inherit; font-size: 12.5px; color: #1f2937;
+  padding: 8px 11px; border: 1px solid #d1d5db; border-radius: 7px;
+  margin-bottom: 10px; background: #fff;
+}
+.vf-in:focus { outline: 0; border-color: #6366f1; }
+
+.vf-done { font-size: 13px; font-weight: 600; color: #1f2937; margin: 0 0 8px; }
+
+/* the verdict — the whole point of the loop */
+.vf-verdict {
+  display: flex; align-items: flex-start; gap: 7px;
+  font-size: 12px; line-height: 1.55; margin: 0;
+  padding: 8px 11px; border-radius: 7px; border: 1px solid;
+}
+.vf-verdict span { width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0; margin-top: 6px; }
+.vf-held  { color: #2f6b4a; border-color: #b9d9c7; background: #eef7f2; }
+.vf-worse { color: #b4462f; border-color: #e7bdb2; background: #fdf1ee; }
+.vf-gone  { color: #6b7280; border-color: #e5e7eb; background: #f9fafb; }
+
+/* opener on the weekly brief */
+.vf-open {
+  font: inherit; font-size: 11px; font-weight: 600; cursor: pointer;
+  padding: 4px 11px; border-radius: 100px;
+  background: #fff; color: #4338ca; border: 1px solid #c7d2fe;
+  display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+}
+.vf-open:hover { background: #eef0ff; }
+.vf-open span {
+  background: #e0e7ff; color: #4338ca; border-radius: 100px;
+  padding: 1px 6px; font-size: 10px; font-weight: 700;
+}
+
+/* decision log */
+#vf-log {
+  position: fixed; inset: 0; z-index: 3000; display: none;
+  background: rgba(15, 23, 42, .38);
+}
+#vf-log.open { display: block; }
+.vf-log-panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 520px; max-width: 94vw;
+  background: #fff; box-shadow: -16px 0 48px rgba(0, 0, 0, .3);
+  overflow-y: auto; padding: 20px 22px 28px;
+}
+.vf-log-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+.vf-log-sub { font-size: 12px; line-height: 1.55; color: #6b7280; margin: 5px 0 0; }
+.vf-x { font: inherit; font-size: 21px; line-height: 1; cursor: pointer;
+  background: none; border: 0; color: #9ca3af; padding: 0 2px; margin-left: auto; }
+.vf-x:hover { color: #111827; }
+
+.vf-row { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px 15px; margin-bottom: 11px; }
+.vf-row-h { display: flex; align-items: baseline; gap: 8px; margin-bottom: 7px; flex-wrap: wrap; }
+.vf-row-h b { font-size: 12px; font-weight: 700; color: #4338ca; }
+.vf-row-h span { font-size: 12.5px; color: #1f2937; font-weight: 600; flex: 1; min-width: 0; }
+.vf-row-h em { font-size: 11px; color: #9ca3af; font-style: normal; }
+.vf-row-a { font-size: 12.5px; color: #374151; margin: 0 0 4px; }
+.vf-row-b { font-size: 11.5px; color: #9ca3af; margin: 0 0 9px; }
+.vf-empty { font-size: 13px; color: #9ca3af; }
+
+/* toast with undo — reversibility made visible */
+.vf-toast {
+  position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%);
+  z-index: 3100; display: flex; align-items: center; gap: 14px;
+  background: #1e1b4b; color: #fff; border-radius: 100px;
+  padding: 10px 12px 10px 20px; font-size: 12.5px;
+  box-shadow: 0 14px 36px -12px rgba(30, 27, 75, .6);
+}
+.vf-toast button {
+  font: inherit; font-size: 12px; font-weight: 600; cursor: pointer;
+  background: rgba(255, 255, 255, .15); color: #fff;
+  border: 0; border-radius: 100px; padding: 5px 13px;
+}
+.vf-toast button:hover { background: rgba(255, 255, 255, .28); }

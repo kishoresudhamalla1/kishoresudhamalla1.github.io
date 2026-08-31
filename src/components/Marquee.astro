@@ -1,0 +1,75 @@
+---
+/* Areas I work across. Kept to domains rather than tools or execution skills. */
+const items = [
+  "Enterprise Product Design", "Complex Workflows", "Platform Experiences",
+  "Product Transformation", "Design Leadership", "Product Strategy",
+  "Design Operations", "AI & Agentic UX",
+];
+---
+
+<div class="mq-wrap" aria-hidden="true">
+  <div class="mq-track">
+    <ul class="mq-list">
+      {items.map(item => (
+        <li>
+          <span class="mq-dot">·</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+    <ul class="mq-list" aria-hidden="true">
+      {items.map(item => (
+        <li>
+          <span class="mq-dot">·</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .mq-wrap {
+    overflow: hidden;
+    background: transparent;
+    padding: 1.1rem 0;
+  }
+  .mq-track {
+    display: flex;
+    width: max-content;
+    animation: mq-scroll 32s linear infinite;
+  }
+  .mq-wrap:hover .mq-track {
+    animation-play-state: paused;
+  }
+  .mq-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mq-list li {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+  .mq-dot {
+    color: var(--color-ink-3);
+    font-size: 0.5rem;
+  }
+  @keyframes mq-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mq-track { animation: none; }
+  }
+</style>

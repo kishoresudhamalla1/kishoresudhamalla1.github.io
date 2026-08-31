@@ -1,0 +1,94 @@
+/* AI layer — visually distinct from deterministic UI on purpose:
+   a reader must always know which numbers are computed and which are inferred. */
+.ai-block{
+  border:1px solid #c7d2fe; border-left:3px solid #6366f1; border-radius:10px;
+  background:linear-gradient(180deg,#f5f6ff 0%,#fbfbff 100%);
+  padding:16px 18px; margin:16px 0;
+}
+.ai-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;flex-wrap:wrap}
+.ai-badge{
+  font-size:10px;font-weight:700;letter-spacing:.06em;color:#4338ca;
+  background:#e0e7ff;border-radius:100px;padding:3px 8px;white-space:nowrap
+}
+.ai-title{font-size:13px;font-weight:700;color:#1e1b4b;flex:1}
+.ai-conf{font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;border-radius:100px;padding:3px 8px}
+.ai-conf--high{color:#166534;background:#dcfce7}
+.ai-conf--medium{color:#854d0e;background:#fef3c7}
+.ai-conf--low{color:#6b7280;background:#f3f4f6}
+.ai-cause{font-size:15px;font-weight:650;color:#1e1b4b;margin:0 0 6px}
+.ai-action{font-size:13px;line-height:1.6;color:#3730a3;margin:0 0 14px}
+.ai-narr{font-size:14px;line-height:1.72;color:#1e1b4b;margin:0 0 12px}
+.ai-evlabel{
+  font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:#818cf8;margin:0 0 6px
+}
+.ai-ev{margin:0 0 12px;padding-left:16px;display:flex;flex-direction:column;gap:5px}
+.ai-ev li{font-size:12px;line-height:1.5;color:#4b5563}
+.ai-ev b{color:#312e81}
+.ai-foot{font-size:11px;line-height:1.5;color:#8b8fa3;margin:0;border-top:1px solid #e5e7ff;padding-top:9px}
+
+/* ask bar */
+#ai-ask{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;width:min(620px,calc(100vw - 48px));z-index:9999}
+.ai-ask-inner{
+  position:relative;
+  display:flex;align-items:center;gap:10px;background:#fff;
+  border:1px solid #c7d2fe;border-radius:100px;padding:11px 18px;
+  box-shadow:0 12px 32px -12px rgba(49,46,129,.35);
+  transition:box-shadow .35s ease,border-color .35s ease
+}
+
+/* Gradient ring around the stroke only.
+   The pseudo-elements are masked to the border band (mask-composite:exclude
+   punches out the interior), so the gradient can never fill the pill — it does
+   not depend on stacking order the way a background layer would.
+   Animating a registered angle spins the gradient without rotating the shape. */
+@property --ai-ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+.ai-ask-inner::before,
+.ai-ask-inner::after{
+  content:"";position:absolute;inset:-1px;
+  border-radius:100px;pointer-events:none;
+  background:conic-gradient(from var(--ai-ang),
+    #6366f1,#a855f7,#22d3ee,#818cf8,#6366f1);
+  padding:1.5px;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+          mask-composite:exclude;
+  opacity:0;transition:opacity .4s ease
+}
+/* The soft halo: same ring, thicker and blurred outwards. */
+.ai-ask-inner::after{
+  inset:-4px;padding:4px;filter:blur(8px)
+}
+
+/* Focused: ring visible, still. */
+.ai-ask-inner:focus-within{border-color:transparent}
+.ai-ask-inner:focus-within::before{opacity:.7}
+.ai-ask-inner:focus-within::after{opacity:.45}
+
+/* Typing: ring at full strength and turning. */
+.ai-ask-inner.is-typing{border-color:transparent}
+.ai-ask-inner.is-typing::before{opacity:1}
+.ai-ask-inner.is-typing::after{opacity:.85}
+.ai-ask-inner.is-typing::before,
+.ai-ask-inner.is-typing::after{animation:ai-turn 2.6s linear infinite}
+.ai-ask-inner.is-typing .ai-ask-mark{animation:ai-pulse 1.5s ease-in-out infinite}
+
+@keyframes ai-turn{to{--ai-ang:360deg}}
+@keyframes ai-pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.65;transform:scale(1.16)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ai-ask-inner.is-typing::before,
+  .ai-ask-inner.is-typing::after,
+  .ai-ask-inner.is-typing .ai-ask-mark{animation:none}
+}
+.ai-ask-mark{color:#6366f1;font-size:14px;transition:opacity .3s,transform .3s}
+#ai-ask-input{flex:1;border:0;outline:0;font-size:13.5px;color:#1e1b4b;background:transparent}
+#ai-ask-input::placeholder{color:#a5b4fc}
+#ai-ask-out{display:none;margin-top:10px;background:#fff;border-radius:12px;box-shadow:0 16px 40px -14px rgba(49,46,129,.4)}
+#ai-ask-out.show{display:block}
+#ai-ask-out .ai-block{margin:0;border-radius:12px}

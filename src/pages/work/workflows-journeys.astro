@@ -1,0 +1,131 @@
+---
+import Base from "../../layouts/Base.astro";
+
+/**
+ * Workflows & Journeys, placeholder.
+ *
+ * The case study is not written yet. Rather than ship a page of template
+ * scaffolding or quietly drop the project from the list, this states plainly
+ * that it is in progress and gives the reader somewhere to go.
+ *
+ * noindex: an unfinished page competing for the same queries as the finished
+ * ones helps nobody until it has real content.
+ */
+---
+
+<Base
+  title="Building Journeys for complex employee experiences. Kishore Sudhamalla"
+  description="A case study in progress: designing a framework for organisations to create and manage employee journeys across HR workflows at Darwinbox."
+  noindex={true}
+>
+  <div class="container-pg pt-8">
+    <a href="/#cases" class="wip-back inline-flex items-center gap-2">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M8.5 2L3.5 7L8.5 12" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to work
+    </a>
+  </div>
+
+  <section class="container-pg wip" data-reveal>
+    <p class="wip-k"><span class="wip-rule"></span>Case study 03 · In progress</p>
+
+    <h1 class="wip-h">Building Journeys for complex employee experiences.</h1>
+
+    <p class="wip-lede">
+      A framework that lets organisations compose employee journeys across HR
+      workflows, rather than leaving people to navigate each module on their own.
+      Darwinbox, 2024.
+    </p>
+
+    <p class="wip-body">
+      I am still writing this one. The work is real and it shipped, but the case
+      study behind it is not ready, and a half-written page would tell you less
+      about how I work than no page at all. It is next in the queue.
+    </p>
+
+    <div class="wip-tags" aria-label="Areas this work covers">
+      {["Platform Design", "Complex Systems", "Workflows", "Enterprise UX"].map(
+        (t) => <span class="wip-tag">{t}</span>
+      )}
+    </div>
+
+    <div class="wip-actions">
+      <a href="/work/design-ops" class="wip-btn">Read a finished one →</a>
+      <a href="mailto:build@kishoresudhamalla.com?subject=Workflows%20%26%20Journeys"
+         class="wip-link">Ask me about this project →</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wip {
+    padding-block: clamp(3rem, 9vw, 7rem);
+    max-width: 44rem;
+  }
+
+  .wip-back {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3);
+    text-decoration: none; transition: color 0.15s;
+  }
+  .wip-back:hover { color: var(--color-ink); }
+
+  .wip-k {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 1.5rem;
+  }
+  .wip-rule { width: 2.25rem; height: 1px; background: var(--color-ink-3); flex-shrink: 0; }
+
+  .wip-h {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.6vw, 3.25rem);
+    font-weight: 700; line-height: 1.05; letter-spacing: -0.035em;
+    color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+
+  .wip-lede {
+    font-size: 1.0625rem; line-height: 1.7;
+    color: var(--color-ink-2); margin: 0 0 1.5rem;
+  }
+  .wip-body {
+    font-size: 1rem; line-height: 1.75;
+    color: var(--color-ink-3); margin: 0 0 2.5rem;
+  }
+
+  .wip-tags {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .wip-tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-ink-3);
+    border: 1px solid var(--color-border);
+    border-radius: 100px; padding: 0.28rem 0.7rem;
+  }
+
+  .wip-actions {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .wip-btn {
+    display: inline-flex; align-items: center;
+    background: var(--color-ink); color: var(--color-bg);
+    font-size: 0.875rem; font-weight: 500;
+    border-radius: 100px; padding: 0.85rem 1.75rem;
+    text-decoration: none; transition: opacity 0.15s;
+  }
+  .wip-btn:hover { opacity: 0.88; }
+  .wip-link {
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--color-ink-2); text-decoration: none;
+    transition: color 0.15s;
+  }
+  .wip-link:hover { color: var(--color-ink); }
+</style>

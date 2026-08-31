@@ -1,0 +1,268 @@
+---
+/**
+ * Selected work — a ledger of projects that opens on hover.
+ *
+ * Each row is a link. Hovering (or focusing) expands it to reveal the case
+ * study's own hero image, so the list reads as an index at rest and as a
+ * preview in motion. Keyboard and touch both work: focus opens the row, and
+ * on coarse pointers every row is open by default since there is no hover.
+ */
+
+const IMG = "/images/work";
+
+const PROJECTS = [
+  {
+    index: "01",
+    year: "2026",
+    href: "/work/design-ops",
+    title: "From design operations to design intelligence",
+    meta: "Darwinbox · Design, systems &amp; build",
+    blurb:
+      "Design work was visible; design health was not. A DesignOps system built solo against a live Jira board, then extended with an evidence-cited AI layer.",
+    tags: ["Enterprise DesignOps", "AI-native", "0 → 1"],
+    img: `${IMG}/design-ops/hero-window.webp`,
+    alt: "The Design Ops dashboard, delivery overview for the live quarter",
+  },
+  {
+    index: "02",
+    year: "2023",
+    href: "/work/time-management-system",
+    title: "Rethinking Time Management for a global workforce",
+    meta: "Darwinbox · Senior UX Manager",
+    blurb:
+      "Modernising an eight-year-old enterprise Time Management experience for global organisations.",
+    tags: ["Enterprise UX", "Product Transformation", "Global HR Tech", "Complex Workflows"],
+    img: `${IMG}/time-management/tm-manager-dashboard-poster.jpg`,
+    alt: "Time Management, the redesigned manager dashboard",
+  },
+  {
+    index: "03",
+    year: "2024",
+    href: "/work/workflows-journeys",
+    title: "Building Journeys for complex employee experiences",
+    meta: "Darwinbox · UX Manager",
+    blurb:
+      "Designing a flexible framework for organisations to create and manage employee journeys across HR workflows.",
+    tags: ["Platform Design", "Complex Systems", "Workflows", "Enterprise UX"],
+    img: null,
+    alt: "",
+    status: "In progress",
+  },
+];
+---
+
+<section id="cases" class="pl" data-reveal>
+  <div class="container-pg">
+    <div class="pl-head">
+      <div>
+        <p class="pl-eyebrow"><span class="pl-rule"></span>Selected work</p>
+        <h2 class="pl-title">Recent<br />projects</h2>
+      </div>
+      <p class="pl-count">Three case studies / &rsquo;23&ndash;&rsquo;26</p>
+    </div>
+
+    <div class="pl-list">
+      {PROJECTS.map((p) => (
+        <a class="pl-row" href={p.href} data-pl-row>
+          <div class="pl-top">
+            <span class="pl-index">{p.index} / {p.year}</span>
+
+            <div class="pl-main">
+              <h3 class="pl-name">
+                {p.title}
+                {p.status && <span class="pl-status">{p.status}</span>}
+              </h3>
+              <div class="pl-tags">
+                {p.tags.map((t) => <span class="pl-tag">{t}</span>)}
+              </div>
+            </div>
+
+            <div class="pl-aside">
+              <p class="pl-meta"><Fragment set:html={p.meta} /></p>
+              <p class="pl-blurb">{p.blurb}</p>
+            </div>
+
+            <span class="pl-arrow" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor"
+                      stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+
+          {p.img && (
+            <div class="pl-reveal">
+              <div class="pl-shot">
+                <img src={p.img} alt={p.alt} loading="lazy" decoding="async" />
+              </div>
+            </div>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pl { padding: clamp(4rem, 9vw, 7rem) 0; }
+
+  .pl-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+  .pl-eyebrow {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 1.1rem;
+  }
+  .pl-rule { width: 2.25rem; height: 1px; background: var(--color-ink-3); flex-shrink: 0; }
+
+  .pl-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 5.25rem);
+    font-weight: 700; line-height: 0.95; letter-spacing: -0.04em;
+    color: var(--color-ink); margin: 0;
+  }
+  .pl-count {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3);
+  }
+
+  .pl-list { border-top: 1px solid var(--color-border); }
+
+  .pl-row {
+    display: block;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .pl-top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem 2rem;
+    align-items: start;
+    padding: clamp(1.6rem, 3.5vw, 2.4rem) 0;
+  }
+  @media (min-width: 900px) {
+    .pl-top { grid-template-columns: 7rem 1fr 20rem auto; align-items: start; }
+  }
+
+  .pl-index {
+    font-family: var(--font-mono);
+    font-size: 0.75rem; letter-spacing: 0.04em;
+    color: var(--color-ink-3); white-space: nowrap; padding-top: 0.5rem;
+  }
+
+  .pl-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+    font-weight: 700; line-height: 1.03; letter-spacing: -0.035em;
+    color: var(--color-ink); margin: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Sits on the title baseline rather than in the tag row: it qualifies the
+     project, it is not another thing the project is about. */
+  .pl-status {
+    display: inline-block; vertical-align: middle;
+    margin-left: 0.75rem; transform: translateY(-0.15em);
+    font-family: var(--font-mono);
+    font-size: 0.625rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-ink-3);
+    border: 1px solid var(--color-border);
+    border-radius: 100px; padding: 0.25rem 0.6rem;
+    white-space: nowrap;
+  }
+
+  .pl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.9rem; }
+  .pl-tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--color-ink-3);
+    border: 1px solid var(--color-border);
+    border-radius: 100px; padding: 0.28rem 0.7rem;
+  }
+
+  .pl-meta {
+    font-family: var(--font-mono);
+    font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-ink-3); margin-bottom: 0.5rem;
+  }
+  .pl-blurb { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2); }
+  .pl-aside { padding-top: 0.35rem; }
+
+  .pl-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    border: 1px solid var(--color-border);
+    color: var(--color-ink-2);
+    flex-shrink: 0; align-self: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* ── the reveal ──────────────────────────────────────────────────────
+     Animating grid-template-rows rather than height means the row opens to
+     whatever the image actually needs, with no hard-coded height to keep in
+     sync with the artwork. */
+  .pl-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pl-shot {
+    overflow: hidden;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    margin-bottom: 0;
+  }
+  /* Sources differ in aspect ratio; a fixed frame keeps every preview the
+     same shape so one project can't read as a different kind of thing. */
+  .pl-shot img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 16 / 9; max-height: 26rem;
+    object-fit: cover; object-position: top center;
+  }
+
+  @media (hover: hover) {
+    .pl-row:hover .pl-reveal,
+    .pl-row:focus-visible .pl-reveal { grid-template-rows: 1fr; }
+    .pl-row:hover .pl-shot,
+    .pl-row:focus-visible .pl-shot {
+      opacity: 1; transform: none; margin-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
+    }
+    .pl-row:hover .pl-arrow,
+    .pl-row:focus-visible .pl-arrow {
+      background: var(--color-ink); border-color: var(--color-ink);
+      color: var(--color-bg); transform: rotate(45deg);
+    }
+    /* dim the rest of the list so the hovered row leads */
+    .pl-list:hover .pl-row:not(:hover) .pl-name { opacity: 0.4; }
+  }
+
+  /* No hover on touch — show the artwork rather than hiding it behind a
+     gesture that does not exist. */
+  @media (hover: none) {
+    .pl-reveal { grid-template-rows: 1fr; }
+    .pl-shot {
+      opacity: 1; transform: none; margin-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pl-reveal, .pl-shot, .pl-arrow, .pl-name { transition: none; }
+  }
+</style>

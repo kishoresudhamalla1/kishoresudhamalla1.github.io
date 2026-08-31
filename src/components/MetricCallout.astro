@@ -1,0 +1,19 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  note?: string;
+}
+const { value, label, note } = Astro.props;
+---
+
+<div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+  <p
+    class="text-4xl font-bold tracking-tight text-[var(--color-ink)]"
+    style="font-variant-numeric: tabular-nums;"
+  >
+    {value}
+  </p>
+  <p class="mt-2 text-sm font-medium text-[var(--color-ink)]">{label}</p>
+  {note && <p class="mt-1 text-xs text-[var(--color-ink-3)]">{note}</p>}
+</div>

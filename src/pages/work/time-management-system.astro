@@ -1,0 +1,1505 @@
+---
+import Base from '../../layouts/Base.astro';
+import ScreenGallery from "../../components/ScreenGallery.astro";
+import CaseHero from "../../components/CaseHero.astro";
+---
+
+<Base title="Time Management System. Kishore Sudhamalla" description="Rebuilding Darwinbox's most-complained-about module into a unified, insight-driven time management experience used by 1.16M employees.">
+
+<style>
+  /* ── Page-level overrides ───────────────────────────────── */
+  .cs-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .cs-h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+  }
+  /* Horizontal scroll gallery */
+  .scroll-gallery {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .scroll-gallery::-webkit-scrollbar { display: none; }
+  .scroll-gallery > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+  /* Screenshot frame — dark stage */
+  .screen-stage {
+    background: #111110;
+    border-radius: 1.25rem;
+    padding: 2.5rem 2.5rem 1.5rem;
+    position: relative;
+  }
+  .screen-stage::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #333;
+    box-shadow: 18px 0 0 #333, 36px 0 0 #333;
+  }
+  .screen-stage img {
+    border-radius: 0.75rem;
+    width: 100%;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  }
+  /* Stat number */
+  .stat-num {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  /* Pull quote */
+  .pull-quote {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    color: var(--color-ink);
+    border-left: 3px solid var(--color-ink);
+    padding-left: 1.5rem;
+  }
+  /* Slide frame — neutral surface with subtle border */
+  .slide-frame {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .slide-frame img { width: 100%; display: block; }
+  /* Before/after label strip */
+  .ba-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* ── Never let a deck-extracted image render above its native width.
+     The sources top out around 1000–1400px, so scaling them to a 1152px
+     container is what made them look soft. ── */
+  .slide-frame img,
+  .screen-stage img,
+  .cs-figure img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .cs-figure {
+    margin: 0 auto;
+    /* Source is 2044px, so it can fill the container and stay retina-sharp. */
+    max-width: 100%;
+    border: 1px solid #262622;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  .cs-figure img { width: 100%; display: block; }
+  .cs-figure figcaption {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.75rem;
+    color: #6b6b64;
+    border-top: 1px solid #262622;
+  }
+
+  /* ── Adoption table ── */
+  .cs-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #262622;
+    border-radius: 1rem;
+  }
+  .cs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    min-width: 640px;
+  }
+  .cs-table th,
+  .cs-table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid #1e1e1a;
+  }
+  .cs-table thead th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6b6b64;
+  }
+  .cs-table tbody th {
+    font-weight: 500;
+    color: #f5f5f0;
+  }
+  .cs-table td { color: #b9b9b1; font-variant-numeric: tabular-nums; }
+  .cs-table .num { text-align: right; }
+  .cs-table tbody tr:last-child th,
+  .cs-table tbody tr:last-child td { border-bottom: none; }
+
+  /* ── Client quotes ── */
+  .cs-quotes {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 900px) { .cs-quotes { grid-template-columns: repeat(3, 1fr); } }
+  .cs-quote {
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px solid #262622;
+    border-radius: 1rem;
+    background: #111110;
+  }
+  .cs-quote p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #d6d6ce;
+    margin-bottom: 1.25rem;
+  }
+  .cs-quote footer { display: flex; flex-direction: column; gap: 0.15rem; }
+  .cs-quote-name { font-size: 0.8125rem; font-weight: 600; color: #f5f5f0; }
+  .cs-quote-role {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b6b64;
+  }
+
+  /* ── Post-release review ── */
+  .cs-review {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 900px) { .cs-review { grid-template-columns: 1fr 1fr; } }
+  .cs-review-col {
+    padding: 1.75rem;
+    border: 1px solid #262622;
+    border-radius: 1rem;
+    background: #111110;
+  }
+  .cs-review-head {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .cs-review-head--good { color: #6ec18f; }
+  .cs-review-head--ask  { color: #d99a5b; }
+  .cs-review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .cs-review-list li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #b9b9b1;
+  }
+  .cs-review-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #4a4a44;
+  }
+  .cs-review-quote {
+    font-size: 0.875rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #d6d6ce;
+    padding-left: 0.9rem;
+    border-left: 2px solid #2e2e28;
+    margin-bottom: 0.9rem;
+  }
+  .cs-review-quote span {
+    display: block;
+    font-style: normal;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #6b6b64;
+    margin-top: 0.35rem;
+  }
+  .cs-review-note {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #6b6b64;
+    padding-top: 0.9rem;
+    border-top: 1px solid #1e1e1a;
+  }
+
+  /* ── Light-section text blocks (converted from deck slides) ── */
+  .cs-split { display: grid; gap: 1rem; }
+  @media (min-width: 768px) { .cs-split { grid-template-columns: 1fr 1fr; } }
+
+  .cs-card {
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    background: var(--color-bg);
+  }
+  .cs-card-kicker {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin-bottom: 0.75rem;
+  }
+  .cs-card-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin-bottom: 0.6rem;
+  }
+  .cs-card-body {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+  }
+
+  .cs-jobs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .cs-jobs li {
+    position: relative;
+    padding-left: 1.1rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+  .cs-jobs li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.62em;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--color-ink-3);
+  }
+
+  /* Participants — client logos with sector captions */
+  .cs-clients {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: end;
+  }
+  .cs-client { text-align: center; }
+  .cs-client-logo {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.9rem;
+  }
+  /* Fill the row box and let object-fit preserve each aspect ratio, so a
+     small intrinsic SVG (bigbasket is 91×34) scales up to match the others
+     instead of rendering at its natural size. */
+  .cs-client-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  /* logos are dark-on-white marks — lift them so they read on a dark page */
+  :global(.dark) .cs-client-logo img {
+    filter: brightness(0) invert(1);
+    opacity: 0.92;
+  }
+  .cs-client-sector {
+    font-size: 0.8125rem;
+    color: var(--color-ink-2);
+  }
+  @media (max-width: 640px) {
+    .cs-clients { grid-template-columns: 1fr; gap: 2rem; }
+    .cs-client-logo { height: 44px; }
+  }
+
+  /* Internal connects — profile cards */
+  .cs-connects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  @media (min-width: 700px)  { .cs-connects { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1000px) { .cs-connects { grid-template-columns: repeat(5, 1fr); } }
+  .cs-connect {
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    background: var(--color-bg);
+    padding: 1.15rem 1.2rem;
+  }
+  .cs-connect-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin-bottom: 0.15rem;
+  }
+  .cs-connect-role {
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--color-ink-3);
+    /* Reserve two lines so roles that wrap and roles that don't still put
+       the rule — and the bullets below it — on the same baseline in every
+       card across the row. */
+    min-height: 2.9em;
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .cs-connect-pts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .cs-connect-pts li {
+    position: relative;
+    padding-left: 0.85rem;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-ink-2);
+  }
+  .cs-connect-pts li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-ink-3);
+  }
+
+  /* Key findings — three columns, tinted like the original slide */
+  .cs-findings { display: grid; gap: 1rem; }
+  @media (min-width: 900px) { .cs-findings { grid-template-columns: repeat(3, 1fr); } }
+  .cs-find { border-radius: 1rem; padding: 1.5rem 1.75rem; }
+  .cs-find--pain { background: #fdf0ee; }
+  .cs-find--disc { background: #fdf8e9; }
+  .cs-find--sugg { background: #edf6f2; }
+  :global(.dark) .cs-find--pain { background: rgba(226,120,100,0.10); }
+  :global(.dark) .cs-find--disc { background: rgba(220,180,80,0.10); }
+  :global(.dark) .cs-find--sugg { background: rgba(90,170,124,0.10); }
+  .cs-find-head {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin-bottom: 1rem;
+  }
+  .cs-find-list {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .cs-find-list li {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+  }
+
+  /* Voice of the user */
+  .cs-voice { display: grid; gap: 0.75rem; }
+  @media (min-width: 768px) { .cs-voice { grid-template-columns: 1fr 1fr; } }
+  .cs-voice p {
+    background: var(--color-surface);
+    border-radius: 0.875rem;
+    padding: 1.1rem 1.35rem;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+  }
+
+  /* Card-sort chips */
+  .cs-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .cs-chip {
+    display: inline-block;
+    background: #fbf3c4;
+    color: #4a4326;
+    border-radius: 0.375rem;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.8125rem;
+    line-height: 1.2;
+  }
+  :global(.dark) .cs-chip { background: rgba(240,214,90,0.14); color: #e4d79a; }
+  .cs-chip--sm { font-size: 0.75rem; padding: 0.35rem 0.65rem; }
+
+  .cs-groups { display: flex; flex-direction: column; gap: 1.25rem; }
+  .cs-group {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+  }
+  .cs-group-name {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin-bottom: 0.7rem;
+  }
+
+  /* ── Shipped product: the emphasis moment of the case study ──
+     Wider than the surrounding text column, generous air above and below,
+     and a quiet frame so the product does the talking. */
+  .cs-final {
+    margin-top: 5rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .cs-final-lead { max-width: 34rem; margin-bottom: 2.5rem; }
+  .cs-final-desc {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-2);
+  }
+  .cs-final-stage {
+    margin: 0;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.35);
+  }
+  :global(.dark) .cs-final-stage { box-shadow: 0 30px 70px -35px rgba(0, 0, 0, 0.8); }
+  .cs-final-video { display: block; width: 100%; height: auto; }
+  .cs-final-meta {
+    margin-top: 1.1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-3);
+  }
+  /* Let it breathe wider than the reading column on large screens */
+  @media (min-width: 1100px) {
+    .cs-final-stage { margin-inline: -3rem; }
+  }
+
+  /* Competitive analysis — hairline rows, no cards or shadows */
+  .cs-compete { border-top: 1px solid var(--color-border); }
+  .cs-compete-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem 2.5rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 700px) {
+    .cs-compete-row { grid-template-columns: 13rem 1fr; align-items: start; }
+  }
+  .cs-compete-name {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+  .cs-compete-note {
+    font-size: 0.75rem;
+    color: var(--color-ink-3);
+    margin-top: 0.1rem;
+  }
+  .cs-compete-pts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.5rem;
+  }
+  .cs-compete-pts li {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: var(--color-ink-2);
+    border: 1px solid var(--color-border);
+    border-radius: 100px;
+    padding: 0.3rem 0.75rem;
+  }
+  .cs-compete-take {
+    margin-top: 2.5rem;
+    max-width: 42rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-ink-2);
+    padding-left: 1.1rem;
+    border-left: 2px solid var(--color-ink);
+  }
+
+  /* Before — two real screens, stacked and given room to be legible */
+  .cs-before { display: flex; flex-direction: column; gap: 1.25rem; }
+  .cs-before-shot {
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .cs-before-shot img { width: 100%; height: auto; display: block; }
+  .cs-before-cap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    color: var(--color-ink-2);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .cs-before-tag {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b4462f;
+    background: #fdf1ee;
+    border-radius: 100px;
+    padding: 0.2rem 0.6rem;
+  }
+  :global(.dark) .cs-before-tag { color: #e79a86; background: rgba(226,120,100,0.14); }
+
+  /* Roadshow photography — real grid, sized so each frame stays retina-sharp */
+  .cs-photos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  @media (min-width: 800px) {
+    .cs-photos { grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  }
+  .cs-photo {
+    margin: 0;
+    overflow: hidden;
+    border-radius: 0.875rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    aspect-ratio: 4 / 3;
+  }
+  .cs-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  .cs-photo:hover img { transform: scale(1.03); }
+  /* one frame leads the grid */
+  @media (min-width: 800px) {
+    .cs-photo--wide { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cs-photo img { transition: none; }
+    .cs-photo:hover img { transform: none; }
+  }
+
+  /* Roadshow client roster */
+  .cs-roster {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  @media (min-width: 700px)  { .cs-roster { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1000px) { .cs-roster { grid-template-columns: repeat(4, 1fr); } }
+
+  .cs-roster-item {
+    background: var(--color-bg);
+    padding: 1.25rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .cs-roster-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+  .cs-roster-industry {
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--color-ink-2);
+  }
+  .cs-roster-country {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+    font-size: 0.6875rem;
+  }
+  .cs-roster-country-label {
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+</style>
+
+  <!-- Back link -->
+  <div class="container-pg pt-8 flex items-center justify-between flex-wrap gap-4">
+    <a href="/" class="cs-label hover:text-[var(--color-ink)] transition-colors inline-flex items-center gap-2">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 2L3.5 7L8.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to work
+    </a>
+    <a href="/work/time-management-system-v2" class="cs-label border border-[var(--color-border)] rounded-full px-4 py-1.5 hover:border-[var(--color-ink-3)] transition-colors">
+      View award-style version →
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       HERO, full-bleed image with overlay headline
+  ══════════════════════════════════════════════════════ -->
+  <CaseHero
+    eyebrow="Systems design · Platform UX · Enterprise"
+    title="Time Management,<br />rebuilt for the world."
+    lede="Darwinbox's most-complained-about module, fragmented, eight years old, and used daily by over a million people. Rebuilt around what a manager needs to see first, then rolled out globally."
+    meta={[
+      { k: "Role", v: "Associate Director, UX" },
+      { k: "Timeline", v: "2023 – 2024" },
+      { k: "Team", v: "3 designers · product · engineering" },
+      { k: "Platform", v: "Darwinbox HCM" },
+    ]}
+    video="/images/work/time-management/tm-manager-dashboard"
+    poster="/images/work/time-management/tm-manager-dashboard-poster.jpg"
+    alt="Time Management, the manager dashboard in use"
+    cards={[
+      {
+        eyebrow: "Manager play rate",
+        value: "73.1%",
+        label: "Highest on the platform",
+        note: "The view managers actually opened, rather than the one they were given.",
+      },
+      {
+        eyebrow: "Gartner WFM",
+        value: "3.5",
+        label: "Up from 2.9 by 2025",
+        note: "Darwinbox's Workforce Management score after the rebuild shipped.",
+      },
+    ]}
+  />
+
+  <!-- ══════════════════════════════════════════════════════
+       IMPACT NUMBERS
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div data-count-group class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--color-border)] border border-[var(--color-border)] rounded-2xl overflow-hidden">
+        {[
+          { num: "3.5", label: "Gartner WFM Score", sub: "↑ from 2.9, by 2025" },
+          { num: "1.16M", label: "Dashboard plays", sub: "Employee + Manager" },
+          { num: "73.1%", label: "Manager play rate", sub: "Highest on platform" },
+          { num: "8 yrs", label: "Module age at start", sub: "Zero UX investment" },
+        ].map(s => (
+          <div class="bg-[var(--color-bg)] px-8 py-10">
+            <p class="stat-num text-[var(--color-ink)] mb-2" data-count>{s.num}</p>
+            <p class="text-sm font-semibold text-[var(--color-ink)] mb-1">{s.label}</p>
+            <p class="text-xs text-[var(--color-ink-3)]">{s.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       01. THE PROBLEM
+  ══════════════════════════════════════════════════════ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="grid lg:grid-cols-[1fr_1.6fr] gap-16 items-start">
+        <div class="lg:sticky lg:top-24">
+          <p class="cs-label mb-4">01. The Problem</p>
+          <h2 class="cs-h2 mb-6">8 years old.<br>Zero redesign.<br>Daily pain.</h2>
+          <p class="text-[var(--color-ink-2)] leading-relaxed mb-8">
+            Time management was split across attendance, leave, timesheets, and shift scheduling, all separate modules. Managers couldn't see their team without jumping screens. Employees couldn't understand why requests were rejected.
+          </p>
+          <!-- Problem list -->
+          <div class="space-y-3">
+            {[
+              "Complex navigation, actions buried 3 levels deep",
+              "Module switching required for basic tasks",
+              "Low feature discoverability",
+              "No centralised team data or insights",
+            ].map(p => (
+              <div class="flex items-start gap-3 text-sm text-[var(--color-ink-2)]">
+                <span class="mt-0.5 text-red-400 flex-shrink-0">✗</span>
+                <span>{p}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <!-- Before, the two screens people actually lived in -->
+        <div class="cs-before">
+          <figure class="cs-before-shot">
+            <figcaption class="cs-before-cap">
+              <span class="cs-before-tag">Before</span>
+              Employee · monthly attendance
+            </figcaption>
+            <img
+              src="/images/work/time-management/before/old-attendance.webp"
+              alt="The old employee attendance screen: a dense month calendar where every day repeats the full shift string, with totals and policy details stacked above it"
+              width="1228"
+              height="527"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+
+          <figure class="cs-before-shot">
+            <figcaption class="cs-before-cap">
+              <span class="cs-before-tag">Before</span>
+              Manager · reportee roster
+            </figcaption>
+            <img
+              src="/images/work/time-management/before/old-roster.webp"
+              alt="The old manager roster screen: a wide table of reportees against dates, with shift names repeated in every cell and no summary of who is in or out"
+              width="1219"
+              height="485"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       02. RESEARCH
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mb-12">
+        <p class="cs-label mb-4">02. Research</p>
+        <h2 class="cs-h2 mb-4">We listened before we designed.</h2>
+        <p class="text-[var(--color-ink-2)] leading-relaxed">
+          Primary research with TVS, Bigbasket, and Licious. Secondary analysis across Kronos, Workday, BambooHR, ZingHR, and Jibble. Card sorting to understand mental models.
+        </p>
+      </div>
+
+      <!-- Method -->
+      <div class="cs-split mb-14">
+        <div class="cs-card">
+          <p class="cs-card-kicker">Primary</p>
+          <p class="cs-card-title">User interviews with SMEs</p>
+          <p class="cs-card-body">
+            Plus client feedback gathered on the existing module.
+          </p>
+        </div>
+        <div class="cs-card">
+          <p class="cs-card-kicker">Secondary</p>
+          <p class="cs-card-title">Competitive capability review</p>
+          <p class="cs-card-body">
+            Identifying stand-out features across direct and indirect competitors.
+          </p>
+        </div>
+      </div>
+
+      <!-- Participants -->
+      <p class="cs-label mb-8">Primary research participants</p>
+      <div class="cs-clients mb-14">
+        <div class="cs-client">
+          <div class="cs-client-logo">
+            <img src="/images/work/time-management/logos/tvs.svg" alt="TVS" width="512" height="92" loading="lazy" />
+          </div>
+          <p class="cs-client-sector">Manufacturing + Corporate</p>
+        </div>
+        <div class="cs-client">
+          <div class="cs-client-logo">
+            <img src="/images/work/time-management/logos/bigbasket.svg" alt="bigbasket" width="91" height="34" loading="lazy" />
+          </div>
+          <p class="cs-client-sector">Corporate</p>
+        </div>
+        <div class="cs-client">
+          <div class="cs-client-logo">
+            <img src="/images/work/time-management/logos/licious.png" alt="Licious" width="445" height="160" loading="lazy" />
+          </div>
+          <p class="cs-client-sector">Manufacturing + Corporate</p>
+        </div>
+      </div>
+
+      <!-- Internal connects -->
+      <p class="cs-label mb-6">Internal team connects</p>
+      <div class="cs-connects mb-14">
+        {[
+          { name: "Uma Natarajan",   role: "Sr. Director, PM",        pts: ["14 years of HR experience", "1.5 years at Darwinbox", "Former COE Lead"] },
+          { name: "Ramya Prasad",    role: "Director, Pre-sales (MENA)", pts: ["15 years of HR experience", "7 years at Darwinbox", "Background in CS and implementation"] },
+          { name: "Shilpi Jain",     role: "COE Lead",                pts: ["7 years at Darwinbox", "Experience in CS and implementation"] },
+          { name: "Isha Dash",       role: "COE Lead",                pts: ["6 years at Darwinbox", "Now COE Solutioning Lead"] },
+          { name: "Sandeep Madugula",role: "Head of Solutioning",     pts: ["2.5 years at Darwinbox", "Former CS Head for Payroll"] },
+        ].map(p => (
+          <div class="cs-connect">
+            <p class="cs-connect-name">{p.name}</p>
+            <p class="cs-connect-role">{p.role}</p>
+            <ul class="cs-connect-pts">
+              {p.pts.map(t => <li>{t}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <!-- Key findings -->
+      <p class="cs-label mb-6">Key findings from primary research</p>
+      <div class="cs-findings mb-14">
+        <div class="cs-find cs-find--pain">
+          <p class="cs-find-head">Pain points</p>
+          <ol class="cs-find-list">
+            <li>Replacing leave is cumbersome, a four-step process on mobile</li>
+            <li>System is not helping me understand my attendance habits</li>
+            <li>System is not assisting me to perform my missed actions</li>
+            <li>No communication on policy breach or upcoming holidays</li>
+            <li>Planning leaves is a pain</li>
+          </ol>
+        </div>
+        <div class="cs-find cs-find--disc">
+          <p class="cs-find-head">Discovery issues</p>
+          <ol class="cs-find-list">
+            <li>Upcoming holidays</li>
+            <li>Leave history</li>
+            <li>Leave request status</li>
+            <li>Bulk regularisation</li>
+            <li>Switching modules to track status</li>
+          </ol>
+        </div>
+        <div class="cs-find cs-find--sugg">
+          <p class="cs-find-head">Suggestions</p>
+          <ol class="cs-find-list">
+            <li>Proactive nudges for missed clock-ins and policy violations</li>
+            <li>Delegation shown proactively while applying leave</li>
+            <li>Show upcoming holidays</li>
+            <li>An option to club leaves and plan a vacation</li>
+            <li>Policy violations called out, e.g. “You have exceeded WFH this month”</li>
+            <li>While applying leave, show teammates who are out that day</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Jobs to be done -->
+      <p class="cs-label mb-6">Jobs to be done, employee</p>
+      <div class="cs-split mb-14">
+        <div class="cs-card">
+          <p class="cs-card-kicker">Primary jobs</p>
+          <ul class="cs-jobs">
+            <li>Make attendance simple, I just want to log in, no matter where I'm working.</li>
+            <li>Asking for time off should be quick: vacation, sick, comp off, unpaid, no hassle.</li>
+            <li>If I slip up on attendance, I want to fix it easily. Mistakes shouldn't be stressful.</li>
+            <li>Seeing my leave balance up front helps me plan time off confidently.</li>
+          </ul>
+        </div>
+        <div class="cs-card">
+          <p class="cs-card-kicker">Secondary jobs</p>
+          <ul class="cs-jobs">
+            <li>Help me spot patterns in my attendance so I can manage my energy.</li>
+            <li>Logging overtime should be smooth, so extra effort means extra credit or rest.</li>
+            <li>Let me request an hour off or a half day when life gets in the way.</li>
+            <li>When I run out of one leave type, let me mix options within the rules.</li>
+            <li>Plans change, let me edit leave or swap with a teammate.</li>
+            <li>Cancelling a leave should be easy.</li>
+            <li>Give me the option to cash out unused leave.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Voice of the user -->
+      <p class="cs-label mb-6">What we heard about dashboards</p>
+      <div class="cs-voice mb-14">
+        <p>“No central place to track employee data.”</p>
+        <p>“Employee and manager dashboard is where we need to focus.”</p>
+        <p>“There is a need for dashboards for managers and permission holders.”</p>
+        <p>“Admins love our leave and attendance modules, policies to the last level are available in the system.”</p>
+      </div>
+
+      <!-- Pull quote -->
+      <div class="max-w-3xl" data-reveal>
+        <p class="pull-quote">“If I had a magic wand to change one thing about the Time module, I'd add dashboards for employees and managers.”</p>
+        <p class="cs-label mt-4 pl-6">Manager, enterprise client</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       03. COMPETITIVE ANALYSIS
+  ══════════════════════════════════════════════════════ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mb-12">
+        <p class="cs-label mb-4">03. Competitive Analysis</p>
+        <h2 class="cs-h2 mb-4">What the rest of the category was doing.</h2>
+        <p class="text-[var(--color-ink-2)] leading-relaxed">
+          We studied five products: Kronos, Workday, BambooHR, ZingHR, and Jibble, looking at dashboard layout, information hierarchy, and feature
+          discoverability. Not to copy them, but to see which patterns had already
+          settled into convention and where there was still room to do better.
+        </p>
+      </div>
+
+      <div class="cs-compete">
+        {[
+          {
+            name: "Kronos",
+            note: "Time & attendance specialist",
+            pts: ["Consolidated dashboard", "Timesheet widget", "Dynamic calendar visualisation", "Tasks surfaced upfront"],
+          },
+          {
+            name: "Workday",
+            note: "Enterprise HCM suite",
+            pts: ["Quick actions", "Proactive system nudges", "Reminder settings"],
+          },
+          {
+            name: "BambooHR",
+            note: "Mid-market HR",
+            pts: ["Employee unavailability, who's out", "Clock-in action upfront", "Simplified timesheets", "Strong visual clarity"],
+          },
+          {
+            name: "ZingHR",
+            note: "Regional HCM",
+            pts: ["Quick actions", "Calendar tied to detail", "Leave balance", "Upcoming holidays", "Key metrics"],
+          },
+        ].map(c => (
+          <div class="cs-compete-row">
+            <div class="cs-compete-who">
+              <p class="cs-compete-name">{c.name}</p>
+              <p class="cs-compete-note">{c.note}</p>
+            </div>
+            <ul class="cs-compete-pts">
+              {c.pts.map(p => <li>{p}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <p class="cs-compete-take">
+        Two things recurred everywhere: a single consolidated view, and the
+        primary action available without navigating. Neither existed in ours.
+        What none of them did well was give a manager their team's position at a
+        glance, which is where we saw the opening.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       04, INFORMATION ARCHITECTURE
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="grid lg:grid-cols-[1.6fr_1fr] gap-16 items-start">
+        <!-- Images left -->
+        <div class="space-y-5">
+          <!-- Card sort, as real content rather than a screenshot of stickies -->
+          <div>
+            <p class="cs-label mb-4">Card sorting, what we asked people to group</p>
+            <div class="cs-chips mb-8">
+              {[
+                "Upcoming Holidays","Timesheets","Total Balance","Attendance Status",
+                "Clock-In / Clock-Out","Attendance Overview","Early Departures","Who's Out",
+                "Timesheet Approvals","Attendance %","Time Off Request","Upcoming Time Off",
+                "Leave Summary","Shift Details","Policies","Late Arrivals","Absenteeism Rate",
+                "Request Off Specific Days","Half Day Leave","Short Leave","Hourly Leave",
+                "Unpaid Leave","Leave Balances","Comp Off","Overtime Hours",
+              ].map(c => <span class="cs-chip">{c}</span>)}
+            </div>
+
+            <p class="cs-label mb-4">How it grouped</p>
+            <div class="cs-groups">
+              {[
+                { name: "Overview", items: ["Attendance Overview","Leave Summary"] },
+                { name: "Delight", items: ["Upcoming Holidays","Upcoming Time Off"] },
+                { name: "Insights", items: ["Overtime Hours","Early Departures","Attendance %","Late Arrivals","Absenteeism Rate"] },
+                { name: "Secondary info", items: ["Who's Out","Leave History","Holidays List","Policies"] },
+                { name: "Tasks / actions", items: ["Attendance Status","Clock-In / Clock-Out","Timesheets","Time Off Request","Apply Leave","Shift Details"] },
+              ].map(g => (
+                <div class="cs-group">
+                  <p class="cs-group-name">{g.name}</p>
+                  <div class="cs-chips">
+                    {g.items.map(i => <span class="cs-chip cs-chip--sm">{i}</span>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="slide-frame">
+              <div class="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                <p class="text-xs font-semibold text-[var(--color-ink-2)]">Layout explorations</p>
+              </div>
+              <img src="/images/work/time-management/image-1783857498993.png" alt="Dashboard layout research" />
+            </div>
+            <div class="slide-frame">
+              <div class="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+                <p class="text-xs font-semibold text-[var(--color-ink-2)]">3-col vs 2-col</p>
+              </div>
+              <img src="/images/work/time-management/image-1783857502682.png" alt="3-column vs 2-column" />
+            </div>
+          </div>
+          <div class="slide-frame">
+            <div class="px-4 py-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+              <p class="text-xs font-semibold text-[var(--color-ink-2)]">Finalized 2-column layout wireframe</p>
+            </div>
+            <img src="/images/work/time-management/image-1783857507797.png" alt="Finalized 2-column layout" />
+          </div>
+        </div>
+        <!-- Text right, sticky -->
+        <div class="lg:sticky lg:top-24">
+          <p class="cs-label mb-4">04, Information Architecture</p>
+          <h2 class="cs-h2 mb-6">Card sorting → 2-column.</h2>
+          <p class="text-[var(--color-ink-2)] leading-relaxed mb-6">
+            Card sorting sessions revealed employees and managers group time data very differently. Primary concern for employees: their own leave and attendance at a glance. For managers: team status and pending approvals first.
+          </p>
+          <p class="text-[var(--color-ink-2)] leading-relaxed mb-8">
+            A 3-column layout spread context too thin. The 2-column layout with a sticky right panel gave both personas what they needed without cognitive overload.
+          </p>
+          <div class="border border-[var(--color-border)] rounded-xl p-5 bg-[var(--color-surface)]">
+            <p class="text-xs font-semibold text-[var(--color-ink)] mb-3 uppercase tracking-wide">Layout decision</p>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-red-400 text-sm font-semibold">✗ 3-col</span>
+              <span class="text-xs text-[var(--color-ink-3)]">Too sparse, context split across columns</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-emerald-500 text-sm font-semibold">✓ 2-col</span>
+              <span class="text-xs text-[var(--color-ink-3)]">Primary + context panel, clear hierarchy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       DESIGN PRINCIPLES, full-bleed dark
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" style="background:#0d0d0c; color:#f5f5f0;" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-6" style="color:#52524c;">05. Design Principles</p>
+      <p class="text-display-sm mb-3" style="color:#f5f5f0; max-width:36rem;">"Empowering the last mile customer."</p>
+      <p class="mb-16 text-lg" style="color:#95958f;">Every decision filtered through five principles.</p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {[
+          { name: "Simplicity", desc: "Reduce steps" },
+          { name: "Efficiency", desc: "Faster decisions" },
+          { name: "Consistency", desc: "Unified patterns" },
+          { name: "Aesthetics", desc: "Modern feel" },
+          { name: "Scalability", desc: "Built to grow" },
+        ].map(p => (
+          <div style="border:1px solid #262622; border-radius:0.875rem; padding:1.5rem 1.25rem;">
+            <p class="font-bold text-base mb-1" style="color:#f5f5f0;">{p.name}</p>
+            <p class="text-xs" style="color:#52524c;">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       06. THE DESIGN
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mb-16">
+        <p class="cs-label mb-4">06. The Design</p>
+        <h2 class="cs-h2 mb-4">One unified experience.<br>Three personas. Zero module switching.</h2>
+        <p class="text-[var(--color-ink-2)] leading-relaxed">
+          Attendance, leave, timesheets, and requests, all consolidated into a single, insight-driven overview. Proactive nudges surface what needs attention. Clock-in is always visible.
+        </p>
+      </div>
+
+      <ScreenGallery
+        id="tm-personas"
+        screens={[
+          {
+            video: "/images/work/time-management/tm-employee",
+            poster: "/images/work/time-management/tm-employee-poster.jpg",
+            name: "Employee",
+            alt: "Employee view, clocking in, applying for time off, and seeing leave balance without switching modules",
+            caption: "one place to clock in, request time off and see a balance, instead of four modules and a guess.",
+          },
+          {
+            video: "/images/work/time-management/tm-manager",
+            poster: "/images/work/time-management/tm-manager-poster.jpg",
+            name: "Manager",
+            alt: "Manager view, approving pending requests, reading team attendance and acting on team insights",
+            caption: "the team's position at a glance: pending approvals, attendance and the nudges worth acting on.",
+          },
+          {
+            video: "/images/work/time-management/tm-hrbp",
+            poster: "/images/work/time-management/tm-hrbp-poster.jpg",
+            name: "HRBP",
+            alt: "HRBP view, searching an employee span of 704 records with designation, reporting manager and today's status",
+            caption: "the same system at org scale, 704 people, filterable, with today's status on every row.",
+          },
+        ]}
+      />
+
+      <!-- ── Shipped product, the payoff of the section ── -->
+      <div class="cs-final" data-reveal>
+        <div class="cs-final-lead">
+          <p class="cs-label mb-3">Shipped. Manager dashboard</p>
+          <p class="cs-final-desc">
+            Pending approvals, team attendance, who's in and who's out, and
+            proactive insights, one screen, no module switching. This is the
+            live product.
+          </p>
+        </div>
+
+        <figure class="cs-final-stage">
+          <video
+            class="cs-final-video"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+            poster="/images/work/time-management/tm-manager-dashboard-poster.jpg"
+            aria-label="Screen recording of the Darwinbox Manager time dashboard: approving pending time-off requests, reviewing team attendance, and reading team insights"
+          >
+            <source src="/images/work/time-management/tm-manager-dashboard.webm" type="video/webm" />
+            <source src="/images/work/time-management/tm-manager-dashboard.mp4" type="video/mp4" />
+          </video>
+        </figure>
+
+        <p class="cs-final-meta">
+          Live in production · 28,547 manager plays · 73.1% play rate
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PERSONAS
+  ══════════════════════════════════════════════════════ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mb-10">
+        <p class="cs-label mb-4">Who we designed for</p>
+        <h2 class="cs-h2">Two distinct mindsets.<br>One unified system.</h2>
+      </div>
+      <div class="cs-split mb-12">
+        <div class="cs-card">
+          <p class="cs-card-kicker">Persona 01</p>
+          <p class="cs-card-title">Employee</p>
+          <p class="cs-card-body">
+            Wants to mark attendance, request time off, fix missed actions, and
+            see their leave balance without hunting for it.
+          </p>
+        </div>
+        <div class="cs-card">
+          <p class="cs-card-kicker">Persona 02</p>
+          <p class="cs-card-title">Manager</p>
+          <p class="cs-card-body">
+            Wants team status at a glance, pending approvals in one place, and
+            enough context to plan the day without opening another module.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-2xl">
+        <p class="cs-label mb-4">The goal we set</p>
+        <p class="text-[var(--color-ink-2)] leading-relaxed mb-4">
+          Put the important tools and information in one place, so people could
+          see what mattered and act without hassle, working the same way
+          regardless of industry, region, or whether they were on mobile or
+          desktop.
+        </p>
+        <p class="text-[var(--color-ink-2)] leading-relaxed">
+          By clearing away the clutter and focusing on what people actually
+          needed, the aim was to help everyone manage their time with less
+          stress.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       07. SEA ROADSHOW
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mb-12">
+        <p class="cs-label mb-4">07. Validation</p>
+        <h2 class="cs-h2 mb-4">Taken to 8 clients across Southeast Asia.</h2>
+        <p class="text-[var(--color-ink-2)] leading-relaxed">
+          Before global rollout, we ran a UX roadshow across Singapore, the Philippines, and Thailand, presenting to Busy Bees, Singlife, Toyota, Security Bank, JG Summit, Cebu Pacific, BPI, and Darwinbox SEA. Real clients, real feedback, before a single line of production code.
+        </p>
+      </div>
+
+      <!-- Client roster, real text rather than a slide of logos -->
+      <p class="cs-label mb-5">Who we presented to</p>
+      <div class="cs-roster mb-10">
+        {[
+          { name: "Busy Bees",        industry: "Education",                  flag: "🇸🇬", country: "Singapore" },
+          { name: "Singlife",         industry: "Banking & Financial Services", flag: "🇸🇬", country: "Singapore" },
+          { name: "Toyota",           industry: "Manufacturing",              flag: "🇵🇭", country: "Philippines" },
+          { name: "Security Bank",    industry: "Banking & Financial Services", flag: "🇵🇭", country: "Philippines" },
+          { name: "JG Summit Holdings", industry: "Multi-industry",           flag: "🇵🇭", country: "Philippines" },
+          { name: "Cebu Pacific",     industry: "Airline & Transportation",   flag: "🇵🇭", country: "Philippines" },
+          { name: "BPI",              industry: "Banking & Financial Services", flag: "🇵🇭", country: "Philippines" },
+          { name: "Darwinbox",        industry: "Internal teams",             flag: "🇸🇬 🇵🇭", country: "Singapore & Philippines" },
+        ].map(c => (
+          <div class="cs-roster-item">
+            <p class="cs-roster-name">{c.name}</p>
+            <p class="cs-roster-industry">{c.industry}</p>
+            <p class="cs-roster-country">
+              <span aria-hidden="true">{c.flag}</span>
+              <span class="sr-only">{c.country}</span>
+              <span class="cs-roster-country-label">{c.country}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <!-- Session photography, individual high-res frames, not a collage -->
+      <p class="cs-label mb-5">On the ground</p>
+      <div class="cs-photos mb-12">
+        {[
+          { f: "session-studio-tiered",       alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", span: 2 },
+          { f: "session-boardroom-dashboard", alt: "Walking a client team through the manager dashboard in a boardroom" },
+          { f: "session-classroom",           alt: "A larger roadshow session presented to client staff in a classroom setting" },
+          { f: "session-manila-boardroom",    alt: "A working session reviewing the designs with a client team" },
+          { f: "busy-bees-team",              alt: "The team at Busy Bees International after a roadshow session" },
+          { f: "toyota-team",                 alt: "The team with client stakeholders at Toyota" },
+          { f: "client-team-group",           alt: "Group photo with a client team following a session" },
+          { f: "client-session-group",        alt: "Group photo with client stakeholders around the working table" },
+        ].map(p => (
+          <figure class={`cs-photo${p.span === 2 ? " cs-photo--wide" : ""}`}>
+            <img
+              src={`/images/work/time-management/roadshow/${p.f}.webp`}
+              alt={p.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
+
+      <!-- What they validated -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-reveal>
+        {[
+          { icon: "✓", text: "Consolidated view", sub: "\"Finally, everything in one place\"" },
+          { icon: "✓", text: "Manager overview", sub: "Team context at a glance" },
+          { icon: "✓", text: "Clock-in widget", sub: "Placement felt natural" },
+          { icon: "✓", text: "Leave lineup", sub: "Who's out, who's in" },
+        ].map(c => (
+          <div class="border border-[var(--color-border)] rounded-xl p-5 bg-[var(--color-surface)]">
+            <p class="text-emerald-500 font-bold mb-2">{c.icon}</p>
+            <p class="font-semibold text-sm text-[var(--color-ink)] mb-1">{c.text}</p>
+            <p class="text-xs text-[var(--color-ink-3)] italic">{c.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       08, IMPACT
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" style="background:#0d0d0c;" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4" style="color:#52524c;">08, Impact</p>
+      <h2 class="text-display-sm mb-4" style="color:#f5f5f0;">Darwinbox became a Gartner Challenger.</h2>
+      <p class="text-lg mb-16" style="color:#95958f; max-width:42rem;">
+        The WFM score climbed from 2.9 to 3.5 by 2025, the highest it has ever been. Time management was cited as a key driver. Over a million employees now use what we built.
+      </p>
+
+      <!-- Gartner graphic, official 2044px asset, sharp on retina -->
+      <figure class="cs-figure mb-16">
+        <img
+          src="/images/work/time-management/gartner-mq-cloud-hcm-2024.webp"
+          alt="Darwinbox positioned as a Challenger in the Gartner Magic Quadrant for Cloud HCM Suites, moving up year on year from 2021 to 2024"
+          width="2044"
+          height="1152"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          Gartner® Magic Quadrant for Cloud HCM Suites, 2024. Darwinbox's
+          position over 2021–2024
+        </figcaption>
+      </figure>
+
+      <!-- ── Adoption, as real data rather than a screenshot ── -->
+      <p class="cs-label mb-5" style="color:#52524c;">Adoption, first weeks after launch</p>
+      <div class="cs-table-wrap mb-16">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th scope="col">Dashboard</th>
+              <th scope="col" class="num">Plays</th>
+              <th scope="col" class="num">Play rate</th>
+              <th scope="col" class="num">Time played</th>
+              <th scope="col" class="num">Engagement</th>
+              <th scope="col" class="num">Unique visitors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Employee Time Dashboard</th>
+              <td class="num">116,374</td>
+              <td class="num">71.6%</td>
+              <td class="num">2,490h</td>
+              <td class="num">49.5%</td>
+              <td class="num">147,357</td>
+            </tr>
+            <tr>
+              <th scope="row">Manager Time Dashboard</th>
+              <td class="num">28,547</td>
+              <td class="num">73.1%</td>
+              <td class="num">758h</td>
+              <td class="num">34.2%</td>
+              <td class="num">34,693</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── What clients said, as text rather than a screenshot ── -->
+      <p class="cs-label mb-6" style="color:#52524c;">What clients said</p>
+      <div class="cs-quotes mb-16">
+        <blockquote class="cs-quote">
+          <p>
+            Really great job on time management, excellent UI and features. The main
+            highlight for me is how it simplified direct-reportee attendance insight,
+            analysis, comparison with the org, and the schedule planner. It will help
+            managers plan the day and save their own time.
+          </p>
+          <footer>
+            <span class="cs-quote-name">Monik Suthar</span>
+            <span class="cs-quote-role">Customer community</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="cs-quote">
+          <p>
+            This is a really excellent addition to the product. It will ease the
+            process and be seen as a productive enhancement. When is this getting
+            implemented?
+          </p>
+          <footer>
+            <span class="cs-quote-name">Pankaj Rajenimbalkar</span>
+            <span class="cs-quote-role">Customer community</span>
+          </footer>
+        </blockquote>
+
+        <blockquote class="cs-quote">
+          <p>
+            This new feature addition to the attendance and leave module looks very
+            impressive. The UI is very engaging. I am sure this will ease the pain of
+            line managers.
+          </p>
+          <footer>
+            <span class="cs-quote-name">Giriraj Mistry</span>
+            <span class="cs-quote-role">Customer community</span>
+          </footer>
+        </blockquote>
+      </div>
+
+      <!-- ── Post-release review, as text rather than a screenshot ── -->
+      <p class="cs-label mb-6" style="color:#52524c;">Post-release review with clients</p>
+      <div class="cs-review">
+        <div class="cs-review-col">
+          <p class="cs-review-head cs-review-head--good">What went well</p>
+          <ul class="cs-review-list">
+            <li>All functionality aligned with user intent</li>
+            <li>Consolidated view of leave and attendance</li>
+            <li>Manager overview of all their reports</li>
+            <li>Evident clock-in widget to address missed ones</li>
+            <li>Leave lineup identified as a standout feature</li>
+          </ul>
+          <p class="cs-review-quote">
+            “Now everything's in one place, and we look forward to enabling this.”
+            <span>Toyota</span>
+          </p>
+          <p class="cs-review-quote">
+            “Time module is more detailed than before.”
+            <span>Shakey's</span>
+          </p>
+        </div>
+
+        <div class="cs-review-col">
+          <p class="cs-review-head cs-review-head--ask">Areas of improvement / asks</p>
+          <ul class="cs-review-list">
+            <li>Dashboard utility with just leave data, when attendance is not enabled</li>
+            <li>Offline capability in mobile, leave application for desk-less employees with limited connectivity</li>
+          </ul>
+          <p class="cs-review-quote">
+            “Time dashboard with only leave data, what would it look like?”
+            <span>Busy Bees</span>
+          </p>
+          <p class="cs-review-note">
+            Most clients did not have the employee-shifts use case. Those that did
+            asked for a separate deep-dive call on scheduler and timesheets.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       09. REFLECTION
+  ══════════════════════════════════════════════════════ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl mx-auto">
+        <p class="cs-label mb-4">09. Reflection</p>
+        <h2 class="cs-h2 mb-8">What I'd do differently.</h2>
+        <div class="space-y-6 text-[var(--color-ink-2)] leading-relaxed">
+          <p>
+            The biggest lesson: commit to the data earlier. The card sorting was unambiguous about 2-column from week one. We spent too long exploring 3-column because it <em>felt</em> more flexible. Trust the research.
+          </p>
+          <p>
+            The SEA roadshow should have happened at wireframe stage, not near-final. The leave-only dashboard request from Busy Bees was valid, we added it to the backlog instead of building it in.
+          </p>
+          <p>
+            The Gartner uplift validated the strategic direction. But the 1.16M plays and 73.1% engagement rate are what I'm proudest of, people are genuinely using what we built.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PREV / NEXT
+  ══════════════════════════════════════════════════════ -->
+  <div class="border-t border-[var(--color-border)]">
+    <div class="container-pg py-12 flex justify-end items-center gap-8">
+      <a href="/work/workflows-journeys" class="flex items-center gap-3 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors text-right">
+        <div>
+          <p class="cs-label mb-0.5">Next</p>
+          <p class="font-medium text-sm">Workflows &amp; Journeys</p>
+        </div>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 3L13 9L7 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+</Base>

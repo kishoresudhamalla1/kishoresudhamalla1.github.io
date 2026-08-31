@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720">
+  <rect width="1200" height="720" fill="#111827"/>
+  <rect x="1" y="1" width="1198" height="718" fill="none" stroke="#374151" stroke-width="2"/>
+  <text x="600" y="340" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" fill="#9ca3af">Figma preview placeholder</text>
+  <text x="600" y="380" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#6b7280">Super Agent — replace with a real screenshot in public/screenshots/</text>
+</svg>

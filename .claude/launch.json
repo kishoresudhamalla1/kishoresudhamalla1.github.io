@@ -1,0 +1,33 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Portfolio dev",
+      "runtimeExecutable": "/Users/kishoresudhamalla/.nvm/versions/node/v20.20.2/bin/node",
+      "runtimeArgs": [
+        "/Users/kishoresudhamalla/Desktop/Hanuman_Portfolio folder/node_modules/.bin/astro",
+        "dev",
+        "--host",
+        "--port",
+        "4321"
+      ],
+      "port": 4321
+    },
+    {
+      "name": "Design Ops dashboard",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "/private/tmp/claude-501/-Users-kishoresudhamalla-Desktop-Hanuman-Portfolio-folder/97f57b9c-8bd4-4f7c-9e98-050f9c0d5a6d/scratchpad/designops/Design Ops Dashboard/serve.py"
+      ],
+      "port": 3333
+    },
+    {
+      "name": "Design Ops AI",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "/private/tmp/claude-501/-Users-kishoresudhamalla-Desktop-Hanuman-Portfolio-folder/97f57b9c-8bd4-4f7c-9e98-050f9c0d5a6d/scratchpad/designops-ai/serve.py"
+      ],
+      "port": 3444
+    }
+  ]
+}
