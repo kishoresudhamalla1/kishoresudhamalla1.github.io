@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // With a custom domain: site="https://yourdomain.com", base="/"
 // Without a custom domain: site="https://youruser.github.io", base="/repo-name"
 export default defineConfig({
-  site: process.env.ASTRO_SITE || "https://kishoresudhamalla.github.io",
+  site: process.env.ASTRO_SITE || "https://kishoresudhamalla1.github.io",
   base: process.env.ASTRO_BASE || "/",
   output: "static",
   integrations: [react()],
