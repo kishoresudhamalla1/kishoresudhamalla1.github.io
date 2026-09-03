@@ -1,17 +1,30 @@
 import { useEffect, useState } from "react";
 
+declare global {
+  interface Window {
+    __theme?: { resolve(): string; apply(): void; set(v: "dark" | "light"): void };
+  }
+}
+
 export function DarkModeToggle() {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    setDark(document.documentElement.classList.contains("dark"));
+    const sync = () => setDark(document.documentElement.classList.contains("dark"));
+    sync();
+    // The schedule can flip the theme under us: at the 6:30pm boundary, when
+    // the tab is refocused, or when the OS switches. Follow it, or the icon
+    // ends up showing the opposite of the theme actually on screen.
+    document.addEventListener("themechange", sync);
+    return () => document.removeEventListener("themechange", sync);
   }, []);
 
   const toggle = () => {
     const next = !dark;
     setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+    // Delegated so the button and the pre-paint script share one definition
+    // of what a manual choice means and how long it lasts.
+    window.__theme?.set(next ? "dark" : "light");
   };
 
   return (

@@ -44,14 +44,89 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Dark mode: read stored preference before paint to prevent flash -->
+    <!--
+      Theme. Runs before paint so there is no flash.
+
+      Three rules, in order:
+        1. A manual choice wins, but only for the period it was made in. One
+           click should not switch the schedule off forever.
+        2. Otherwise dark after 6:30pm and before 7am, local time.
+        3. Otherwise dark if the OS is in dark mode, whatever the hour.
+
+      Re-applied on `astro:after-swap`: ViewTransitions copies the incoming
+      document's <html> attributes over the live ones, and the incoming
+      document has no `dark` class because it is added at runtime. Without
+      this, every navigation dropped back to light.
+    -->
     <script is:inline>
       (function () {
-        const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (stored === "dark" || (!stored && prefersDark)) {
-          document.documentElement.classList.add("dark");
+        var DARK_FROM = 18.5; // 6:30pm
+        var DARK_TO = 7; // 7:00am
+
+        function isNight(d) {
+          var h = d.getHours() + d.getMinutes() / 60;
+          return h >= DARK_FROM || h < DARK_TO;
         }
+
+        // Changes at each 6:30pm / 7am boundary, so an override expires with
+        // the period rather than persisting indefinitely.
+        function periodKey(d) {
+          var night = isNight(d);
+          var day = new Date(d);
+          if (night && d.getHours() < DARK_TO) day.setDate(day.getDate() - 1);
+          return [day.getFullYear(), day.getMonth() + 1, day.getDate(), night ? "n" : "d"].join("-");
+        }
+
+        function autoTheme(d) {
+          var osDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          return osDark || isNight(d) ? "dark" : "light";
+        }
+
+        function resolve() {
+          var now = new Date();
+          try {
+            var raw = localStorage.getItem("theme-override");
+            if (raw) {
+              var o = JSON.parse(raw);
+              if (o && o.period === periodKey(now)) return o.value;
+              localStorage.removeItem("theme-override");
+            }
+          } catch (e) {}
+          return autoTheme(now);
+        }
+
+        function apply() {
+          var t = resolve();
+          var isDark = t === "dark";
+          if (document.documentElement.classList.contains("dark") !== isDark) {
+            document.documentElement.classList.toggle("dark", isDark);
+            document.dispatchEvent(new CustomEvent("themechange", { detail: t }));
+          }
+        }
+
+        function set(value) {
+          try {
+            localStorage.setItem(
+              "theme-override",
+              JSON.stringify({ value: value, period: periodKey(new Date()) })
+            );
+          } catch (e) {}
+          document.documentElement.classList.toggle("dark", value === "dark");
+          document.dispatchEvent(new CustomEvent("themechange", { detail: value }));
+        }
+
+        try { localStorage.removeItem("theme"); } catch (e) {} // legacy key
+
+        window.__theme = { resolve: resolve, apply: apply, set: set };
+        document.documentElement.classList.toggle("dark", resolve() === "dark");
+
+        document.addEventListener("astro:after-swap", apply);
+        // Cross the 6:30pm boundary while the tab is open and it follows.
+        setInterval(apply, 60000);
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) apply();
+        });
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", apply);
       })();
     </script>
     <ViewTransitions />
