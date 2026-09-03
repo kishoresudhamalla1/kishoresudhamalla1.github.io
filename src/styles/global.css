@@ -6,8 +6,11 @@
 /* ─── Design tokens ─────────────────────────────────────────────────────── */
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  /* Display face for headlines and the wordmark; body stays Inter for reading. */
-  --font-display: "Schibsted Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Headlines and body are the same family. Inter carries an optical-size
+     axis, so it tightens its own spacing and apertures at display sizes,
+     which is the only reason a separate display face was needed. A second
+     neo-grotesque alongside Inter reads as inconsistency, not hierarchy. */
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Pure white light palette */
@@ -387,14 +390,14 @@ body::before {
 }
 
 /* ─── Display type ────────────────────────────────────────────────────────
- * Schibsted Grotesk carries the headlines and the wordmark; Inter keeps the
- * body, where it reads better at small sizes. JetBrains Mono is reserved for
- * the small tracked labels ("SELECTED WORK", "01 / 2025").
+ * One family, two optical sizes. Inter's `opsz` axis is requested in the font
+ * link, so headlines get the display cut automatically; JetBrains Mono stays
+ * reserved for the small tracked labels ("SELECTED WORK", "01 / 2025").
  */
 h1, h2, h3,
 .text-display, .text-display-sm, .cs-h2, .r-name {
   font-family: var(--font-display);
-  font-feature-settings: "ss01" 1;
+  font-optical-sizing: auto;
 }
 .text-label, .cs-label, .land-h, .card-k, .split-k, .layer-n, .r-section-label {
   font-family: var(--font-mono);
