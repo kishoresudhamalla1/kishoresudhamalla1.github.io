@@ -260,6 +260,37 @@ import Base from '../layouts/Base.astro';
     line-height: 1.7;
   }
 
+  .r-rec {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+    row-gap: 0.4rem;
+  }
+  .r-rec li {
+    position: relative;
+    padding-left: 0.8rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #4a4a45;
+  }
+  .r-rec li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 4px;
+    height: 1px;
+    background: #a3a39c;
+  }
+  .r-rec em { font-style: italic; }
+
+  @media (max-width: 640px) {
+    .r-rec { grid-template-columns: 1fr; }
+  }
+
   /* Personal note */
   .r-personal {
     margin-top: 2rem;
@@ -331,6 +362,8 @@ import Base from '../layouts/Base.astro';
 
     .r-bottom            { gap: 1.35rem; margin-top: 0.4rem; }
     .r-section--recognition { margin-top: 0.35rem; }
+    .r-rec    { row-gap: 0.2rem; column-gap: 1.35rem; }
+    .r-rec li { font-size: 0.72rem; line-height: 1.45; }
     .r-skills-group      { margin-bottom: 0.5rem; }
     .r-skills-group-name { font-size: 0.72rem; margin-bottom: 0.05rem; }
     .r-skills-list       { font-size: 0.72rem; line-height: 1.5; }
@@ -576,7 +609,12 @@ import Base from '../layouts/Base.astro';
 
       <div class="r-section r-section--recognition">
         <div class="r-section-label">Recognition</div>
-        <div class="r-skills-list">Darwinbox named Gartner Challenger 2024 (WFM), following the Time Management redesign · Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand</div>
+        <ul class="r-rec">
+          <li>Darwinbox named Gartner Challenger 2024 (WFM), following the Time Management redesign</li>
+          <li>Five Best Contributor of the Quarter awards at Darwinbox</li>
+          <li>Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand</li>
+          <li>Best Graphic Designer of the Year, <em>Chhota Bheem and the Curse of Damyaan</em></li>
+        </ul>
       </div>
     </div>
 
