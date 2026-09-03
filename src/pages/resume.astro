@@ -231,19 +231,22 @@ import Base from '../layouts/Base.astro';
   }
 
   /* Skills + Education two-col */
-  .r-bottom {
+  /* Skills and Education used to sit side by side, which made two entries of
+     education look sparse next to four groups of skills. Each is now a
+     full-width band and the groups inside it flow in two columns, so both
+     sections fill their row and neither is judged against the other. */
+  .r-bottom > .r-section { margin-bottom: 1.75rem; }
+  .r-bottom > .r-section:last-child { margin-bottom: 0; }
+
+  .r-cols {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* Columns need air, rows do not: a single `gap` stacked the row gap on
-       top of the section margin and opened a hole above Recognition. */
     column-gap: 2rem;
-    row-gap: 0;
+    align-items: start;
   }
-  /* the two columns are the last thing in their row, so they carry no tail */
-  .r-bottom > .r-section { margin-bottom: 0; }
-  /* Recognition is neither a skill nor a qualification, so it sits below both
-     columns rather than being tucked into one of them. */
-  .r-section--recognition { grid-column: 1 / -1; margin-top: 1.75rem; margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .r-cols { grid-template-columns: 1fr; }
+  }
   /* Groups bind internally and separate externally: the gap below a name is
      now a sixth of the gap between groups, so four entries read as four
      blocks rather than eight evenly spaced lines. */
@@ -363,8 +366,9 @@ import Base from '../layouts/Base.astro';
     .r-role-text + .r-role-text { margin-top: 0.3rem; }
     .r-role-divider { margin: 0.3rem 0; }
 
-    .r-bottom            { gap: 1.35rem; margin-top: 0.4rem; }
-    .r-section--recognition { margin-top: 0.35rem; }
+    .r-bottom            { margin-top: 0.4rem; }
+    .r-bottom > .r-section { margin-bottom: 0.75rem; }
+    .r-cols              { column-gap: 1.35rem; }
     .r-rec    { row-gap: 0.2rem; column-gap: 1.35rem; }
     .r-rec li { font-size: 0.72rem; line-height: 1.45; }
     .r-skills-group      { margin-bottom: 0.5rem; }
@@ -578,37 +582,41 @@ import Base from '../layouts/Base.astro';
       </div>
     </div>
 
-    <!-- Bottom grid: Skills + Education -->
+    <!-- Bottom: full-width bands, each flowing in two columns -->
     <div class="r-bottom">
       <div class="r-section">
         <div class="r-section-label">Skills</div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">Complex systems</div>
-          <div class="r-skills-list">Enterprise UX · systems thinking · platform design · workflows &amp; journeys · multi-role permissions · global rollouts</div>
-        </div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">AI &amp; agentic UX</div>
-          <div class="r-skills-list">Human–AI responsibility models · explainability and evidence · confidence and uncertainty · human-in-the-loop approval · failure and recovery</div>
-        </div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">Research &amp; direction</div>
-          <div class="r-skills-list">Jobs to Be Done · card sorting · enterprise client validation · design sprints · stakeholder alignment</div>
-        </div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">Prototyping &amp; building</div>
-          <div class="r-skills-list">Claude Code · Figma · Figma MCP · Adobe CC</div>
+        <div class="r-cols">
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">Complex systems</div>
+            <div class="r-skills-list">Enterprise UX · systems thinking · platform design · workflows &amp; journeys · multi-role permissions · global rollouts</div>
+          </div>
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">AI &amp; agentic UX</div>
+            <div class="r-skills-list">Human–AI responsibility models · explainability and evidence · confidence and uncertainty · human-in-the-loop approval · failure and recovery</div>
+          </div>
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">Research &amp; direction</div>
+            <div class="r-skills-list">Jobs to Be Done · card sorting · enterprise client validation · design sprints · stakeholder alignment</div>
+          </div>
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">Prototyping &amp; building</div>
+            <div class="r-skills-list">Claude Code · Figma · Figma MCP · Adobe CC</div>
+          </div>
         </div>
       </div>
 
       <div class="r-section">
         <div class="r-section-label">Education &amp; Certifications</div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">ISBM</div>
-          <div class="r-skills-list">Bachelor's in Visual Communications</div>
-        </div>
-        <div class="r-skills-group">
-          <div class="r-skills-group-name">Xperian · IBM</div>
-          <div class="r-skills-list">Digital Product Design · Enterprise Design Thinking · Essentials for AI</div>
+        <div class="r-cols">
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">ISBM</div>
+            <div class="r-skills-list">Bachelor's in Visual Communications</div>
+          </div>
+          <div class="r-skills-group">
+            <div class="r-skills-group-name">Xperian · IBM</div>
+            <div class="r-skills-list">Digital Product Design · Enterprise Design Thinking · Essentials for AI</div>
+          </div>
         </div>
       </div>
 
