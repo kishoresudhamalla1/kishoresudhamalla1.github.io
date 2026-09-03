@@ -115,6 +115,29 @@
     });
   }
 
+  /**
+   * Snap every counter to its final value before printing.
+   *
+   * Counters are set to zero on init and only animate once scrolled into
+   * view, so printing a page before that happened committed the placeholder
+   * to paper. On the resume that meant the headline metrics could print as
+   * "0 yrs", or mid-animation as "13+ yrs" instead of "16+ yrs" — the first
+   * numbers a reader sees, wrong, in the artefact that gets emailed on.
+   */
+  function settleCounters() {
+    document.querySelectorAll<HTMLElement>("[data-count][data-count-parsed]").forEach((el) => {
+      const p: Parsed = JSON.parse(el.dataset.countParsed!);
+      const hasGroups = (el.dataset.countGroups ?? "") === "1";
+      el.textContent = p.prefix + grouped(p.target, p.decimals, hasGroups) + p.suffix;
+    });
+  }
+
+  window.addEventListener("beforeprint", settleCounters);
+  // Safari fires no beforeprint for the print shortcut; the media query does.
+  window.matchMedia("print").addEventListener?.("change", (e) => {
+    if (e.matches) settleCounters();
+  });
+
   initCounters();
   document.addEventListener("astro:page-load", initCounters);
 </script>

@@ -158,7 +158,7 @@ import Base from '../layouts/Base.astro';
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #72726c;   /* AA: 4.84:1 on white */
+    color: #0d0d0c;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 0.5px solid #e8e8e2;
@@ -182,7 +182,7 @@ import Base from '../layouts/Base.astro';
     margin-bottom: 0.15rem;
   }
   .r-role-date {
-    font-size: 0.6rem;
+    font-size: 0.5625rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: #72726c;   /* AA: 4.84:1 on white */
@@ -190,7 +190,7 @@ import Base from '../layouts/Base.astro';
   }
   .r-role-body {}
   .r-role-title {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #0d0d0c;
     margin-bottom: 0.3rem;
@@ -202,6 +202,10 @@ import Base from '../layouts/Base.astro';
     line-height: 1.7;
     margin: 0;
   }
+  /* Consecutive paragraphs inside one role were butting together into a wall.
+     Set on the adjacent sibling so a role's first line still sits tight under
+     its title. */
+  .r-role-text + .r-role-text { margin-top: 0.55rem; }
   .r-role-divider {
     height: 0.5px;
     background: #e8e8e2;
@@ -227,18 +231,28 @@ import Base from '../layouts/Base.astro';
   .r-bottom {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    /* Columns need air, rows do not: a single `gap` stacked the row gap on
+       top of the section margin and opened a hole above Recognition. */
+    column-gap: 2rem;
+    row-gap: 0;
   }
+  /* the two columns are the last thing in their row, so they carry no tail */
+  .r-bottom > .r-section { margin-bottom: 0; }
+  /* Recognition is neither a skill nor a qualification, so it sits below both
+     columns rather than being tucked into one of them. */
+  .r-section--recognition { grid-column: 1 / -1; margin-top: 1.75rem; margin-bottom: 0; }
+  /* Groups bind internally and separate externally: the gap below a name is
+     now a sixth of the gap between groups, so four entries read as four
+     blocks rather than eight evenly spaced lines. */
   .r-skills-group {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
   .r-skills-group-name {
-    font-size: 0.5625rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #72726c;   /* AA: 4.84:1 on white */
-    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+    color: #0d0d0c;
+    margin-bottom: 0.15rem;
   }
   .r-skills-list {
     font-size: 0.75rem;
@@ -312,11 +326,13 @@ import Base from '../layouts/Base.astro';
     .r-role-date    { font-size: 0.68rem; }
     .r-role-title   { font-size: 0.74rem; margin-bottom: 0.1rem; }
     .r-role-text    { font-size: 0.78rem; line-height: 1.5; }
+    .r-role-text + .r-role-text { margin-top: 0.3rem; }
     .r-role-divider { margin: 0.3rem 0; }
 
     .r-bottom            { gap: 1.35rem; margin-top: 0.4rem; }
-    .r-skills-group      { margin-bottom: 0.35rem; }
-    .r-skills-group-name { font-size: 0.62rem; margin-bottom: 0.1rem; }
+    .r-section--recognition { margin-top: 0.35rem; }
+    .r-skills-group      { margin-bottom: 0.5rem; }
+    .r-skills-group-name { font-size: 0.72rem; margin-bottom: 0.05rem; }
     .r-skills-list       { font-size: 0.72rem; line-height: 1.5; }
 
 
@@ -509,10 +525,10 @@ import Base from '../layouts/Base.astro';
           <div class="r-role-note">Side project · in daily use</div>
         </div>
         <div class="r-role-body">
-          <div class="r-role-title">A delivery system for a design org, design through to working product</div>
+          <div class="r-role-title">A delivery system for a design org: design through to working product</div>
           <p class="r-role-text">
             Jira reported tickets, not whether a team was on pace. I designed and built a tool
-            that syncs a live Jira board and reports delivery, capacity and slipped commitments, vanilla JavaScript, no framework, written in Claude Code. In daily use.
+            that syncs a live Jira board and reports delivery, capacity and slipped commitments. Vanilla JavaScript, no framework, written in Claude Code. In daily use.
           </p>
           <p class="r-role-text">
             Then added the layer I actually wanted to design: an AI that explains <em>why</em> a
@@ -556,16 +572,17 @@ import Base from '../layouts/Base.astro';
           <div class="r-skills-group-name">Xperian · IBM</div>
           <div class="r-skills-list">Digital Product Design · Enterprise Design Thinking · Essentials for AI</div>
         </div>
-        <div class="r-skills-group" style="margin-top:1rem;">
-          <div class="r-skills-group-name">Recognition</div>
-          <div class="r-skills-list">Darwinbox named Gartner Challenger 2024 (WFM), following the Time Management redesign · Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand</div>
-        </div>
+      </div>
+
+      <div class="r-section r-section--recognition">
+        <div class="r-section-label">Recognition</div>
+        <div class="r-skills-list">Darwinbox named Gartner Challenger 2024 (WFM), following the Time Management redesign · Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand</div>
       </div>
     </div>
 
     <!-- Personal note -->
     <p class="r-personal">
-      I've always learned by making, a product concept, a visual experiment, an
+      I've always learned by making: a product concept, a visual experiment, an
       AI prototype, or a new tool I'm trying to understand. Always open to
       conversations about complex products, enterprise systems, and AI-driven
       product experiences.
