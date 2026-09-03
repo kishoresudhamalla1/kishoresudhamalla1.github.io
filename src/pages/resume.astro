@@ -13,13 +13,17 @@ import Base from '../layouts/Base.astro';
     position: relative;
   }
 
-  /* Download control — sits with the sheet; the page title and the name on the
-     résumé itself already say what this is, so the old label bar was noise. */
+  /* Download control.
+     Previously absolute at the sheet's top-right, which landed it on top of
+     the 16px corner radius and crowded the name. It now sits in its own row
+     above the sheet, the way a document toolbar does, so the sheet edge stays
+     unbroken. `.dl-bar` is already hidden by the print block. */
+  .dl-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.875rem;
+  }
   .dl-btn {
-    position: absolute;
-    top: 1.5rem;
-    right: 2rem;
-    z-index: 2;
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
@@ -35,7 +39,6 @@ import Base from '../layouts/Base.astro';
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   .dl-btn:hover { color: var(--color-ink); border-color: var(--color-ink); }
-  @media (max-width: 640px) { .dl-btn { position: static; margin-bottom: 1rem; } }
 
   .sheet {
     --color-ink: #0d0d0c;
@@ -378,10 +381,12 @@ import Base from '../layouts/Base.astro';
 <div class="rs-wrap">
 
   <!-- Download bar -->
-  <button class="dl-btn no-print" onclick="window.print()">
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M1.5 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Save as PDF
-  </button>
+  <div class="dl-bar no-print">
+    <button class="dl-btn" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M1.5 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Save as PDF
+    </button>
+  </div>
 
   <!-- ══ Resume sheet ══════════════════════════════════════════ -->
   <div class="sheet">
