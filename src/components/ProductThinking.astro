@@ -14,9 +14,9 @@ const principles = [
   },
   {
     number: "03",
-    title: "Create clarity",
+    title: "Say what's actually uncertain",
     detail:
-      "I use flows, models, prototypes and conversations to help teams understand the problem, compare options and align on direction.",
+      "Most disagreements on a hard problem are really disagreements about what we don't know yet. I try to name that directly instead of designing around it.",
   },
   {
     number: "04",
@@ -36,9 +36,13 @@ const principles = [
 <section id="thinking" class="border-t border-[var(--color-border)] sec-y md:sec-y">
   <div class="container-pg">
     <p class="text-label mb-4 text-[var(--color-ink-3)]" data-reveal>How I think</p>
-    <h2 class="text-display-sm mb-14 max-w-xl" data-reveal data-delay="1">
+    <h2 class="text-display-sm mb-5 max-w-xl" data-reveal data-delay="1">
       How I approach product problems.
     </h2>
+    <p class="text-base leading-relaxed text-[var(--color-ink-2)] mb-14 max-w-xl" data-reveal data-delay="1">
+      This hasn't changed with AI in the picture. If anything it matters more, because
+      the cost of skipping it now shows up as a system that acts on the wrong assumption.
+    </p>
 
     <div class="grid gap-0 divide-y divide-[var(--color-border)] md:grid-cols-2 md:gap-x-16 md:gap-y-0 md:divide-y-0">
       {principles.map((p, i) => (
