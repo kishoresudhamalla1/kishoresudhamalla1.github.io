@@ -151,11 +151,13 @@ const PROJECTS = [
   @media (min-width: 900px) {
     /* title+tags | thumbnail | meta+blurb | arrow, one row. The thumbnail
        column exists in the grid at rest even when empty, so nothing shifts
-       when the image fades in. */
+       when the image fades in. Top-aligned: with center alignment the
+       thumbnail and description floated in the middle of the row instead of
+       level with the top of a title that runs two or three lines. */
     .pl-top {
       grid-template-columns: 1fr 11.5rem 19rem auto;
       grid-template-areas: "main thumb aside arrow";
-      align-items: center;
+      align-items: start;
     }
     .pl-thumb { grid-area: thumb; }
   }
@@ -236,6 +238,12 @@ const PROJECTS = [
     flex-shrink: 0; align-self: center;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
                 background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  @media (min-width: 900px) {
+    /* Row is top-aligned now; nudge the circle down so its centre lands
+       near the title's cap-height instead of sitting flush with the grid's
+       raw top edge. */
+    .pl-arrow { align-self: start; margin-top: 0.2rem; }
   }
 
   @media (hover: hover) {

@@ -33,7 +33,7 @@ const ROLES = [
 
 <section id="experience" class="xp" data-reveal>
   <div class="container-pg">
-    <p class="xp-eyebrow"><span class="xp-rule"></span>Relevant experience</p>
+    <p class="xp-eyebrow"><span class="xp-rule"></span>My experience</p>
 
     <div class="xp-list">
       {ROLES.map((r) => (
@@ -86,7 +86,7 @@ const ROLES = [
     align-items: start;
   }
   @media (min-width: 860px) {
-    .xp-row { grid-template-columns: 9rem 1fr 1.15fr; align-items: baseline; }
+    .xp-row { grid-template-columns: 9rem 1fr 1.15fr; align-items: start; }
   }
 
   .xp-period {
@@ -95,6 +95,9 @@ const ROLES = [
     letter-spacing: 0.04em;
     color: var(--color-ink-3);
     white-space: nowrap;
+  }
+  @media (min-width: 860px) {
+    .xp-period { padding-top: 0.5rem; }
   }
 
   .xp-company {
