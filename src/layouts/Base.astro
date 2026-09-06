@@ -129,6 +129,33 @@ const {
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", apply);
       })();
     </script>
+    <!--
+      Reload/re-visit landed mid-page instead of at the hero.
+
+      Chrome caches a scroll offset against each history entry for a tab and
+      restores it whenever that exact URL loads again -- not only on a
+      back/forward navigation, which `history.scrollRestoration` governs,
+      but also on a plain reload or re-entering the same address. A visitor
+      who scrolls the homepage and later reloads it, or returns to a tab
+      that already had it open, lands wherever they'd scrolled to before,
+      with no hero in view and no obvious reason why.
+
+      Back/forward genuinely restoring scroll is correct and left alone
+      (confirmed: PerformanceNavigationTiming.type is "back_forward" there,
+      never "navigate" or "reload"). This only forces the reset for the two
+      entry types where landing at the top is actually what a visitor wants,
+      and only when there's no #anchor to honour instead.
+    -->
+    <script is:inline>
+      (function () {
+        var nav = performance.getEntriesByType("navigation")[0];
+        var type = nav ? nav.type : "navigate";
+        if (!location.hash && (type === "navigate" || type === "reload")) {
+          if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+          window.scrollTo(0, 0);
+        }
+      })();
+    </script>
     <ViewTransitions />
   </head>
   <body class="bg-[var(--color-bg)] text-[var(--color-ink)] transition-colors duration-200">
