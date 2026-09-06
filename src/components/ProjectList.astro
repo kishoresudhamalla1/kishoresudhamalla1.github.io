@@ -16,26 +16,20 @@ const IMG = "/images/work";
 
 const PROJECTS = [
   {
-    index: "01",
-    year: "2023",
     href: "/work/time-management-system",
     title: "Rethinking Time Management for a global workforce",
-    meta: "Darwinbox · Senior UX Manager",
+    meta: "Darwinbox · Senior UX Manager · Enterprise UX",
     blurb:
       "Reorganised an eight-year-old enterprise module around what managers need to decide first. Validated with 8 enterprise clients before global rollout.",
-    tags: ["Enterprise UX", "Product Transformation", "Global HR Tech", "Complex Workflows"],
     img: `${IMG}/time-management/tm-manager-dashboard-poster.jpg`,
     alt: "Time Management, the redesigned manager dashboard",
   },
   {
-    index: "02",
-    year: "2026",
     href: "/work/design-ops",
     title: "Building an AI that explains why delivery slipped",
-    meta: "Darwinbox · Designed and built solo",
+    meta: "Darwinbox · Designed and built solo · AI-native",
     blurb:
       "An AI that explains why a commitment moved, cites the records it read, and measures whether the fix held.",
-    tags: ["AI-Native", "Agentic UX", "Designed & built", "0 → 1"],
     img: `${IMG}/design-ops/hero-window.webp`,
     alt: "The Design Ops dashboard, delivery overview for the live quarter",
   },
@@ -58,13 +52,10 @@ const PROJECTS = [
           <div class="pl-top">
             <div class="pl-main">
               <h3 class="pl-name">
-                <span class="pl-dash" aria-hidden="true"></span>
                 {p.title}
                 {p.status && <span class="pl-status">{p.status}</span>}
               </h3>
-              <div class="pl-tags">
-                {p.tags.map((t) => <span class="pl-tag">{t}</span>)}
-              </div>
+              <p class="pl-kicker"><Fragment set:html={p.meta} /></p>
             </div>
 
             {p.img && (
@@ -74,7 +65,6 @@ const PROJECTS = [
             )}
 
             <div class="pl-aside">
-              <p class="pl-meta"><Fragment set:html={p.meta} /></p>
               <p class="pl-blurb">{p.blurb}</p>
             </div>
 
@@ -114,7 +104,7 @@ const PROJECTS = [
   .pl-title {
     font-family: var(--font-display);
     font-size: clamp(2.5rem, 7vw, 5.25rem);
-    font-weight: 700; line-height: 0.95; letter-spacing: -0.04em;
+    font-weight: 500; line-height: 0.95; letter-spacing: -0.045em;
     color: var(--color-ink); margin: 0;
   }
   .pl-count {
@@ -173,36 +163,14 @@ const PROJECTS = [
   .pl-name {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 3.4vw, 2.5rem);
-    font-weight: 700; line-height: 1.03; letter-spacing: -0.035em;
+    font-weight: 600; line-height: 1.03; letter-spacing: -0.04em;
     color: var(--color-ink); margin: 0;
     transition: opacity 0.3s ease;
   }
 
-  /* The short dash that steps in before the title on hover — reserved
-     width at rest so the title doesn't itself shift sideways when it
-     appears, only the dash fades and slides in. */
-  .pl-dash {
-    display: inline-block;
-    width: 0.9em;
-    margin-right: 0.1em;
-    opacity: 0;
-    transform: translateX(-0.4em);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .pl-dash::before {
-    content: "—";
-    color: var(--color-ink-3);
-  }
-  @media (hover: hover) {
-    .pl-row:hover .pl-dash,
-    .pl-row:focus-visible .pl-dash { opacity: 1; transform: none; }
-  }
-  @media (hover: none) {
-    .pl-dash { display: none; }
-  }
-
-  /* Sits on the title baseline rather than in the tag row: it qualifies the
-     project, it is not another thing the project is about. */
+  /* Sits on the title baseline: it qualifies the project, it is not
+     another thing the project is about. Plain text, not a pill — a single
+     status word doesn't need a border to be legible. */
   .pl-status {
     display: inline-block; vertical-align: middle;
     margin-left: 0.75rem; transform: translateY(-0.15em);
@@ -210,18 +178,16 @@ const PROJECTS = [
     font-size: 0.625rem; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--color-ink-3);
-    border: 1px solid var(--color-border);
-    border-radius: 100px; padding: 0.25rem 0.6rem;
     white-space: nowrap;
   }
 
-  .pl-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.9rem; }
-  .pl-tag {
+  /* One plain line under the title — company, role, the one keyword that
+     matters — in place of a row of bordered pills that repeated words
+     already in the title and description. */
+  .pl-kicker {
     font-family: var(--font-mono);
-    font-size: 0.625rem; letter-spacing: 0.07em; text-transform: uppercase;
-    color: var(--color-ink-3);
-    border: 1px solid var(--color-border);
-    border-radius: 100px; padding: 0.28rem 0.7rem;
+    font-size: 0.75rem; letter-spacing: 0.03em;
+    color: var(--color-ink-3); margin: 0.6rem 0 0;
   }
 
   /* ── the thumbnail ─────────────────────────────────────────────────
@@ -259,11 +225,6 @@ const PROJECTS = [
     .pl-row:focus-visible .pl-thumb { opacity: 1; transform: none; }
   }
 
-  .pl-meta {
-    font-family: var(--font-mono);
-    font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--color-ink-3); margin-bottom: 0.5rem;
-  }
   .pl-blurb { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2); }
   .pl-aside { align-self: start; padding-top: 0.35rem; }
 
@@ -288,6 +249,6 @@ const PROJECTS = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pl-row, .pl-thumb, .pl-dash, .pl-arrow, .pl-name { transition: none; }
+    .pl-row, .pl-thumb, .pl-arrow, .pl-name { transition: none; }
   }
 </style>
