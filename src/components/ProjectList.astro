@@ -56,8 +56,6 @@ const PROJECTS = [
       {PROJECTS.map((p) => (
         <a class="pl-row" href={p.href} data-pl-row>
           <div class="pl-top">
-            <span class="pl-index">{p.index} / {p.year}</span>
-
             <div class="pl-main">
               <h3 class="pl-name">
                 <span class="pl-dash" aria-hidden="true"></span>
@@ -143,43 +141,33 @@ const PROJECTS = [
     }
   }
 
-  /* Below 900px, four grid children (index, main, aside, arrow) were
-     auto-placing into a bare two-column grid: index+aside landed in column
-     one and main+arrow in column two, which squeezed the description into
-     an ~80px column that wrapped almost one word per line. Named areas fix
-     the placement explicitly instead of relying on source-order luck. */
+  /* Named areas rather than relying on source order + implicit auto-flow —
+     that previously squeezed the description into an ~80px column on
+     mobile when a bare two-column grid auto-placed four children. */
   .pl-top {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      "index arrow"
-      "main  main"
+      "main  arrow"
       "aside aside";
     gap: 0.75rem 1.25rem;
     align-items: center;
     padding: clamp(1.6rem, 3.5vw, 2.4rem) clamp(0rem, 2vw, 1.25rem);
   }
-  .pl-index  { grid-area: index; }
   .pl-main   { grid-area: main; }
   .pl-aside  { grid-area: aside; }
   .pl-arrow  { grid-area: arrow; justify-self: end; }
 
   @media (min-width: 900px) {
-    /* index | title+tags | thumbnail | meta+blurb | arrow, one row. The
-       thumbnail column exists in the grid at rest even when empty, so
-       nothing shifts when the image fades in. */
+    /* title+tags | thumbnail | meta+blurb | arrow, one row. The thumbnail
+       column exists in the grid at rest even when empty, so nothing shifts
+       when the image fades in. */
     .pl-top {
-      grid-template-columns: 7rem 1fr 6.5rem 19rem auto;
-      grid-template-areas: "index main thumb aside arrow";
+      grid-template-columns: 1fr 11.5rem 19rem auto;
+      grid-template-areas: "main thumb aside arrow";
       align-items: center;
     }
     .pl-thumb { grid-area: thumb; }
-  }
-
-  .pl-index {
-    font-family: var(--font-mono);
-    font-size: 0.75rem; letter-spacing: 0.04em;
-    color: var(--color-ink-3); white-space: nowrap; align-self: start; padding-top: 0.5rem;
   }
 
   .pl-name {
@@ -246,16 +234,19 @@ const PROJECTS = [
     display: none;
   }
   @media (min-width: 900px) {
+    /* Sized to read as an actual preview of the case study, not a favicon —
+       roughly the height of the two-line description beside it. */
     .pl-thumb {
       display: block;
-      width: 6rem;
-      height: 4rem;
-      border-radius: 0.6rem;
+      width: 100%;
+      max-width: 10rem;
+      aspect-ratio: 16 / 10;
+      border-radius: 0.75rem;
       overflow: hidden;
       border: 1px solid var(--color-border);
       background: var(--color-surface);
       opacity: 0;
-      transform: scale(0.96);
+      transform: scale(0.97);
       transition: opacity 0.35s ease, transform 0.35s ease;
     }
     .pl-thumb img {
