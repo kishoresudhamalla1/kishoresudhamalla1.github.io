@@ -1,11 +1,15 @@
 ---
 /**
- * Selected work — a ledger of projects that opens on hover.
+ * Selected work — a ledger of projects that previews on hover.
  *
- * Each row is a link. Hovering (or focusing) expands it to reveal the case
- * study's own hero image, so the list reads as an index at rest and as a
- * preview in motion. Keyboard and touch both work: focus opens the row, and
- * on coarse pointers every row is open by default since there is no hover.
+ * Previously the row expanded on hover, animating open a full 16:9 image
+ * that pushed every row below it down the page — the further down the list,
+ * the more it moved. Now the row's height never changes: a small thumbnail
+ * fades into space the row already reserves, the way wonderful.ai/careers
+ * handles its "Main Roles" list. Hovering shows more without moving anything.
+ *
+ * Touch has no hover, so the thumbnail is simply not part of the mobile
+ * layout rather than always-open — the list stays a clean, tappable index.
  */
 
 const IMG = "/images/work";
@@ -45,7 +49,7 @@ const PROJECTS = [
         <p class="pl-eyebrow"><span class="pl-rule"></span>Selected work</p>
         <h2 class="pl-title">Recent<br />projects</h2>
       </div>
-      <p class="pl-count">Three case studies / &rsquo;23&ndash;&rsquo;26</p>
+      <p class="pl-count">Two case studies / &rsquo;23&ndash;&rsquo;26</p>
     </div>
 
     <div class="pl-list">
@@ -56,6 +60,7 @@ const PROJECTS = [
 
             <div class="pl-main">
               <h3 class="pl-name">
+                <span class="pl-dash" aria-hidden="true"></span>
                 {p.title}
                 {p.status && <span class="pl-status">{p.status}</span>}
               </h3>
@@ -63,6 +68,12 @@ const PROJECTS = [
                 {p.tags.map((t) => <span class="pl-tag">{t}</span>)}
               </div>
             </div>
+
+            {p.img && (
+              <div class="pl-thumb" aria-hidden="true">
+                <img src={p.img} alt="" loading="lazy" decoding="async" />
+              </div>
+            )}
 
             <div class="pl-aside">
               <p class="pl-meta"><Fragment set:html={p.meta} /></p>
@@ -76,14 +87,6 @@ const PROJECTS = [
               </svg>
             </span>
           </div>
-
-          {p.img && (
-            <div class="pl-reveal">
-              <div class="pl-shot">
-                <img src={p.img} alt={p.alt} loading="lazy" decoding="async" />
-              </div>
-            </div>
-          )}
         </a>
       ))}
     </div>
@@ -129,23 +132,54 @@ const PROJECTS = [
     border-bottom: 1px solid var(--color-border);
     text-decoration: none;
     color: inherit;
+    /* the hover tint, full-bleed within the row, edge to edge */
+    background: transparent;
+    transition: background-color 0.3s ease;
+  }
+  @media (hover: hover) {
+    .pl-row:hover,
+    .pl-row:focus-visible {
+      background: var(--color-surface);
+    }
   }
 
+  /* Below 900px, four grid children (index, main, aside, arrow) were
+     auto-placing into a bare two-column grid: index+aside landed in column
+     one and main+arrow in column two, which squeezed the description into
+     an ~80px column that wrapped almost one word per line. Named areas fix
+     the placement explicitly instead of relying on source-order luck. */
   .pl-top {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 0.75rem 2rem;
-    align-items: start;
-    padding: clamp(1.6rem, 3.5vw, 2.4rem) 0;
+    grid-template-areas:
+      "index arrow"
+      "main  main"
+      "aside aside";
+    gap: 0.75rem 1.25rem;
+    align-items: center;
+    padding: clamp(1.6rem, 3.5vw, 2.4rem) clamp(0rem, 2vw, 1.25rem);
   }
+  .pl-index  { grid-area: index; }
+  .pl-main   { grid-area: main; }
+  .pl-aside  { grid-area: aside; }
+  .pl-arrow  { grid-area: arrow; justify-self: end; }
+
   @media (min-width: 900px) {
-    .pl-top { grid-template-columns: 7rem 1fr 20rem auto; align-items: start; }
+    /* index | title+tags | thumbnail | meta+blurb | arrow, one row. The
+       thumbnail column exists in the grid at rest even when empty, so
+       nothing shifts when the image fades in. */
+    .pl-top {
+      grid-template-columns: 7rem 1fr 6.5rem 19rem auto;
+      grid-template-areas: "index main thumb aside arrow";
+      align-items: center;
+    }
+    .pl-thumb { grid-area: thumb; }
   }
 
   .pl-index {
     font-family: var(--font-mono);
     font-size: 0.75rem; letter-spacing: 0.04em;
-    color: var(--color-ink-3); white-space: nowrap; padding-top: 0.5rem;
+    color: var(--color-ink-3); white-space: nowrap; align-self: start; padding-top: 0.5rem;
   }
 
   .pl-name {
@@ -154,6 +188,29 @@ const PROJECTS = [
     font-weight: 700; line-height: 1.03; letter-spacing: -0.035em;
     color: var(--color-ink); margin: 0;
     transition: opacity 0.3s ease;
+  }
+
+  /* The short dash that steps in before the title on hover — reserved
+     width at rest so the title doesn't itself shift sideways when it
+     appears, only the dash fades and slides in. */
+  .pl-dash {
+    display: inline-block;
+    width: 0.9em;
+    margin-right: 0.1em;
+    opacity: 0;
+    transform: translateX(-0.4em);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .pl-dash::before {
+    content: "—";
+    color: var(--color-ink-3);
+  }
+  @media (hover: hover) {
+    .pl-row:hover .pl-dash,
+    .pl-row:focus-visible .pl-dash { opacity: 1; transform: none; }
+  }
+  @media (hover: none) {
+    .pl-dash { display: none; }
   }
 
   /* Sits on the title baseline rather than in the tag row: it qualifies the
@@ -179,13 +236,45 @@ const PROJECTS = [
     border-radius: 100px; padding: 0.28rem 0.7rem;
   }
 
+  /* ── the thumbnail ─────────────────────────────────────────────────
+     Desktop-only, hover-only. Occupies its grid column at rest — width and
+     height fixed — so the fade-in changes opacity, never layout. Hidden
+     entirely below 900px rather than always-open: on touch this keeps the
+     list a clean, fast-scanning index instead of showing four open images
+     stacked on load. */
+  .pl-thumb {
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .pl-thumb {
+      display: block;
+      width: 6rem;
+      height: 4rem;
+      border-radius: 0.6rem;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .pl-thumb img {
+      display: block; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+    }
+  }
+  @media (hover: hover) and (min-width: 900px) {
+    .pl-row:hover .pl-thumb,
+    .pl-row:focus-visible .pl-thumb { opacity: 1; transform: none; }
+  }
+
   .pl-meta {
     font-family: var(--font-mono);
     font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase;
     color: var(--color-ink-3); margin-bottom: 0.5rem;
   }
   .pl-blurb { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2); }
-  .pl-aside { padding-top: 0.35rem; }
+  .pl-aside { align-self: start; padding-top: 0.35rem; }
 
   .pl-arrow {
     display: flex; align-items: center; justify-content: center;
@@ -197,40 +286,7 @@ const PROJECTS = [
                 background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
-  /* ── the reveal ──────────────────────────────────────────────────────
-     Animating grid-template-rows rather than height means the row opens to
-     whatever the image actually needs, with no hard-coded height to keep in
-     sync with the artwork. */
-  .pl-reveal {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .pl-shot {
-    overflow: hidden;
-    border-radius: 0.875rem;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.45s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-    margin-bottom: 0;
-  }
-  /* Sources differ in aspect ratio; a fixed frame keeps every preview the
-     same shape so one project can't read as a different kind of thing. */
-  .pl-shot img {
-    display: block; width: 100%; height: auto;
-    aspect-ratio: 16 / 9; max-height: 26rem;
-    object-fit: cover; object-position: top center;
-  }
-
   @media (hover: hover) {
-    .pl-row:hover .pl-reveal,
-    .pl-row:focus-visible .pl-reveal { grid-template-rows: 1fr; }
-    .pl-row:hover .pl-shot,
-    .pl-row:focus-visible .pl-shot {
-      opacity: 1; transform: none; margin-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
-    }
     .pl-row:hover .pl-arrow,
     .pl-row:focus-visible .pl-arrow {
       background: var(--color-ink); border-color: var(--color-ink);
@@ -240,16 +296,7 @@ const PROJECTS = [
     .pl-list:hover .pl-row:not(:hover) .pl-name { opacity: 0.4; }
   }
 
-  /* No hover on touch — show the artwork rather than hiding it behind a
-     gesture that does not exist. */
-  @media (hover: none) {
-    .pl-reveal { grid-template-rows: 1fr; }
-    .pl-shot {
-      opacity: 1; transform: none; margin-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .pl-reveal, .pl-shot, .pl-arrow, .pl-name { transition: none; }
+    .pl-row, .pl-thumb, .pl-dash, .pl-arrow, .pl-name { transition: none; }
   }
 </style>
