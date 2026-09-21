@@ -1,0 +1,673 @@
+---
+import Base from '../../layouts/Base.astro';
+import CaseHero from "../../components/CaseHero.astro";
+
+const IMG = "/images/work/beyond-the-task";
+---
+
+<Base
+  title="Beyond the Task. Kishore Sudhamalla"
+  description="From transactional workflows to guided experiences and AI-assisted Playbooks. Product direction and UX for Journeys at Darwinbox, and an exploration into how AI could help admins assemble guidance that doesn't exist yet."
+>
+
+<style>
+  .cs-label {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3);
+  }
+  .cs-h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.025em; color: var(--color-ink);
+  }
+  .cs-lede { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); }
+
+  /* numbered rows */
+  .rows { border-top: 1px solid var(--color-border); }
+  .row {
+    display: grid; grid-template-columns: 1fr; gap: 0.4rem 2rem;
+    padding: 1.6rem 0; border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 800px) { .row { grid-template-columns: 3.5rem 1fr; } }
+  .row-n {
+    font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-ink-3);
+    padding-top: 0.15rem;
+  }
+  .row-t {
+    font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--color-ink);
+    margin-bottom: 0.4rem;
+  }
+  .row-d { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); }
+  .row-why {
+    margin-top: 0.6rem; font-size: 0.8438rem; line-height: 1.6; color: var(--color-ink-3);
+    padding-left: 0.9rem; border-left: 2px solid var(--color-border);
+  }
+
+  .cards { display: grid; gap: 1rem; }
+  @media (min-width: 800px) { .cards--2 { grid-template-columns: 1fr 1fr; } }
+  .card {
+    border: 1px solid var(--color-border); border-radius: 1rem;
+    padding: 1.75rem; background: var(--color-bg);
+  }
+  .card-k {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.7rem;
+  }
+  .card-status {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.05em;
+    text-transform: uppercase; border-radius: 100px; padding: 0.3rem 0.75rem;
+    margin-bottom: 1.1rem;
+  }
+  .card-status--shipped { color: #2f6b4a; background: #eef7f2; }
+  .card-status--explored { color: #8a6410; background: #fdf8ea; }
+  :global(.dark) .card-status--shipped  { color: #8ecfab; background: rgba(90,170,124,.12); }
+  :global(.dark) .card-status--explored { color: #dcc07a; background: rgba(220,180,80,.12); }
+  .card-t {
+    font-size: 1.375rem; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--color-ink); margin-bottom: 0.9rem;
+  }
+  .card-b { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); }
+  .card-b + .card-b { margin-top: 0.9rem; }
+
+  .quote {
+    font-size: clamp(1.125rem, 2.2vw, 1.5rem); font-weight: 600; line-height: 1.45;
+    letter-spacing: -0.02em; color: var(--color-ink);
+    padding-left: 1.25rem; border-left: 2px solid var(--color-ink);
+  }
+
+  /* rule-says / needed-to-know style two-column contrast, reused for
+     admin/employee and AI-helps/admin-decides */
+  .split { display: grid; gap: 1rem; }
+  @media (min-width: 800px) { .split { grid-template-columns: 1fr 1fr; } }
+  .split-col {
+    border: 1px solid var(--color-border); border-radius: 1rem; padding: 1.75rem;
+    background: var(--color-bg);
+  }
+  .split-col--alt { border-color: var(--color-ink-3); }
+  .split-k {
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.9rem;
+  }
+  .split-t {
+    font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--color-ink); margin-bottom: 0.9rem;
+  }
+  .split-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .split-list li {
+    position: relative; padding-left: 0.9rem;
+    font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2);
+  }
+  .split-list li::before {
+    content: ""; position: absolute; left: 0; top: 0.6em;
+    width: 4px; height: 1px; background: var(--color-ink-3);
+  }
+
+  /* decision callout, reused from the tldr on-ramp pattern */
+  .decision {
+    border-left: 3px solid var(--color-ink);
+    padding: 0.35rem 0 0.35rem 1.6rem;
+    max-width: 40rem; margin: 2rem 0;
+  }
+  .decision-k {
+    font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.4rem;
+  }
+  .decision-b { font-size: 1.0625rem; line-height: 1.6; color: var(--color-ink); font-weight: 600; }
+
+  /* ── flow diagram: reused across sec.01 (flows -> journeys) and
+       sec.06/08 (playbook interaction). One vocabulary, three uses. ── */
+  .flow { display: grid; grid-template-columns: 1fr; gap: 0.5rem; align-items: stretch; }
+  @media (min-width: 860px) {
+    .flow--row { grid-auto-flow: column; grid-template-columns: repeat(auto-fit, minmax(0,1fr)); align-items: center; gap: 0; }
+  }
+  .flow-node {
+    border: 1px solid var(--color-border); border-radius: 0.85rem;
+    padding: 1.1rem 1.25rem; background: var(--color-bg); min-width: 0;
+  }
+  .flow-node--dark { border-color: var(--color-ink); background: var(--color-ink); }
+  .flow-node--dark .flow-n-t { color: var(--color-bg); }
+  .flow-node--dark .flow-n-s { color: var(--color-ink-3); }
+  .flow-n-t { font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.015em; color: var(--color-ink); margin-bottom: 0.2rem; }
+  .flow-n-s { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-3); }
+  .flow-arrow {
+    position: relative; display: block; justify-self: center; align-self: center;
+    width: 1px; height: 1.4rem; background: var(--color-ink-3); margin: 0.1rem 0;
+  }
+  .flow-arrow::after {
+    content: ""; position: absolute; left: 50%; bottom: 0; width: 6px; height: 6px;
+    border-right: 1px solid var(--color-ink-3); border-bottom: 1px solid var(--color-ink-3);
+    transform: translate(-50%, 1px) rotate(45deg);
+  }
+  @media (min-width: 860px) {
+    .flow--row .flow-arrow { width: 2rem; height: 1px; margin: 0 0.5rem; }
+    .flow--row .flow-arrow::after { left: auto; right: 0; bottom: 50%; transform: translate(1px, 50%) rotate(-45deg); }
+  }
+
+  /* transition visual: known scenario vs new scenario */
+  .transition { display: grid; gap: 1rem; }
+  @media (min-width: 800px) { .transition { grid-template-columns: 1fr auto 1fr; align-items: center; } }
+  .transition-x {
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3);
+    padding: 0.5rem;
+  }
+
+  /* illustrative scenario banner */
+  .scenario-flag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3);
+    border: 1px solid var(--color-border); border-radius: 100px;
+    padding: 0.4rem 0.9rem; margin-bottom: 1.5rem;
+  }
+  .scenario-flag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--color-ink-3); }
+
+  /* evidence placeholder: reads as "pending", not as a broken layout */
+  .evidence {
+    border: 1.5px dashed var(--color-border); border-radius: 1rem;
+    padding: 2.5rem 1.5rem; text-align: center;
+    background: var(--color-surface);
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+  }
+  .evidence-icon { color: var(--color-ink-3); }
+  .evidence-t {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--color-ink-3); max-width: 26rem;
+  }
+  .evidence figcaption {
+    margin-top: 0.5rem; font-size: 0.8125rem; color: var(--color-ink-2);
+  }
+  .evidence-grid { display: grid; gap: 1rem; }
+  @media (min-width: 900px) { .evidence-grid--2 { grid-template-columns: 1fr 1fr; } }
+
+  .status-flag {
+    font-size: 0.8125rem; color: var(--color-ink-3); margin-top: 1.25rem;
+    padding-top: 1.25rem; border-top: 1px solid var(--color-border);
+  }
+</style>
+
+  <!-- Back -->
+  <div class="container-pg pt-8">
+    <a href="/#cases" class="cs-label inline-flex items-center gap-2 hover:text-[var(--color-ink)] transition-colors">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 2L3.5 7L8.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to work
+    </a>
+  </div>
+
+  <!-- ══ HERO ══ -->
+  <CaseHero
+    eyebrow="Product evolution · Enterprise UX · AI-assisted experiences"
+    title="Beyond the Task"
+    lede="HR systems help people get things done. But some employee processes need more than a task list — they need context, guidance, and a clear path forward. At Darwinbox, I co-led the product direction for Journeys with Product Leadership and drove the UX strategy and hands-on design. The work explored how we could make complex HR processes more guided and connected. That experience later informed my exploration of AI-assisted Playbooks: how AI could help create guided experiences for scenarios that didn't already have a Journey."
+    meta={[
+      { k: "Company", v: "Darwinbox" },
+      { k: "Role", v: "Senior Manager, UX Design" },
+      { k: "Focus", v: "Product direction, UX strategy, hands-on design" },
+      { k: "Collaboration", v: "Product Leadership, Design Leadership, cross-functional teams" },
+    ]}
+    img={`${IMG}/hero-diagram.svg`}
+    alt="Conceptual illustration: existing flow architecture and the Journeys experience layer. Not an actual product screen."
+  />
+  <div class="container-pg">
+    <p class="text-xs text-[var(--color-ink-3)] italic -mt-8 mb-4 max-w-2xl">
+      Conceptual illustration created for this case study, not an actual Darwinbox screen. From transactional
+      workflows to guided experiences and AI-assisted Playbooks.
+    </p>
+    <p class="text-xs text-[var(--color-ink-3)] max-w-2xl">
+      Status: Journeys released and in use by clients. AI Playbooks — concept and prototype work; current rollout status to be verified.
+    </p>
+  </div>
+
+  <!-- ══ 01 THE STARTING POINT ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">01. The starting point</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">We already had workflows. The opportunity was in the experience around them.</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        Darwinbox already had a flow architecture supporting different kinds of HR processes. Business Flows
+        handled day-to-day transactional tasks. Standard Flows supported mandatory HR processes such as
+        onboarding, confirmation, and separation.
+      </p>
+      <p class="cs-lede max-w-2xl mb-10">
+        These flows helped people complete work. But for some processes, completing individual tasks was only
+        part of the experience — people could also need instructions, supporting resources, and a better
+        understanding of what came next. The opportunity was to build on the existing architecture, not
+        replace it, with a more guided experience.
+      </p>
+
+      <div class="flow flow--row mb-4">
+        <div class="flow-node">
+          <p class="flow-n-t">Business Flows</p>
+          <p class="flow-n-s">Transactional, day-to-day tasks</p>
+        </div>
+        <span class="flow-arrow" aria-hidden="true"></span>
+        <div class="flow-node">
+          <p class="flow-n-t">Standard Flows</p>
+          <p class="flow-n-s">Mandatory HR processes</p>
+        </div>
+        <span class="flow-arrow" aria-hidden="true"></span>
+        <div class="flow-node flow-node--dark">
+          <p class="flow-n-t">Journeys — the experience layer</p>
+          <p class="flow-n-s">Guidance, instructions, resources, connected tasks</p>
+        </div>
+      </div>
+
+      <figure class="evidence mt-10 max-w-2xl">
+        <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M3 9h18M8 4v14" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <p class="evidence-t">[ADD: Existing transactional flow or task inbox screenshot]</p>
+        <figcaption>An example of the existing task-based experience.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══ 02 THE PRODUCT CHALLENGE ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">02. The product challenge</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">How do we make guided experiences useful across workflows?</h2>
+      <p class="cs-lede max-w-2xl mb-6">
+        As Journeys evolved, the product direction expanded beyond a narrow set of processes. The challenge
+        was to make guided experiences useful across workflows while giving Journeys a clear purpose within
+        the broader flow experience. I worked with Product Leadership to explore the product direction and
+        shape the UX around that challenge.
+      </p>
+      <p class="cs-lede max-w-2xl mb-6">This meant thinking beyond individual screens:</p>
+
+      <ul class="split-list max-w-2xl mb-10">
+        <li>Where does a guided experience add meaningful value?</li>
+        <li>How should Journeys build on the existing flow architecture?</li>
+        <li>What capabilities make the experience useful and coherent?</li>
+        <li>How can admins configure experiences without adding unnecessary complexity for employees?</li>
+      </ul>
+
+      <p class="cs-lede max-w-2xl mb-2">
+        The direction focused on making Journeys a guided experience layer, with capabilities tailored to
+        that experience.
+      </p>
+
+      <div class="decision">
+        <p class="decision-k">The design question</p>
+        <p class="decision-b">How can we extend guidance across workflows without losing the clarity of the experience?</p>
+      </div>
+
+      <figure class="evidence max-w-2xl">
+        <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 18V6a2 2 0 0 1 2-2h8l6 6v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M14 4v6h6" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <p class="evidence-t">[ADD: Early concept or decision artifact]</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══ 03 DESIGNING JOURNEYS ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">03. Designing Journeys</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">A guided experience for the employee, and a configurable experience for the admin.</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        Journeys needed to work from two perspectives. For admins, the experience needed to support
+        configuration: bringing together the right tasks, instructions, resources, and other supporting
+        content. For employees, it needed to make the process easier to follow, with relevant guidance and a
+        clearer sense of what to do next. The design challenge was to make these two sides work together —
+        give admins enough flexibility to shape an experience, while keeping the employee-facing Journey
+        understandable.
+      </p>
+
+      <div class="split mb-10">
+        <div class="split-col">
+          <p class="split-k">For admins</p>
+          <p class="split-t">Configure the experience</p>
+          <p class="cs-lede text-sm">Add relevant guidance and resources, and shape how a process is presented.</p>
+        </div>
+        <div class="split-col split-col--alt">
+          <p class="split-k">For employees</p>
+          <p class="split-t">Follow the process</p>
+          <p class="cs-lede text-sm">Understand the process, find the information they need, and move through connected tasks with guidance.</p>
+        </div>
+      </div>
+
+      <div class="evidence-grid evidence-grid--2">
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 9h18M9 21V9" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <p class="evidence-t">[ADD: Admin configuration screen]</p>
+        </figure>
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 18h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="evidence-t">[ADD: Employee-facing Journey screen]</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 04 THE EXPERIENCE IN ACTION ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">04. The experience in action</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">Making a complex process easier to follow</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        I'm using offboarding as an example to show how the Journey framework brings tasks and guidance
+        together. The aim here is to illustrate the experience model, not to suggest that every Journey
+        follows the same sequence. These are explanatory stages, not verified product steps.
+      </p>
+
+      <div class="rows mb-8">
+        {[
+          {
+            t: "The admin configures the Journey",
+            d: "Bringing together the tasks, instructions and resources relevant to this process.",
+            why: "What this illustrates: the admin decides what belongs in the experience, so the same underlying flows can support different levels of guidance depending on the process.",
+          },
+          {
+            t: "Relevant tasks and supporting guidance are brought together",
+            d: "The Journey assembles the pieces the admin configured into one coherent structure.",
+            why: "What this illustrates: guidance and tasks live in the same place, rather than the employee having to reconcile a task list with separate instructions or documents.",
+          },
+          {
+            t: "The employee accesses the Journey",
+            d: "They see the information and tasks relevant to the process, in one place.",
+            why: "What this illustrates: the entry point to a complex process is a single guided experience, not a scattered set of emails and inbox items.",
+          },
+          {
+            t: "The employee moves through the experience",
+            d: "Supporting context stays available as they complete each part of the process.",
+            why: "What this illustrates: guidance isn't a one-time introduction — it stays reachable at the point where it's actually needed.",
+          },
+        ].map((s, i) => (
+          <div class="row">
+            <p class="row-n">{String(i + 1).padStart(2, "0")}</p>
+            <div>
+              <p class="row-t">{s.t}</p>
+              <p class="row-d">{s.d}</p>
+              <p class="row-why">{s.why}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="evidence-grid evidence-grid--2">
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="evidence-t">[ADD: Actual offboarding Journey flow]</p>
+        </figure>
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M12 8v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="evidence-t">[ADD: Admin and employee screens, plus a key UX decision or interaction detail]</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 05 THE NEXT QUESTION ══ -->
+  <!-- Deliberately fixed colours, not theme tokens: this section is meant to
+       read as a dramatic dark break between the two chapters regardless of
+       whether the reader has the site in light or dark mode. Theme tokens
+       flip in dark mode, which inverted this into a pale box floating on an
+       already-dark page -- the opposite of the intended emphasis. -->
+  <section class="sec-y" data-reveal style="background:#111110;">
+    <div class="container-pg">
+      <p class="cs-label mb-4" style="color:#8a8a82">05. The next question</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl" style="color:#fbfbf9">What happens when the Journey doesn't exist yet?</h2>
+      <p class="mb-10 max-w-2xl text-[1.0625rem] leading-[1.7]" style="color:#c7c7bd">
+        Journeys gave us a way to create guided experiences for processes an organization could configure.
+        But a new scenario can emerge before an appropriate Journey or template exists. That raised another
+        question for me: could AI help admins assemble a guided experience for a new situation, without
+        taking the decision away from them?
+      </p>
+
+      <div class="transition">
+        <div class="flow-node" style="background:#1c1c1a; border-color:#3a3a36;">
+          <p class="flow-n-t" style="color:#fbfbf9">Known scenario</p>
+          <p class="flow-n-s" style="color:#8a8a82">Existing Journey or template</p>
+        </div>
+        <div class="transition-x" style="color:#8a8a82">→</div>
+        <div class="flow-node" style="background:#1c1c1a; border-color:#3a3a36;">
+          <p class="flow-n-t" style="color:#fbfbf9">New scenario</p>
+          <p class="flow-n-s" style="color:#8a8a82">AI-assisted Playbook creation</p>
+        </div>
+      </div>
+      <p class="text-xs mt-4 italic" style="color:#8a8a82">
+        Conceptual progression from configured experiences to AI-assisted creation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ 06 AI PLAYBOOKS ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">06. AI Playbooks</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">From configured experiences to AI-assisted creation</h2>
+      <p class="cs-lede max-w-2xl mb-6">
+        AI Playbooks explored how an admin could work with an AI agent to create a guided experience for a
+        scenario that didn't already have an appropriate Journey. Rather than starting with a blank
+        configuration screen, the admin could express what they needed in natural language.
+      </p>
+      <p class="cs-lede max-w-2xl mb-10">
+        The AI could recommend an existing template or help assemble a proposed experience when a suitable
+        template wasn't available. The admin could then review the proposed steps, make changes, and decide
+        whether to assign the experience or save it as a reusable template. The goal was to explore how AI
+        could reduce the effort of putting an experience together while keeping the admin involved in shaping
+        the result.
+      </p>
+
+      <div class="flow mb-4">
+        <div class="flow-node">
+          <p class="flow-n-t">Admin expresses intent</p>
+          <p class="flow-n-s">In natural language, rather than a blank configuration screen</p>
+        </div>
+        <span class="flow-arrow" aria-hidden="true"></span>
+        <div class="flow-node">
+          <p class="flow-n-t">AI recommends or proposes</p>
+          <p class="flow-n-s">An existing template, or an assembled Playbook when none fits</p>
+        </div>
+        <span class="flow-arrow" aria-hidden="true"></span>
+        <div class="flow-node">
+          <p class="flow-n-t">Admin reviews and edits</p>
+          <p class="flow-n-s">Changes steps, adds or removes, asks for other recommendations</p>
+        </div>
+        <span class="flow-arrow" aria-hidden="true"></span>
+        <div class="flow-node flow-node--dark">
+          <p class="flow-n-t">Admin approves and assigns, or saves as a template</p>
+          <p class="flow-n-s">The decision stays with the admin</p>
+        </div>
+      </div>
+
+      <div class="evidence-grid evidence-grid--2 mt-10">
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <p class="evidence-t">[ADD: AI Playbooks concept and agent interaction flow]</p>
+        </figure>
+        <figure class="evidence">
+          <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M7 9h10M7 13h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <p class="evidence-t">[ADD: Prototype screenshots]</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 07 THE KEY AI DESIGN DECISION ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">07. The key AI design decision</p>
+      <h2 class="cs-h2 mb-6 max-w-3xl">AI could help build the experience. The admin still needed to shape it.</h2>
+      <p class="cs-lede max-w-2xl mb-6">
+        One of the hardest parts of designing AI Playbooks was deciding what to delegate to AI and where
+        people needed to stay involved. We explored how AI could recommend and assemble a Playbook, but I
+        didn't want the interaction to jump straight from an AI-generated proposal to automatic assignment.
+      </p>
+      <p class="cs-lede max-w-2xl mb-10">
+        The design included deliberate points where the admin could ask for recommendations, review the
+        proposed steps, make changes, and approve the result. That created a more deliberate collaboration
+        model: AI helps put the experience together, while the admin remains responsible for deciding what is
+        appropriate.
+      </p>
+
+      <div class="split mb-10">
+        <div class="split-col">
+          <p class="split-k">AI helps with</p>
+          <ul class="split-list">
+            <li>Recommending a Playbook</li>
+            <li>Proposing steps</li>
+            <li>Helping modify the experience</li>
+            <li>Supporting template creation</li>
+          </ul>
+        </div>
+        <div class="split-col split-col--alt">
+          <p class="split-k">Admin remains responsible for</p>
+          <ul class="split-list">
+            <li>Reviewing the proposal</li>
+            <li>Editing or removing steps</li>
+            <li>Deciding whether to approve and assign</li>
+            <li>Choosing whether to save a reusable template</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="quote max-w-3xl mb-10">
+        AI could help create the experience. It shouldn't make the final decision for the admin.
+      </p>
+
+      <figure class="evidence max-w-2xl">
+        <svg class="evidence-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <p class="evidence-t">[ADD: Actual admin review and approval interaction]</p>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ══ 08 AN ILLUSTRATIVE SCENARIO ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">08. An illustrative scenario</p>
+      <span class="scenario-flag">Illustrative scenario — not a customer case study</span>
+      <h2 class="cs-h2 mb-6 max-w-3xl">A new scenario, without an existing template</h2>
+      <p class="cs-lede max-w-2xl mb-10">
+        Imagine an employee transferring from India to Singapore, and the organization doesn't already have a
+        Journey for that situation. An admin could ask the AI agent to help create a suitable Playbook. The
+        AI-assisted experience could propose a set of relevant steps. The admin would then review the
+        proposal, make changes, and decide whether to approve it or save it as a template for future use. The
+        employee would receive the resulting guided experience, without needing to understand how the AI
+        assembled it.
+      </p>
+
+      <div class="rows">
+        {[
+          { t: "A new scenario emerges", d: "An India-to-Singapore transfer, with no matching Journey configured." },
+          { t: "Admin asks AI for help", d: "Rather than starting a configuration from a blank screen." },
+          { t: "Admin reviews and shapes the proposed Playbook", d: "Editing, adding, or removing steps before deciding anything." },
+          { t: "Approved Journey is assigned or saved as a reusable template", d: "The decision, and the responsibility for it, stays with the admin." },
+        ].map((s, i) => (
+          <div class="row">
+            <p class="row-n">{String(i + 1).padStart(2, "0")}</p>
+            <div>
+              <p class="row-t">{s.t}</p>
+              <p class="row-d">{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 09 WHAT SHIPPED, WHAT WAS EXPLORED ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">09. What shipped, what was explored</p>
+      <h2 class="cs-h2 mb-10 max-w-2xl">Two stages of the work</h2>
+
+      <div class="cards cards--2">
+        <div class="card">
+          <span class="card-status card-status--shipped">Released</span>
+          <p class="card-t">Journeys</p>
+          <p class="card-b">
+            The Journeys admin configuration and employee experience were released, and clients use Journeys.
+          </p>
+          <p class="card-b">
+            I also took part in UX roadshows and demos for MENA and SEA, helping explain the experience and
+            its value.
+          </p>
+          <div class="status-flag">[ADD: Approved release evidence, client-facing demo material, or verified usage data]</div>
+        </div>
+        <div class="card">
+          <span class="card-status card-status--explored">Concept &amp; prototype</span>
+          <p class="card-t">AI Playbooks</p>
+          <p class="card-b">
+            I was involved in AI Playbooks from the concept stage, helping shape the interaction model and
+            exploring how admins could work with AI to create guided experiences.
+          </p>
+          <p class="card-b">
+            The prototype and concepts represent the direction explored during my involvement. The current
+            product and rollout status should be confirmed before publication.
+          </p>
+          <div class="status-flag">[ADD: Approved prototype screens, and verified current product status]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 10 REFLECTION ══ -->
+  <section class="sec-y" data-reveal>
+    <div class="container-pg">
+      <div class="max-w-2xl">
+        <p class="cs-label mb-4">10. Reflection</p>
+        <h2 class="cs-h2 mb-8">What I took away from this work</h2>
+        <div class="space-y-6 text-[var(--color-ink-2)] leading-relaxed">
+          <p>
+            Journeys reinforced something I care about in enterprise product design: the experience around a
+            task can matter as much as the task itself.
+          </p>
+          <p>
+            It also reminded me that product direction and UX are closely connected. Some of the important
+            design work happened before the final screens — working through where the experience should add
+            value, how it should build on existing architecture, and how it should stay coherent across
+            workflows.
+          </p>
+          <p>
+            With AI Playbooks, the question became more nuanced. It wasn't only about what AI could generate.
+            It was also about how admins could understand, shape, and take responsibility for what it
+            proposed. That's the part of AI experience design I find especially interesting: making the
+            technology useful without making the person feel removed from the decision.
+          </p>
+        </div>
+        <p class="quote mt-10">From helping people follow a process to exploring how AI can help create one.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PREV / NEXT ══ -->
+  <div class="border-t border-[var(--color-border)]">
+    <div class="container-pg py-12 flex justify-between items-center gap-8">
+      <a href="/work/design-ops" class="flex items-center gap-3 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 3L5 9L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><p class="cs-label mb-0.5">Previous</p><p class="font-medium text-sm">Design Ops</p></div>
+      </a>
+      <a href="/#cases" class="flex items-center gap-3 text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors text-right">
+        <div><p class="cs-label mb-0.5">Back to</p><p class="font-medium text-sm">All work</p></div>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 3L13 9L7 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+</Base>
