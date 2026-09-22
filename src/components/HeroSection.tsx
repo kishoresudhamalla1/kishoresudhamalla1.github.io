@@ -69,7 +69,7 @@ export function HeroSection() {
             className="hero-item mb-6 text-[0.6875rem] font-medium uppercase tracking-[0.12em] text-[var(--color-ink-3)]"
             style={{ animationDelay: "40ms" }}
           >
-            UX &amp; Product Design Leader · AI-Native &amp; Agentic Experiences
+            Enterprise Product Design Leader · Hands-On Systems &amp; Agentic AI
           </p>
 
           <h1
@@ -87,7 +87,8 @@ export function HeroSection() {
             I design AI-native experiences for complex enterprise products, where agents
             work across real workflows, systems and decisions. With 16+ years in design and
             nearly 9 years in enterprise HR technology, I bring deep systems thinking to the
-            shift from software people use to software that can act.
+            shift from software people use to software that can act. I build that shift
+            myself, in working code.
           </p>
 
           <div
@@ -121,7 +122,7 @@ export function HeroSection() {
             {[
               { value: "16+", label: "Years design" },
               { value: "~9", label: "Years enterprise HR" },
-              { value: "6", label: "Current design scope" },
+              { value: "6", label: "Product areas owned" },
               { value: "120+", label: "Countries, Journeys reach" },
             ].map(({ value, label }, i) => (
               <div key={label}>

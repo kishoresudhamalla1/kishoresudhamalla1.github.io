@@ -303,7 +303,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <CaseHero
     eyebrow="AI-native · Agentic UX · 0 → 1"
     title="Building an AI that explains why delivery slipped."
-    lede="I designed and built a system that reads a live Jira board, then added the layer I actually wanted to design: an AI that explains why a commitment moved, cites the records it read, proposes one action, and only writes back once a person approves the exact change. Then it measures whether the fix held."
+    lede="I designed and built a system that reads a live Jira board, then added the layer I actually wanted to design: an AI that explains why a commitment moved, cites the records it read, and proposes one action. Nothing writes back without human-in-the-loop approval of the exact change. Then it measures whether the fix held."
     meta={[
       { k: "Role", v: "UX designer, solo, end to end" },
       { k: "Shipped", v: "In daily use, 2026" },
@@ -335,9 +335,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
         <p class="tldr-k">In short</p>
         <p class="tldr-b">
           A DesignOps system that reads a live Jira board and tells a design org what its
-          delivery actually looks like, extended with an AI layer that explains <em>why</em>
-          something slipped, cites the records it read, and measures whether the fix held.
-          Product thinking, interface and implementation, all mine.
+          delivery actually looks like. A deterministic rules engine flags risk; an AI
+          layer explains it, citing the exact records it read. Product thinking,
+          interface and implementation, all mine.
         </p>
         <p class="tldr-b">
           The weekly delivery review used to start by rebuilding the picture by hand from
