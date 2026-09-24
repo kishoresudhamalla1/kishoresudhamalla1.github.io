@@ -1,44 +1,46 @@
-<svg viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg" font-family="Inter, ui-sans-serif, sans-serif">
-  <rect width="960" height="620" fill="#fbfbf9"/>
+<svg viewBox="0 0 960 480" xmlns="http://www.w3.org/2000/svg" font-family="Inter, ui-sans-serif, sans-serif">
+  <rect width="960" height="480" fill="#fbfbf9"/>
 
   <!-- eyebrow -->
-  <text x="60" y="56" font-size="12" letter-spacing="1.5" font-weight="600" fill="#8a8a82">CONCEPTUAL ILLUSTRATION — NOT AN ACTUAL PRODUCT SCREEN</text>
+  <text x="60" y="56" font-size="12" letter-spacing="1.5" font-weight="600" fill="#8a8a82">CONCEPTUAL ILLUSTRATION, NOT AN ACTUAL PRODUCT SCREEN</text>
 
-  <!-- existing flow architecture group -->
-  <text x="60" y="108" font-size="14" font-weight="600" fill="#54544c">Existing flow architecture</text>
+  <!-- left: a list of tasks -->
+  <text x="60" y="110" font-size="14" font-weight="600" fill="#54544c">A list of tasks</text>
+  <rect x="60" y="132" width="330" height="270" rx="14" fill="#ffffff" stroke="#e2e2da" stroke-width="1.5"/>
+  <g stroke="#d7d7cd" stroke-width="1.5">
+    <rect x="90" y="168" width="16" height="16" rx="4" fill="none"/>
+    <line x1="122" y1="176" x2="330" y2="176"/>
+    <rect x="90" y="216" width="16" height="16" rx="4" fill="none"/>
+    <line x1="122" y1="224" x2="300" y2="224"/>
+    <rect x="90" y="264" width="16" height="16" rx="4" fill="none"/>
+    <line x1="122" y1="272" x2="320" y2="272"/>
+    <rect x="90" y="312" width="16" height="16" rx="4" fill="none"/>
+    <line x1="122" y1="320" x2="280" y2="320"/>
+  </g>
+  <text x="90" y="368" font-size="13.5" fill="#a3a39c">Complete, and move on</text>
 
-  <rect x="60" y="130" width="390" height="120" rx="14" fill="#ffffff" stroke="#e2e2da" stroke-width="1.5"/>
-  <text x="90" y="178" font-size="20" font-weight="700" fill="#171714">Business Flows</text>
-  <text x="90" y="206" font-size="14" fill="#77776e">Transactional, day-to-day tasks</text>
+  <!-- arrow -->
+  <line x1="420" y1="267" x2="470" y2="267" stroke="#b7b7ac" stroke-width="1.5"/>
+  <path d="M470 267 L456 258 L456 276 Z" fill="#b7b7ac"/>
 
-  <rect x="470" y="130" width="390" height="120" rx="14" fill="#ffffff" stroke="#e2e2da" stroke-width="1.5"/>
-  <text x="500" y="178" font-size="20" font-weight="700" fill="#171714">Standard Flows</text>
-  <text x="500" y="206" font-size="14" fill="#77776e">Mandatory HR processes</text>
+  <!-- right: a journey -->
+  <text x="510" y="110" font-size="14" font-weight="600" fill="#54544c">A Journey</text>
+  <rect x="510" y="132" width="390" height="270" rx="16" fill="#171714"/>
+  <text x="540" y="172" font-size="19" font-weight="700" fill="#fbfbf9">What to do, and why it matters</text>
 
-  <!-- connecting arrow -->
-  <line x1="480" y1="262" x2="480" y2="322" stroke="#b7b7ac" stroke-width="1.5"/>
-  <path d="M480 322 L471 308 L489 308 Z" fill="#b7b7ac"/>
-
-  <!-- journeys layer -->
-  <text x="60" y="362" font-size="14" font-weight="600" fill="#54544c">Journeys — the guided experience layer</text>
-
-  <rect x="60" y="384" width="800" height="170" rx="16" fill="#171714"/>
-  <text x="90" y="424" font-size="20" font-weight="700" fill="#fbfbf9">Brings together, on top of the existing flows</text>
-
-  <!-- four chips -->
   <g font-size="13.5" font-weight="600" fill="#171714">
-    <rect x="90"  y="452" width="170" height="46" rx="23" fill="#fbfbf9"/>
-    <text x="115" y="481">Guidance</text>
+    <rect x="540" y="200" width="170" height="44" rx="22" fill="#fbfbf9"/>
+    <text x="565" y="228">Guidance</text>
 
-    <rect x="278" y="452" width="200" height="46" rx="23" fill="#fbfbf9"/>
-    <text x="303" y="481">Instructions</text>
+    <rect x="540" y="256" width="200" height="44" rx="22" fill="#fbfbf9"/>
+    <text x="565" y="284">Instructions</text>
 
-    <rect x="496" y="452" width="180" height="46" rx="23" fill="#fbfbf9"/>
-    <text x="521" y="481">Resources</text>
+    <rect x="540" y="312" width="180" height="44" rx="22" fill="#fbfbf9"/>
+    <text x="565" y="340">Resources</text>
 
-    <rect x="694" y="452" width="166" height="46" rx="23" fill="#fbfbf9"/>
-    <text x="719" y="481">Tasks</text>
+    <rect x="736" y="200" width="130" height="44" rx="22" fill="#fbfbf9"/>
+    <text x="761" y="228">Tasks</text>
   </g>
 
-  <text x="90" y="528" font-size="13.5" fill="#c7c7bd">The underlying flow architecture is not replaced.</text>
+  <text x="540" y="382" font-size="13" fill="#c7c7bd">One connected experience, not a checklist.</text>
 </svg>

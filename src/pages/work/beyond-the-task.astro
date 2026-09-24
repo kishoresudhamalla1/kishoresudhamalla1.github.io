@@ -198,7 +198,7 @@ const IMG = "/images/work/beyond-the-task";
   <CaseHero
     eyebrow="Product evolution · Enterprise UX · AI-assisted experiences"
     title="Beyond the Task"
-    lede="HR systems help people get things done. But some employee processes need more than a task list — they need context, guidance, and a clear path forward. At Darwinbox, I co-led the product direction for Journeys with Product Leadership and drove the UX strategy and hands-on design. The work explored how we could make complex HR processes more guided and connected. That experience later informed my exploration of AI-assisted Playbooks: how AI could help create guided experiences for scenarios that didn't already have a Journey."
+    lede="HR systems help people get things done. But some employee processes need more than a task list. They need context, guidance, and a clear path forward. At Darwinbox, I co-led the product direction for Journeys with Product Leadership and drove the UX strategy and hands-on design. The work explored how we could make complex HR processes more guided and connected. That experience later informed my exploration of AI-assisted Playbooks: how AI could help create guided experiences for scenarios that didn't already have a Journey."
     meta={[
       { k: "Company", v: "Darwinbox" },
       { k: "Role", v: "Senior Manager, UX Design" },
@@ -206,7 +206,7 @@ const IMG = "/images/work/beyond-the-task";
       { k: "Collaboration", v: "Product Leadership, Design Leadership, cross-functional teams" },
     ]}
     img={`${IMG}/hero-diagram.svg`}
-    alt="Conceptual illustration: existing flow architecture and the Journeys experience layer. Not an actual product screen."
+    alt="Conceptual illustration: from a task list to a guided Journey. Not an actual product screen."
   />
   <div class="container-pg">
     <p class="text-xs text-[var(--color-ink-3)] italic -mt-8 mb-4 max-w-2xl">
@@ -214,7 +214,7 @@ const IMG = "/images/work/beyond-the-task";
       workflows to guided experiences and AI-assisted Playbooks.
     </p>
     <p class="text-xs text-[var(--color-ink-3)] max-w-2xl">
-      Status: Journeys released and in use by clients. AI Playbooks — concept and prototype work; current rollout status to be verified.
+      Status: Journeys released and in use by clients. AI Playbooks: concept and prototype work, current rollout status to be verified.
     </p>
   </div>
 
@@ -224,30 +224,23 @@ const IMG = "/images/work/beyond-the-task";
       <p class="cs-label mb-4">01. The starting point</p>
       <h2 class="cs-h2 mb-6 max-w-3xl">We already had workflows. The opportunity was in the experience around them.</h2>
       <p class="cs-lede max-w-2xl mb-10">
-        Darwinbox already had a flow architecture supporting different kinds of HR processes. Business Flows
-        handled day-to-day transactional tasks. Standard Flows supported mandatory HR processes such as
-        onboarding, confirmation, and separation.
+        Darwinbox already handled the day-to-day transactional work: approvals, requests, mandatory HR
+        processes like onboarding and separation. Task completion works fine when a process is simple.
       </p>
       <p class="cs-lede max-w-2xl mb-10">
-        These flows helped people complete work. But for some processes, completing individual tasks was only
-        part of the experience — people could also need instructions, supporting resources, and a better
-        understanding of what came next. The opportunity was to build on the existing architecture, not
-        replace it, with a more guided experience.
+        But for some processes, finishing individual tasks was only part of the experience. People also
+        needed instructions, supporting resources, and a clearer sense of what came next. The opportunity
+        was to design that missing layer: a genuinely guided experience, not just a list of things to do.
       </p>
 
       <div class="flow flow--row mb-4">
         <div class="flow-node">
-          <p class="flow-n-t">Business Flows</p>
-          <p class="flow-n-s">Transactional, day-to-day tasks</p>
-        </div>
-        <span class="flow-arrow" aria-hidden="true"></span>
-        <div class="flow-node">
-          <p class="flow-n-t">Standard Flows</p>
-          <p class="flow-n-s">Mandatory HR processes</p>
+          <p class="flow-n-t">A list of tasks</p>
+          <p class="flow-n-s">Complete, and move on</p>
         </div>
         <span class="flow-arrow" aria-hidden="true"></span>
         <div class="flow-node flow-node--dark">
-          <p class="flow-n-t">Journeys — the experience layer</p>
+          <p class="flow-n-t">A Journey</p>
           <p class="flow-n-s">Guidance, instructions, resources, connected tasks</p>
         </div>
       </div>
@@ -278,7 +271,7 @@ const IMG = "/images/work/beyond-the-task";
 
       <ul class="split-list max-w-2xl mb-10">
         <li>Where does a guided experience add meaningful value?</li>
-        <li>How should Journeys build on the existing flow architecture?</li>
+        <li>What capabilities make the experience useful and coherent, not just decorative?</li>
         <li>What capabilities make the experience useful and coherent?</li>
         <li>How can admins configure experiences without adding unnecessary complexity for employees?</li>
       </ul>
@@ -312,7 +305,7 @@ const IMG = "/images/work/beyond-the-task";
         Journeys needed to work from two perspectives. For admins, the experience needed to support
         configuration: bringing together the right tasks, instructions, resources, and other supporting
         content. For employees, it needed to make the process easier to follow, with relevant guidance and a
-        clearer sense of what to do next. The design challenge was to make these two sides work together —
+        clearer sense of what to do next. The design challenge was to make these two sides work together:
         give admins enough flexibility to shape an experience, while keeping the employee-facing Journey
         understandable.
       </p>
@@ -365,7 +358,7 @@ const IMG = "/images/work/beyond-the-task";
           {
             t: "The admin configures the Journey",
             d: "Bringing together the tasks, instructions and resources relevant to this process.",
-            why: "What this illustrates: the admin decides what belongs in the experience, so the same underlying flows can support different levels of guidance depending on the process.",
+            why: "What this illustrates: the admin decides what belongs in the experience, so different processes can carry different levels of guidance without every process looking identical.",
           },
           {
             t: "Relevant tasks and supporting guidance are brought together",
@@ -380,7 +373,7 @@ const IMG = "/images/work/beyond-the-task";
           {
             t: "The employee moves through the experience",
             d: "Supporting context stays available as they complete each part of the process.",
-            why: "What this illustrates: guidance isn't a one-time introduction — it stays reachable at the point where it's actually needed.",
+            why: "What this illustrates: guidance isn't a one-time introduction. It stays reachable at the point where it's actually needed.",
           },
         ].map((s, i) => (
           <div class="row">
@@ -561,7 +554,7 @@ const IMG = "/images/work/beyond-the-task";
   <section class="sec-y" data-reveal>
     <div class="container-pg">
       <p class="cs-label mb-4">08. An illustrative scenario</p>
-      <span class="scenario-flag">Illustrative scenario — not a customer case study</span>
+      <span class="scenario-flag">Illustrative scenario, not a customer case study</span>
       <h2 class="cs-h2 mb-6 max-w-3xl">A new scenario, without an existing template</h2>
       <p class="cs-lede max-w-2xl mb-10">
         Imagine an employee transferring from India to Singapore, and the organization doesn't already have a
@@ -640,9 +633,9 @@ const IMG = "/images/work/beyond-the-task";
           </p>
           <p>
             It also reminded me that product direction and UX are closely connected. Some of the important
-            design work happened before the final screens — working through where the experience should add
-            value, how it should build on existing architecture, and how it should stay coherent across
-            workflows.
+            design work happened before the final screens: working through where the experience should add
+            value, what it needed to earn its own place alongside the work people were already doing, and how
+            it should stay coherent across workflows.
           </p>
           <p>
             With AI Playbooks, the question became more nuanced. It wasn't only about what AI could generate.
