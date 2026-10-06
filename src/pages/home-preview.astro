@@ -1,0 +1,417 @@
+---
+/**
+ * Alternate homepage, built for comparison against the live one.
+ *
+ * Deliberately NOT using Base/Nav/Footer: those are shared with every
+ * case-study page, and the brief was explicit about not touching anything
+ * outside the landing page. A fully standalone document means zero risk of
+ * this experiment leaking into pages it was never meant to touch.
+ *
+ * Interaction and structure are adapted from kokiltamta.in (huge bold hero,
+ * an about-teaser with pill tags, a three-panel hover-expand work list, a
+ * footer with a cursor-aware detail) — the pattern, not the content or the
+ * tone. The googly-eye mascot and the joke copy ("she responds faster than
+ * she fills my bowl") are personality choices that don't fit the zero-fluff,
+ * engineering-adjacent register the rest of this site is written in, so the
+ * footer's cursor interaction survived as two plain tracking rings instead
+ * of a cartoon face, and every sentence of copy here is either lifted
+ * verbatim from vetted copy elsewhere on the site or a direct restatement
+ * of it. Nothing new is claimed.
+ *
+ * noindex: this is a draft for comparison, not a page meant to be found.
+ */
+
+const WORK = [
+  {
+    href: "/work/time-management-system",
+    n: "01",
+    tag: "Enterprise UX",
+    title: "Rethinking Time Management for a global workforce",
+    blurb:
+      "Reorganised an eight-year-old enterprise module around what managers need to decide first. Validated with 8 enterprise clients before global rollout.",
+    img: "/images/work/time-management/tm-manager-dashboard-poster.jpg",
+    alt: "Time Management, the redesigned manager dashboard",
+    featured: false,
+  },
+  {
+    href: "/work/design-ops",
+    n: "02",
+    tag: "AI-native",
+    title: "Building an AI that explains why delivery slipped",
+    blurb:
+      "An AI that explains why a commitment moved, cites the records it read, and measures whether the fix held.",
+    img: "/images/work/design-ops/hero-window.webp",
+    alt: "The Design Ops dashboard, delivery overview for the live quarter",
+    featured: true,
+  },
+  {
+    href: "/work/beyond-the-task",
+    n: "03",
+    tag: "Draft",
+    title: "Beyond the Task: Journeys and AI-assisted Playbooks",
+    blurb:
+      "From transactional workflows to guided experiences, then to exploring how AI could help admins assemble guidance that doesn't already exist.",
+    img: "/images/work/beyond-the-task/hero-diagram.svg",
+    alt: "Conceptual diagram: from a task list to a guided Journey",
+    featured: false,
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Alternate homepage draft, for comparison only." />
+    <title>Homepage draft. Kishore Sudhamalla</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Inter+Tight:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --surface: #141414;
+        --ink: #ffffff;
+        --ink-2: #b7b7b2;
+        --ink-3: #7c7c77;
+        --line: rgba(255, 255, 255, 0.12);
+        --line-soft: rgba(255, 255, 255, 0.07);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", ui-sans-serif, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 78rem; margin-inline: auto; padding-inline: clamp(1.5rem, 4vw, 4rem); }
+      .display { font-family: "Inter Tight", "Inter", sans-serif; font-weight: 800; letter-spacing: -0.03em; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+      /* ── banner: this is a draft, not the live site ──────────────────── */
+      .draft-banner {
+        background: #fff; color: #0a0a0a;
+        font-family: "JetBrains Mono", monospace; font-size: 0.75rem; font-weight: 600;
+        text-align: center; padding: 0.6rem 1rem; letter-spacing: 0.02em;
+      }
+      .draft-banner a { color: inherit; text-decoration: underline; }
+
+      /* ── nav ──────────────────────────────────────────────────────────── */
+      nav.top {
+        position: sticky; top: 0; z-index: 50;
+        display: flex; justify-content: center;
+        padding: 1.25rem clamp(1.25rem, 4vw, 2.5rem) 0;
+      }
+      .nav-pill {
+        display: flex; align-items: center; gap: 0.25rem;
+        background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(12px);
+        border: 1px solid var(--line); border-radius: 100px;
+        padding: 0.4rem 0.4rem 0.4rem 1.1rem;
+      }
+      .brand { display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem; margin-right: 0.75rem; white-space: nowrap; color: var(--ink); text-decoration: none; }
+      .brand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
+      .nav-links { display: none; align-items: center; gap: 0.3rem; }
+      @media (min-width: 760px) { .nav-links { display: flex; } }
+      .nav-links a {
+        color: var(--ink-2); text-decoration: none; font-size: 0.875rem; font-weight: 500;
+        padding: 0.5rem 0.9rem; border-radius: 100px; transition: color 0.15s, background 0.15s;
+      }
+      .nav-links a:hover { color: var(--ink); background: var(--line-soft); }
+      .nav-cta {
+        display: inline-flex; align-items: center; gap: 0.4rem;
+        background: #fff; color: #0a0a0a; font-size: 0.8125rem; font-weight: 600;
+        padding: 0.55rem 1.1rem; border-radius: 100px; text-decoration: none; white-space: nowrap;
+        margin-left: 0.5rem; transition: opacity 0.15s;
+      }
+      .nav-cta:hover { opacity: 0.85; }
+
+      /* ── hero ─────────────────────────────────────────────────────────── */
+      .hero { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem); }
+      .hero-eyebrow { color: var(--ink-2); font-size: clamp(1rem, 2vw, 1.25rem); margin: 0 0 0.5rem; }
+      .hero-h1 {
+        margin: 0; line-height: 0.92;
+        font-size: clamp(3.2rem, 10.5vw, 8.5rem);
+        text-transform: uppercase;
+      }
+      .hero-sub {
+        max-width: 38rem; color: var(--ink-2); font-size: 1.0625rem; line-height: 1.65;
+        margin: clamp(2rem, 5vw, 3rem) 0 2.5rem;
+      }
+      .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+      .btn {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        font-size: 0.9rem; font-weight: 600; padding: 0.95rem 1.6rem; border-radius: 100px;
+        text-decoration: none; transition: opacity 0.15s, background 0.15s;
+      }
+      .btn--solid { background: #fff; color: #0a0a0a; }
+      .btn--solid:hover { opacity: 0.85; }
+      .btn--outline { border: 1px solid var(--line); color: var(--ink); }
+      .btn--outline:hover { background: var(--line-soft); }
+      .hero-meta {
+        display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+        border-top: 1px solid var(--line); padding-top: 1.25rem;
+        font-family: "JetBrains Mono", monospace; font-size: 0.6875rem; letter-spacing: 0.1em;
+        text-transform: uppercase; color: var(--ink-3);
+      }
+
+      /* ── section shell ────────────────────────────────────────────────── */
+      .sec { padding: clamp(3.5rem, 8vw, 6rem) 0; border-top: 1px solid var(--line); }
+      .sec-k {
+        font-family: "JetBrains Mono", monospace; font-size: 0.75rem; letter-spacing: 0.05em;
+        color: var(--ink-3); margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+      }
+
+      /* ── about teaser ─────────────────────────────────────────────────── */
+      .about-statement {
+        font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.22; letter-spacing: -0.015em;
+        max-width: 50rem; margin: 0 0 clamp(2rem, 5vw, 3rem);
+      }
+      .pill-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+      .pill {
+        border: 1px solid var(--line); border-radius: 100px; padding: 0.5rem 1rem;
+        font-size: 0.8125rem; color: var(--ink-2);
+      }
+      .more-link {
+        margin-left: auto; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 0.9rem;
+        display: inline-flex; align-items: center; gap: 0.4rem;
+      }
+
+      /* ── work: three panels, one expanded, css-only ──────────────────── */
+      .work-row {
+        display: flex; gap: 0.5rem; align-items: stretch;
+        height: clamp(22rem, 46vw, 30rem);
+      }
+      .work-card {
+        position: relative; flex: 0 1 4.5rem; min-width: 4.5rem;
+        border: 1px solid var(--line); border-radius: 1.25rem; overflow: hidden;
+        text-decoration: none; color: inherit; background: var(--surface);
+        transition: flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1), flex-basis 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .work-card[data-featured="true"] { flex: 3 1 0; min-width: 4.5rem; }
+      @media (min-width: 760px) {
+        .work-row:hover .work-card { flex: 1 1 0; }
+        .work-row:hover .work-card:hover { flex: 3.4 1 0; }
+      }
+      .work-card-img { position: absolute; inset: 0; }
+      .work-card-img img {
+        width: 100%; height: 100%; object-fit: cover; object-position: top center;
+        opacity: 0.22; transition: opacity 0.4s ease;
+      }
+      .work-card[data-featured="true"] .work-card-img img,
+      .work-row:hover .work-card:hover .work-card-img img { opacity: 0.55; }
+      .work-card::after {
+        content: ""; position: absolute; inset: 0;
+        background: linear-gradient(0deg, rgba(10,10,10,0.95) 10%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.35) 100%);
+      }
+      .work-card-label {
+        position: absolute; top: 1.25rem; left: 1.25rem; z-index: 2;
+        font-family: "JetBrains Mono", monospace; font-size: 0.6875rem; letter-spacing: 0.08em;
+        color: var(--ink-3); white-space: nowrap;
+        writing-mode: vertical-rl; text-orientation: mixed;
+      }
+      .work-card[data-featured="true"] .work-card-label,
+      .work-row:hover .work-card:hover .work-card-label { writing-mode: horizontal-tb; }
+      .work-card-body {
+        position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.25rem; z-index: 2;
+        opacity: 0; transform: translateY(8px);
+        transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
+      }
+      .work-card[data-featured="true"] .work-card-body,
+      .work-row:hover .work-card:hover .work-card-body { opacity: 1; transform: none; }
+      .work-card-tag {
+        display: inline-block; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em;
+        text-transform: uppercase; color: var(--ink); background: rgba(255,255,255,0.1);
+        border-radius: 100px; padding: 0.3rem 0.7rem; margin-bottom: 0.9rem;
+      }
+      .work-card-title {
+        font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; letter-spacing: -0.015em;
+        line-height: 1.2; margin: 0 0 0.6rem; max-width: 30rem;
+      }
+      .work-card-blurb { font-size: 0.875rem; line-height: 1.55; color: var(--ink-2); max-width: 28rem; margin: 0 0 1rem; }
+      .work-card-arrow {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid var(--line); color: var(--ink);
+      }
+
+      /* ── footer ───────────────────────────────────────────────────────── */
+      .foot-head { position: relative; font-size: clamp(2.2rem, 6vw, 4.5rem); line-height: 1.05; margin: 0 0 clamp(2.5rem, 6vw, 4rem); }
+      .foot-head .dim { color: var(--ink-3); }
+      .tracker { position: absolute; display: inline-flex; gap: 0.6rem; margin-left: 1rem; vertical-align: middle; }
+      .tracker-ring {
+        position: relative; width: 2.6rem; height: 2.6rem; border-radius: 50%;
+        border: 1.5px solid var(--line); background: var(--surface); flex-shrink: 0;
+      }
+      .tracker-dot {
+        position: absolute; top: 50%; left: 50%; width: 0.7rem; height: 0.7rem; border-radius: 50%;
+        background: #fff; transform: translate(-50%, -50%);
+        transition: transform 0.12s ease-out;
+      }
+      .foot-grid { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+      @media (min-width: 700px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+      .foot-row { background: var(--bg); padding: 1.5rem 1.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-decoration: none; color: inherit; transition: background 0.15s; }
+      .foot-row:hover { background: var(--line-soft); }
+      .foot-row-t { font-weight: 600; font-size: 1rem; margin: 0 0 0.25rem; }
+      .foot-row-s { font-size: 0.8125rem; color: var(--ink-3); margin: 0; }
+      .foot-bottom {
+        margin-top: clamp(3rem, 6vw, 4.5rem); padding-top: 1.5rem; border-top: 1px solid var(--line);
+        display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
+        font-family: "JetBrains Mono", monospace; font-size: 0.75rem; color: var(--ink-3);
+      }
+      .foot-bottom a { color: var(--ink-3); text-decoration: none; }
+      .foot-bottom a:hover { color: var(--ink); }
+    </style>
+
+    <p class="draft-banner">
+      Draft for comparison, not the live site &nbsp;·&nbsp; <a href="/">See the current homepage</a>
+    </p>
+
+    <nav class="top">
+      <div class="nav-pill">
+        <a href="#top" class="brand"><span class="brand-dot"></span>Kishore Sudhamalla</a>
+        <div class="nav-links">
+          <a href="#work">Work</a>
+          <a href="/#about">About</a>
+          <a href="/#contact">Contact</a>
+        </div>
+        <a href="mailto:build@kishoresudhamalla.com" class="nav-cta">Get in touch</a>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="wrap">
+        <p class="hero-eyebrow mono" style="font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; font-size:0.75rem;">
+          UX &amp; Product Design Leader
+        </p>
+        <h1 class="hero-h1 display">
+          Product<br />Designer
+        </h1>
+        <p class="hero-sub">
+          I design AI-native experiences for complex enterprise products, where agents work across
+          real workflows, systems and decisions. 16+ years in design, nearly 9 of them in enterprise
+          HR technology. I build that shift myself, in working code.
+        </p>
+        <div class="hero-ctas">
+          <a href="#work" class="btn btn--solid">See selected work ↓</a>
+          <a href="/kishore-sudhamalla-resume.pdf" download class="btn btn--outline">Download résumé</a>
+        </div>
+        <div class="hero-meta">
+          <span>Portfolio &rsquo;26</span>
+          <span>Enterprise UX &middot; AI-native &middot; Systems design</span>
+          <span>Scroll ↓</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="sec">
+      <div class="wrap">
+        <p class="sec-k">(01) &mdash; ABOUT</p>
+        <p class="about-statement display" style="font-weight:700; letter-spacing:-0.02em;">
+          I design complex enterprise systems that people actually understand, then build the AI
+          layer that knows when to act, assist, and step back.
+        </p>
+        <div class="pill-row">
+          <span class="pill">Figma</span>
+          <span class="pill">Claude Code</span>
+          <span class="pill">Systems thinking</span>
+          <span class="pill">Agentic prototyping</span>
+          <span class="pill">AI-assisted design</span>
+          <a href="/#about" class="more-link">More about me →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work">
+      <div class="wrap">
+        <p class="sec-k">(02) &mdash; SELECTED WORK</p>
+        <div class="work-row">
+          {WORK.map((w) => (
+            <a class="work-card" href={w.href} data-featured={w.featured ? "true" : "false"}>
+              <div class="work-card-img"><img src={w.img} alt="" loading="lazy" /></div>
+              <p class="work-card-label">{w.n} &mdash; {w.tag.toUpperCase()}</p>
+              <div class="work-card-body">
+                <span class="work-card-tag">{w.tag}</span>
+                <p class="work-card-title">{w.title}</p>
+                <p class="work-card-blurb">{w.blurb}</p>
+                <span class="work-card-arrow" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="contact-draft">
+      <div class="wrap">
+        <p class="sec-k">(03) &mdash; CONTACT</p>
+        <h2 class="foot-head display">
+          Let&rsquo;s build something<br /><span class="dim">that can act.</span>
+          <span class="tracker" aria-hidden="true" data-tracker>
+            <span class="tracker-ring"><span class="tracker-dot" data-dot></span></span>
+            <span class="tracker-ring"><span class="tracker-dot" data-dot></span></span>
+          </span>
+        </h2>
+        <div class="foot-grid">
+          <a class="foot-row" href="mailto:build@kishoresudhamalla.com">
+            <span>
+              <p class="foot-row-t">Email</p>
+              <p class="foot-row-s">Usually the fastest way to reach me.</p>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="foot-row" href="https://linkedin.com/in/kishuxer" target="_blank" rel="noopener noreferrer">
+            <span>
+              <p class="foot-row-t">LinkedIn</p>
+              <p class="foot-row-s">Where the rest of my network is.</p>
+            </span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="foot-bottom">
+          <span>&copy; 2026 Kishore Kumar Sudhamalla</span>
+          <span><a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noopener noreferrer">LinkedIn</a> &nbsp;&middot;&nbsp; <a href="/resume">R&eacute;sum&eacute;</a></span>
+          <a href="#top">Back to top ↑</a>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Two small rings near the footer headline track the cursor within a
+      // bounded radius — the interaction kokiltamta.in's googly eyes do,
+      // restyled as a plain tracking detail rather than a mascot, to match
+      // the rest of this site's register.
+      (function () {
+        var tracker = document.querySelector('[data-tracker]');
+        if (!tracker) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var dots = Array.prototype.slice.call(document.querySelectorAll('[data-dot]'));
+        var MAX = 7; // px the dot is allowed to drift off-centre
+        document.addEventListener('mousemove', function (e) {
+          dots.forEach(function (dot) {
+            var ring = dot.parentElement.getBoundingClientRect();
+            var cx = ring.left + ring.width / 2;
+            var cy = ring.top + ring.height / 2;
+            var dx = e.clientX - cx;
+            var dy = e.clientY - cy;
+            var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            var clamped = Math.min(dist, MAX * 6) / 6;
+            var x = (dx / dist) * Math.min(clamped, MAX);
+            var y = (dy / dist) * Math.min(clamped, MAX);
+            dot.style.transform = 'translate(calc(-50% + ' + x.toFixed(1) + 'px), calc(-50% + ' + y.toFixed(1) + 'px))';
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
