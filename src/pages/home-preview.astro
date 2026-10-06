@@ -139,9 +139,20 @@ const WORK = [
       .hero { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem); }
       .hero-eyebrow { color: var(--ink-2); font-size: clamp(1rem, 2vw, 1.25rem); margin: 0 0 0.5rem; }
       .hero-h1 {
-        margin: 0; line-height: 0.92;
-        font-size: clamp(3.2rem, 10.5vw, 8.5rem);
+        margin: 0; line-height: 0.94;
+        font-size: clamp(2.6rem, 8.6vw, 7rem);
         text-transform: uppercase;
+      }
+      .hero-h1 .eyes { display: inline-flex; gap: 0.5rem; margin-left: clamp(0.5rem, 1.5vw, 1rem); vertical-align: middle; }
+      .eye {
+        position: relative; display: inline-block; border-radius: 50%;
+        width: clamp(1.8rem, 5.6vw, 4.5rem); height: clamp(1.8rem, 5.6vw, 4.5rem);
+        background: #fff; flex-shrink: 0;
+      }
+      .eye .pupil {
+        position: absolute; top: 50%; left: 50%; border-radius: 50%; background: #0a0a0a;
+        width: 38%; height: 38%; transform: translate(-50%, -50%);
+        transition: transform 0.12s ease-out;
       }
       .hero-sub {
         max-width: 38rem; color: var(--ink-2); font-size: 1.0625rem; line-height: 1.65;
@@ -289,11 +300,16 @@ const WORK = [
 
     <header class="hero" id="top">
       <div class="wrap">
-        <p class="hero-eyebrow mono" style="font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.1em; font-size:0.75rem;">
-          UX &amp; Product Design Leader
+        <p class="hero-eyebrow" style="font-size:clamp(1rem, 2vw, 1.25rem);">
+          Hi, I&rsquo;m Kishore, a
         </p>
         <h1 class="hero-h1 display">
-          Product<br />Designer
+          Principal<br />Product
+          <span class="eyes" aria-hidden="true" data-tracker>
+            <span class="eye"><span class="pupil" data-dot></span></span>
+            <span class="eye"><span class="pupil" data-dot></span></span>
+          </span>
+          <br />Designer
         </h1>
         <p class="hero-sub">
           I design AI-native experiences for complex enterprise products, where agents work across
@@ -387,27 +403,28 @@ const WORK = [
     </section>
 
     <script>
-      // Two small rings near the footer headline track the cursor within a
-      // bounded radius — the interaction kokiltamta.in's googly eyes do,
-      // restyled as a plain tracking detail rather than a mascot, to match
-      // the rest of this site's register.
+      // Pupils (the two hero eyes, and the footer's two tracking rings) move
+      // toward the cursor within a bounded radius. One script, reused for
+      // both groups: the bound scales to each ring's own size, since the
+      // hero eyes run several times larger than the footer rings and a
+      // fixed pixel drift would look stiff on the big ones and overshoot on
+      // the small ones.
       (function () {
-        var tracker = document.querySelector('[data-tracker]');
-        if (!tracker) return;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         var dots = Array.prototype.slice.call(document.querySelectorAll('[data-dot]'));
-        var MAX = 7; // px the dot is allowed to drift off-centre
+        if (!dots.length) return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         document.addEventListener('mousemove', function (e) {
           dots.forEach(function (dot) {
             var ring = dot.parentElement.getBoundingClientRect();
+            var max = ring.width * 0.22; // keep the pupil inside the ring
             var cx = ring.left + ring.width / 2;
             var cy = ring.top + ring.height / 2;
             var dx = e.clientX - cx;
             var dy = e.clientY - cy;
             var dist = Math.sqrt(dx * dx + dy * dy) || 1;
-            var clamped = Math.min(dist, MAX * 6) / 6;
-            var x = (dx / dist) * Math.min(clamped, MAX);
-            var y = (dy / dist) * Math.min(clamped, MAX);
+            var clamped = Math.min(dist, max * 6) / 6;
+            var x = (dx / dist) * Math.min(clamped, max);
+            var y = (dy / dist) * Math.min(clamped, max);
             dot.style.transform = 'translate(calc(-50% + ' + x.toFixed(1) + 'px), calc(-50% + ' + y.toFixed(1) + 'px))';
           });
         });
