@@ -1,15 +1,18 @@
 ---
 /**
- * Selected work — a ledger of projects that previews on hover.
+ * Selected work — three panels, one expanded at rest, hover swaps which.
  *
- * Previously the row expanded on hover, animating open a full 16:9 image
- * that pushed every row below it down the page — the further down the list,
- * the more it moved. Now the row's height never changes: a small thumbnail
- * fades into space the row already reserves, the way wonderful.ai/careers
- * handles its "Main Roles" list. Hovering shows more without moving anything.
+ * Earlier version faded a thumbnail into a reserved column on hover
+ * (wonderful.ai/careers' "Main Roles" pattern). This replaces that with a
+ * pattern borrowed from a reference the user liked: panels sit side by
+ * side, one is expanded by default, and hovering a collapsed one expands
+ * it while the others collapse — pure CSS (flex-grow transitions), no JS.
  *
- * Touch has no hover, so the thumbnail is simply not part of the mobile
- * layout rather than always-open — the list stays a clean, tappable index.
+ * Touch has no hover, so collapsing to illegible vertical strips would
+ * strand two of three projects with no way to read them. Below 900px the
+ * row becomes a plain vertical stack instead: full title, blurb and image
+ * on all three, no collapse at all — the same "stays a clean, tappable
+ * index on touch" rule the previous version used.
  */
 
 const IMG = "/images/work";
@@ -17,30 +20,36 @@ const IMG = "/images/work";
 const PROJECTS = [
   {
     href: "/work/time-management-system",
+    n: "01",
     title: "Rethinking Time Management for a global workforce",
     meta: "Darwinbox · Senior UX Manager · Enterprise UX",
     blurb:
       "Reorganised an eight-year-old enterprise module around what managers need to decide first. Validated with 8 enterprise clients before global rollout.",
     img: `${IMG}/time-management/tm-manager-dashboard-poster.jpg`,
     alt: "Time Management, the redesigned manager dashboard",
+    featured: false,
   },
   {
     href: "/work/design-ops",
+    n: "02",
     title: "Building an AI that explains why delivery slipped",
     meta: "Darwinbox · Designed and built solo · AI-native",
     blurb:
       "An AI that explains why a commitment moved, cites the records it read, and measures whether the fix held.",
     img: `${IMG}/design-ops/hero-window.webp`,
     alt: "The Design Ops dashboard, delivery overview for the live quarter",
+    featured: true,
   },
   {
     href: "/work/beyond-the-task",
+    n: "03",
     title: "Beyond the Task: Journeys and AI-assisted Playbooks",
     meta: "Darwinbox · Senior Manager, UX Design · Product direction",
     blurb:
       "From transactional workflows to guided experiences, then to exploring how AI could help admins assemble guidance that doesn't already exist.",
-    img: `/images/work/beyond-the-task/hero-diagram.svg`,
+    img: "/images/work/beyond-the-task/hero-diagram.svg",
     alt: "Conceptual diagram: from a task list to a guided Journey",
+    featured: false,
     status: "Draft, evidence pending",
   },
 ];
@@ -56,29 +65,19 @@ const PROJECTS = [
       <p class="pl-count">Three case studies / &rsquo;23&ndash;&rsquo;26</p>
     </div>
 
-    <div class="pl-list">
+    <div class="work-row">
       {PROJECTS.map((p) => (
-        <a class="pl-row" href={p.href} data-pl-row>
-          <div class="pl-top">
-            <div class="pl-main">
-              <h3 class="pl-name">
-                {p.title}
-                {p.status && <span class="pl-status">{p.status}</span>}
-              </h3>
-              <p class="pl-kicker"><Fragment set:html={p.meta} /></p>
-            </div>
-
-            {p.img && (
-              <div class="pl-thumb" aria-hidden="true">
-                <img src={p.img} alt="" loading="lazy" decoding="async" />
-              </div>
-            )}
-
-            <div class="pl-aside">
-              <p class="pl-blurb">{p.blurb}</p>
-            </div>
-
-            <span class="pl-arrow" aria-hidden="true">
+        <a class="work-card" href={p.href} data-featured={p.featured ? "true" : "false"}>
+          <div class="work-card-img"><img src={p.img} alt="" loading="lazy" decoding="async" /></div>
+          <p class="work-card-label">{p.n}</p>
+          <div class="work-card-body">
+            <p class="work-card-title">
+              {p.title}
+              {p.status && <span class="work-card-status">{p.status}</span>}
+            </p>
+            <p class="work-card-kicker"><Fragment set:html={p.meta} /></p>
+            <p class="work-card-blurb">{p.blurb}</p>
+            <span class="work-card-arrow" aria-hidden="true">
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                 <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor"
                       stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -123,150 +122,111 @@ const PROJECTS = [
     text-transform: uppercase; color: var(--color-ink-3);
   }
 
-  .pl-list { border-top: 1px solid var(--color-border); }
+  /* ── the row: three panels, one expanded, css-only ────────────────────
+     Mobile-first as a plain vertical stack (no hover to drive a collapse,
+     so nothing collapses); the side-by-side expand/collapse only turns on
+     at the breakpoint where a pointer with hover is also likely. */
+  .work-row { display: flex; flex-direction: column; gap: 1rem; }
 
-  .pl-row {
-    display: block;
-    border-bottom: 1px solid var(--color-border);
-    text-decoration: none;
-    color: inherit;
-    /* the hover tint, full-bleed within the row, edge to edge */
-    background: transparent;
-    transition: background-color 0.3s ease;
+  .work-card {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--color-border); border-radius: 1.25rem;
+    text-decoration: none; color: inherit; background: var(--color-surface);
+    min-height: 20rem;
   }
-  @media (hover: hover) {
-    .pl-row:hover,
-    .pl-row:focus-visible {
-      background: var(--color-surface);
-    }
-  }
-
-  /* Named areas rather than relying on source order + implicit auto-flow —
-     that previously squeezed the description into an ~80px column on
-     mobile when a bare two-column grid auto-placed four children. */
-  .pl-top {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "main  arrow"
-      "aside aside";
-    gap: 0.75rem 1.25rem;
-    align-items: center;
-    padding: clamp(1.6rem, 3.5vw, 2.4rem) clamp(0rem, 2vw, 1.25rem);
-  }
-  .pl-main   { grid-area: main; }
-  .pl-aside  { grid-area: aside; }
-  .pl-arrow  { grid-area: arrow; justify-self: end; }
 
   @media (min-width: 900px) {
-    /* title+tags | thumbnail | meta+blurb | arrow, one row. The thumbnail
-       column exists in the grid at rest even when empty, so nothing shifts
-       when the image fades in. Top-aligned: with center alignment the
-       thumbnail and description floated in the middle of the row instead of
-       level with the top of a title that runs two or three lines. */
-    .pl-top {
-      grid-template-columns: 1fr 11.5rem 19rem auto;
-      grid-template-areas: "main thumb aside arrow";
-      align-items: start;
+    .work-row { flex-direction: row; align-items: stretch; height: clamp(22rem, 44vw, 28rem); gap: 0.75rem; }
+    .work-card {
+      flex: 0 1 4.5rem; min-width: 4.5rem; min-height: 0;
+      transition: flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .pl-thumb { grid-area: thumb; }
+    .work-card[data-featured="true"] { flex: 3 1 0; }
+    .work-row:hover .work-card { flex: 1 1 0; }
+    .work-row:hover .work-card:hover { flex: 3.2 1 0; }
   }
 
-  .pl-name {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3.4vw, 2.5rem);
-    font-weight: 600; line-height: 1.03; letter-spacing: -0.04em;
-    color: var(--color-ink); margin: 0;
-    transition: opacity 0.3s ease;
+  .work-card-img { position: absolute; inset: 0; }
+  .work-card-img img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  }
+  /* uniform scrim first, so the vertical label stays legible against any
+     photo, regardless of theme; a second, stronger gradient under the body
+     text at the bottom so the title/blurb never fight the image for
+     contrast. Both reference var(--color-bg), so they're already the
+     correct colour for whichever theme is active -- no separate dark rule
+     needed. */
+  .work-card::before {
+    content: ""; position: absolute; inset: 0; background: var(--color-bg); opacity: 0.62;
+  }
+  .work-card::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(0deg, var(--color-bg) 0%, var(--color-bg) 18%, transparent 68%);
+    opacity: 0.88;
   }
 
-  /* Sits on the title baseline: it qualifies the project, it is not
-     another thing the project is about. Plain text, not a pill — a single
-     status word doesn't need a border to be legible. */
-  .pl-status {
-    display: inline-block; vertical-align: middle;
-    margin-left: 0.75rem; transform: translateY(-0.15em);
-    font-family: var(--font-mono);
-    font-size: 0.625rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
+  /* Mobile: a plain small index above the full card content below. Desktop
+     collapsed state: the same number, rotated, reading top-to-bottom as the
+     only thing a narrow strip has room for -- the full title lives in
+     .work-card-body, which fades in once a panel expands, so there's
+     nothing to duplicate here. */
+  .work-card-label {
+    position: absolute; top: 1.1rem; left: 1.1rem; z-index: 2; margin: 0;
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em;
     color: var(--color-ink-3);
-    white-space: nowrap;
-  }
-
-  /* One plain line under the title — company, role, the one keyword that
-     matters — in place of a row of bordered pills that repeated words
-     already in the title and description. */
-  .pl-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.75rem; letter-spacing: 0.03em;
-    color: var(--color-ink-3); margin: 0.6rem 0 0;
-  }
-
-  /* ── the thumbnail ─────────────────────────────────────────────────
-     Desktop-only, hover-only. Occupies its grid column at rest — width and
-     height fixed — so the fade-in changes opacity, never layout. Hidden
-     entirely below 900px rather than always-open: on touch this keeps the
-     list a clean, fast-scanning index instead of showing four open images
-     stacked on load. */
-  .pl-thumb {
-    display: none;
   }
   @media (min-width: 900px) {
-    /* Sized to read as an actual preview of the case study, not a favicon —
-       roughly the height of the two-line description beside it. */
-    .pl-thumb {
-      display: block;
-      width: 100%;
-      max-width: 10rem;
-      aspect-ratio: 16 / 10;
-      border-radius: 0.75rem;
-      overflow: hidden;
-      border: 1px solid var(--color-border);
-      background: var(--color-surface);
-      opacity: 0;
-      transform: scale(0.97);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    .pl-thumb img {
-      display: block; width: 100%; height: 100%;
-      object-fit: cover; object-position: top center;
-    }
-  }
-  @media (hover: hover) and (min-width: 900px) {
-    .pl-row:hover .pl-thumb,
-    .pl-row:focus-visible .pl-thumb { opacity: 1; transform: none; }
+    .work-card-label { writing-mode: vertical-rl; text-orientation: mixed; top: 1.25rem; }
+    .work-card[data-featured="true"] .work-card-label,
+    .work-row:hover .work-card:hover .work-card-label { writing-mode: horizontal-tb; }
   }
 
-  .pl-blurb { font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2); }
-  .pl-aside { align-self: start; padding-top: 0.35rem; }
-
-  .pl-arrow {
-    display: flex; align-items: center; justify-content: center;
-    width: 2.75rem; height: 2.75rem; border-radius: 50%;
-    border: 1px solid var(--color-border);
-    color: var(--color-ink-2);
-    flex-shrink: 0; align-self: center;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  .work-card-body {
+    position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.25rem; z-index: 2;
   }
   @media (min-width: 900px) {
-    /* Row is top-aligned now; nudge the circle down so its centre lands
-       near the title's cap-height instead of sitting flush with the grid's
-       raw top edge. */
-    .pl-arrow { align-self: start; margin-top: 0.2rem; }
+    .work-card-body {
+      opacity: 0; transform: translateY(8px); pointer-events: none;
+      transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
+    }
+    .work-card[data-featured="true"] .work-card-body,
+    .work-row:hover .work-card:hover .work-card-body {
+      opacity: 1; transform: none; pointer-events: auto;
+    }
   }
 
+  .work-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    font-weight: 600; line-height: 1.15; letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 0.5rem; max-width: 30rem;
+  }
+  .work-card-status {
+    display: inline-block; vertical-align: middle; margin-left: 0.6rem; transform: translateY(-0.1em);
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); white-space: nowrap;
+  }
+  .work-card-kicker {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em;
+    color: var(--color-ink-3); margin: 0 0 0.6rem;
+  }
+  .work-card-blurb {
+    font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); max-width: 28rem; margin: 0 0 1rem;
+  }
+  .work-card-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    border: 1px solid var(--color-border); color: var(--color-ink);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
   @media (hover: hover) {
-    .pl-row:hover .pl-arrow,
-    .pl-row:focus-visible .pl-arrow {
-      background: var(--color-ink); border-color: var(--color-ink);
-      color: var(--color-bg); transform: rotate(45deg);
+    .work-card:hover .work-card-arrow {
+      background: var(--color-ink); border-color: var(--color-ink); color: var(--color-bg);
+      transform: rotate(45deg);
     }
-    /* dim the rest of the list so the hovered row leads */
-    .pl-list:hover .pl-row:not(:hover) .pl-name { opacity: 0.4; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .pl-row, .pl-thumb, .pl-arrow, .pl-name { transition: none; }
+    .work-card, .work-card-body, .work-card-arrow { transition: none; }
   }
 </style>
