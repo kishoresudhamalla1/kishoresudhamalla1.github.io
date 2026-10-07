@@ -67,7 +67,7 @@ const PROJECTS = [
 
     <div class="work-row">
       {PROJECTS.map((p) => (
-        <a class="work-card" href={p.href} data-featured={p.featured ? "true" : "false"}>
+        <a class:list={["work-card", p.featured && "is-featured"]} href={p.href}>
           <div class="work-card-img"><img src={p.img} alt="" loading="lazy" decoding="async" /></div>
           <p class="work-card-label">{p.n}</p>
           <div class="work-card-body">
@@ -141,7 +141,7 @@ const PROJECTS = [
       flex: 0 1 4.5rem; min-width: 4.5rem; min-height: 0;
       transition: flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .work-card[data-featured="true"] { flex: 3 1 0; }
+    .work-card.is-featured { flex: 3 1 0; }
     .work-row:hover .work-card { flex: 1 1 0; }
     .work-row:hover .work-card:hover { flex: 3.2 1 0; }
   }
@@ -175,23 +175,54 @@ const PROJECTS = [
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em;
     color: var(--color-ink-3);
   }
+  /* Same custom-property approach as .work-card-body, and for the same
+     reason: a selector-merging bug in Lightning CSS (see the long comment
+     above .work-card-body) that strips ancestor qualifiers when two rules
+     share a trailing compound selector. One concrete rule against
+     .work-card-label; the ancestor-state rules only ever set a variable. */
   @media (min-width: 900px) {
-    .work-card-label { writing-mode: vertical-rl; text-orientation: mixed; top: 1.25rem; }
-    .work-card[data-featured="true"] .work-card-label,
-    .work-row:hover .work-card:hover .work-card-label { writing-mode: horizontal-tb; }
+    .work-card-label {
+      writing-mode: var(--label-mode, vertical-rl);
+      text-orientation: mixed; top: 1.25rem;
+    }
+    .work-card.is-featured { --label-mode: horizontal-tb; }
+    .work-row:hover .work-card:hover { --label-mode: horizontal-tb; }
   }
 
-  .work-card-body {
-    position: absolute; left: 1.25rem; right: 1.25rem; bottom: 1.25rem; z-index: 2;
-  }
+  /* opacity/transform/pointer-events driven entirely by custom properties,
+     set by the ancestor-state rules below, rather than by separate
+     ancestor-qualified rules targeting .work-card-body directly.
+
+     This stylesheet goes through Lightning CSS (Tailwind v4's minifier),
+     which was found -- repeatedly, across several attempted fixes -- to
+     unsafely "factor" rules that share a trailing compound selector,
+     stripping the discriminating ancestor off one branch and leaving a
+     bare ".work-card-body { opacity: 1 }" applying to every card
+     unconditionally. That's what caused all three cards' body text to
+     render fully visible and overlapping at once instead of only the
+     expanded one.
+
+     With exactly one rule ever written against the concrete
+     .work-card-body selector, there is nothing left for that
+     optimisation to incorrectly merge. The ancestor rules below only ever
+     set custom properties on their own selectors (.work-card.is-featured,
+     .work-row:hover .work-card:hover) -- distinct selectors from each
+     other and from .work-card-body itself, so even if Lightning CSS merges
+     *those*, the merge is harmless: both branches set the same two
+     variables to the same values. Verified in the compiled CSS after this
+     change: .work-card-body appears exactly once. */
   @media (min-width: 900px) {
     .work-card-body {
-      opacity: 0; transform: translateY(8px); pointer-events: none;
+      opacity: var(--body-opacity, 0);
+      transform: var(--body-shift, translateY(8px));
+      pointer-events: var(--body-events, none);
       transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
     }
-    .work-card[data-featured="true"] .work-card-body,
-    .work-row:hover .work-card:hover .work-card-body {
-      opacity: 1; transform: none; pointer-events: auto;
+    .work-card.is-featured {
+      --body-opacity: 1; --body-shift: none; --body-events: auto;
+    }
+    .work-row:hover .work-card:hover {
+      --body-opacity: 1; --body-shift: none; --body-events: auto;
     }
   }
 
