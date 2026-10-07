@@ -1,0 +1,47 @@
+---
+/**
+ * Confidentiality notice — same pattern as benroachdesign.com/work/google:
+ * a short, explicit statement placed right after the hero explaining why
+ * proprietary screens/data aren't shown, so the reader isn't left guessing
+ * whether missing craft means the work doesn't exist.
+ */
+interface Props {
+  note: string;
+}
+const { note } = Astro.props;
+---
+
+<div class="container-pg r-conf">
+  <div class="r-conf-box" data-reveal>
+    <p class="r-conf-head">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3.5 2.5 20h19L12 3.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+        <path d="M12 9.5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        <circle cx="12" cy="17.25" r="0.9" fill="currentColor" />
+      </svg>
+      Confidentiality notice
+    </p>
+    <p class="r-conf-body">{note}</p>
+  </div>
+</div>
+
+<style>
+  .r-conf { padding: 0 0 clamp(1.5rem, 3vw, 2rem); }
+  .r-conf-box {
+    max-width: 46rem;
+    padding: 1.5rem 1.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.875rem;
+    background: var(--color-surface);
+  }
+  .r-conf-head {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 600;
+    font-size: 0.9375rem; color: var(--color-ink);
+    margin: 0 0 0.6rem;
+  }
+  .r-conf-head svg { flex-shrink: 0; color: #c45a3a; }
+  .r-conf-body {
+    font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-3); margin: 0;
+  }
+</style>
