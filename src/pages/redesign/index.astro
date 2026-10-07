@@ -1,0 +1,245 @@
+---
+/**
+ * Redesign option — homepage. Repositions from "AI leader / strategic UX
+ * leader" to hands-on Principal/Staff IC: complex enterprise systems first,
+ * AI-native product design as the next chapter, not the whole identity.
+ *
+ * Every stat here is one already used elsewhere in the live site
+ * (HeroSection.tsx, About.astro) — nothing new invented. "120+ countries"
+ * carries the same caveat it already has there: no case study in the repo
+ * cites a source for it, so if you want to keep it, it needs a citation.
+ */
+import RBase from "../../layouts/RBase.astro";
+
+const FACTS = [
+  { value: "16+", label: "Years in design" },
+  { value: "9", label: "Years building enterprise HCM" },
+  { value: "1.6M+", label: "Users reached" },
+  { value: "120+", label: "Countries" },
+];
+
+const WORK = [
+  {
+    n: "01",
+    title: "Time Management",
+    subtitle: "Reimagining enterprise time management for global scale.",
+    meta: "8-year-old enterprise module · 1.6M+ users · 120+ countries",
+    href: "/redesign/work/time-management",
+    img: "/images/work/time-management/tm-manager-dashboard-poster.jpg",
+  },
+  {
+    n: "02",
+    title: "Flows → Journeys → Playbooks",
+    subtitle: "Rethinking employee experiences for an AI-native HCM platform.",
+    meta: "Product evolution · AI-native interaction design",
+    href: "/redesign/work/flows-journeys-playbooks",
+    img: "/images/work/beyond-the-task/hero-diagram.svg",
+  },
+];
+---
+
+<RBase title="Kishore Sudhamalla — Principal Product Designer">
+  <!-- Hero -->
+  <section class="container-pg r-hero">
+    <p class="r-eyebrow" data-reveal>Kishore Sudhamalla</p>
+    <h1 class="r-h1" data-reveal>
+      Principal Product Designer, designing complex enterprise systems into
+      <span class="r-h1-accent">intelligent, AI-native experiences.</span>
+    </h1>
+
+    <p class="r-lede" data-reveal>
+      I design complex products, systems and workflows that make work simpler
+      for people. Currently exploring the next generation of AI-native
+      product experiences.
+    </p>
+
+    <div class="r-cta-row" data-reveal>
+      <a href="#work" class="r-btn r-btn-primary">View selected work</a>
+      <a href="/redesign/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
+    </div>
+
+    <dl class="r-facts" data-reveal>
+      {FACTS.map((f) => (
+        <div>
+          <dt>{f.value}</dt>
+          <dd>{f.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <!-- Selected work -->
+  <section id="work" class="container-pg r-work">
+    <p class="r-section-label" data-reveal>Selected work</p>
+
+    <div class="r-work-list">
+      {WORK.map((p) => (
+        <a href={p.href} class="r-work-card" data-reveal>
+          <div class="r-work-media">
+            <img src={p.img} alt="" loading="lazy" decoding="async" />
+          </div>
+          <div class="r-work-copy">
+            <p class="r-work-n">{p.n}</p>
+            <h3 class="r-work-title">{p.title}</h3>
+            <p class="r-work-subtitle">{p.subtitle}</p>
+            <p class="r-work-meta">{p.meta}</p>
+            <span class="r-work-arrow" aria-hidden="true">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- How I work -->
+  <section class="container-pg r-how">
+    <p class="r-section-label" data-reveal>How I work</p>
+    <h2 class="r-how-head" data-reveal>I start with the system, not the screen.</h2>
+
+    <div class="r-how-list">
+      {[
+        { n: "01", t: "Understand the system", d: "Users, data, workflows, dependencies and constraints." },
+        { n: "02", t: "Find the real problem", d: "Separate the visible request from the underlying experience problem." },
+        { n: "03", t: "Shape the model", d: "Simplify complexity into clearer mental models and interaction patterns." },
+        { n: "04", t: "Prototype the future", d: "Move quickly from ideas to working experiences." },
+        { n: "05", t: "Make it real", d: "Work closely with product and engineering to ship." },
+        { n: "06", t: "Learn and evolve", d: "Use adoption, behaviour and feedback to improve the system." },
+      ].map((s) => (
+        <div class="r-how-item" data-reveal>
+          <p class="r-how-n">{s.n}</p>
+          <h3>{s.t}</h3>
+          <p>{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="container-pg r-about-teaser">
+    <p class="r-section-label" data-reveal>About</p>
+    <p class="r-about-p" data-reveal>
+      I like difficult problems. I've spent most of my career designing
+      products where complexity is unavoidable. For the last nine years I've
+      worked on Darwinbox, a global HCM platform used across 120+ countries,
+      across Time Management, Payroll, Benefits, Journeys, Flows, HR
+      Documents, Core HR, Extensibility and AI experiences. What interests
+      me now is what happens when these systems become intelligent.
+    </p>
+    <a href="/redesign/about" class="r-text-link" data-reveal>More about me →</a>
+  </section>
+</RBase>
+
+<style>
+  .r-hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem); max-width: 54rem; }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .r-h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
+    margin: 0 0 1.5rem;
+  }
+  .r-h1-accent { color: var(--color-ink-2); }
+  .r-lede {
+    font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
+    color: var(--color-ink-2); max-width: 36rem; margin: 0 0 2.25rem;
+  }
+  .r-cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+  .r-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
+  .r-btn-primary:hover { opacity: 0.85; }
+  .r-btn-ghost {
+    border: 1px solid var(--color-border); color: var(--color-ink);
+  }
+  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-facts {
+    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--color-border);
+  }
+  .r-facts dt {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .r-facts dd {
+    margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3);
+  }
+
+  .r-section-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+
+  .r-work { padding: clamp(2rem, 5vw, 3rem) 0 clamp(3rem, 6vw, 5rem); }
+  .r-work-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .r-work-card {
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 1.25rem;
+    text-decoration: none; color: inherit; transition: border-color 0.2s;
+  }
+  .r-work-card:hover { border-color: var(--color-ink-3); }
+  .r-work-media {
+    border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--color-border);
+    background: var(--color-surface); aspect-ratio: 16/9;
+  }
+  .r-work-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .r-work-n {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0 0 0.5rem;
+  }
+  .r-work-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 0.5rem;
+  }
+  .r-work-subtitle { font-size: 0.9375rem; color: var(--color-ink-2); margin: 0 0 0.75rem; }
+  .r-work-meta {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0 0 1rem;
+  }
+  .r-work-arrow {
+    display: inline-flex; width: 2rem; height: 2rem; align-items: center; justify-content: center;
+    border: 1px solid var(--color-border); border-radius: 50%; color: var(--color-ink);
+  }
+
+  @media (min-width: 768px) {
+    .r-work-card { grid-template-columns: 1.1fr 1fr; align-items: center; }
+  }
+
+  .r-how { padding: clamp(2rem, 5vw, 3rem) 0 clamp(3rem, 6vw, 5rem); }
+  .r-how-head {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.25rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 2.5rem; max-width: 30rem;
+  }
+  .r-how-list {
+    display: grid; grid-template-columns: 1fr; gap: 2rem;
+    padding-top: 2rem; border-top: 1px solid var(--color-border);
+  }
+  .r-how-item h3 { font-size: 1rem; font-weight: 600; color: var(--color-ink); margin: 0.5rem 0 0.5rem; }
+  .r-how-item p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .r-how-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0; }
+
+  @media (min-width: 768px) {
+    .r-how-list { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .r-about-teaser { padding: clamp(2rem, 5vw, 3rem) 0 clamp(4rem, 8vw, 6rem); max-width: 42rem; }
+  .r-about-p { font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.5rem; }
+  .r-text-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
+    text-decoration: none; border-bottom: 1px solid var(--color-border);
+  }
+  .r-text-link:hover { border-color: var(--color-ink); }
+</style>

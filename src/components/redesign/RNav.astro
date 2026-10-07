@@ -1,0 +1,76 @@
+---
+/**
+ * Redesign-option nav — scoped to /redesign/*, kept separate from the live
+ * Nav.astro so this exploration can't affect the live site. Nav is reduced
+ * to exactly what the brief asked for: Work, AI Lab, Thinking, About, Résumé.
+ */
+import { DarkModeToggle } from "../DarkModeToggle.tsx";
+
+const items = [
+  { href: "/redesign#work", label: "Work" },
+  { href: "/redesign/ai-lab", label: "AI Lab" },
+  { href: "/redesign/thinking", label: "Thinking" },
+  { href: "/redesign/about", label: "About" },
+];
+---
+
+<header class="r-nav">
+  <div class="container-pg r-nav-inner">
+    <a href="/redesign" class="r-nav-brand">Kishore Sudhamalla</a>
+    <nav class="r-nav-links" aria-label="Primary">
+      {items.map((it) => (
+        <a href={it.href}>{it.label}</a>
+      ))}
+    </nav>
+    <div class="r-nav-right">
+      <a href="/resume" class="r-nav-resume">Résumé</a>
+      <DarkModeToggle client:load />
+    </div>
+  </div>
+</header>
+
+<style>
+  .r-nav {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .r-nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+    height: auto; min-height: 3.5rem;
+    padding: 0.6rem 0;
+    flex-wrap: wrap;
+  }
+  .r-nav-brand {
+    font-family: var(--font-display);
+    font-size: 0.875rem; font-weight: 600;
+    color: var(--color-ink); text-decoration: none; letter-spacing: -0.01em;
+    flex-shrink: 0;
+  }
+  .r-nav-links {
+    display: flex; align-items: center; gap: 1.1rem;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    order: 3; width: 100%;
+    scrollbar-width: none;
+  }
+  .r-nav-links::-webkit-scrollbar { display: none; }
+  .r-nav-links a {
+    flex-shrink: 0;
+    font-size: 0.8125rem; font-weight: 500; color: var(--color-ink-2);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .r-nav-links a:hover { color: var(--color-ink); }
+  .r-nav-right { display: flex; align-items: center; gap: 1.25rem; flex-shrink: 0; }
+  .r-nav-resume {
+    font-size: 0.8125rem; font-weight: 500; color: var(--color-ink-2);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .r-nav-resume:hover { color: var(--color-ink); }
+
+  @media (min-width: 768px) {
+    .r-nav-inner { flex-wrap: nowrap; height: 3.5rem; padding: 0; }
+    .r-nav-links { order: 0; width: auto; overflow: visible; }
+  }
+</style>

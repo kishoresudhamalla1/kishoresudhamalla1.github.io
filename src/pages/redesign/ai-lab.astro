@@ -1,0 +1,176 @@
+---
+/**
+ * Redesign option — AI Lab.
+ *
+ * One real, shipped experiment: the existing Design Ops case study
+ * (/work/design-ops) is a genuinely built, solo, end-to-end AI tool — rules
+ * decide what's true, AI explains what it means, nothing writes back
+ * without approval. It fits "AI Lab" better than it fit the two-flagship
+ * Selected Work list, so it's surfaced here instead, linked to the real
+ * page rather than duplicated.
+ *
+ * The other three experiments the brief suggested (UX Signals, Wireframe
+ * Generator, Design QA Agent) have not been built in this repo. They're
+ * shown as explicitly labeled "Conceptual" cards with no invented results,
+ * per the content-integrity rule — a one-line description of the idea,
+ * nothing claimed as built or measured.
+ */
+import RBase from "../../layouts/RBase.astro";
+import ContentNeeded from "../../components/redesign/ContentNeeded.astro";
+
+const CONCEPTS = [
+  {
+    title: "UX Signals",
+    status: "Conceptual",
+    explore: "Whether a BRD or product-context document can be turned into UX signals and open design questions before any screen gets drawn — surfacing ambiguity early instead of discovering it mid-design.",
+    build: "Not yet built.",
+    learn: "Not applicable — conceptual only.",
+  },
+  {
+    title: "Wireframe Generator",
+    status: "Conceptual",
+    explore: "Whether a short text description or rough sketch can be turned into a low-fidelity product structure fast enough to be useful as a starting point, not a replacement, for design exploration.",
+    build: "Not yet built.",
+    learn: "Not applicable — conceptual only.",
+  },
+  {
+    title: "Design QA Agent",
+    status: "Conceptual",
+    explore: "Whether a design file or screenshot can be checked against usability and accessibility heuristics automatically, catching issues earlier than a manual review pass would.",
+    build: "Not yet built.",
+    learn: "Not applicable — conceptual only.",
+  },
+];
+---
+
+<RBase title="AI Lab — Kishore Sudhamalla">
+  <section class="container-pg r-lab-hero">
+    <p class="r-eyebrow" data-reveal>AI Lab</p>
+    <h1 data-reveal>Where I build, not just design, AI-native ideas.</h1>
+    <p class="r-lede" data-reveal>
+      This is a working record, not a marketing page. Some of what's here
+      shipped and runs on real data. Some is a question I'm still exploring
+      and haven't built yet — those are labeled conceptual, with no results
+      claimed for them.
+    </p>
+  </section>
+
+  <!-- Real, shipped experiment -->
+  <section class="container-pg r-lab-real" data-reveal>
+    <p class="r-case-label">Built · in daily use</p>
+    <a href="/work/design-ops" class="r-real-card">
+      <div class="r-real-media">
+        <img src="/images/work/design-ops/hero-window.webp" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="r-real-copy">
+        <h2>Agentic HCM: an AI that explains why delivery slipped</h2>
+        <p class="r-real-intro">What I wanted to explore</p>
+        <p>
+          Whether a rules engine reading a live Jira board could be paired
+          with an AI layer that explains — in plain language, with citations
+          — why a commitment moved, without the AI ever being allowed to
+          silently rewrite the underlying data.
+        </p>
+        <p class="r-real-intro">What I built</p>
+        <p>
+          A solo, end-to-end system: a rules engine that stays the single
+          source of truth for dates, scope and status (eight flags —
+          Overdue, Scope Changed, Blocked, and others), and an AI layer on
+          top that explains root cause, cites the specific records it read,
+          and only ever writes back after explicit approval. It's in daily
+          use as of 2026.
+        </p>
+        <p class="r-real-intro">What I learned</p>
+        <p>
+          The hard part wasn't the AI — it was knowing exactly which signals
+          were actually derivable from the data available, and drawing a
+          strict line between what rules should always decide and what only
+          AI should interpret. A recommendation nobody measures is just a
+          confident opinion, so the loop checks whether its own advice held.
+        </p>
+        <span class="r-real-link">Read the full case study →</span>
+      </div>
+    </a>
+  </section>
+
+  <!-- Conceptual experiments -->
+  <section class="container-pg r-lab-concepts">
+    <p class="r-case-label" data-reveal>Conceptual · not yet built</p>
+    <div class="r-concept-grid">
+      {CONCEPTS.map((c) => (
+        <div class="r-concept-card" data-reveal>
+          <div class="r-concept-top">
+            <h3>{c.title}</h3>
+            <span class="r-concept-status">{c.status}</span>
+          </div>
+          <p class="r-concept-label">What I wanted to explore</p>
+          <p>{c.explore}</p>
+          <p class="r-concept-label">What I built</p>
+          <p>{c.build}</p>
+          <p class="r-concept-label">What I learned</p>
+          <p>{c.learn}</p>
+        </div>
+      ))}
+    </div>
+    <ContentNeeded note="These three concepts are listed because they're directions worth exploring, not because any of them has been built. If one gets built, move it up to the 'Built' section above with real detail on what it does and what was learned — don't backfill results here." />
+  </section>
+</RBase>
+
+<style>
+  .r-lab-hero { max-width: 42rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2rem, 4vw, 3rem); }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .r-lab-hero h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.875rem, 4.5vw, 3rem); letter-spacing: -0.03em; line-height: 1.1;
+    color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-lede { font-size: 1.0625rem; line-height: 1.65; color: var(--color-ink-2); margin: 0; }
+
+  .r-case-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+
+  .r-lab-real { padding: clamp(1rem, 3vw, 2rem) 0 clamp(3rem, 6vw, 4.5rem); }
+  .r-real-card {
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 1.25rem;
+    text-decoration: none; color: inherit; transition: border-color 0.2s;
+  }
+  .r-real-card:hover { border-color: var(--color-ink-3); }
+  .r-real-media { border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-surface); }
+  .r-real-media img { width: 100%; display: block; }
+  .r-real-copy h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-real-intro { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; color: var(--color-ink-3); margin: 0 0 0.35rem; text-transform: uppercase; font-family: var(--font-mono); }
+  .r-real-copy p:not(.r-real-intro) { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-real-link { font-size: 0.875rem; font-weight: 500; color: var(--color-ink); }
+
+  @media (min-width: 900px) {
+    .r-real-card { grid-template-columns: 0.9fr 1.1fr; align-items: start; }
+  }
+
+  .r-lab-concepts { padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-concept-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+  .r-concept-card { padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 1rem; }
+  .r-concept-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+  .r-concept-top h3 { font-size: 1.0625rem; font-weight: 600; color: var(--color-ink); margin: 0; }
+  .r-concept-status {
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--color-ink-3); border: 1px solid var(--color-border); border-radius: 100px; padding: 0.25rem 0.6rem;
+  }
+  .r-concept-label { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.3rem; font-family: var(--font-mono); }
+  .r-concept-card p:not(.r-concept-label) { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0 0 1rem; }
+
+  @media (min-width: 768px) {
+    .r-concept-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

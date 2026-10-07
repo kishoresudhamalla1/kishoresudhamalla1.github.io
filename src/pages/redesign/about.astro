@@ -1,0 +1,129 @@
+---
+/**
+ * Redesign option — About.
+ *
+ * Bio text is the brief's own "core story" paragraph verbatim, plus the
+ * existing About.astro's career-journey timeline (already real, unchanged
+ * content) and the same facts used across the rest of this option — no new
+ * claims introduced here.
+ */
+import RBase from "../../layouts/RBase.astro";
+
+const FACTS = [
+  { value: "16+", label: "Years in design" },
+  { value: "9", label: "Years at Darwinbox" },
+  { value: "1.6M+", label: "Users reached" },
+  { value: "120+", label: "Countries" },
+];
+
+const TIMELINE = [
+  { t: "Visual design", d: "Learning craft, communication and visual problem solving." },
+  { t: "UX & product design", d: "Moving from communicating information to understanding users, workflows and product problems." },
+  { t: "Startup product design", d: "Learning to design with speed, ambiguity and limited resources." },
+  { t: "Darwinbox, early design team", d: "Helping establish product design foundations while the company scaled from startup to unicorn." },
+  { t: "Enterprise product design", d: "Complex workflows, business rules, permissions, configurations and global product requirements." },
+  { t: "Hands-on IC, deep in the work", d: "Staying close to the work — mapping a workflow, questioning an interaction, reviewing a prototype, exploring a new product idea." },
+  { t: "AI-native product design", d: "Applying years of enterprise systems experience to products that can understand intent, reason, act and collaborate with people." },
+];
+---
+
+<RBase title="About — Kishore Sudhamalla">
+  <section class="container-pg r-about">
+    <p class="r-eyebrow" data-reveal>About</p>
+
+    <p class="r-bio" data-reveal>
+      I like difficult problems. I've spent most of my career designing
+      products where complexity is unavoidable. For the last nine years,
+      I've worked on Darwinbox, a global HCM platform used across 120+
+      countries. I've worked across Time Management, Payroll, Benefits,
+      Journeys, Flows, HR Documents, Core HR, Extensibility and AI
+      experiences.
+    </p>
+    <p class="r-bio" data-reveal>
+      What interests me now is what happens when these systems become
+      intelligent. Instead of asking users to navigate increasingly complex
+      software, I want to explore products that understand context,
+      recognize intent and help people act.
+    </p>
+    <p class="r-bio" data-reveal>
+      My next chapter is focused on AI-native product design.
+    </p>
+
+    <dl class="r-facts" data-reveal>
+      {FACTS.map((f) => (
+        <div>
+          <dt>{f.value}</dt>
+          <dd>{f.label}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <div class="r-links" data-reveal>
+      <a href="/resume" class="r-btn r-btn-primary">Résumé ↓</a>
+      <a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noreferrer" class="r-btn r-btn-ghost">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <section class="container-pg r-timeline-section">
+    <p class="r-case-label" data-reveal>Path here</p>
+    <div class="r-timeline">
+      {TIMELINE.map((item, i) => (
+        <div class="r-timeline-row" data-reveal>
+          <p class="r-timeline-n">{String(i + 1).padStart(2, "0")}</p>
+          <div>
+            <h3>{item.t}</h3>
+            <p>{item.d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</RBase>
+
+<style>
+  .r-about { max-width: 38rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+  .r-bio { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem; }
+
+  .r-facts {
+    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+    margin: 2rem 0; padding-top: 1.75rem; border-top: 1px solid var(--color-border);
+  }
+  .r-facts dt {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.375rem, 2.2vw, 1.75rem); color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .r-facts dd { margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3); }
+
+  .r-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .r-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.2s;
+  }
+  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
+  .r-btn-primary:hover { opacity: 0.85; }
+  .r-btn-ghost { border: 1px solid var(--color-border); color: var(--color-ink); }
+  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-case-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+  .r-timeline-section { max-width: 42rem; padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-timeline { display: flex; flex-direction: column; }
+  .r-timeline-row {
+    display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem;
+    padding: 1.25rem 0; border-top: 1px solid var(--color-border);
+  }
+  .r-timeline-row:last-child { border-bottom: 1px solid var(--color-border); }
+  .r-timeline-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0.15rem 0 0; }
+  .r-timeline-row h3 { font-size: 1rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.35rem; }
+  .r-timeline-row p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+</style>

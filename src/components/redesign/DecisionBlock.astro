@@ -1,0 +1,97 @@
+---
+/**
+ * One "key design decision" per the brief's structure: Problem, Options
+ * considered, Decision, Why, Trade-offs, Result. Seniority is meant to show
+ * through the decision itself, not through adjectives — so this stays a
+ * plain record, no badges or scorekeeping.
+ */
+interface Props {
+  number: string;
+  problem: string;
+  options: string[];
+  decision: string;
+  why: string;
+  tradeoffs: string;
+  result: string;
+}
+const { number, problem, options, decision, why, tradeoffs, result } = Astro.props;
+---
+
+<div class="dblock" data-reveal>
+  <p class="dblock-n">Decision {number}</p>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Problem</p>
+    <p class="dblock-v">{problem}</p>
+  </div>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Options considered</p>
+    <ul class="dblock-options">
+      {options.map((o) => <li>{o}</li>)}
+    </ul>
+  </div>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Decision</p>
+    <p class="dblock-v dblock-decision">{decision}</p>
+  </div>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Why</p>
+    <p class="dblock-v">{why}</p>
+  </div>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Trade-offs</p>
+    <p class="dblock-v">{tradeoffs}</p>
+  </div>
+
+  <div class="dblock-row">
+    <p class="dblock-k">Result</p>
+    <p class="dblock-v">{result}</p>
+  </div>
+</div>
+
+<style>
+  .dblock {
+    padding: clamp(1.75rem, 3.5vw, 2.5rem);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+  }
+  .dblock-n {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-ink-3); margin: 0 0 1.5rem;
+  }
+  .dblock-row {
+    display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem;
+    padding: 1rem 0; border-top: 1px solid var(--color-border);
+  }
+  .dblock-row:first-of-type { border-top: none; padding-top: 0; }
+  .dblock-k {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-ink-3); margin: 0; padding-top: 0.15rem;
+  }
+  .dblock-v {
+    margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2);
+  }
+  .dblock-decision { color: var(--color-ink); font-weight: 600; }
+  .dblock-options {
+    margin: 0; padding: 0; list-style: none;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .dblock-options li {
+    font-size: 0.9375rem; line-height: 1.5; color: var(--color-ink-2);
+    padding-left: 1rem; position: relative;
+  }
+  .dblock-options li::before {
+    content: "–"; position: absolute; left: 0; color: var(--color-ink-3);
+  }
+
+  @media (max-width: 640px) {
+    .dblock-row { grid-template-columns: 1fr; gap: 0.4rem; }
+  }
+</style>

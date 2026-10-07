@@ -1,0 +1,345 @@
+---
+/**
+ * Redesign option — Time Management case study.
+ *
+ * Restructured from the live /work/time-management-system.astro into the
+ * brief's Context / Complexity / Problem framing / Key decisions / System /
+ * Craft / Collaboration / Outcome / Reflection shape. All facts, quotes and
+ * assets below are pulled from the live page and existing public/images —
+ * nothing here is invented.
+ *
+ * One flagged conflict: the brief for this redesign states the WFM rating
+ * moved "2.9 to 3.7." The live case study's own evidence (Gartner MQ figure
+ * + impact stat tiles) says 2.9 to 3.5. Rather than silently pick one, this
+ * page uses 3.5 (the figure the live page's own evidence supports) and
+ * calls the discrepancy out explicitly so it can be confirmed against the
+ * real Gartner source before anything ships.
+ *
+ * Also preserved as-is, per the brief's instruction not to overclaim
+ * causation: the rating lift is described as something Time Management was
+ * "cited as a driver of," never as something the redesign caused outright.
+ */
+import RBase from "../../../layouts/RBase.astro";
+import CaseHero from "../../../components/CaseHero.astro";
+import DecisionBlock from "../../../components/redesign/DecisionBlock.astro";
+import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
+
+const IMG = "/images/work/time-management";
+---
+
+<RBase title="Time Management — Kishore Sudhamalla">
+  <CaseHero
+    eyebrow="Case study 01 · Darwinbox"
+    title="Time Management, rebuilt for the world."
+    lede="Reimagining enterprise time management for global scale — an eight-year-old module, used daily, carrying attendance, leaves, timesheets, approvals, payroll dependencies and global compliance, with zero prior UX investment."
+    meta={[
+      { k: "Role", v: "Associate Director, UX" },
+      { k: "Team", v: "3 designers · product · engineering" },
+      { k: "Timeline", v: "2023 – 2024" },
+      { k: "Platform", v: "Darwinbox HCM, 120+ countries" },
+    ]}
+    video={`${IMG}/tm-manager-dashboard`}
+    poster={`${IMG}/tm-manager-dashboard-poster.jpg`}
+    alt="Time Management manager dashboard"
+    cards={[
+      { eyebrow: "Gartner WFM score", value: "3.5", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped. See note on the 3.5 vs 3.7 discrepancy below." },
+      { eyebrow: "Manager play rate", value: "73.1%", label: "Highest on the platform", note: "The dashboard view managers actually opened, not the one they were given." },
+    ]}
+  />
+
+  <article class="container-pg r-case">
+    <!-- Context -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Context</p>
+      <h2>An eight-year-old module, zero redesign, daily pain.</h2>
+      <p>
+        Time Management is one of Darwinbox's oldest and most heavily used
+        modules — attendance, leaves, timesheets, approvals, payroll
+        dependencies and global compliance rules, used across 120+ countries.
+        It had never had a dedicated redesign. By the time this project
+        started, it was the most-complained-about module on the platform,
+        used daily by over a million people.
+      </p>
+    </section>
+
+    <!-- Complexity -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Complexity</p>
+      <h2>Why this was hard.</h2>
+      <p>
+        Three roles — employee, manager, HRBP — needed fundamentally
+        different views of the same underlying data, inside a system where
+        attendance, leave and payroll calculations are interdependent and
+        every customer's compliance configuration is different. Eight years
+        of incremental feature requests had accumulated into a module that
+        was powerful and flexible, but also dense, inconsistent, and
+        difficult to learn. The constraint wasn't "design something new" —
+        it was "rethink this without breaking what existing customers
+        already depend on."
+      </p>
+    </section>
+
+    <!-- Problem framing -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Problem framing</p>
+      <h2>What we realized was actually wrong.</h2>
+      <p>
+        Primary research with TVS, Bigbasket and Licious, plus secondary
+        analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the
+        same gap repeatedly: there was no central place for managers or
+        employees to see time data at a glance. Everything lived behind
+        transactional flows — you had to already know what you were looking
+        for. One enterprise manager put it directly:
+      </p>
+      <blockquote>
+        "If I had a magic wand to change one thing about the Time module,
+        I'd add dashboards for employees and managers."
+      </blockquote>
+      <p>
+        The real problem wasn't missing features. It was that the module had
+        no front door — no single view that answered "what do I need to
+        know or decide right now," for any of the three roles who depended
+        on it.
+      </p>
+    </section>
+
+    <!-- Key design decisions -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Key design decisions</p>
+      <h2>Two decisions that shaped the system.</h2>
+
+      <div class="r-decisions">
+        <DecisionBlock
+          number="1"
+          problem="A dashboard needed to show primary time data alongside the context that makes it actionable (schedule, team comparison, exceptions) without splitting a manager's attention across the screen."
+          options={[
+            "3-column layout — primary data, team context and exceptions each in their own column.",
+            "2-column layout — primary data with a single supporting context panel.",
+          ]}
+          decision="2-column layout: one primary view, one context panel."
+          why="The 3-column version felt more flexible on paper, but it fragmented attention — managers had to scan three places to answer one question. The 2-column version gave every screen a clear hierarchy: one thing to look at first, one place to go for context."
+          tradeoffs="Less can be visible simultaneously than in the 3-column version; some secondary data moved behind a panel toggle instead of staying always-on screen."
+          result="Shipped as the production information architecture for the manager and employee dashboards."
+        />
+
+        <DecisionBlock
+          number="2"
+          problem="Employees, managers and HRBPs each needed a different view of time data, but the existing module handled this by routing each role to different, inconsistent screens."
+          options={[
+            "Keep role-specific screens as separate surfaces, each evolving independently.",
+            "Build one unified dashboard system, configured per role and permission set.",
+          ]}
+          decision="One unified dashboard framework, adapted per persona — not three separate products."
+          why="Separate screens compound inconsistency over time: every future change has to be made three times, and employees, managers and HRBPs end up learning three different mental models of the same data. A single framework meant one information model that could flex by role."
+          tradeoffs="Higher upfront design and engineering cost to build a system that works across three permission levels at once, versus shipping one role's view first and iterating."
+          result="Employee, manager and HRBP dashboards all shipped from the same underlying system — zero module switching for any of the three roles."
+        />
+      </div>
+    </section>
+
+    <!-- System -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">System</p>
+      <h2>How it connects to the rest of the product.</h2>
+      <p>
+        Time Management sits at the intersection of attendance, leave and
+        payroll — a change to how an exception is surfaced on the manager
+        dashboard has downstream effects on payroll calculation and
+        compliance reporting. The dashboards built here didn't replace the
+        underlying transactional flows (approvals, corrections, payroll
+        sync); they sit on top of them as the layer that tells each role
+        what to look at first, while the configuration-heavy flows
+        underneath stayed intact for the customers who depend on their
+        specific setup.
+      </p>
+    </section>
+
+    <!-- Craft -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Craft</p>
+      <h2>The work.</h2>
+
+      <div class="r-craft-compare">
+        <figure>
+          <img src={`${IMG}/before/old-attendance.webp`} alt="Attendance module before the redesign" loading="lazy" />
+          <figcaption>Before — attendance, no dashboard layer</figcaption>
+        </figure>
+        <figure>
+          <img src={`${IMG}/before/old-roster.webp`} alt="Roster view before the redesign" loading="lazy" />
+          <figcaption>Before — roster view</figcaption>
+        </figure>
+      </div>
+
+      <div class="r-craft-grid">
+        <figure>
+          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-employee-poster.jpg`}>
+            <source src={`${IMG}/tm-employee.webm`} type="video/webm" />
+            <source src={`${IMG}/tm-employee.mp4`} type="video/mp4" />
+          </video>
+          <figcaption>Employee dashboard, shipped</figcaption>
+        </figure>
+        <figure>
+          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-manager-poster.jpg`}>
+            <source src={`${IMG}/tm-manager.webm`} type="video/webm" />
+            <source src={`${IMG}/tm-manager.mp4`} type="video/mp4" />
+          </video>
+          <figcaption>Manager dashboard, shipped</figcaption>
+        </figure>
+        <figure>
+          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-hrbp-poster.jpg`}>
+            <source src={`${IMG}/tm-hrbp.webm`} type="video/webm" />
+            <source src={`${IMG}/tm-hrbp.mp4`} type="video/mp4" />
+          </video>
+          <figcaption>HRBP dashboard, shipped</figcaption>
+        </figure>
+      </div>
+
+      <p class="r-craft-note">
+        Mobile and responsive behaviour: the product is used globally across
+        desktop and mobile by frontline and field employees.
+      </p>
+      <ContentNeeded note="Mobile-specific screenshots/recordings weren't carried over from the live case study in this pass — pull the mobile views from the same source folder if they should be shown here." />
+    </section>
+
+    <!-- Collaboration -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Collaboration</p>
+      <h2>How this got built.</h2>
+      <p>
+        Delivered with a team of three designers alongside product and
+        engineering, over roughly a year. Research and validation involved
+        direct conversations with enterprise clients — TVS, Bigbasket and
+        Licious in primary research, and later an in-market roadshow across
+        Singapore, the Philippines and Thailand, presenting the shipped
+        direction to Busy Bees, Singlife, Toyota, Security Bank, JG Summit,
+        Cebu Pacific, BPI and Darwinbox's own SEA team.
+      </p>
+    </section>
+
+    <!-- Outcome -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Outcome</p>
+      <h2>What shipped, and what we know about its use.</h2>
+
+      <div class="r-stat-row">
+        <div><p class="r-stat-v">1.16M</p><p class="r-stat-l">Dashboard plays, employee + manager</p></div>
+        <div><p class="r-stat-v">73.1%</p><p class="r-stat-l">Manager play rate — highest on the platform</p></div>
+        <div><p class="r-stat-v">3.5</p><p class="r-stat-l">Gartner WFM score, up from 2.9</p></div>
+      </div>
+
+      <table class="r-table">
+        <thead>
+          <tr><th>Dashboard</th><th>Plays</th><th>Play rate</th><th>Unique visitors</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Employee Time Dashboard</td><td>116,374</td><td>71.6%</td><td>147,357</td></tr>
+          <tr><td>Manager Time Dashboard</td><td>28,547</td><td>73.1%</td><td>34,693</td></tr>
+        </tbody>
+      </table>
+      <p class="r-table-caption">Adoption in the first weeks after launch.</p>
+
+      <p>
+        Darwinbox's Gartner Magic Quadrant Workforce Management score moved
+        from 2.9 to 3.5 between 2021 and 2024, and the company moved into
+        Challenger status over that period. Time Management was cited as a
+        contributing factor — the evidence here doesn't support saying the
+        redesign alone caused the score to move, only that it was named as
+        part of the reason.
+      </p>
+
+      <ContentNeeded note="The brief for this redesign states the rating moved '2.9 to 3.7.' The source case study's own evidence (Gartner MQ figure, impact stat tiles) supports 2.9 to 3.5. Confirm which figure is current against the actual Gartner report before publishing — this page uses 3.5 pending that confirmation." />
+
+      <blockquote>
+        "Really great job on time management, excellent UI and features. The
+        main highlight for me is how it simplified direct-reportee
+        attendance insight, analysis, comparison with the org, and the
+        schedule planner."
+        <cite>— Monik Suthar, Darwinbox customer community</cite>
+      </blockquote>
+    </section>
+
+    <!-- Reflection -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Reflection</p>
+      <h2>What I'd do differently.</h2>
+      <p>
+        The biggest lesson was committing to the data model earlier. We
+        spent too long exploring the 3-column layout because it felt more
+        flexible, when the evidence for a simpler 2-column hierarchy was
+        already there. And the SEA roadshow — the most direct, highest-
+        quality validation in the whole project — happened near-final rather
+        than at wireframe stage. By then, good feedback could only go into
+        the backlog instead of shaping the core decisions that were already
+        locked in. Validating earlier, even with rougher artifacts, would
+        have let that feedback actually change the design.
+      </p>
+    </section>
+  </article>
+</RBase>
+
+<style>
+  .r-case { max-width: 46rem; padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+  .r-case-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 0.75rem;
+  }
+  .r-case-section h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-case-section p {
+    font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem;
+  }
+  .r-case-section blockquote {
+    margin: 1.5rem 0; padding: 1.25rem 1.5rem;
+    border-left: 2px solid var(--color-ink-3);
+    font-size: 1.0625rem; line-height: 1.6; font-style: italic; color: var(--color-ink);
+  }
+  .r-case-section blockquote cite {
+    display: block; margin-top: 0.75rem; font-size: 0.8125rem; font-style: normal; color: var(--color-ink-3);
+  }
+
+  .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+
+  .r-craft-compare, .r-craft-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.5rem 0;
+  }
+  .r-craft-compare { grid-template-columns: repeat(2, 1fr); }
+  .r-craft-grid { grid-template-columns: repeat(3, 1fr); }
+  .r-craft-compare figure, .r-craft-grid figure { margin: 0; }
+  .r-craft-compare img, .r-craft-grid video {
+    width: 100%; border-radius: 0.75rem; border: 1px solid var(--color-border);
+    display: block; background: var(--color-surface);
+  }
+  .r-craft-compare figcaption, .r-craft-grid figcaption {
+    margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
+  }
+  .r-craft-note { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+
+  .r-stat-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    padding: 1.5rem 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+    margin: 1.5rem 0;
+  }
+  .r-stat-v {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-ink); margin: 0; font-variant-numeric: tabular-nums;
+  }
+  .r-stat-l { font-size: 0.75rem; color: var(--color-ink-3); margin: 0.25rem 0 0; }
+
+  .r-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 0.5rem; font-size: 0.875rem; }
+  .r-table th, .r-table td {
+    text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-border);
+    color: var(--color-ink-2);
+  }
+  .r-table th { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); }
+  .r-table td:first-child { color: var(--color-ink); font-weight: 500; }
+  .r-table-caption { font-size: 0.75rem; color: var(--color-ink-3); margin: 0 0 1.5rem; }
+
+  @media (max-width: 640px) {
+    .r-craft-compare, .r-craft-grid, .r-stat-row { grid-template-columns: 1fr; }
+  }
+</style>

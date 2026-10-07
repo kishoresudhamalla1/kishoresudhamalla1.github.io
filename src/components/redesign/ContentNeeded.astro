@@ -1,0 +1,36 @@
+---
+/**
+ * Explicit "missing evidence" marker per the brief's content-integrity
+ * rule: never invent a metric, quote or outcome — flag the gap instead.
+ * `note` says exactly what evidence would fill it, so it's actionable
+ * rather than a vague placeholder.
+ */
+interface Props {
+  note: string;
+}
+const { note } = Astro.props;
+---
+
+<div class="cn" role="note">
+  <span class="cn-tag">Content needed</span>
+  <p class="cn-note">{note}</p>
+</div>
+
+<style>
+  .cn {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 0.9rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px dashed var(--color-border);
+    border-radius: 0.6rem;
+    background: var(--color-surface);
+  }
+  .cn-tag {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .cn-note {
+    margin: 0; font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-3);
+  }
+</style>

@@ -1,0 +1,245 @@
+---
+/**
+ * Redesign option — Flows → Journeys → Playbooks case study.
+ *
+ * Reframes the live /work/beyond-the-task.astro (currently a heavily
+ * placeholder-flagged page — 9+ "[ADD: ...]" evidence markers, no real
+ * metrics, explicit "to be verified" language on AI Playbooks status) into
+ * the brief's product-evolution story. The product decision described here
+ * (AI proposes, admin decides) is the one piece of real content in the
+ * source page; everything else that was a placeholder there is marked
+ * ContentNeeded here too, rather than invented fresh.
+ */
+import RBase from "../../../layouts/RBase.astro";
+import CaseHero from "../../../components/CaseHero.astro";
+import DecisionBlock from "../../../components/redesign/DecisionBlock.astro";
+import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
+---
+
+<RBase title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
+  <CaseHero
+    eyebrow="Case study 02 · Darwinbox"
+    title="From Flows to Journeys to Playbooks."
+    lede="Rethinking employee experiences for an AI-native HCM platform — a product evolution story, not a single redesign. Journeys is released and in use by clients; AI Playbooks is concept and prototype work, with current rollout status still to be verified."
+    meta={[
+      { k: "Role", v: "Senior Manager, UX Design" },
+      { k: "Scope", v: "Product direction, Flows → Journeys → Playbooks" },
+      { k: "Status", v: "Journeys shipped · Playbooks conceptual" },
+      { k: "Platform", v: "Darwinbox HCM" },
+    ]}
+    img="/images/work/beyond-the-task/hero-diagram.svg"
+    alt="A task list evolving into a connected Journey experience — conceptual illustration"
+  />
+
+  <article class="container-pg r-case">
+    <!-- Context -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Context</p>
+      <h2>Flows already existed. The opportunity was in the experience around them.</h2>
+      <p>
+        Darwinbox had Flows: transactional automation that moved a request
+        through steps — approvals, notifications, data updates. Flows worked,
+        but they were isolated. An employee going through something like an
+        offboarding or a transfer would hit a series of disconnected tasks,
+        each one correct on its own, with nothing connecting them into a
+        single, legible experience.
+      </p>
+    </section>
+
+    <!-- Complexity -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Complexity</p>
+      <h2>Why this was hard.</h2>
+      <p>
+        A guided experience needs to work for two very different people at
+        once: the admin, who has to configure something flexible enough to
+        cover many scenarios and many customer-specific rules, and the
+        employee, who should never see that configuration complexity —
+        only a clear next step. Layer AI on top of that and the difficulty
+        compounds: the system has to decide when it's confident enough to
+        propose something automatically, and the admin has to stay able to
+        trust and override every step of what it proposes.
+      </p>
+    </section>
+
+    <!-- Problem framing -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Problem framing</p>
+      <h2>The question changed twice.</h2>
+      <p>
+        The first version of the problem was: how can we make guided
+        experiences useful across many kinds of workflows? That became
+        Journeys — a guided experience for the employee, configurable by the
+        admin, built on top of the existing Flows.
+      </p>
+      <p>
+        The second version of the problem came later, once Journeys existed:
+        an admin still has to manually build every Journey from scratch, even
+        though the system already has the employee data, the system events
+        and the patterns that would let it suggest one. The question changed
+        from <em>"how can an admin create a better Journey?"</em> to
+        <em>"why should the admin have to manually create every Journey?"</em>
+        That reframing is what Playbooks responds to.
+      </p>
+    </section>
+
+    <!-- Key design decisions -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Key design decisions</p>
+      <h2>The decision that shaped Playbooks.</h2>
+
+      <div class="r-decisions">
+        <DecisionBlock
+          number="1"
+          problem="Once the system could recognize a signal or moment (a role change, a location transfer, a new joiner) well enough to suggest a Playbook, how much of the resulting experience should the AI control versus the admin?"
+          options={[
+            "AI assembles and activates the Playbook directly, admin reviews after the fact.",
+            "AI recommends and proposes steps; admin reviews, edits and approves before anything is assigned.",
+          ]}
+          decision="AI proposes; the admin remains responsible for reviewing, editing and approving before anything ships to an employee."
+          why="An HCM Playbook touches real employee experiences and, often, compliance-sensitive steps. The admin needs to stay the accountable party — AI should remove the blank-page problem of starting from scratch, not remove the admin's judgment from a decision that affects real people."
+          tradeoffs="Slower time-to-activation than a fully automated path, and the UI has to carry the extra weight of a clear review/edit/approve step rather than a single 'accept' action."
+          result="This human-in-the-loop model is the current design direction for Playbooks. Production status beyond the design/prototype stage still needs confirming — see the note below."
+        />
+      </div>
+    </section>
+
+    <!-- System: the evolution model -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">System</p>
+      <h2>The evolution, as a model.</h2>
+      <div class="r-evolution">
+        <div class="r-evo-step">
+          <p class="r-evo-n">Flows</p>
+          <p class="r-evo-d">Transactional automation.</p>
+        </div>
+        <div class="r-evo-arrow" aria-hidden="true">↓</div>
+        <div class="r-evo-step">
+          <p class="r-evo-n">Journeys</p>
+          <p class="r-evo-d">A guided employee experience, built on top of Flows.</p>
+        </div>
+        <div class="r-evo-arrow" aria-hidden="true">↓</div>
+        <div class="r-evo-step">
+          <p class="r-evo-n">Playbooks</p>
+          <p class="r-evo-d">AI recognizes a signal, recommends a Journey — the admin still decides.</p>
+        </div>
+      </div>
+
+      <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
+      <div class="r-chain">
+        <span>Signal</span><span aria-hidden="true">→</span>
+        <span>Moment</span><span aria-hidden="true">→</span>
+        <span>AI-recommended Playbook</span><span aria-hidden="true">→</span>
+        <span>Admin customization</span><span aria-hidden="true">→</span>
+        <span>Employee experience</span>
+      </div>
+    </section>
+
+    <!-- Craft -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Craft</p>
+      <h2>The work.</h2>
+      <p>
+        For admins, Journeys is a configuration surface — choosing which
+        steps, guidance and resources make up a given process. For
+        employees, it's a single guided view: what to do, and why it
+        matters, instead of a disconnected task list.
+      </p>
+      <ContentNeeded note="The source page flagged nine separate image placeholders here: the existing task-inbox screen, an early Journeys concept artifact, the admin configuration screen, the employee-facing Journey screen, a real offboarding Journey flow, and the AI Playbooks concept/agent-interaction flow and prototype screens. None of these were carried over because they didn't exist as real assets in the source file — only the conceptual hero diagram (above) is a real, if explicitly non-product, asset. Pull actual product screenshots from Darwinbox before this case study is publication-ready." />
+    </section>
+
+    <!-- Collaboration -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Collaboration</p>
+      <h2>How this got built.</h2>
+      <p>
+        Led as Senior Manager, UX Design, working with product leadership to
+        define the Journeys → Playbooks direction, alongside product and
+        engineering partners responsible for the underlying Flows engine and
+        the AI recommendation layer.
+      </p>
+      <ContentNeeded note="Team size, specific collaborators, and timeline weren't present as concrete facts in the source page — add if you want this section more specific than the role-level description above." />
+    </section>
+
+    <!-- Outcome -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Outcome</p>
+      <h2>What shipped, what was explored.</h2>
+      <p>
+        Journeys is released and in use by clients. AI Playbooks exists as
+        concept and prototype work built around the admin-approval decision
+        above; it has not been presented here as a shipped, measured
+        product.
+      </p>
+      <ContentNeeded note="No usage data, adoption numbers or client feedback for Journeys were present in the source page — add real evidence here (adoption, client quotes, or a status update on Playbooks' current rollout) before publishing. Do not state or imply usage numbers without a verified source." />
+    </section>
+
+    <!-- Reflection -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Reflection</p>
+      <h2>What this work was really about.</h2>
+      <p>
+        The interesting part of this project wasn't the UI for Journeys —
+        it was the shift in the question itself, from "how do we help an
+        admin build something" to "why does the admin have to build it at
+        all." That's the same shift AI-native product design keeps forcing:
+        less time spent designing the configuration screen, more time
+        deciding how much judgment a system can responsibly take on, and how
+        it stays answerable to the person who's still accountable for the
+        outcome.
+      </p>
+    </section>
+  </article>
+</RBase>
+
+<style>
+  .r-case { max-width: 46rem; padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+  .r-case-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 0.75rem;
+  }
+  .r-case-section h2 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.375rem, 2.6vw, 1.875rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-case-section p {
+    font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem;
+  }
+  .r-case-section em { color: var(--color-ink); font-style: italic; }
+
+  .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+
+  .r-evolution {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;
+    margin: 1.5rem 0 2rem;
+  }
+  .r-evo-step {
+    padding: 1rem 1.25rem; border: 1px solid var(--color-border); border-radius: 0.75rem;
+    width: 100%;
+  }
+  .r-evo-n { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--color-ink); margin: 0 0 0.25rem; }
+  .r-evo-d { font-size: 0.875rem; color: var(--color-ink-2); margin: 0; }
+  .r-evo-arrow { color: var(--color-ink-3); padding-left: 1.25rem; }
+
+  .r-evo-chain-label { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0 0 0.75rem; }
+  .r-chain {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
+    padding: 1.25rem; border: 1px solid var(--color-border); border-radius: 0.75rem;
+    background: var(--color-surface); margin-bottom: 1rem;
+  }
+  .r-chain span:not([aria-hidden]) {
+    font-size: 0.8125rem; font-weight: 500; color: var(--color-ink);
+    padding: 0.35rem 0.75rem; border-radius: 100px; border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+  .r-chain span[aria-hidden] { color: var(--color-ink-3); }
+
+  @media (min-width: 640px) {
+    .r-evolution { flex-direction: row; align-items: stretch; }
+    .r-evo-step { flex: 1; }
+    .r-evo-arrow { display: flex; align-items: center; padding: 0 0.25rem; transform: rotate(-90deg); }
+  }
+</style>
