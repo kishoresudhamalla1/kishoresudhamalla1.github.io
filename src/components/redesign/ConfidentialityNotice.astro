@@ -26,9 +26,12 @@ const { note } = Astro.props;
 </div>
 
 <style>
+  /* Width matches CaseHero's .ch-window exactly (both come from the same
+     container-pg), so the box reads as centered under the hero rather than
+     left-aligned against a hero that spans the full row -- the alignment
+     the benroachdesign.com reference uses. */
   .r-conf { padding: 0 0 clamp(1.5rem, 3vw, 2rem); }
   .r-conf-box {
-    max-width: 46rem;
     padding: 1.5rem 1.75rem;
     border: 1px solid var(--color-border);
     border-radius: 0.875rem;
