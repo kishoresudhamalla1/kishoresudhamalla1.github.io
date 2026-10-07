@@ -64,22 +64,49 @@ export function HeroSection() {
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const ink = getComputedStyle(document.documentElement)
-      .getPropertyValue("--color-ink")
-      .trim();
+    // --color-ink's dark-mode value is scoped to `.dark body`, not :root, so
+    // it must be read off the body element — reading documentElement here
+    // silently falls back to the light value and the grid goes invisible
+    // against the dark background.
+    const readInk = () => getComputedStyle(document.body).getPropertyValue("--color-ink").trim();
 
-    const destroy = initCursorGrid(el, {
-      color: ink || "#0d0d0c",
-      cellSize: 56,
-      radius: 160,
-      maxOpacity: 0.45,
+    let destroy = initCursorGrid(el, {
+      color: readInk() || "#0d0d0c",
+      cellSize: 60,
+      radius: 150,
+      maxOpacity: 0.22,
       holdTime: 250,
       fadeDuration: 650,
+      lineWidth: 0.75,
       gridOpacity: 0,
       fillOpacity: 0,
-      cellRadius: 3,
+      cellRadius: 4,
     });
-    return destroy;
+
+    // Theme toggles swap --color-ink at runtime; re-mount so the grid picks
+    // up the new color instead of staying on whichever theme was active
+    // when the component first mounted.
+    const onThemeChange = () => {
+      destroy();
+      destroy = initCursorGrid(el, {
+        color: readInk() || "#0d0d0c",
+        cellSize: 60,
+        radius: 150,
+        maxOpacity: 0.22,
+        holdTime: 250,
+        fadeDuration: 650,
+        lineWidth: 0.75,
+        gridOpacity: 0,
+        fillOpacity: 0,
+        cellRadius: 4,
+      });
+    };
+    document.addEventListener("themechange", onThemeChange);
+
+    return () => {
+      document.removeEventListener("themechange", onThemeChange);
+      destroy();
+    };
   }, []);
 
   return (
