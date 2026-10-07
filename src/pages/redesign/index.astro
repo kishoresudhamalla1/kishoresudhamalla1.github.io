@@ -10,6 +10,7 @@
  * cites a source for it, so if you want to keep it, it needs a citation.
  */
 import RBase from "../../layouts/RBase.astro";
+import Contact from "../../components/Contact.astro";
 
 const FACTS = [
   { value: "16+", label: "Years in design" },
@@ -146,6 +147,8 @@ const WORK = [
     </p>
     <a href="/redesign/about" class="r-text-link" data-reveal>More about me →</a>
   </section>
+
+  <Contact />
 </RBase>
 
 <style>
