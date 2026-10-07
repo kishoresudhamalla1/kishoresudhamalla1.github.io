@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
+import { initCursorGrid } from "../lib/cursorGrid";
 
 /**
  * Metric counter for the hero.
@@ -56,9 +57,38 @@ export function HeroSection() {
   // CSS float animation, and an inline transform from Framer Motion would
   // silently win over it. Two elements, one transform each.
   const photoY = useTransform(scrollY, [0, 700], [0, -56]);
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ink = getComputedStyle(document.documentElement)
+      .getPropertyValue("--color-ink")
+      .trim();
+
+    const destroy = initCursorGrid(el, {
+      color: ink || "#0d0d0c",
+      cellSize: 56,
+      radius: 160,
+      maxOpacity: 0.45,
+      holdTime: 250,
+      fadeDuration: 650,
+      gridOpacity: 0,
+      fillOpacity: 0,
+      cellRadius: 3,
+    });
+    return destroy;
+  }, []);
 
   return (
     <section className="container-pg relative pt-4 pb-16 md:min-h-[calc(100svh-3.5rem)] md:flex md:items-start md:pt-14 md:pb-12">
+      <div
+        ref={gridRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+      />
       <div className="w-full flex flex-col items-start gap-10 md:flex-row md:items-center md:gap-12 lg:gap-20">
 
         {/* ── Text column ───────────────────────────────── */}
