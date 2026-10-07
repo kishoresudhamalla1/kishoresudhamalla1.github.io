@@ -1,4 +1,62 @@
 <svg viewBox="0 0 1700 620" xmlns="http://www.w3.org/2000/svg" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+  <style>
+    /* Self-contained: this file is embedded as a plain image, so these
+       rules run on their own -- no host-page script needed, same as the
+       reference's looping video loops but built as lightweight CSS
+       instead. */
+    * { transform-box: fill-box; transform-origin: center; }
+
+    .bob { animation: bob 4.2s ease-in-out infinite; }
+    .bob.d1 { animation-delay: -1.1s; }
+    .bob.d2 { animation-delay: -2.4s; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-7px); }
+    }
+
+    .sparkle { animation: sparkle 2.6s ease-in-out infinite; }
+    .sparkle.d1 { animation-delay: -1.3s; }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.35; transform: scale(0.82); }
+      50%      { opacity: 1;    transform: scale(1.08); }
+    }
+
+    .waypoint { animation: waypoint 2.4s ease-in-out infinite; }
+    .waypoint.d1 { animation-delay: -0.8s; }
+    .waypoint.d2 { animation-delay: -1.6s; }
+    @keyframes waypoint {
+      0%, 100% { opacity: 0.55; transform: scale(0.85); }
+      35%      { opacity: 1;    transform: scale(1.25); }
+    }
+
+    .signal-line { animation: signal-flow 1.1s linear infinite; }
+    @keyframes signal-flow {
+      to { stroke-dashoffset: -16; }
+    }
+
+    .avatar-ring { animation: ring-breathe 3.2s ease-in-out infinite; }
+    @keyframes ring-breathe {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50%      { opacity: 1;    transform: scale(1.07); }
+    }
+
+    .badge-pulse { animation: badge-pulse 3.2s ease-in-out infinite; animation-delay: -1s; }
+    @keyframes badge-pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.12); }
+    }
+
+    .node-pulse { animation: node-pulse 2.8s ease-in-out infinite; }
+    .node-pulse.d1 { animation-delay: -1.4s; }
+    @keyframes node-pulse {
+      0%, 100% { opacity: 0.7; }
+      50%      { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+    }
+  </style>
   <defs>
     <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0%" stop-color="#5fb8a8"/>
@@ -43,10 +101,12 @@
     <g>
       <!-- person, reaching toward the flow diagram -->
       <g transform="translate(60,330)">
-        <rect x="-10" y="70" width="150" height="130" rx="24" fill="#3b63c9"/>
-        <circle cx="35" cy="40" r="42" fill="#2d4ea3"/>
-        <rect x="70" y="95" width="100" height="26" rx="13" fill="#3b63c9" transform="rotate(-18 70 95)"/>
-        <circle cx="168" cy="55" r="13" fill="#2d4ea3"/>
+        <g class="bob">
+          <rect x="-10" y="70" width="150" height="130" rx="24" fill="#3b63c9"/>
+          <circle cx="35" cy="40" r="42" fill="#2d4ea3"/>
+          <rect x="70" y="95" width="100" height="26" rx="13" fill="#3b63c9" transform="rotate(-18 70 95)"/>
+          <circle cx="168" cy="55" r="13" fill="#2d4ea3"/>
+        </g>
       </g>
 
       <!-- flow diagram -->
@@ -70,7 +130,7 @@
           <text x="50" y="30">Trigger</text>
         </g>
 
-        <circle cx="296" cy="190" r="9" fill="#ffffff" stroke="#c7ccd6" stroke-width="2"/>
+        <circle class="node-pulse" cx="296" cy="190" r="9" fill="#ffffff" stroke="#c7ccd6" stroke-width="2"/>
         <path d="M291 190 h10 M296 185 v10" stroke="#9aa1ad" stroke-width="2"/>
 
         <!-- collect info -->
@@ -91,7 +151,7 @@
           <text x="50" y="30" font-size="13">Approval</text>
         </g>
 
-        <circle cx="470" cy="260" r="9" fill="#ffffff" stroke="#c7ccd6" stroke-width="2"/>
+        <circle class="node-pulse d1" cx="470" cy="260" r="9" fill="#ffffff" stroke="#c7ccd6" stroke-width="2"/>
         <path d="M465 260 h10 M470 255 v10" stroke="#9aa1ad" stroke-width="2"/>
 
         <g stroke="#c7ccd6" stroke-width="2" fill="none">
@@ -126,17 +186,19 @@
       <!-- winding path -->
       <path d="M660 460 C 740 380, 700 300, 790 260 S 940 300, 960 220 S 1080 180, 1090 140"
             fill="none" stroke="url(#pathGrad)" stroke-width="10" stroke-linecap="round" opacity="0.85"/>
-      <circle cx="790" cy="260" r="8" fill="#5fb8a8"/>
-      <circle cx="960" cy="220" r="8" fill="#5a9fd6"/>
-      <circle cx="1030" cy="170" r="8" fill="#8a7fd1"/>
+      <circle class="waypoint" cx="790" cy="260" r="8" fill="#5fb8a8"/>
+      <circle class="waypoint d1" cx="960" cy="220" r="8" fill="#5a9fd6"/>
+      <circle class="waypoint d2" cx="1030" cy="170" r="8" fill="#8a7fd1"/>
 
       <!-- walking person with phone -->
       <g transform="translate(830,330)">
-        <rect x="-20" y="80" width="140" height="150" rx="32" fill="#e3a93b"/>
-        <circle cx="50" cy="42" r="46" fill="#2b2f38"/>
-        <rect x="88" y="120" width="54" height="30" rx="10" fill="#fff" stroke="#e3e6ec" stroke-width="2"/>
-        <rect x="95" y="127" width="18" height="4" rx="2" fill="#c7ccd6"/>
-        <rect x="95" y="134" width="30" height="4" rx="2" fill="#c7ccd6"/>
+        <g class="bob d1">
+          <rect x="-20" y="80" width="140" height="150" rx="32" fill="#e3a93b"/>
+          <circle cx="50" cy="42" r="46" fill="#2b2f38"/>
+          <rect x="88" y="120" width="54" height="30" rx="10" fill="#fff" stroke="#e3e6ec" stroke-width="2"/>
+          <rect x="95" y="127" width="18" height="4" rx="2" fill="#c7ccd6"/>
+          <rect x="95" y="134" width="30" height="4" rx="2" fill="#c7ccd6"/>
+        </g>
       </g>
 
       <!-- surrounding UI cards -->
@@ -199,19 +261,19 @@
     <!-- ============ SECTION 3: AI PLAYBOOKS ============ -->
     <g>
       <!-- sparkles -->
-      <g fill="#8a7fd1" opacity="0.8">
-        <path d="M1560 70 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5 l14 -5 Z"/>
-        <path d="M1660 190 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 Z" opacity="0.6"/>
+      <g fill="#8a7fd1">
+        <path class="sparkle" d="M1560 70 l5 14 l14 5 l-14 5 l-5 14 l-5 -14 l-14 -5 l14 -5 Z"/>
+        <path class="sparkle d1" d="M1660 190 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 Z"/>
       </g>
 
       <!-- radiating signal lines -->
       <g stroke="#c9bdf0" stroke-width="1.5" stroke-dasharray="3 5" fill="none">
-        <path d="M1430 230 L1330 100"/>
-        <path d="M1430 230 L1460 90"/>
-        <path d="M1430 230 L1560 110"/>
-        <path d="M1430 230 L1620 170"/>
-        <path d="M1460 260 L1300 170"/>
-        <path d="M1460 260 L1620 250"/>
+        <path class="signal-line" d="M1430 230 L1330 100"/>
+        <path class="signal-line" d="M1430 230 L1460 90"/>
+        <path class="signal-line" d="M1430 230 L1560 110"/>
+        <path class="signal-line" d="M1430 230 L1620 170"/>
+        <path class="signal-line" d="M1460 260 L1300 170"/>
+        <path class="signal-line" d="M1460 260 L1620 250"/>
       </g>
 
       <!-- signal pills -->
@@ -267,12 +329,14 @@
 
       <!-- avatar -->
       <g transform="translate(1430,230)">
-        <circle r="46" fill="#ffffff" stroke="#c9bdf0" stroke-width="3"/>
+        <circle class="avatar-ring" r="46" fill="#ffffff" stroke="#c9bdf0" stroke-width="3"/>
         <circle r="36" fill="#7a5fd0"/>
         <circle cy="-6" r="13" fill="#e9e3fb"/>
         <path d="M-20 24 q20 -22 40 0 Z" fill="#e9e3fb"/>
-        <circle cx="30" cy="30" r="14" fill="#2fae79" stroke="#fff" stroke-width="3"/>
-        <path d="M24 30 l4 4 l8 -8" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <g class="badge-pulse">
+          <circle cx="30" cy="30" r="14" fill="#2fae79" stroke="#fff" stroke-width="3"/>
+          <path d="M24 30 l4 4 l8 -8" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
       </g>
 
       <!-- suggestion panel -->
@@ -308,9 +372,11 @@
 
       <!-- second person, considering the panel -->
       <g transform="translate(1600,280)">
-        <rect x="-10" y="80" width="130" height="140" rx="28" fill="#2fae79"/>
-        <circle cx="50" cy="42" r="44" fill="#1f7a52"/>
-        <rect x="20" y="78" width="26" height="34" rx="10" fill="#1f7a52" transform="rotate(-30 20 78)"/>
+        <g class="bob d2">
+          <rect x="-10" y="80" width="130" height="140" rx="28" fill="#2fae79"/>
+          <circle cx="50" cy="42" r="44" fill="#1f7a52"/>
+          <rect x="20" y="78" width="26" height="34" rx="10" fill="#1f7a52" transform="rotate(-30 20 78)"/>
+        </g>
       </g>
     </g>
   </g>
