@@ -15,6 +15,7 @@ import CaseHero from "../../../components/CaseHero.astro";
 import DecisionBlock from "../../../components/redesign/DecisionBlock.astro";
 import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
 import ConfidentialityNotice from "../../../components/redesign/ConfidentialityNotice.astro";
+import SignalChain from "../../../components/redesign/SignalChain.astro";
 ---
 
 <RBase title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
@@ -129,13 +130,7 @@ import ConfidentialityNotice from "../../../components/redesign/ConfidentialityN
       </div>
 
       <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
-      <div class="r-chain">
-        <span>Signal</span><span aria-hidden="true">→</span>
-        <span>Moment</span><span aria-hidden="true">→</span>
-        <span>AI-recommended Playbook</span><span aria-hidden="true">→</span>
-        <span>Admin customization</span><span aria-hidden="true">→</span>
-        <span>Employee experience</span>
-      </div>
+      <SignalChain />
     </section>
 
     <!-- Craft -->
@@ -228,17 +223,6 @@ import ConfidentialityNotice from "../../../components/redesign/ConfidentialityN
   .r-evo-arrow { color: var(--color-ink-3); padding-left: 1.25rem; }
 
   .r-evo-chain-label { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0 0 0.75rem; }
-  .r-chain {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
-    padding: 1.25rem; border: 1px solid var(--color-border); border-radius: 0.75rem;
-    background: var(--color-surface); margin-bottom: 1rem;
-  }
-  .r-chain span:not([aria-hidden]) {
-    font-size: 0.8125rem; font-weight: 500; color: var(--color-ink);
-    padding: 0.35rem 0.75rem; border-radius: 100px; border: 1px solid var(--color-border);
-    background: var(--color-bg);
-  }
-  .r-chain span[aria-hidden] { color: var(--color-ink-3); }
 
   @media (min-width: 640px) {
     .r-evolution { flex-direction: row; align-items: stretch; }
