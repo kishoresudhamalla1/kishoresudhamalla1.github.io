@@ -27,23 +27,23 @@ import ContentNeeded from "../../components/ContentNeeded.astro";
 const IMG = "/images/work/time-management";
 ---
 
-<Base title="Time Management — Kishore Sudhamalla">
+<Base title="Time Management | Kishore Sudhamalla">
   <CaseHero
     eyebrow="Case study 01 · Darwinbox"
     title="Time Management, rebuilt for the world."
-    lede="Reimagining enterprise time management for global scale — an eight-year-old module, used daily, carrying attendance, leaves, timesheets, approvals, payroll dependencies and global compliance, with zero prior UX investment."
+    lede="Reimagining enterprise time management for global scale. An eight-year-old module used daily for attendance, leaves, timesheets, approvals, payroll dependencies and global compliance, with zero prior UX investment."
     meta={[
       { k: "Role", v: "Associate Director, UX" },
       { k: "Team", v: "3 designers · product · engineering" },
       { k: "Timeline", v: "2023 – 2024" },
-      { k: "Platform", v: "Darwinbox HCM, 120+ countries" },
+      { k: "Platform", v: "Darwinbox HCM · 120+ countries" },
     ]}
     video={`${IMG}/tm-manager-dashboard`}
     poster={`${IMG}/tm-manager-dashboard-poster.jpg`}
     alt="Time Management manager dashboard"
     cards={[
-      { eyebrow: "Gartner WFM score", value: "3.5", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped. See note on the 3.5 vs 3.7 discrepancy below." },
-      { eyebrow: "Manager play rate", value: "73.1%", label: "Highest on the platform", note: "The dashboard view managers actually opened, not the one they were given." },
+      { eyebrow: "Gartner WFM score", value: "3.5", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped. See the note on the 3.5 vs 3.7 discrepancy below." },
+      { eyebrow: "Manager play rate", value: "73.1%", label: "Highest on the platform", note: "The dashboard view managers actually opened rather than the one they were given." },
     ]}
   />
 
@@ -51,14 +51,9 @@ const IMG = "/images/work/time-management";
     <!-- Context -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Context</p>
-      <h2>An eight-year-old module, zero redesign, daily pain.</h2>
+      <h2>An eight-year-old module with zero redesign and daily pain.</h2>
       <p>
-        Time Management is one of Darwinbox's oldest and most heavily used
-        modules — attendance, leaves, timesheets, approvals, payroll
-        dependencies and global compliance rules, used across 120+ countries.
-        It had never had a dedicated redesign. By the time this project
-        started, it was the most-complained-about module on the platform,
-        used daily by over a million people.
+        Time Management is one of Darwinbox's oldest and most heavily used modules. It covers attendance, leaves, timesheets, approvals, payroll dependencies and global compliance rules across 120+ countries. It had never had a dedicated redesign. By the time this project started it was the most complained-about module on the platform, used daily by over a million people.
       </p>
     </section>
 
@@ -67,15 +62,7 @@ const IMG = "/images/work/time-management";
       <p class="r-case-label">Complexity</p>
       <h2>Why this was hard.</h2>
       <p>
-        Three roles — employee, manager, HRBP — needed fundamentally
-        different views of the same underlying data, inside a system where
-        attendance, leave and payroll calculations are interdependent and
-        every customer's compliance configuration is different. Eight years
-        of incremental feature requests had accumulated into a module that
-        was powerful and flexible, but also dense, inconsistent, and
-        difficult to learn. The constraint wasn't "design something new" —
-        it was "rethink this without breaking what existing customers
-        already depend on."
+        Employees, managers and HRBPs needed fundamentally different views of the same data, inside a system where attendance, leave and payroll calculations depend on each other and every customer's compliance configuration differs. Eight years of incremental feature requests had produced a module that was powerful and flexible but also dense, inconsistent and difficult to learn. The constraint was not to design something new. It was to rethink the module without breaking what existing customers depend on.
       </p>
     </section>
 
@@ -85,21 +72,14 @@ const IMG = "/images/work/time-management";
       <h2>What we realized was actually wrong.</h2>
       <p>
         Primary research with TVS, Bigbasket and Licious, plus secondary
-        analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the
-        same gap repeatedly: there was no central place for managers or
-        employees to see time data at a glance. Everything lived behind
-        transactional flows — you had to already know what you were looking
-        for. One enterprise manager put it directly:
+        analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the same gap repeatedly. There was no central place for managers or employees to see time data at a glance. Everything lived behind transactional flows, so you had to already know what you were looking for. One enterprise manager put it directly:
       </p>
       <blockquote>
         "If I had a magic wand to change one thing about the Time module,
         I'd add dashboards for employees and managers."
       </blockquote>
       <p>
-        The real problem wasn't missing features. It was that the module had
-        no front door — no single view that answered "what do I need to
-        know or decide right now," for any of the three roles who depended
-        on it.
+        The real problem was not missing features. The module had no front door: no single view that answered "what do I need to know or decide right now" for any of the three roles who depended on it.
       </p>
     </section>
 
@@ -113,12 +93,12 @@ const IMG = "/images/work/time-management";
           number="1"
           problem="A dashboard needed to show primary time data alongside the context that makes it actionable (schedule, team comparison, exceptions) without splitting a manager's attention across the screen."
           options={[
-            "3-column layout — primary data, team context and exceptions each in their own column.",
-            "2-column layout — primary data with a single supporting context panel.",
+            "3-column layout: primary data, team context and exceptions each in their own column.",
+            "2-column layout: primary data with a single supporting context panel.",
           ]}
           decision="2-column layout: one primary view, one context panel."
-          why="The 3-column version felt more flexible on paper, but it fragmented attention — managers had to scan three places to answer one question. The 2-column version gave every screen a clear hierarchy: one thing to look at first, one place to go for context."
-          tradeoffs="Less can be visible simultaneously than in the 3-column version; some secondary data moved behind a panel toggle instead of staying always-on screen."
+          why="The 3-column version felt more flexible on paper, but fragmented attention. Managers had to scan three places to answer one question. The 2-column version gave every screen a clear hierarchy: one thing to look at first and one place to go for context."
+          tradeoffs="Less can be visible at once than in the 3-column version. Some secondary data moved behind a panel toggle instead of staying always on screen."
           result="Shipped as the production information architecture for the manager and employee dashboards."
         />
 
@@ -129,10 +109,10 @@ const IMG = "/images/work/time-management";
             "Keep role-specific screens as separate surfaces, each evolving independently.",
             "Build one unified dashboard system, configured per role and permission set.",
           ]}
-          decision="One unified dashboard framework, adapted per persona — not three separate products."
-          why="Separate screens compound inconsistency over time: every future change has to be made three times, and employees, managers and HRBPs end up learning three different mental models of the same data. A single framework meant one information model that could flex by role."
-          tradeoffs="Higher upfront design and engineering cost to build a system that works across three permission levels at once, versus shipping one role's view first and iterating."
-          result="Employee, manager and HRBP dashboards all shipped from the same underlying system — zero module switching for any of the three roles."
+          decision="One unified dashboard framework adapted per persona, not three separate products."
+          why="Separate screens compound inconsistency over time. Every future change has to be made three times and each role ends up learning a different mental model of the same data. A single framework meant one information model that could flex by role."
+          tradeoffs="Higher upfront design and engineering cost to build a system that works across three permission levels at once, rather than shipping one role's view first and iterating."
+          result="Employee, manager and HRBP dashboards all shipped from the same underlying system with zero module switching for any of the three roles."
         />
       </div>
     </section>
@@ -142,15 +122,7 @@ const IMG = "/images/work/time-management";
       <p class="r-case-label">System</p>
       <h2>How it connects to the rest of the product.</h2>
       <p>
-        Time Management sits at the intersection of attendance, leave and
-        payroll — a change to how an exception is surfaced on the manager
-        dashboard has downstream effects on payroll calculation and
-        compliance reporting. The dashboards built here didn't replace the
-        underlying transactional flows (approvals, corrections, payroll
-        sync); they sit on top of them as the layer that tells each role
-        what to look at first, while the configuration-heavy flows
-        underneath stayed intact for the customers who depend on their
-        specific setup.
+        Time Management sits at the intersection of attendance, leave and payroll. A change to how an exception is surfaced on the manager dashboard has downstream effects on payroll calculation and compliance reporting. The dashboards did not replace the underlying transactional flows (approvals, corrections, payroll sync). They sit on top of them as the layer that tells each role what to look at first, while the configuration-heavy flows underneath stayed intact for the customers who depend on their specific setup.
       </p>
     </section>
 
@@ -162,11 +134,11 @@ const IMG = "/images/work/time-management";
       <div class="r-craft-compare">
         <figure>
           <img src={`${IMG}/before/old-attendance.webp`} alt="Attendance module before the redesign" loading="lazy" />
-          <figcaption>Before — attendance, no dashboard layer</figcaption>
+          <figcaption>Before: attendance with no dashboard layer</figcaption>
         </figure>
         <figure>
           <img src={`${IMG}/before/old-roster.webp`} alt="Roster view before the redesign" loading="lazy" />
-          <figcaption>Before — roster view</figcaption>
+          <figcaption>Before: roster view</figcaption>
         </figure>
       </div>
 
@@ -198,7 +170,7 @@ const IMG = "/images/work/time-management";
         Mobile and responsive behaviour: the product is used globally across
         desktop and mobile by frontline and field employees.
       </p>
-      <ContentNeeded note="Mobile-specific screenshots/recordings weren't carried over from the live case study in this pass — pull the mobile views from the same source folder if they should be shown here." />
+      <ContentNeeded note="Mobile-specific screenshots and recordings were not carried over from the original case study in this pass. Pull the mobile views from the same source folder if they should be shown here." />
     </section>
 
     <!-- Collaboration -->
@@ -206,13 +178,7 @@ const IMG = "/images/work/time-management";
       <p class="r-case-label">Collaboration</p>
       <h2>How this got built.</h2>
       <p>
-        Delivered with a team of three designers alongside product and
-        engineering, over roughly a year. Research and validation involved
-        direct conversations with enterprise clients — TVS, Bigbasket and
-        Licious in primary research, and later an in-market roadshow across
-        Singapore, the Philippines and Thailand, presenting the shipped
-        direction to Busy Bees, Singlife, Toyota, Security Bank, JG Summit,
-        Cebu Pacific, BPI and Darwinbox's own SEA team.
+        Delivered with a team of three designers alongside product and engineering over roughly a year. Research and validation involved direct conversations with enterprise clients: TVS, Bigbasket and Licious in primary research, and later an in-market roadshow across Singapore, the Philippines and Thailand. We presented the shipped direction to Busy Bees, Singlife, Toyota, Security Bank, JG Summit, Cebu Pacific, BPI and Darwinbox's own SEA team.
       </p>
     </section>
 
@@ -221,9 +187,7 @@ const IMG = "/images/work/time-management";
       <p class="r-case-label">Validation</p>
       <h2>Taken to 8 clients across Southeast Asia.</h2>
       <p>
-        Before global rollout, we ran a UX roadshow across Singapore, the
-        Philippines and Thailand, presenting the designs to client teams and
-        collecting their reactions in the room.
+        Before global rollout we ran a UX roadshow across Singapore, the Philippines and Thailand. We presented the designs to client teams and collected their reactions in the room.
       </p>
 
       <p class="r-sub-label">Who we presented to</p>
@@ -296,7 +260,7 @@ const IMG = "/images/work/time-management";
         <div>
           <p class="r-review-head">Areas of improvement / asks</p>
           <ul>
-            <li>Dashboard utility with just leave data, when attendance is not enabled</li>
+            <li>Dashboard utility with just leave data when attendance is not enabled</li>
             <li>Offline capability in mobile: leave application for desk-less employees with limited connectivity</li>
           </ul>
           <p class="r-review-quote">“Time dashboard with only leave data, what would it look like?” <span>Busy Bees</span></p>
@@ -308,12 +272,12 @@ const IMG = "/images/work/time-management";
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Outcome</p>
-      <h2>What shipped, and what we know about its use.</h2>
+      <h2>What shipped and what we know about its use.</h2>
 
       <div class="r-stat-row">
         <div><p class="r-stat-v">1.16M</p><p class="r-stat-l">Dashboard plays, employee + manager</p></div>
-        <div><p class="r-stat-v">73.1%</p><p class="r-stat-l">Manager play rate — highest on the platform</p></div>
-        <div><p class="r-stat-v">3.5</p><p class="r-stat-l">Gartner WFM score, up from 2.9</p></div>
+        <div><p class="r-stat-v">73.1%</p><p class="r-stat-l">Highest manager play rate on the platform</p></div>
+        <div><p class="r-stat-v">3.5</p><p class="r-stat-l">Gartner WFM score (up from 2.9)</p></div>
       </div>
 
       <table class="r-table">
@@ -329,21 +293,17 @@ const IMG = "/images/work/time-management";
 
       <p>
         Darwinbox's Gartner Magic Quadrant Workforce Management score moved
-        from 2.9 to 3.5 between 2021 and 2024, and the company moved into
-        Challenger status over that period. Time Management was cited as a
-        contributing factor — the evidence here doesn't support saying the
-        redesign alone caused the score to move, only that it was named as
-        part of the reason.
+        from 2.9 to 3.5 between 2021 and 2024 and the company moved into Challenger status over that period. Time Management was cited as a contributing factor. The evidence here does not support saying the redesign alone caused the score to move, only that it was named as part of the reason.
       </p>
 
-      <ContentNeeded note="The brief for this redesign states the rating moved '2.9 to 3.7.' The source case study's own evidence (Gartner MQ figure, impact stat tiles) supports 2.9 to 3.5. Confirm which figure is current against the actual Gartner report before publishing — this page uses 3.5 pending that confirmation." />
+      <ContentNeeded note="The brief for this redesign states the rating moved from 2.9 to 3.7. The source case study's own evidence (Gartner MQ figure, impact stat tiles) supports 2.9 to 3.5. Confirm which figure is current against the actual Gartner report before publishing. This page uses 3.5 pending that confirmation." />
 
       <blockquote>
         "Really great job on time management, excellent UI and features. The
         main highlight for me is how it simplified direct-reportee
         attendance insight, analysis, comparison with the org, and the
         schedule planner."
-        <cite>— Monik Suthar, Darwinbox customer community</cite>
+        <cite>Monik Suthar, Darwinbox customer community</cite>
       </blockquote>
     </section>
 
@@ -354,13 +314,7 @@ const IMG = "/images/work/time-management";
       <p>
         The biggest lesson was committing to the data model earlier. We
         spent too long exploring the 3-column layout because it felt more
-        flexible, when the evidence for a simpler 2-column hierarchy was
-        already there. And the SEA roadshow — the most direct, highest-
-        quality validation in the whole project — happened near-final rather
-        than at wireframe stage. By then, good feedback could only go into
-        the backlog instead of shaping the core decisions that were already
-        locked in. Validating earlier, even with rougher artifacts, would
-        have let that feedback actually change the design.
+        flexible, when the evidence for a simpler 2-column hierarchy was already there. The SEA roadshow was the most direct and highest-quality validation in the whole project, yet it happened near-final rather than at wireframe stage. By then good feedback could only go into the backlog instead of shaping core decisions that were already locked in. Validating earlier, even with rougher artifacts, would have let that feedback change the design.
       </p>
     </section>
   </article>
@@ -368,7 +322,7 @@ const IMG = "/images/work/time-management";
 
 <style>
   .r-case { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem); }
-  .r-case > * { max-width: 46rem; }
+  .r-case-section > :is(p, h2, h3, blockquote, ul, ol, .r-case-label, .cn, .r-decisions, .r-sub-label) { max-width: var(--measure); }
   .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
   .r-case-label {
     font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
@@ -434,8 +388,6 @@ const IMG = "/images/work/time-management";
   }
 
   /* Validation (roadshow) */
-  .r-case > .r-wide { max-width: none; }
-  .r-wide > p, .r-wide > h2 { max-width: 46rem; }
   .r-sub-label {
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--color-ink-3); margin: 2.5rem 0 1rem !important;

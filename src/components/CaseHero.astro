@@ -168,7 +168,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
   .ch-copy {
     position: relative;
     z-index: 3;
-    max-width: 46rem;
+    max-width: var(--measure-head);
   }
 
   .ch-eyebrow {
@@ -189,7 +189,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
   .ch-lede {
     font-size: clamp(1rem, 1.6vw, 1.1875rem);
     line-height: 1.65; color: var(--color-ink-2);
-    max-width: 38rem; margin: 0;
+    max-width: var(--measure); margin: 0;
   }
 
   .ch-meta {

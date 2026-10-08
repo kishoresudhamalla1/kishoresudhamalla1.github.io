@@ -115,6 +115,11 @@
   --ease-move: cubic-bezier(0.65, 0, 0.35, 1);        /* A to B         */
   --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);  /* spatial change */
 
+  /* Reading measures: every page uses these two, so text columns share one
+     width everywhere. Media and diagrams may run wider than the text. */
+  --measure: 42rem;        /* body copy        */
+  --measure-head: 54rem;   /* display headlines */
+
   --dist-small: 4px;
   --dist-medium: 12px;
 }

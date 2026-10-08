@@ -19,11 +19,11 @@ import SignalChain from "../../components/SignalChain.astro";
 import FlowsMorph from "../../components/FlowsMorph.astro";
 ---
 
-<Base title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
+<Base title="Flows → Journeys → Playbooks | Kishore Sudhamalla">
   <CaseHero
     eyebrow="Case study 02 · Darwinbox"
     title="From Flows to Journeys to Playbooks."
-    lede="Rethinking employee experiences for an AI-native HCM platform — a product evolution story, not a single redesign. Journeys is released and in use by clients; AI Playbooks is concept and prototype work, with current rollout status still to be verified."
+    lede="Rethinking employee experiences for an AI-native HCM platform. A product evolution story rather than a single redesign. Journeys is released and in use by clients. AI Playbooks is concept and prototype work, with current rollout status still to be verified."
     meta={[
       { k: "Role", v: "Senior Manager, UX Design" },
       { k: "Scope", v: "Product direction, Flows → Journeys → Playbooks" },
@@ -32,10 +32,10 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
     ]}
     video="/images/work/beyond-the-task/hero-illustration"
     poster="/images/work/beyond-the-task/hero-illustration-poster.jpg"
-    alt="Flows, Journeys and AI Playbooks shown as one evolving system — conceptual illustration"
+    alt="Flows, Journeys and AI Playbooks shown as one evolving system (conceptual illustration)"
   />
 
-  <ConfidentialityNotice note="My work on Flows, Journeys and AI Playbooks is based on live Darwinbox product work. To respect confidentiality and non-disclosure obligations around proprietary customer data, live interfaces and in-development AI capabilities, actual product screens and specific implementation details have been omitted or replaced with conceptual illustrations. This case study focuses on product strategy, design decisions and publicly communicable direction." />
+  <ConfidentialityNotice note="My work on Flows, Journeys and AI Playbooks is based on live Darwinbox product work. To respect confidentiality and non-disclosure obligations around proprietary customer data, live interfaces and in-development AI capabilities, actual product screens and implementation details have been omitted or replaced with conceptual illustrations. This case study focuses on product strategy, design decisions and publicly communicable direction." />
 
   <article class="container-pg r-case">
     <!-- Context -->
@@ -43,12 +43,7 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Context</p>
       <h2>Flows already existed. The opportunity was in the experience around them.</h2>
       <p>
-        Darwinbox had Flows: transactional automation that moved a request
-        through steps — approvals, notifications, data updates. Flows worked,
-        but they were isolated. An employee going through something like an
-        offboarding or a transfer would hit a series of disconnected tasks,
-        each one correct on its own, with nothing connecting them into a
-        single, legible experience.
+        Darwinbox had Flows: transactional automation that moved a request through steps such as approvals, notifications and data updates. Flows worked but they were isolated. An employee going through an offboarding or a transfer would hit a series of disconnected tasks, each one correct on its own, with nothing connecting them into a single legible experience.
       </p>
     </section>
 
@@ -57,14 +52,7 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Complexity</p>
       <h2>Why this was hard.</h2>
       <p>
-        A guided experience needs to work for two very different people at
-        once: the admin, who has to configure something flexible enough to
-        cover many scenarios and many customer-specific rules, and the
-        employee, who should never see that configuration complexity —
-        only a clear next step. Layer AI on top of that and the difficulty
-        compounds: the system has to decide when it's confident enough to
-        propose something automatically, and the admin has to stay able to
-        trust and override every step of what it proposes.
+        A guided experience needs to work for two very different people at once. The admin has to configure something flexible enough to cover many scenarios and customer-specific rules. The employee should never see that configuration complexity, only a clear next step. Layer AI on top and the difficulty compounds. The system has to decide when it is confident enough to propose something automatically and the admin has to stay able to trust and override every step of what it proposes.
       </p>
     </section>
 
@@ -73,16 +61,10 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Problem framing</p>
       <h2>The question changed twice.</h2>
       <p>
-        The first version of the problem was: how can we make guided
-        experiences useful across many kinds of workflows? That became
-        Journeys — a guided experience for the employee, configurable by the
-        admin, built on top of the existing Flows.
+        The first version of the problem was how to make guided experiences useful across many kinds of workflows. That became Journeys: a guided experience for the employee, configurable by the admin and built on top of the existing Flows.
       </p>
       <p>
-        The second version of the problem came later, once Journeys existed:
-        an admin still has to manually build every Journey from scratch, even
-        though the system already has the employee data, the system events
-        and the patterns that would let it suggest one. The question changed
+        The second version of the problem came once Journeys existed. An admin still had to build every Journey from scratch, even though the system already had the employee data, the system events and the patterns that would let it suggest one. The question changed
         from <em>"how can an admin create a better Journey?"</em> to
         <em>"why should the admin have to manually create every Journey?"</em>
         That reframing is what Playbooks responds to.
@@ -99,13 +81,13 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
           number="1"
           problem="Once the system could recognize a signal or moment (a role change, a location transfer, a new joiner) well enough to suggest a Playbook, how much of the resulting experience should the AI control versus the admin?"
           options={[
-            "AI assembles and activates the Playbook directly, admin reviews after the fact.",
-            "AI recommends and proposes steps; admin reviews, edits and approves before anything is assigned.",
+            "AI assembles and activates the Playbook directly and the admin reviews after the fact.",
+            "AI recommends and proposes steps. The admin reviews, edits and approves before anything is assigned.",
           ]}
-          decision="AI proposes; the admin remains responsible for reviewing, editing and approving before anything ships to an employee."
-          why="An HCM Playbook touches real employee experiences and, often, compliance-sensitive steps. The admin needs to stay the accountable party — AI should remove the blank-page problem of starting from scratch, not remove the admin's judgment from a decision that affects real people."
-          tradeoffs="Slower time-to-activation than a fully automated path, and the UI has to carry the extra weight of a clear review/edit/approve step rather than a single 'accept' action."
-          result="This human-in-the-loop model is the current design direction for Playbooks. Production status beyond the design/prototype stage still needs confirming — see the note below."
+          decision="AI proposes. The admin remains responsible for reviewing, editing and approving before anything ships to an employee."
+          why="An HCM Playbook touches real employee experiences and often compliance-sensitive steps. The admin needs to stay the accountable party. AI should remove the blank-page problem of starting from scratch, not remove the admin's judgment from a decision that affects real people."
+          tradeoffs="Slower time to activation than a fully automated path. The UI also has to carry the extra weight of a clear review, edit and approve step rather than a single accept action."
+          result="This human-in-the-loop model is the current design direction for Playbooks. Production status beyond the design and prototype stage still needs confirming. See the note below."
         />
       </div>
     </section>
@@ -125,12 +107,9 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Craft</p>
       <h2>The work.</h2>
       <p>
-        For admins, Journeys is a configuration surface — choosing which
-        steps, guidance and resources make up a given process. For
-        employees, it's a single guided view: what to do, and why it
-        matters, instead of a disconnected task list.
+        For admins, Journeys is a configuration surface for choosing which steps, guidance and resources make up a given process. For employees it is a single guided view of what to do and why it matters, instead of a disconnected task list.
       </p>
-      <ContentNeeded note="Actual admin configuration and employee-facing Journey screens, plus the AI Playbooks concept/agent-interaction flow, are withheld per the confidentiality notice above — Darwinbox's live interfaces and proprietary customer data can't be shown here. The hero diagram is the one illustration used, and it's explicitly labeled conceptual rather than a real product screen. If a sanitized or genericized set of screens is ever approved for external use, swap them in here." />
+      <ContentNeeded note="Actual admin configuration and employee-facing Journey screens, plus the AI Playbooks concept and agent interaction flow, are withheld per the confidentiality notice above. Darwinbox's live interfaces and proprietary customer data cannot be shown here. The hero illustration is explicitly labeled conceptual rather than a real product screen. If a sanitized set of screens is ever approved for external use, swap them in here." />
     </section>
 
     <!-- Collaboration -->
@@ -138,25 +117,19 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Collaboration</p>
       <h2>How this got built.</h2>
       <p>
-        Led as Senior Manager, UX Design, working with product leadership to
-        define the Journeys → Playbooks direction, alongside product and
-        engineering partners responsible for the underlying Flows engine and
-        the AI recommendation layer.
+        Led as Senior Manager, UX Design. I worked with product leadership to define the Journeys to Playbooks direction, alongside product and engineering partners responsible for the underlying Flows engine and the AI recommendation layer.
       </p>
-      <ContentNeeded note="Team size, specific collaborators, and timeline weren't present as concrete facts in the source page — add if you want this section more specific than the role-level description above." />
+      <ContentNeeded note="Team size, specific collaborators and timeline were not present as concrete facts in the source page. Add them if you want this section more specific than the role-level description above." />
     </section>
 
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Outcome</p>
-      <h2>What shipped, what was explored.</h2>
+      <h2>What shipped and what was explored.</h2>
       <p>
-        Journeys is released and in use by clients. AI Playbooks exists as
-        concept and prototype work built around the admin-approval decision
-        above; it has not been presented here as a shipped, measured
-        product.
+        Journeys is released and in use by clients. AI Playbooks exists as concept and prototype work built around the admin-approval decision above. It is not presented here as a shipped, measured product.
       </p>
-      <ContentNeeded note="No usage data, adoption numbers or client feedback for Journeys were present in the source page — add real evidence here (adoption, client quotes, or a status update on Playbooks' current rollout) before publishing. Do not state or imply usage numbers without a verified source." />
+      <ContentNeeded note="No usage data, adoption numbers or client feedback for Journeys were present in the source page. Add real evidence here (adoption, client quotes or a status update on the Playbooks rollout) before publishing. Do not state or imply usage numbers without a verified source." />
     </section>
 
     <!-- Reflection -->
@@ -164,14 +137,7 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Reflection</p>
       <h2>What this work was really about.</h2>
       <p>
-        The interesting part of this project wasn't the UI for Journeys —
-        it was the shift in the question itself, from "how do we help an
-        admin build something" to "why does the admin have to build it at
-        all." That's the same shift AI-native product design keeps forcing:
-        less time spent designing the configuration screen, more time
-        deciding how much judgment a system can responsibly take on, and how
-        it stays answerable to the person who's still accountable for the
-        outcome.
+        The interesting part of this project was not the UI for Journeys. It was the shift in the question itself, from "how do we help an admin build something" to "why does the admin have to build it at all." That is the same shift AI-native product design keeps forcing: less time designing the configuration screen and more time deciding how much judgment a system can responsibly take on and how it stays answerable to the person who is still accountable for the outcome.
       </p>
     </section>
   </article>
@@ -179,7 +145,8 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
 
 <style>
   .r-case { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem); }
-  .r-case > * { max-width: 46rem; }
+  .r-case-section > :is(p, h2, h3, blockquote, ul, ol, .r-case-label, .cn, .r-decisions, .r-sub-label) { max-width: var(--measure); }
+  .r-case-section > :global(.fm), .r-case-section > :global(.sc) { max-width: var(--measure-head); }
   .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
   .r-case-label {
     font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;

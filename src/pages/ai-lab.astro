@@ -22,36 +22,33 @@ const CONCEPTS = [
   {
     title: "UX Signals",
     status: "Conceptual",
-    explore: "Whether a BRD or product-context document can be turned into UX signals and open design questions before any screen gets drawn — surfacing ambiguity early instead of discovering it mid-design.",
+    explore: "Whether a BRD or product-context document can be turned into UX signals and open design questions before any screen gets drawn. The aim is to surface ambiguity early instead of discovering it mid-design.",
     build: "Not yet built.",
-    learn: "Not applicable — conceptual only.",
+    learn: "Not applicable. Conceptual only.",
   },
   {
     title: "Wireframe Generator",
     status: "Conceptual",
-    explore: "Whether a short text description or rough sketch can be turned into a low-fidelity product structure fast enough to be useful as a starting point, not a replacement, for design exploration.",
+    explore: "Whether a short text description or rough sketch can be turned into a low-fidelity product structure fast enough to be useful as a starting point for design exploration rather than a replacement for it.",
     build: "Not yet built.",
-    learn: "Not applicable — conceptual only.",
+    learn: "Not applicable. Conceptual only.",
   },
   {
     title: "Design QA Agent",
     status: "Conceptual",
-    explore: "Whether a design file or screenshot can be checked against usability and accessibility heuristics automatically, catching issues earlier than a manual review pass would.",
+    explore: "Whether a design file or screenshot can be checked against usability and accessibility heuristics automatically and catch issues earlier than a manual review would.",
     build: "Not yet built.",
-    learn: "Not applicable — conceptual only.",
+    learn: "Not applicable. Conceptual only.",
   },
 ];
 ---
 
-<Base title="AI Lab — Kishore Sudhamalla">
+<Base title="AI Lab | Kishore Sudhamalla">
   <section class="container-pg r-lab-hero" data-reveal>
     <p class="r-eyebrow">AI Lab</p>
-    <h1>Where I build, not just design, AI-native ideas.</h1>
+    <h1>Where I build AI-native ideas as well as design them.</h1>
     <p class="r-lede">
-      This is a working record, not a marketing page. Some of what's here
-      shipped and runs on real data. Some is a question I'm still exploring
-      and haven't built yet — those are labeled conceptual, with no results
-      claimed for them.
+      This is a working record, not a marketing page. Some of what's here shipped and runs on real data. Some is a question I'm still exploring and haven't built yet. Those are labeled conceptual and no results are claimed for them.
     </p>
   </section>
 
@@ -66,26 +63,15 @@ const CONCEPTS = [
         <h2>Agentic HCM: an AI that explains why delivery slipped</h2>
         <p class="r-real-intro">What I wanted to explore</p>
         <p>
-          Whether a rules engine reading a live Jira board could be paired
-          with an AI layer that explains — in plain language, with citations
-          — why a commitment moved, without the AI ever being allowed to
-          silently rewrite the underlying data.
+          Whether a rules engine reading a live Jira board could be paired with an AI layer that explains in plain language and with citations why a commitment moved, without the AI ever being allowed to silently rewrite the underlying data.
         </p>
         <p class="r-real-intro">What I built</p>
         <p>
-          A solo, end-to-end system: a rules engine that stays the single
-          source of truth for dates, scope and status (eight flags —
-          Overdue, Scope Changed, Blocked, and others), and an AI layer on
-          top that explains root cause, cites the specific records it read,
-          and only ever writes back after explicit approval. It's in daily
-          use as of 2026.
+          A solo end-to-end system: a rules engine that stays the single source of truth for dates, scope and status (eight flags such as Overdue, Scope Changed and Blocked), and an AI layer on top that explains root cause, cites the specific records it read and only ever writes back after explicit approval. It's in daily use as of 2026.
         </p>
         <p class="r-real-intro">What I learned</p>
         <p>
-          The hard part wasn't the AI — it was knowing exactly which signals
-          were actually derivable from the data available, and drawing a
-          strict line between what rules should always decide and what only
-          AI should interpret. A recommendation nobody measures is just a
+          The hard part was not the AI. It was knowing exactly which signals were derivable from the data available and drawing a strict line between what rules should always decide and what only AI should interpret. A recommendation nobody measures is just a
           confident opinion, so the loop checks whether its own advice held.
         </p>
         <span class="r-real-link">Read the full case study →</span>
@@ -112,13 +98,13 @@ const CONCEPTS = [
         </div>
       ))}
     </div>
-    <ContentNeeded note="These three concepts are listed because they're directions worth exploring, not because any of them has been built. If one gets built, move it up to the 'Built' section above with real detail on what it does and what was learned — don't backfill results here." />
+    <ContentNeeded note="These three concepts are listed because they are directions worth exploring, not because any of them has been built. If one gets built, move it up to the 'Built' section above with real detail on what it does and what was learned. Do not backfill results here." />
   </section>
 </Base>
 
 <style>
   .r-lab-hero { padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem); }
-  .r-lab-hero > * { max-width: 42rem; }
+  .r-lab-hero > * { max-width: var(--measure); }
   .r-eyebrow {
     font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);

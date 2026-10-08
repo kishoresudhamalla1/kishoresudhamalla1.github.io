@@ -23,12 +23,12 @@ const TIMELINE = [
   { t: "Startup product design", d: "Learning to design with speed, ambiguity and limited resources." },
   { t: "Darwinbox, early design team", d: "Helping establish product design foundations while the company scaled from startup to unicorn." },
   { t: "Enterprise product design", d: "Complex workflows, business rules, permissions, configurations and global product requirements." },
-  { t: "Hands-on IC, deep in the work", d: "Staying close to the work — mapping a workflow, questioning an interaction, reviewing a prototype, exploring a new product idea." },
+  { t: "Hands-on IC work", d: "Staying close to the work: mapping a workflow, questioning an interaction, reviewing a prototype and exploring a new product idea." },
   { t: "AI-native product design", d: "Applying years of enterprise systems experience to products that can understand intent, reason, act and collaborate with people." },
 ];
 ---
 
-<Base title="About — Kishore Sudhamalla">
+<Base title="About | Kishore Sudhamalla">
   <section class="container-pg r-about" data-reveal>
     <div class="r-about-grid">
     <div class="r-about-copy">
@@ -36,18 +36,13 @@ const TIMELINE = [
 
     <p class="r-bio">
       I like difficult problems. I've spent most of my career designing
-      products where complexity is unavoidable. For the last nine years,
-      I've worked on Darwinbox, a global HCM platform used across 120+
+      products where complexity is unavoidable. For the last nine years I've worked on Darwinbox, a global HCM platform used across 120+
       countries. I've worked across Time Management, Payroll, Benefits,
       Journeys, Flows, HR Documents, Core HR, Extensibility and AI
       experiences.
     </p>
     <p class="r-bio">
-      I've spent years leading designers and shaping product direction, and
-      I still work close to the work: opening Figma when the problem is
-      hard, building a prototype when the idea isn't clear, and getting into
-      the details with product and engineering until the experience makes
-      sense. That's how I work as a Principal Designer.
+      I've spent years leading designers and shaping product direction and I still work close to the work: opening Figma when the problem is hard, building a prototype when the idea isn't clear and getting into the details with product and engineering until the experience makes sense. That's how I work as a Principal Designer.
     </p>
     <p class="r-bio">
       What interests me now is what happens when these systems become
@@ -104,7 +99,7 @@ const TIMELINE = [
 <style>
   .r-about { padding-block: clamp(3rem, 7vw, 5rem) clamp(2.5rem, 5vw, 4rem); }
   .r-about-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
-  .r-about-copy { max-width: 38rem; }
+  .r-about-copy { max-width: var(--measure); }
   .r-about-photo { margin: 0; order: -1; width: min(72vw, 260px); }
   .r-about-photo img {
     display: block; width: 100%; height: auto; aspect-ratio: 0.86 / 1;
@@ -152,7 +147,7 @@ const TIMELINE = [
     margin: 0 0 1.5rem;
   }
   .r-timeline-section { padding-bottom: clamp(4rem, 8vw, 6rem); }
-  .r-timeline-section > * { max-width: 42rem; }
+  .r-timeline-section > * { max-width: var(--measure); }
   .r-timeline { display: flex; flex-direction: column; }
   .r-timeline-row {
     display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem;
