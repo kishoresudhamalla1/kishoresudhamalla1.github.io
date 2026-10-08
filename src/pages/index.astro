@@ -54,12 +54,6 @@ const QUESTIONS = [
   "How do we know it worked?",
 ];
 
-const BRING = [
-  { t: "Systems thinking", d: "I enjoy products where workflows, rules, roles, data, and dependencies all intersect." },
-  { t: "Product thinking", d: "I look beyond the interface to understand what the product should actually do and why." },
-  { t: "AI-native design", d: "I'm exploring how agents, AI workflows, and human oversight can become part of the product itself." },
-  { t: "Hands-on craft", d: "I stay close to the work, from framing the problem and mapping the system to prototyping the interaction and working with engineering to make it real." },
-];
 ---
 
 <Base title="Kishore Sudhamalla — Principal Product Designer">
@@ -88,17 +82,6 @@ const BRING = [
       <a href="/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
     </div>
   </div>
-  </section>
-
-  <!-- A little about how I work -->
-  <section class="container-pg r-prose" data-reveal>
-    <p class="r-section-label">A little about how I work</p>
-    <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
-    <p>The screen is usually just where the complexity becomes visible.</p>
-    <p>I like getting underneath it: understanding the system, finding where people struggle, and figuring out what the product should do differently.</p>
-    <p>With AI, that becomes even more interesting.</p>
-    <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask, and when it should step back.</p>
-    <p class="r-prose-close">That's the kind of work I enjoy.</p>
   </section>
 
   <!-- Selected work — side by side, hover expands one, collapses the others -->
@@ -141,6 +124,17 @@ const BRING = [
     </div>
   </section>
 
+  <!-- A little about how I work -->
+  <section class="container-pg r-prose" data-reveal>
+    <p class="r-section-label">A little about how I work</p>
+    <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
+    <p>The screen is usually just where the complexity becomes visible.</p>
+    <p>I like getting underneath it: understanding the system, finding where people struggle, and figuring out what the product should do differently.</p>
+    <p>With AI, that becomes even more interesting.</p>
+    <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask, and when it should step back.</p>
+    <p class="r-prose-close">That's the kind of work I enjoy.</p>
+  </section>
+
   <!-- How I think about AI-native products -->
   <section class="container-pg r-think" data-reveal>
     <p class="r-section-label">How I think about AI-native products</p>
@@ -170,6 +164,7 @@ const BRING = [
     <div class="r-prose-inline">
       <p>I'm using AI and code to explore new ways of designing products, workflows, and systems.</p>
       <p>The AI Lab is where I take ideas beyond Figma, build working prototypes, test how they behave, and learn what changes when AI becomes part of the product itself.</p>
+      <p>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
     </div>
 
     <a href="/ai-lab" class="r-lab-card">
@@ -181,37 +176,6 @@ const BRING = [
       </div>
       <span class="r-text-link">Explore AI Lab →</span>
     </a>
-  </section>
-
-  <!-- What I bring -->
-  <section class="container-pg r-how" data-reveal>
-    <p class="r-section-label">What I bring</p>
-    <div class="r-bring">
-      {BRING.map((b) => (
-        <div class="r-how-item">
-          <h3>{b.t}</h3>
-          <p>{b.d}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- A note on leadership -->
-  <section class="container-pg r-prose" data-reveal>
-    <p class="r-section-label">A note on leadership</p>
-    <p>I've spent years leading designers and shaping product direction across complex enterprise products.</p>
-    <p>But I still want to be close to the work.</p>
-    <p>I like opening Figma when the problem is hard, building a prototype when the idea isn't clear, and getting into the details with product and engineering until the experience makes sense.</p>
-    <p class="r-prose-close">That's the kind of Principal Designer I want to be.</p>
-  </section>
-
-  <!-- Currently exploring -->
-  <section class="container-pg r-prose" data-reveal>
-    <p class="r-section-label">Currently exploring</p>
-    <p class="r-prose-lead">
-      AI-native enterprise products · Agentic workflows · Human-AI collaboration · Product systems · Design through code
-    </p>
-    <p>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
   </section>
 
   <!-- Let's talk -->
@@ -435,23 +399,7 @@ const BRING = [
     .work-card, .work-card-arrow, .work-card-body, .work-card-label { transition: none; }
   }
 
-  .r-how { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
-  .r-how-head {
-    font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(1.5rem, 3vw, 2.25rem); letter-spacing: -0.02em;
-    color: var(--color-ink); margin: 0 0 2.5rem; max-width: 30rem;
-  }
-  .r-how-list {
-    display: grid; grid-template-columns: 1fr; gap: 2rem;
-    padding-top: 2rem; border-top: 1px solid var(--color-border);
-  }
-  .r-how-item h3 { font-size: 1rem; font-weight: 600; color: var(--color-ink); margin: 0.5rem 0 0.5rem; }
-  .r-how-item p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
-  .r-how-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0; }
 
-  @media (min-width: 768px) {
-    .r-how-list { grid-template-columns: repeat(3, 1fr); }
-  }
 
   .r-text-link {
     font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
@@ -502,8 +450,6 @@ const BRING = [
   .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
   .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
 
-  .r-bring { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
-  @media (min-width: 768px) { .r-bring { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 3rem; } }
 
   .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
   .r-talk-head {
