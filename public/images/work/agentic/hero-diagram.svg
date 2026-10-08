@@ -1,0 +1,28 @@
+<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" font-family="Inter, ui-sans-serif, sans-serif">
+  <rect width="960" height="600" fill="#f4f0fb"/>
+  <text x="48" y="56" font-size="12" letter-spacing="1.5" font-weight="600" fill="#8a8f9c">CONCEPTUAL ILLUSTRATION, NOT AN ACTUAL PRODUCT SCREEN</text>
+  <g font-size="15" font-weight="600" fill="#2b2f38">
+    <rect x="48" y="150" width="256" height="320" rx="18" fill="#fff" stroke="#e3e6ec"/>
+    <text x="72" y="190">Chatbot</text>
+    <rect x="72" y="220" width="170" height="36" rx="18" fill="#eef3fb"/>
+    <rect x="130" y="268" width="150" height="36" rx="18" fill="#7a5fd0"/>
+    <rect x="72" y="316" width="190" height="36" rx="18" fill="#eef3fb"/>
+    <text x="72" y="440" font-size="13" font-weight="500" fill="#8a8f9c">Answers questions</text>
+
+    <rect x="352" y="150" width="256" height="320" rx="18" fill="#fff" stroke="#e3e6ec"/>
+    <text x="376" y="190">Agent</text>
+    <rect x="376" y="220" width="208" height="40" rx="12" fill="#eef7f3"/>
+    <rect x="376" y="272" width="208" height="40" rx="12" fill="#eef7f3"/>
+    <rect x="376" y="324" width="208" height="40" rx="12" fill="#eef7f3"/>
+    <circle cx="396" cy="240" r="8" fill="#2fae79"/><circle cx="396" cy="292" r="8" fill="#2fae79"/><circle cx="396" cy="344" r="8" fill="#2fae79"/>
+    <text x="376" y="440" font-size="13" font-weight="500" fill="#8a8f9c">Uses tools, takes actions</text>
+
+    <rect x="656" y="150" width="256" height="320" rx="18" fill="#fff" stroke="#e3e6ec"/>
+    <text x="680" y="190">AI-native</text>
+    <circle cx="784" cy="300" r="52" fill="#7a5fd0" opacity="0.15"/>
+    <circle cx="784" cy="300" r="30" fill="#7a5fd0"/>
+    <g stroke="#c9bdf0" stroke-width="2" stroke-dasharray="3 5"><path d="M784 300 L710 230"/><path d="M784 300 L860 230"/><path d="M784 300 L710 380"/><path d="M784 300 L860 380"/></g>
+    <text x="680" y="440" font-size="13" font-weight="500" fill="#8a8f9c">Part of the product itself</text>
+  </g>
+  <g stroke="#b9c0cc" stroke-width="2.5" stroke-linecap="round" fill="none"><path d="M312 310 h28 M332 298 l12 12 l-12 12"/><path d="M616 310 h28 M636 298 l12 12 l-12 12"/></g>
+</svg>

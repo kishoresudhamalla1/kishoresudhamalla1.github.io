@@ -1,79 +1,104 @@
 ---
 /**
- * Redesign option — homepage. Repositions from "AI leader / strategic UX
- * leader" to hands-on Principal/Staff IC: complex enterprise systems first,
- * AI-native product design as the next chapter, not the whole identity.
+ * Redesign option — homepage, rewritten to the user's supplied copy
+ * (hero, "a little about how I work", three selected-work cards, "how I
+ * think about AI-native products", AI Lab, "what I bring", "a note on
+ * leadership", "currently exploring", "let's talk").
  *
- * Every stat here is one already used elsewhere in the live site
- * (HeroSection.tsx, About.astro) — nothing new invented. "120+ countries"
- * carries the same caveat it already has there: no case study in the repo
- * cites a source for it, so if you want to keep it, it needs a citation.
+ * Copy is the user's verbatim; no stats or claims were added. Two things to
+ * confirm: the third card ("Chatbot → Agentic AI → AI-native experiences")
+ * links to a stub page with no case-study content yet, and its image is a
+ * conceptual diagram, not product work. The earlier 16+/9/1.6M+/120+ stat
+ * row was dropped because the new hero line replaces it.
  */
 import RBase from "../../layouts/RBase.astro";
-import Contact from "../../components/Contact.astro";
-
-const FACTS = [
-  { value: "16+", label: "Years in design" },
-  { value: "9", label: "Years building enterprise HCM" },
-  { value: "1.6M+", label: "Users reached" },
-  { value: "120+", label: "Countries" },
-];
 
 const WORK = [
   {
     n: "01",
     title: "Time Management",
-    kicker: "Darwinbox · Associate Director, UX · Enterprise systems",
-    blurb: "Reimagining enterprise time management for global scale — an eight-year-old module rebuilt around what managers need to decide first.",
-    tags: ["1.6M+ users", "120+ countries"],
+    tagline: "Making a complex workforce system easier to understand and act on.",
+    blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets, and workforce insights into a more coherent experience for employees, managers, and HR teams.",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
     href: "/redesign/work/time-management",
     img: "/images/work/time-management/tm-manager-dashboard-poster.jpg",
     featured: true,
   },
   {
     n: "02",
-    title: "Flows → Journeys → Playbooks",
-    kicker: "Darwinbox · Senior Manager, UX Design · AI-native",
-    blurb: "Rethinking employee experiences for an AI-native HCM platform — a product evolution story, from transactional flows to AI-recommended guidance.",
-    tags: ["Product evolution", "AI-native interaction"],
+    title: "From Flows → Journeys → AI Playbooks",
+    tagline: "Evolving enterprise workflows from transactions into intelligent experiences.",
+    blurb: "A product evolution from individual workflow transactions to guided employee journeys and, ultimately, AI-assisted playbooks that can help orchestrate complex work.",
+    tags: ["Product strategy", "Workflow design", "AI-native experiences"],
     href: "/redesign/work/flows-journeys-playbooks",
     img: "/images/work/beyond-the-task/hero-illustration-poster.jpg",
     featured: false,
   },
+  {
+    n: "03",
+    title: "Chatbot → Agentic AI → AI-native experiences",
+    tagline: "Exploring what changes when AI moves from answering questions to getting work done.",
+    blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions, and become part of the product experience itself.",
+    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
+    href: "/redesign/work/chatbot-to-agentic",
+    img: "/images/work/agentic/hero-diagram.svg",
+    featured: false,
+  },
+];
+
+const QUESTIONS = [
+  "What does the system know?",
+  "What can it decide?",
+  "What should it do?",
+  "When should a person be involved?",
+  "How do we know it worked?",
+];
+
+const BRING = [
+  { t: "Systems thinking", d: "I enjoy products where workflows, rules, roles, data, and dependencies all intersect." },
+  { t: "Product thinking", d: "I look beyond the interface to understand what the product should actually do and why." },
+  { t: "AI-native design", d: "I'm exploring how agents, AI workflows, and human oversight can become part of the product itself." },
+  { t: "Hands-on craft", d: "I stay close to the work, from framing the problem and mapping the system to prototyping the interaction and working with engineering to make it real." },
 ];
 ---
 
 <RBase title="Kishore Sudhamalla — Principal Product Designer">
   <!-- Hero -->
   <section class="container-pg r-hero">
-    <p class="r-eyebrow" data-reveal>Kishore Sudhamalla</p>
+    <p class="r-eyebrow" data-reveal>Principal Product Designer</p>
     <h1 class="r-h1" data-reveal>
-      Principal Product Designer, designing complex enterprise systems into
-      <span class="r-h1-accent">intelligent, AI-native experiences.</span>
+      I design complex enterprise products into
+      <span class="r-h1-accent">simpler, more intelligent experiences.</span>
     </h1>
 
     <p class="r-lede" data-reveal>
-      I design complex products, systems and workflows that make work simpler
-      for people. Currently exploring the next generation of AI-native
-      product experiences.
+      I work at the intersection of product design, systems thinking, and AI,
+      turning workflows, rules, and business complexity into experiences that
+      help people understand, decide, and act.
+    </p>
+
+    <p class="r-hero-facts" data-reveal>
+      16+ years in design · 9 years in enterprise products · AI-native product design
     </p>
 
     <div class="r-cta-row" data-reveal>
-      <a href="#work" class="r-btn r-btn-primary">View selected work</a>
+      <a href="#work" class="r-btn r-btn-primary">View my work</a>
       <a href="/redesign/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
     </div>
-
-    <dl class="r-facts" data-reveal>
-      {FACTS.map((f) => (
-        <div>
-          <dt>{f.value}</dt>
-          <dd>{f.label}</dd>
-        </div>
-      ))}
-    </dl>
   </section>
 
-  <!-- Selected work — side by side, hover expands one, collapses the other -->
+  <!-- A little about how I work -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>A little about how I work</p>
+    <p class="r-prose-lead" data-reveal>Complex products rarely have a single UX problem.</p>
+    <p data-reveal>The screen is usually just where the complexity becomes visible.</p>
+    <p data-reveal>I like getting underneath it: understanding the system, finding where people struggle, and figuring out what the product should do differently.</p>
+    <p data-reveal>With AI, that becomes even more interesting.</p>
+    <p data-reveal>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask, and when it should step back.</p>
+    <p class="r-prose-close" data-reveal>That's the kind of work I enjoy.</p>
+  </section>
+
+  <!-- Selected work — side by side, hover expands one, collapses the others -->
   <section id="work" class="container-pg r-work" data-reveal>
     <p class="r-section-label">Selected work</p>
 
@@ -90,8 +115,8 @@ const WORK = [
           </div>
 
           <div class="work-card-info">
-            <p class="work-card-kicker">{p.kicker}</p>
             <p class="work-card-title">{p.title}</p>
+            <p class="work-card-tagline">{p.tagline}</p>
             <p class="work-card-blurb">{p.blurb}</p>
             <div class="work-card-foot">
               <div class="work-card-tags">
@@ -111,44 +136,79 @@ const WORK = [
     </div>
   </section>
 
-  <!-- How I work -->
-  <section class="container-pg r-how">
-    <p class="r-section-label" data-reveal>How I work</p>
-    <h2 class="r-how-head" data-reveal>I start with the system, not the screen.</h2>
+  <!-- How I think about AI-native products -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>How I think about AI-native products</p>
+    <p class="r-prose-lead" data-reveal>AI isn't just another feature to add to an existing interface.</p>
+    <p data-reveal>It changes how people interact with products.</p>
+    <p data-reveal>Instead of asking users to find the right screen, understand the right workflow, and perform every step themselves, we can start with intent and let the system help with the work.</p>
+    <p data-reveal>But that only works when people understand what the system is doing and remain in control when it matters.</p>
+    <p data-reveal>I think about AI experiences through a few simple questions:</p>
+    <ul class="r-questions">
+      {QUESTIONS.map((q) => <li data-reveal>{q}</li>)}
+    </ul>
+    <p class="r-prose-close" data-reveal>That's where I spend a lot of my time.</p>
+  </section>
 
-    <div class="r-how-list">
-      {[
-        { n: "01", t: "Understand the system", d: "Users, data, workflows, dependencies and constraints." },
-        { n: "02", t: "Find the real problem", d: "Separate the visible request from the underlying experience problem." },
-        { n: "03", t: "Shape the model", d: "Simplify complexity into clearer mental models and interaction patterns." },
-        { n: "04", t: "Prototype the future", d: "Move quickly from ideas to working experiences." },
-        { n: "05", t: "Make it real", d: "Work closely with product and engineering to ship." },
-        { n: "06", t: "Learn and evolve", d: "Use adoption, behaviour and feedback to improve the system." },
-      ].map((s) => (
+  <!-- AI Lab -->
+  <section class="container-pg r-lab">
+    <p class="r-section-label" data-reveal>AI Lab</p>
+    <h2 class="r-h2" data-reveal>Designing by building</h2>
+    <div class="r-prose-inline">
+      <p data-reveal>I'm using AI and code to explore new ways of designing products, workflows, and systems.</p>
+      <p data-reveal>The AI Lab is where I take ideas beyond Figma, build working prototypes, test how they behave, and learn what changes when AI becomes part of the product itself.</p>
+    </div>
+
+    <a href="/redesign/ai-lab" class="r-lab-card" data-reveal>
+      <h3>Design Ops</h3>
+      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean, and help designers decide what to do next?</p>
+      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval, and verification.</p>
+      <div class="work-card-tags">
+        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+      </div>
+      <span class="r-text-link">Explore AI Lab →</span>
+    </a>
+  </section>
+
+  <!-- What I bring -->
+  <section class="container-pg r-how">
+    <p class="r-section-label" data-reveal>What I bring</p>
+    <div class="r-bring">
+      {BRING.map((b) => (
         <div class="r-how-item" data-reveal>
-          <p class="r-how-n">{s.n}</p>
-          <h3>{s.t}</h3>
-          <p>{s.d}</p>
+          <h3>{b.t}</h3>
+          <p>{b.d}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- About teaser -->
-  <section class="container-pg r-about-teaser">
-    <p class="r-section-label" data-reveal>About</p>
-    <p class="r-about-p" data-reveal>
-      I like difficult problems. I've spent most of my career designing
-      products where complexity is unavoidable. For the last nine years I've
-      worked on Darwinbox, a global HCM platform used across 120+ countries,
-      across Time Management, Payroll, Benefits, Journeys, Flows, HR
-      Documents, Core HR, Extensibility and AI experiences. What interests
-      me now is what happens when these systems become intelligent.
-    </p>
-    <a href="/redesign/about" class="r-text-link" data-reveal>More about me →</a>
+  <!-- A note on leadership -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>A note on leadership</p>
+    <p data-reveal>I've spent years leading designers and shaping product direction across complex enterprise products.</p>
+    <p data-reveal>But I still want to be close to the work.</p>
+    <p data-reveal>I like opening Figma when the problem is hard, building a prototype when the idea isn't clear, and getting into the details with product and engineering until the experience makes sense.</p>
+    <p class="r-prose-close" data-reveal>That's the kind of Principal Designer I want to be.</p>
   </section>
 
-  <Contact />
+  <!-- Currently exploring -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>Currently exploring</p>
+    <p class="r-prose-lead" data-reveal>
+      AI-native enterprise products · Agentic workflows · Human-AI collaboration · Product systems · Design through code
+    </p>
+    <p data-reveal>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
+  </section>
+
+  <!-- Let's talk -->
+  <section id="contact" class="r-talk">
+    <div class="container-pg">
+      <h2 class="r-talk-head" data-reveal>Let's talk</h2>
+      <p class="r-talk-p" data-reveal>If you're building complex products, rethinking enterprise workflows, or figuring out what AI-native experiences should actually look like, I'd love to compare notes.</p>
+      <a href="mailto:build@kishoresudhamalla.com" class="r-btn r-btn-primary" data-reveal>Get in touch</a>
+    </div>
+  </section>
 </RBase>
 
 <style>
@@ -345,4 +405,63 @@ const WORK = [
     text-decoration: none; border-bottom: 1px solid var(--color-border);
   }
   .r-text-link:hover { border-color: var(--color-ink); }
+
+  /* ── copy sections ── */
+  .r-hero-facts {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.04em;
+    color: var(--color-ink-3); margin: 0 0 1.75rem;
+  }
+  .r-cta-row { margin-bottom: 0; }
+
+  .r-prose { max-width: 42rem; padding: clamp(2rem, 5vw, 3.5rem) 0; }
+  .r-prose p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-prose .r-prose-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-prose .r-prose-close { color: var(--color-ink); font-weight: 500; margin-top: 1.5rem; }
+  .r-questions { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .r-questions li {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.125rem, 2vw, 1.375rem); color: var(--color-ink);
+    padding: 0.85rem 0; border-top: 1px solid var(--color-border);
+  }
+  .r-questions li:last-child { border-bottom: 1px solid var(--color-border); }
+
+  .work-card-tagline {
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem; line-height: 1.4;
+    letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.6rem; max-width: 32rem;
+  }
+  .work-card-info .work-card-title { margin-bottom: 0.4rem; }
+
+  .r-h2 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem); color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-lab { padding: clamp(2rem, 5vw, 3.5rem) 0; }
+  .r-prose-inline { max-width: 40rem; }
+  .r-prose-inline p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-lab-card {
+    display: block; max-width: 46rem; margin-top: 1.5rem; padding: 1.75rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
+    text-decoration: none; color: inherit; transition: border-color 0.2s;
+  }
+  .r-lab-card:hover { border-color: var(--color-ink-3); }
+  .r-lab-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
+    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.75rem;
+  }
+  .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
+  .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+
+  .r-bring { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  @media (min-width: 768px) { .r-bring { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 3rem; } }
+
+  .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
+  .r-talk-head {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95;
+    font-size: clamp(2.75rem, 9vw, 6rem); color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+  .r-talk-p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); max-width: 36rem; margin: 0 0 2rem; }
 </style>

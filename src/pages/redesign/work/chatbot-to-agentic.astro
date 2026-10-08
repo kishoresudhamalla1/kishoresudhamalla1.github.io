@@ -1,0 +1,41 @@
+---
+/**
+ * Redesign option — Chatbot → Agentic AI → AI-native experiences.
+ *
+ * Stub. The homepage card links here, but no case-study content exists for
+ * this yet. The intro below is the user's own card copy; everything else is
+ * flagged ContentNeeded rather than invented.
+ */
+import RBase from "../../../layouts/RBase.astro";
+import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
+---
+
+<RBase title="Chatbot → Agentic AI → AI-native experiences — Kishore Sudhamalla">
+  <article class="container-pg stub">
+    <p class="stub-label">Case study 03 · In progress</p>
+    <h1>Chatbot → Agentic AI → AI-native experiences</h1>
+    <p class="stub-tag">Exploring what changes when AI moves from answering questions to getting work done.</p>
+    <p class="stub-p">
+      A look at the shift from conversational assistants to agents that
+      understand intent, use tools, take actions, and become part of the
+      product experience itself.
+    </p>
+    <img class="stub-img" src="/images/work/agentic/hero-diagram.svg" alt="Chatbot, agent and AI-native stages — conceptual illustration" />
+    <ContentNeeded note="This case study isn't written yet. Needs: the specific work it draws on (and whether it can be shown or needs a confidentiality notice), the design decisions and trade-offs, and any verified outcomes. Nothing beyond the card copy above has been written or assumed." />
+  </article>
+</RBase>
+
+<style>
+  .stub { max-width: 46rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .stub-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 1rem;
+  }
+  .stub h1 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+    font-size: clamp(1.875rem, 4.5vw, 3rem); color: var(--color-ink); margin: 0 0 1rem;
+  }
+  .stub-tag { font-weight: 600; font-size: 1.125rem; color: var(--color-ink); margin: 0 0 1rem; }
+  .stub-p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 2rem; }
+  .stub-img { width: 100%; border-radius: 0.875rem; border: 1px solid var(--color-border); margin-bottom: 1.5rem; display: block; }
+</style>
