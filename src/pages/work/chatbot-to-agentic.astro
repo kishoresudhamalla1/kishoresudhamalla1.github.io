@@ -8,6 +8,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import ContentNeeded from "../../components/ContentNeeded.astro";
+import ConfidentialityNotice from "../../components/ConfidentialityNotice.astro";
 ---
 
 <Base title="Chatbot → Agentic AI → AI-native experiences | Kishore Sudhamalla">
@@ -20,6 +21,11 @@ import ContentNeeded from "../../components/ContentNeeded.astro";
       understand intent, use tools, take actions, and become part of the
       product experience itself.
     </p>
+  </article>
+
+  <ConfidentialityNotice note="This work is confidential, so its interface, behaviour and prototypes are withheld and it appears here only as conceptual illustration. This case study focuses on the shift in interaction model and publicly communicable direction." />
+
+  <article class="container-pg stub stub--after">
     <img class="stub-img" src="/images/work/agentic/hero-diagram.svg" alt="Chatbot, agent and AI-native stages (conceptual illustration)" />
     <ContentNeeded note="This case study isn't written yet. Needs: the specific work it draws on (and whether it can be shown or needs a confidentiality notice), the design decisions and trade-offs and any verified outcomes. Nothing beyond the card copy above has been written or assumed." />
   </article>
@@ -27,6 +33,8 @@ import ContentNeeded from "../../components/ContentNeeded.astro";
 
 <style>
   .stub { padding-block: clamp(3rem, 7vw, 5rem) clamp(4rem, 8vw, 6rem); }
+  .stub--after { padding-block: 0 clamp(4rem, 8vw, 6rem); }
+  .stub:not(.stub--after) { padding-bottom: clamp(1.5rem, 3vw, 2rem); }
   .stub > * { max-width: var(--measure); }
   .stub-label {
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
