@@ -216,6 +216,95 @@ const IMG = "/images/work/time-management";
       </p>
     </section>
 
+    <!-- Validation: the SEA roadshow, carried over from the original case study -->
+    <section class="r-case-section r-wide" data-reveal>
+      <p class="r-case-label">Validation</p>
+      <h2>Taken to 8 clients across Southeast Asia.</h2>
+      <p>
+        Before global rollout, we ran a UX roadshow across Singapore, the
+        Philippines and Thailand, presenting the designs to client teams and
+        collecting their reactions in the room.
+      </p>
+
+      <p class="r-sub-label">Who we presented to</p>
+      <div class="r-roster">
+        {[
+          { name: "Busy Bees", industry: "Education", country: "Singapore" },
+          { name: "Singlife", industry: "Banking & Financial Services", country: "Singapore" },
+          { name: "Toyota", industry: "Manufacturing", country: "Philippines" },
+          { name: "Security Bank", industry: "Banking & Financial Services", country: "Philippines" },
+          { name: "JG Summit Holdings", industry: "Multi-industry", country: "Philippines" },
+          { name: "Cebu Pacific", industry: "Airline & Transportation", country: "Philippines" },
+          { name: "BPI", industry: "Banking & Financial Services", country: "Philippines" },
+          { name: "Darwinbox", industry: "Internal teams", country: "Singapore & Philippines" },
+        ].map((c) => (
+          <div class="r-roster-item">
+            <p class="r-roster-name">{c.name}</p>
+            <p class="r-roster-industry">{c.industry}</p>
+            <p class="r-roster-country">{c.country}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="r-sub-label">On the ground</p>
+      <div class="r-photos">
+        {[
+          { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", wide: true },
+          { f: "session-boardroom-dashboard", alt: "Walking a client team through the manager dashboard in a boardroom" },
+          { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting" },
+          { f: "session-manila-boardroom", alt: "A working session reviewing the designs with a client team" },
+          { f: "busy-bees-team", alt: "The team at Busy Bees International after a roadshow session" },
+          { f: "toyota-team", alt: "The team with client stakeholders at Toyota" },
+          { f: "client-team-group", alt: "Group photo with a client team following a session" },
+          { f: "client-session-group", alt: "Group photo with client stakeholders around the working table" },
+        ].map((p) => (
+          <figure class={`r-photo${p.wide ? " r-photo--wide" : ""}`}>
+            <img src={`${IMG}/roadshow/${p.f}.webp`} alt={p.alt} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+
+      <p class="r-sub-label">What they validated</p>
+      <div class="r-validated">
+        {[
+          { t: "Consolidated view", q: "“Finally, everything in one place”" },
+          { t: "Manager overview", q: "Team context at a glance" },
+          { t: "Clock-in widget", q: "Placement felt natural" },
+          { t: "Leave lineup", q: "Who's out, who's in" },
+        ].map((v) => (
+          <div class="r-validated-item">
+            <p class="r-validated-t">{v.t}</p>
+            <p class="r-validated-q">{v.q}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="r-sub-label">Post-release review with clients</p>
+      <div class="r-review">
+        <div>
+          <p class="r-review-head">What went well</p>
+          <ul>
+            <li>All functionality aligned with user intent</li>
+            <li>Consolidated view of leave and attendance</li>
+            <li>Manager overview of all their reports</li>
+            <li>Evident clock-in widget to address missed ones</li>
+            <li>Leave lineup identified as a standout feature</li>
+          </ul>
+          <p class="r-review-quote">“Now everything's in one place, and we look forward to enabling this.” <span>Toyota</span></p>
+          <p class="r-review-quote">“Time module is more detailed than before.” <span>Shakey's</span></p>
+        </div>
+        <div>
+          <p class="r-review-head">Areas of improvement / asks</p>
+          <ul>
+            <li>Dashboard utility with just leave data, when attendance is not enabled</li>
+            <li>Offline capability in mobile: leave application for desk-less employees with limited connectivity</li>
+          </ul>
+          <p class="r-review-quote">“Time dashboard with only leave data, what would it look like?” <span>Busy Bees</span></p>
+          <p class="r-review-note">Most clients did not have the employee-shifts use case. Those that did asked for a separate deep-dive call on scheduler and timesheets.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Outcome</p>
@@ -342,4 +431,58 @@ const IMG = "/images/work/time-management";
   @media (max-width: 640px) {
     .r-craft-compare, .r-craft-grid, .r-stat-row { grid-template-columns: 1fr; }
   }
+
+  /* Validation (roadshow) */
+  .r-wide { max-width: none; }
+  .r-wide > p, .r-wide > h2 { max-width: 46rem; }
+  .r-sub-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 2.5rem 0 1rem !important;
+  }
+  .r-roster {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--color-border); border: 1px solid var(--color-border);
+    border-radius: 1rem; overflow: hidden;
+  }
+  @media (min-width: 700px) { .r-roster { grid-template-columns: repeat(4, 1fr); } }
+  .r-roster-item { background: var(--color-bg); padding: 1.1rem 1.2rem; }
+  .r-roster-item p { margin: 0 !important; }
+  .r-roster-name { font-size: 0.9375rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
+  .r-roster-industry { font-size: 0.75rem !important; line-height: 1.45 !important; margin-top: 0.2rem !important; }
+  .r-roster-country {
+    font-size: 0.6875rem !important; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--color-ink-3) !important; margin-top: 0.5rem !important; line-height: 1.3 !important;
+  }
+
+  .r-photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (min-width: 800px) { .r-photos { grid-template-columns: repeat(4, 1fr); gap: 1rem; } }
+  .r-photo {
+    margin: 0; overflow: hidden; border-radius: 0.875rem; aspect-ratio: 4 / 3;
+    border: 1px solid var(--color-border); background: var(--color-surface);
+  }
+  .r-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media (min-width: 800px) { .r-photo--wide { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; } }
+
+  .r-validated { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (min-width: 800px) { .r-validated { grid-template-columns: repeat(4, 1fr); } }
+  .r-validated-item {
+    padding: 1.1rem 1.2rem; border: 1px solid var(--color-border);
+    border-radius: 0.875rem; background: var(--color-surface);
+  }
+  .r-validated-item p { margin: 0 !important; }
+  .r-validated-t { font-size: 0.875rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
+  .r-validated-q { font-size: 0.75rem !important; font-style: italic; color: var(--color-ink-3) !important; margin-top: 0.3rem !important; line-height: 1.4 !important; }
+
+  .r-review { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+  @media (min-width: 800px) { .r-review { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+  .r-review-head { font-weight: 600; color: var(--color-ink) !important; margin: 0 0 0.75rem !important; font-size: 0.9375rem !important; }
+  .r-review ul { margin: 0 0 1.25rem; padding: 0; list-style: none; }
+  .r-review li {
+    font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink-2);
+    padding: 0.55rem 0 0.55rem 1rem; border-top: 1px solid var(--color-border); position: relative;
+  }
+  .r-review li::before { content: "–"; position: absolute; left: 0; color: var(--color-ink-3); }
+  .r-review-quote { font-style: italic; color: var(--color-ink) !important; margin: 0 0 0.75rem !important; font-size: 0.9375rem !important; line-height: 1.55 !important; }
+  .r-review-quote span { display: block; font-style: normal; font-size: 0.75rem; color: var(--color-ink-3); margin-top: 0.2rem; }
+  .r-review-note { font-size: 0.8125rem !important; color: var(--color-ink-3) !important; line-height: 1.55 !important; }
 </style>
