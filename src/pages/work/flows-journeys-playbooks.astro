@@ -17,6 +17,8 @@ import ContentNeeded from "../../components/ContentNeeded.astro";
 import ConfidentialityNotice from "../../components/ConfidentialityNotice.astro";
 import SignalChain from "../../components/SignalChain.astro";
 import FlowsMorph from "../../components/FlowsMorph.astro";
+import ScreenGallery from "../../components/ScreenGallery.astro";
+const J = "/images/work/journeys";
 ---
 
 <Base title="Flows → Journeys → Playbooks | Kishore Sudhamalla">
@@ -107,9 +109,61 @@ import FlowsMorph from "../../components/FlowsMorph.astro";
       <p class="r-case-label">Craft</p>
       <h2>The work.</h2>
       <p>
-        For admins, Journeys is a configuration surface for choosing which steps, guidance and resources make up a given process. For employees it is a single guided view of what to do and why it matters, instead of a disconnected task list.
+        For admins, Journeys is a configuration surface for choosing which steps, guidance and resources make up a given process. For employees it is a single guided view of what to do and why it matters, instead of a disconnected task list. These are the released screens: the five steps an admin works through to configure a Journey, and the view the employee gets.
       </p>
-      <ContentNeeded note="Journeys screens are live and can be shown here. Add the exported Figma frames (Journeys list, Templates, Basic Details, builder steps, Approval, Notifications, Summary). Playbooks concept screens stay withheld as confidential, and the hero illustration is explicitly labeled conceptual." />
+      <ScreenGallery
+        id="journeys-screens"
+        screens={[
+          {
+            src: `${J}/journeys-list.webp`,
+            name: "Journeys",
+            alt: "The Journeys list in the admin settings, a table of Journeys with title, category, number of employees, progress, owner, origin and dates, with Templates and Journeys tabs above it",
+            caption: "every Journey in one list, with its category, how many employees it reaches, progress and owner.",
+          },
+          {
+            src: `${J}/templates.webp`,
+            name: "Templates",
+            alt: "The Templates tab showing a grid of predefined Journey templates by category and task count, with a Create from scratch option at the side",
+            caption: "predefined Journeys to start from, grouped by category, or a blank one built from scratch.",
+          },
+          {
+            src: `${J}/basic-details.webp`,
+            name: "Basic details",
+            alt: "Step one of the Create Journey flow with fields for title, category, description, event type, trigger event and user assignments, above a Help and Support section",
+            caption: "the first of five steps. What the Journey is and when it applies: title, category, event and trigger, who it is assigned to and the help content attached to it.",
+          },
+          {
+            src: `${J}/journey-initiation.webp`,
+            name: "Initiation",
+            alt: "Step two of the Create Journey flow showing initiator details with manual or auto trigger and a table of initiators, initiation steps and step content",
+            caption: "the second step. Who starts the Journey and how, manual or automatic, and what content each step carries.",
+          },
+          {
+            src: `${J}/approval-workflow.webp`,
+            name: "Approval and workflow",
+            alt: "Step three of the Create Journey flow showing an ordered table of approvers (self, L1 manager, HOD) with an initiation step for each, and a workflow selector below",
+            caption: "the third step. The order of approvers and the workflow each step runs through.",
+          },
+          {
+            src: `${J}/notifications-settings.webp`,
+            name: "Notifications",
+            alt: "Step four of the Create Journey flow showing a table that maps events to recipients, CC recipients and notification templates, with advanced toggles for confidentiality, auto revoke and hiding completed people",
+            caption: "the fourth step. Who is told about which event, plus confidentiality, auto-revoke and visibility options.",
+          },
+          {
+            src: `${J}/summary-preview.webp`,
+            name: "Banner and preview",
+            alt: "Step five of the Create Journey flow with banner upload and a gallery of banners on the left and a live preview of the employee-facing Journey on the right",
+            caption: "the last step. Choose or upload a banner and preview the employee view before it goes out.",
+          },
+          {
+            src: `${J}/journey-preview-employee.webp`,
+            name: "Employee view",
+            alt: "A Journey preview page for a first-time manager programme showing the overview, a week by week itinerary, reference documents and a help contact",
+            caption: "what the employee sees: the Journey overview, an itinerary by stage, reference documents and someone to ask.",
+          },
+        ]}
+      />
     </section>
 
     <!-- Collaboration -->

@@ -254,6 +254,7 @@ body::before {
 .gal-foot { justify-content:space-between;align-items:flex-start;gap:1.5rem;margin-top:.9rem;display:flex }
 .gal-cap { color:var(--color-ink-2);max-width:46rem;margin:0;font-size:.875rem;line-height:1.6;display:grid }
 .gal-cap strong { color:var(--color-ink);font-weight:600 }
+.gal-cap strong::after { content: ": "; font-weight: 400; color: var(--color-ink-3) }
 .gal-cap-i { visibility:hidden;opacity:0;grid-area:1/1;transition:opacity var(--dur-normal) var(--ease-enter),visibility var(--dur-normal) }
 .gal-cap-i[data-active] { visibility:visible;opacity:1 }
 .gal-nav { flex-shrink:0;align-items:center;gap:.4rem;display:flex }

@@ -35,3 +35,6 @@ workflows-journeys.original-draft.astro.bak
 # Jira sync config. Placeholders today, but this file is served publicly from
 # public/, so a real API token pasted here would be published.
 public/demo/design-ops/jira-config.js
+
+# Figma export originals (optimised copies live in public/images/work/journeys)
+/Journeys/
