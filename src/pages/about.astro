@@ -30,6 +30,8 @@ const TIMELINE = [
 
 <Base title="About — Kishore Sudhamalla">
   <section class="container-pg r-about" data-reveal>
+    <div class="r-about-grid">
+    <div class="r-about-copy">
     <p class="r-eyebrow">About</p>
 
     <p class="r-bio">
@@ -63,6 +65,15 @@ const TIMELINE = [
       <a href="/resume" class="r-btn r-btn-primary">Résumé ↓</a>
       <a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noreferrer" class="r-btn r-btn-ghost">LinkedIn ↗</a>
     </div>
+    </div>
+
+    <figure class="r-about-photo">
+      <picture>
+        <source srcset="/images/kishore-portrait.webp" type="image/webp" />
+        <img src="/images/kishore-portrait.jpg" alt="Kishore Kumar Sudhamalla" width="780" height="907" decoding="async" />
+      </picture>
+    </figure>
+    </div>
   </section>
 
   <section class="container-pg r-timeline-section" data-reveal>
@@ -84,7 +95,21 @@ const TIMELINE = [
 </Base>
 
 <style>
-  .r-about { max-width: 38rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); }
+  .r-about { padding-block: clamp(3rem, 7vw, 5rem) clamp(2.5rem, 5vw, 4rem); }
+  .r-about-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+  .r-about-copy { max-width: 38rem; }
+  .r-about-photo { margin: 0; order: -1; width: min(72vw, 260px); }
+  .r-about-photo img {
+    display: block; width: 100%; height: auto; aspect-ratio: 0.86 / 1;
+    object-fit: cover; object-position: 50% 24%; border-radius: 16px;
+    box-shadow: 0 22px 54px rgb(20 14 8 / 0.18);
+  }
+  /* the plate is light grey, so it gets graded down against a dark page */
+  :global(.dark) .r-about-photo img { filter: brightness(0.88) contrast(1.04); box-shadow: 0 22px 54px rgb(0 0 0 / 0.55); }
+  @media (min-width: 900px) {
+    .r-about-grid { grid-template-columns: minmax(0, 1fr) minmax(220px, 20rem); gap: clamp(3rem, 7vw, 6rem); align-items: start; }
+    .r-about-photo { order: 0; width: 100%; margin-top: 2.5rem; }
+  }
   .r-eyebrow {
     font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
@@ -119,7 +144,8 @@ const TIMELINE = [
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
     margin: 0 0 1.5rem;
   }
-  .r-timeline-section { max-width: 42rem; padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-timeline-section { padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-timeline-section > * { max-width: 42rem; }
   .r-timeline { display: flex; flex-direction: column; }
   .r-timeline-row {
     display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem;

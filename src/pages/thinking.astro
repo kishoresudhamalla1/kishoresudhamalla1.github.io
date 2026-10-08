@@ -45,7 +45,8 @@ const TOPICS = [
 </Base>
 
 <style>
-  .r-thinking-hero { max-width: 40rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2rem, 4vw, 3rem); }
+  .r-thinking-hero { padding-block: clamp(3rem, 7vw, 5rem) clamp(2rem, 4vw, 3rem); }
+  .r-thinking-hero > * { max-width: 40rem; }
   .r-eyebrow {
     font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
@@ -58,7 +59,8 @@ const TOPICS = [
   }
   .r-lede { font-size: 1rem; line-height: 1.65; color: var(--color-ink-2); margin: 0; }
 
-  .r-thinking-list { padding-bottom: 2rem; max-width: 42rem; }
+  .r-thinking-list { padding-bottom: 2rem; }
+  .r-thinking-list > * { max-width: 42rem; }
   .r-topic-row {
     display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
     padding: 1.25rem 0; border-top: 1px solid var(--color-border);
@@ -71,5 +73,6 @@ const TOPICS = [
     color: var(--color-ink-3);
   }
 
-  .r-thinking-note { max-width: 42rem; padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-thinking-note { padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .r-thinking-note > * { max-width: 42rem; }
 </style>

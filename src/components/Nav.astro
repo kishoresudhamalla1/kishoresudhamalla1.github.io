@@ -38,7 +38,7 @@ const items = [
     display: flex; align-items: center; justify-content: space-between;
     gap: 1rem;
     height: auto; min-height: 3.5rem;
-    padding: 0.6rem 0;
+    padding-block: 0.6rem;
     flex-wrap: wrap;
   }
   .r-nav-brand {
@@ -68,7 +68,7 @@ const items = [
   .r-nav-resume:hover { color: var(--color-ink); }
 
   @media (min-width: 768px) {
-    .r-nav-inner { flex-wrap: nowrap; height: 3.5rem; padding: 0; }
+    .r-nav-inner { flex-wrap: nowrap; height: 3.5rem; padding-block: 0; }
     .r-nav-links { order: 0; width: auto; overflow: visible; }
   }
 </style>

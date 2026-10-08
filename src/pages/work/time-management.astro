@@ -367,7 +367,8 @@ const IMG = "/images/work/time-management";
 </Base>
 
 <style>
-  .r-case { max-width: 46rem; padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .r-case { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem); }
+  .r-case > * { max-width: 46rem; }
   .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
   .r-case-label {
     font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
@@ -433,7 +434,7 @@ const IMG = "/images/work/time-management";
   }
 
   /* Validation (roadshow) */
-  .r-wide { max-width: none; }
+  .r-case > .r-wide { max-width: none; }
   .r-wide > p, .r-wide > h2 { max-width: 46rem; }
   .r-sub-label {
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;

@@ -26,7 +26,8 @@ import ContentNeeded from "../../components/ContentNeeded.astro";
 </Base>
 
 <style>
-  .stub { max-width: 46rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .stub { padding-block: clamp(3rem, 7vw, 5rem) clamp(4rem, 8vw, 6rem); }
+  .stub > * { max-width: 46rem; }
   .stub-label {
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 1rem;
