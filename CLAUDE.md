@@ -15,22 +15,24 @@
 ## File map
 ```
 src/
-  components/       ← Astro (.astro) and React (.tsx) components
+  components/       ← Nav, Footer, CaseHero, DecisionBlock, ContentNeeded,
+                      ConfidentialityNotice, SignalChain, Experience, …
   layouts/
     Base.astro      ← wraps every page
-    CaseStudy.astro ← wraps case study pages
+  lib/
+    cursorGrid.ts   ← hero cursor-reactive grid
   pages/
-    index.astro     ← homepage: Hero → Cases → How I Lead → Testimonials → About → Contact
+    index.astro     ← homepage (hero, how I work, selected work, AI Lab, …)
+    about.astro, ai-lab.astro, thinking.astro, resume.astro
     work/
-      workflows-journeys.astro
-      ai-native-agentic-experience.astro
-      time-management-system.astro
+      time-management.astro
+      flows-journeys-playbooks.astro
+      chatbot-to-agentic.astro   ← stub, content needed
+      design-ops.astro           ← linked from the AI Lab
   styles/
     global.css      ← Tailwind v4 @import + @theme + @variant dark
-  env.d.ts
-public/
-  images/work/      ← drop real screenshots here (replace SVG placeholders)
 ```
+Old case-study URLs redirect to the new pages (see `redirects` in astro.config.mjs).
 
 ## Adding real content
 All `🔴 PLACEHOLDER` sections are marked inline. Typical replacements:

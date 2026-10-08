@@ -7,8 +7,8 @@
  * for — topic placeholders — each clearly marked "Not yet written," rather
  * than fabricated article titles presented as if they existed.
  */
-import RBase from "../../layouts/RBase.astro";
-import ContentNeeded from "../../components/redesign/ContentNeeded.astro";
+import Base from "../layouts/Base.astro";
+import ContentNeeded from "../components/ContentNeeded.astro";
 
 const TOPICS = [
   "AI traces, explained simply",
@@ -19,7 +19,7 @@ const TOPICS = [
 ];
 ---
 
-<RBase title="Thinking — Kishore Sudhamalla">
+<Base title="Thinking — Kishore Sudhamalla">
   <section class="container-pg r-thinking-hero">
     <p class="r-eyebrow" data-reveal>Thinking</p>
     <h1 data-reveal>Notes on enterprise systems and AI-native design.</h1>
@@ -42,7 +42,7 @@ const TOPICS = [
   <section class="container-pg r-thinking-note">
     <ContentNeeded note="No real published writing exists in the current site or repo to pull from. Replace this list with actual pieces as they're written — do not pre-fill summaries or dates for posts that don't exist yet." />
   </section>
-</RBase>
+</Base>
 
 <style>
   .r-thinking-hero { max-width: 40rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2rem, 4vw, 3rem); }

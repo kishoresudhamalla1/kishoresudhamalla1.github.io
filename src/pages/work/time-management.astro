@@ -19,15 +19,15 @@
  * causation: the rating lift is described as something Time Management was
  * "cited as a driver of," never as something the redesign caused outright.
  */
-import RBase from "../../../layouts/RBase.astro";
-import CaseHero from "../../../components/CaseHero.astro";
-import DecisionBlock from "../../../components/redesign/DecisionBlock.astro";
-import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
+import Base from "../../layouts/Base.astro";
+import CaseHero from "../../components/CaseHero.astro";
+import DecisionBlock from "../../components/DecisionBlock.astro";
+import ContentNeeded from "../../components/ContentNeeded.astro";
 
 const IMG = "/images/work/time-management";
 ---
 
-<RBase title="Time Management — Kishore Sudhamalla">
+<Base title="Time Management — Kishore Sudhamalla">
   <CaseHero
     eyebrow="Case study 01 · Darwinbox"
     title="Time Management, rebuilt for the world."
@@ -275,7 +275,7 @@ const IMG = "/images/work/time-management";
       </p>
     </section>
   </article>
-</RBase>
+</Base>
 
 <style>
   .r-case { max-width: 46rem; padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem); }

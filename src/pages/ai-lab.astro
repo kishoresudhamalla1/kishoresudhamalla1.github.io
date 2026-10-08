@@ -15,8 +15,8 @@
  * per the content-integrity rule — a one-line description of the idea,
  * nothing claimed as built or measured.
  */
-import RBase from "../../layouts/RBase.astro";
-import ContentNeeded from "../../components/redesign/ContentNeeded.astro";
+import Base from "../layouts/Base.astro";
+import ContentNeeded from "../components/ContentNeeded.astro";
 
 const CONCEPTS = [
   {
@@ -43,7 +43,7 @@ const CONCEPTS = [
 ];
 ---
 
-<RBase title="AI Lab — Kishore Sudhamalla">
+<Base title="AI Lab — Kishore Sudhamalla">
   <section class="container-pg r-lab-hero">
     <p class="r-eyebrow" data-reveal>AI Lab</p>
     <h1 data-reveal>Where I build, not just design, AI-native ideas.</h1>
@@ -114,7 +114,7 @@ const CONCEPTS = [
     </div>
     <ContentNeeded note="These three concepts are listed because they're directions worth exploring, not because any of them has been built. If one gets built, move it up to the 'Built' section above with real detail on what it does and what was learned — don't backfill results here." />
   </section>
-</RBase>
+</Base>
 
 <style>
   .r-lab-hero { max-width: 42rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2rem, 4vw, 3rem); }

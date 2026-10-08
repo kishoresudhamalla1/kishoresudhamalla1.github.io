@@ -6,11 +6,11 @@
  * this yet. The intro below is the user's own card copy; everything else is
  * flagged ContentNeeded rather than invented.
  */
-import RBase from "../../../layouts/RBase.astro";
-import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
+import Base from "../../layouts/Base.astro";
+import ContentNeeded from "../../components/ContentNeeded.astro";
 ---
 
-<RBase title="Chatbot → Agentic AI → AI-native experiences — Kishore Sudhamalla">
+<Base title="Chatbot → Agentic AI → AI-native experiences — Kishore Sudhamalla">
   <article class="container-pg stub">
     <p class="stub-label">Case study 03 · In progress</p>
     <h1>Chatbot → Agentic AI → AI-native experiences</h1>
@@ -23,7 +23,7 @@ import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
     <img class="stub-img" src="/images/work/agentic/hero-diagram.svg" alt="Chatbot, agent and AI-native stages — conceptual illustration" />
     <ContentNeeded note="This case study isn't written yet. Needs: the specific work it draws on (and whether it can be shown or needs a confidentiality notice), the design decisions and trade-offs, and any verified outcomes. Nothing beyond the card copy above has been written or assumed." />
   </article>
-</RBase>
+</Base>
 
 <style>
   .stub { max-width: 46rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(4rem, 8vw, 6rem); }

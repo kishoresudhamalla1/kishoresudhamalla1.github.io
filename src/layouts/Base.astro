@@ -9,15 +9,12 @@ interface Props {
   title?: string;
   description?: string;
   og?: string;
-  /** Keep this page out of search results. Used by the temporary hero-option
-   *  routes, which are near-duplicates of the homepage and would otherwise be
-   *  indexed as competing copies of it. */
   noindex?: boolean;
 }
 
 const {
-  title = "Kishore Sudhamalla. Product Designer",
-  description = "Product designer working on complex workflows, data-dense tools and AI-native product experiences, with nearly 9 years in enterprise HR technology. I design complex enterprise products and build what I design.",
+  title = "Kishore Sudhamalla — Principal Product Designer",
+  description = "Designing complex enterprise systems into intelligent, AI-native experiences.",
   og = "/og.png",
   noindex = false,
 } = Astro.props;
@@ -44,44 +41,24 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <!--
-      Theme. Runs before paint so there is no flash.
-
-      Three rules, in order:
-        1. A manual choice wins, but only for the period it was made in. One
-           click should not switch the schedule off forever.
-        2. Otherwise dark after 6:30pm and before 7am, local time.
-        3. Otherwise dark if the OS is in dark mode, whatever the hour.
-
-      Re-applied on `astro:after-swap`: ViewTransitions copies the incoming
-      document's <html> attributes over the live ones, and the incoming
-      document has no `dark` class because it is added at runtime. Without
-      this, every navigation dropped back to light.
-    -->
     <script is:inline>
       (function () {
-        var DARK_FROM = 18.5; // 6:30pm
-        var DARK_TO = 7; // 7:00am
-
+        var DARK_FROM = 18.5;
+        var DARK_TO = 7;
         function isNight(d) {
           var h = d.getHours() + d.getMinutes() / 60;
           return h >= DARK_FROM || h < DARK_TO;
         }
-
-        // Changes at each 6:30pm / 7am boundary, so an override expires with
-        // the period rather than persisting indefinitely.
         function periodKey(d) {
           var night = isNight(d);
           var day = new Date(d);
           if (night && d.getHours() < DARK_TO) day.setDate(day.getDate() - 1);
           return [day.getFullYear(), day.getMonth() + 1, day.getDate(), night ? "n" : "d"].join("-");
         }
-
         function autoTheme(d) {
           var osDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           return osDark || isNight(d) ? "dark" : "light";
         }
-
         function resolve() {
           var now = new Date();
           try {
@@ -94,7 +71,6 @@ const {
           } catch (e) {}
           return autoTheme(now);
         }
-
         function apply() {
           var t = resolve();
           var isDark = t === "dark";
@@ -103,25 +79,16 @@ const {
             document.dispatchEvent(new CustomEvent("themechange", { detail: t }));
           }
         }
-
         function set(value) {
           try {
-            localStorage.setItem(
-              "theme-override",
-              JSON.stringify({ value: value, period: periodKey(new Date()) })
-            );
+            localStorage.setItem("theme-override", JSON.stringify({ value: value, period: periodKey(new Date()) }));
           } catch (e) {}
           document.documentElement.classList.toggle("dark", value === "dark");
           document.dispatchEvent(new CustomEvent("themechange", { detail: value }));
         }
-
-        try { localStorage.removeItem("theme"); } catch (e) {} // legacy key
-
         window.__theme = { resolve: resolve, apply: apply, set: set };
         document.documentElement.classList.toggle("dark", resolve() === "dark");
-
         document.addEventListener("astro:after-swap", apply);
-        // Cross the 6:30pm boundary while the tab is open and it follows.
         setInterval(apply, 60000);
         document.addEventListener("visibilitychange", function () {
           if (!document.hidden) apply();
@@ -129,23 +96,6 @@ const {
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", apply);
       })();
     </script>
-    <!--
-      Reload/re-visit landed mid-page instead of at the hero.
-
-      Chrome caches a scroll offset against each history entry for a tab and
-      restores it whenever that exact URL loads again -- not only on a
-      back/forward navigation, which `history.scrollRestoration` governs,
-      but also on a plain reload or re-entering the same address. A visitor
-      who scrolls the homepage and later reloads it, or returns to a tab
-      that already had it open, lands wherever they'd scrolled to before,
-      with no hero in view and no obvious reason why.
-
-      Back/forward genuinely restoring scroll is correct and left alone
-      (confirmed: PerformanceNavigationTiming.type is "back_forward" there,
-      never "navigate" or "reload"). This only forces the reset for the two
-      entry types where landing at the top is actually what a visitor wants,
-      and only when there's no #anchor to honour instead.
-    -->
     <script is:inline>
       (function () {
         var nav = performance.getEntriesByType("navigation")[0];
@@ -168,48 +118,39 @@ const {
   </body>
 </html>
 
-<!-- Scroll-reveal: IntersectionObserver for [data-reveal] elements -->
+
 <script>
   function initReveal() {
-    const els = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const els = document.querySelectorAll("[data-reveal]");
     if (!els.length) return;
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            (entry.target as HTMLElement).classList.add("revealed");
+            entry.target.classList.add("revealed");
             io.unobserve(entry.target);
           }
         });
       },
       { rootMargin: "-60px 0px", threshold: 0.05 }
     );
-
     els.forEach((el) => io.observe(el));
   }
-
-  // Fire on initial load and after every ViewTransitions navigation
   initReveal();
   document.addEventListener("astro:page-load", initReveal);
 </script>
 
-<!-- Scroll parallax: [data-parallax="0.08"] drifts relative to viewport center -->
 <script>
   function initParallax() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const els = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-parallax]")
-    );
+    const els = Array.from(document.querySelectorAll("[data-parallax]"));
     if (!els.length) return;
-
     let raf = 0;
     const update = () => {
       raf = 0;
       const vh = window.innerHeight;
       for (const el of els) {
         const speed = parseFloat(el.dataset.parallax || "0.08");
-        // Measure the parent so the element's own transform doesn't feed back
         const anchor = el.parentElement ?? el;
         const r = anchor.getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) continue;

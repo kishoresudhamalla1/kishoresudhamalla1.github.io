@@ -10,15 +10,15 @@
  * source page; everything else that was a placeholder there is marked
  * ContentNeeded here too, rather than invented fresh.
  */
-import RBase from "../../../layouts/RBase.astro";
-import CaseHero from "../../../components/CaseHero.astro";
-import DecisionBlock from "../../../components/redesign/DecisionBlock.astro";
-import ContentNeeded from "../../../components/redesign/ContentNeeded.astro";
-import ConfidentialityNotice from "../../../components/redesign/ConfidentialityNotice.astro";
-import SignalChain from "../../../components/redesign/SignalChain.astro";
+import Base from "../../layouts/Base.astro";
+import CaseHero from "../../components/CaseHero.astro";
+import DecisionBlock from "../../components/DecisionBlock.astro";
+import ContentNeeded from "../../components/ContentNeeded.astro";
+import ConfidentialityNotice from "../../components/ConfidentialityNotice.astro";
+import SignalChain from "../../components/SignalChain.astro";
 ---
 
-<RBase title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
+<Base title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
   <CaseHero
     eyebrow="Case study 02 · Darwinbox"
     title="From Flows to Journeys to Playbooks."
@@ -189,7 +189,7 @@ import SignalChain from "../../../components/redesign/SignalChain.astro";
       </p>
     </section>
   </article>
-</RBase>
+</Base>
 
 <style>
   .r-case { max-width: 46rem; padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(4rem, 8vw, 6rem); }

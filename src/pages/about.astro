@@ -7,7 +7,8 @@
  * content) and the same facts used across the rest of this option — no new
  * claims introduced here.
  */
-import RBase from "../../layouts/RBase.astro";
+import Base from "../layouts/Base.astro";
+import Experience from "../components/Experience.astro";
 
 const FACTS = [
   { value: "16+", label: "Years in design" },
@@ -27,7 +28,7 @@ const TIMELINE = [
 ];
 ---
 
-<RBase title="About — Kishore Sudhamalla">
+<Base title="About — Kishore Sudhamalla">
   <section class="container-pg r-about">
     <p class="r-eyebrow" data-reveal>About</p>
 
@@ -78,7 +79,9 @@ const TIMELINE = [
       ))}
     </div>
   </section>
-</RBase>
+
+  <Experience />
+</Base>
 
 <style>
   .r-about { max-width: 38rem; padding: clamp(3rem, 7vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem); }

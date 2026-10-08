@@ -1,29 +1,500 @@
 ---
+/**
+ * Redesign option — homepage, rewritten to the user's supplied copy
+ * (hero, "a little about how I work", three selected-work cards, "how I
+ * think about AI-native products", AI Lab, "what I bring", "a note on
+ * leadership", "currently exploring", "let's talk").
+ *
+ * Copy is the user's verbatim; no stats or claims were added. Two things to
+ * confirm: the third card ("Chatbot → Agentic AI → AI-native experiences")
+ * links to a stub page with no case-study content yet, and its image is a
+ * conceptual diagram, not product work. The earlier 16+/9/1.6M+/120+ stat
+ * row was dropped because the new hero line replaces it.
+ */
 import Base from "../layouts/Base.astro";
-import { HeroSection } from "../components/HeroSection";
-import Marquee from "../components/Marquee.astro";
-import WhatIWorkOn from "../components/WhatIWorkOn.astro";
-import ProjectList from "../components/ProjectList.astro";
-import ProductThinking from "../components/ProductThinking.astro";
-import Experience from "../components/Experience.astro";
-import AIExploration from "../components/AIExploration.astro";
-import AIProcess from "../components/AIProcess.astro";
-import About from "../components/About.astro";
-import Contact from "../components/Contact.astro";
+
+const WORK = [
+  {
+    n: "01",
+    title: "Time Management",
+    tagline: "Making a complex workforce system easier to understand and act on.",
+    blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets, and workforce insights into a more coherent experience for employees, managers, and HR teams.",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
+    href: "/work/time-management",
+    img: "/images/work/time-management/tm-manager-dashboard-poster.jpg",
+    featured: true,
+  },
+  {
+    n: "02",
+    title: "From Flows → Journeys → AI Playbooks",
+    tagline: "Evolving enterprise workflows from transactions into intelligent experiences.",
+    blurb: "A product evolution from individual workflow transactions to guided employee journeys and, ultimately, AI-assisted playbooks that can help orchestrate complex work.",
+    tags: ["Product strategy", "Workflow design", "AI-native experiences"],
+    href: "/work/flows-journeys-playbooks",
+    img: "/images/work/beyond-the-task/hero-illustration-poster.jpg",
+    featured: false,
+  },
+  {
+    n: "03",
+    title: "Chatbot → Agentic AI → AI-native experiences",
+    tagline: "Exploring what changes when AI moves from answering questions to getting work done.",
+    blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions, and become part of the product experience itself.",
+    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
+    href: "/work/chatbot-to-agentic",
+    img: "/images/work/agentic/hero-diagram.svg",
+    featured: false,
+  },
+];
+
+const QUESTIONS = [
+  "What does the system know?",
+  "What can it decide?",
+  "What should it do?",
+  "When should a person be involved?",
+  "How do we know it worked?",
+];
+
+const BRING = [
+  { t: "Systems thinking", d: "I enjoy products where workflows, rules, roles, data, and dependencies all intersect." },
+  { t: "Product thinking", d: "I look beyond the interface to understand what the product should actually do and why." },
+  { t: "AI-native design", d: "I'm exploring how agents, AI workflows, and human oversight can become part of the product itself." },
+  { t: "Hands-on craft", d: "I stay close to the work, from framing the problem and mapping the system to prototyping the interaction and working with engineering to make it real." },
+];
 ---
 
-<Base
-  title="Kishore Sudhamalla. Product Designer"
-  description="Product Designer with 16+ years across design and nearly 9 years in enterprise HR technology. I make complex products easier to understand and use."
->
-  <HeroSection client:load />
-  <Marquee />
-  <WhatIWorkOn />
-  <ProjectList />
-  <ProductThinking />
-  <AIExploration />
-  <AIProcess />
-  <About />
-  <Experience />
-  <Contact />
+<Base title="Kishore Sudhamalla — Principal Product Designer">
+  <!-- Hero -->
+  <section class="r-hero-wrap">
+  <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
+  <div class="container-pg r-hero">
+    <p class="r-eyebrow" data-reveal>Principal Product Designer</p>
+    <h1 class="r-h1" data-reveal>
+      I design complex enterprise products into
+      <span class="r-h1-accent">simpler, more intelligent experiences.</span>
+    </h1>
+
+    <p class="r-lede" data-reveal>
+      I work at the intersection of product design, systems thinking, and AI,
+      turning workflows, rules, and business complexity into experiences that
+      help people understand, decide, and act.
+    </p>
+
+    <p class="r-hero-facts" data-reveal>
+      16+ years in design · 9 years in enterprise products · AI-native product design
+    </p>
+
+    <div class="r-cta-row" data-reveal>
+      <a href="#work" class="r-btn r-btn-primary">View my work</a>
+      <a href="/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
+    </div>
+  </div>
+  </section>
+
+  <!-- A little about how I work -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>A little about how I work</p>
+    <p class="r-prose-lead" data-reveal>Complex products rarely have a single UX problem.</p>
+    <p data-reveal>The screen is usually just where the complexity becomes visible.</p>
+    <p data-reveal>I like getting underneath it: understanding the system, finding where people struggle, and figuring out what the product should do differently.</p>
+    <p data-reveal>With AI, that becomes even more interesting.</p>
+    <p data-reveal>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask, and when it should step back.</p>
+    <p class="r-prose-close" data-reveal>That's the kind of work I enjoy.</p>
+  </section>
+
+  <!-- Selected work — side by side, hover expands one, collapses the others -->
+  <section id="work" class="container-pg r-work" data-reveal>
+    <p class="r-section-label">Selected work</p>
+
+    <div class="work-row">
+      {WORK.map((p) => (
+        <a href={p.href} class:list={["work-card", p.featured && "is-featured"]}>
+          <span class="work-card-n" aria-hidden="true">{p.n}</span>
+
+          <div class="work-card-frame">
+            <span class="work-card-chrome" aria-hidden="true"><i></i><i></i><i></i></span>
+            <div class="work-card-shot">
+              <img src={p.img} alt="" loading="lazy" decoding="async" />
+            </div>
+          </div>
+
+          <div class="work-card-info">
+            <p class="work-card-title">{p.title}</p>
+            <p class="work-card-tagline">{p.tagline}</p>
+            <p class="work-card-blurb">{p.blurb}</p>
+            <div class="work-card-foot">
+              <div class="work-card-tags">
+                {p.tags.map((t) => <span>{t}</span>)}
+              </div>
+              <span class="work-card-arrow" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                  <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <p class="work-card-label" aria-hidden="true">{p.n} &middot; {p.title}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- How I think about AI-native products -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>How I think about AI-native products</p>
+    <p class="r-prose-lead" data-reveal>AI isn't just another feature to add to an existing interface.</p>
+    <p data-reveal>It changes how people interact with products.</p>
+    <p data-reveal>Instead of asking users to find the right screen, understand the right workflow, and perform every step themselves, we can start with intent and let the system help with the work.</p>
+    <p data-reveal>But that only works when people understand what the system is doing and remain in control when it matters.</p>
+    <p data-reveal>I think about AI experiences through a few simple questions:</p>
+    <ul class="r-questions">
+      {QUESTIONS.map((q) => <li data-reveal>{q}</li>)}
+    </ul>
+    <p class="r-prose-close" data-reveal>That's where I spend a lot of my time.</p>
+  </section>
+
+  <!-- AI Lab -->
+  <section class="container-pg r-lab">
+    <p class="r-section-label" data-reveal>AI Lab</p>
+    <h2 class="r-h2" data-reveal>Designing by building</h2>
+    <div class="r-prose-inline">
+      <p data-reveal>I'm using AI and code to explore new ways of designing products, workflows, and systems.</p>
+      <p data-reveal>The AI Lab is where I take ideas beyond Figma, build working prototypes, test how they behave, and learn what changes when AI becomes part of the product itself.</p>
+    </div>
+
+    <a href="/ai-lab" class="r-lab-card" data-reveal>
+      <h3>Design Ops</h3>
+      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean, and help designers decide what to do next?</p>
+      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval, and verification.</p>
+      <div class="work-card-tags">
+        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+      </div>
+      <span class="r-text-link">Explore AI Lab →</span>
+    </a>
+  </section>
+
+  <!-- What I bring -->
+  <section class="container-pg r-how">
+    <p class="r-section-label" data-reveal>What I bring</p>
+    <div class="r-bring">
+      {BRING.map((b) => (
+        <div class="r-how-item" data-reveal>
+          <h3>{b.t}</h3>
+          <p>{b.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- A note on leadership -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>A note on leadership</p>
+    <p data-reveal>I've spent years leading designers and shaping product direction across complex enterprise products.</p>
+    <p data-reveal>But I still want to be close to the work.</p>
+    <p data-reveal>I like opening Figma when the problem is hard, building a prototype when the idea isn't clear, and getting into the details with product and engineering until the experience makes sense.</p>
+    <p class="r-prose-close" data-reveal>That's the kind of Principal Designer I want to be.</p>
+  </section>
+
+  <!-- Currently exploring -->
+  <section class="container-pg r-prose">
+    <p class="r-section-label" data-reveal>Currently exploring</p>
+    <p class="r-prose-lead" data-reveal>
+      AI-native enterprise products · Agentic workflows · Human-AI collaboration · Product systems · Design through code
+    </p>
+    <p data-reveal>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
+  </section>
+
+  <!-- Let's talk -->
+  <section id="contact" class="r-talk">
+    <div class="container-pg">
+      <h2 class="r-talk-head" data-reveal>Let's talk</h2>
+      <p class="r-talk-p" data-reveal>If you're building complex products, rethinking enterprise workflows, or figuring out what AI-native experiences should actually look like, I'd love to compare notes.</p>
+      <a href="mailto:build@kishoresudhamalla.com" class="r-btn r-btn-primary" data-reveal>Get in touch</a>
+    </div>
+  </section>
 </Base>
+
+<script>
+  import { initCursorGrid } from "../lib/cursorGrid";
+
+  // Faint cursor-reactive grid behind the hero. --color-ink's dark value is
+  // scoped to `.dark body`, so it has to be read off body, and re-read on
+  // the site's `themechange` event (dispatched on document).
+  function mountHeroGrid() {
+    const el = document.querySelector<HTMLElement>("[data-cursor-grid]");
+    if (!el || el.dataset.ready) return;
+    el.dataset.ready = "1";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const opts = () => ({
+      color: getComputedStyle(document.body).getPropertyValue("--color-ink").trim() || "#0d0d0c",
+      cellSize: 60, radius: 150, maxOpacity: 0.22, holdTime: 250,
+      fadeDuration: 650, lineWidth: 0.75, gridOpacity: 0, fillOpacity: 0, cellRadius: 4,
+    });
+    let destroy = initCursorGrid(el, opts());
+    document.addEventListener("themechange", () => {
+      destroy();
+      destroy = initCursorGrid(el, opts());
+    });
+  }
+  mountHeroGrid();
+  document.addEventListener("astro:page-load", mountHeroGrid);
+</script>
+
+<style>
+  .r-hero-wrap { position: relative; overflow: hidden; }
+  .r-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .r-hero-wrap > .r-hero { position: relative; z-index: 1; }
+  .r-hero { padding: clamp(3rem, 8vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem); max-width: 54rem; }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .r-h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
+    margin: 0 0 1.5rem;
+  }
+  .r-h1-accent { color: var(--color-ink-2); }
+  .r-lede {
+    font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
+    color: var(--color-ink-2); max-width: 36rem; margin: 0 0 2.25rem;
+  }
+  .r-cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+  .r-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
+  .r-btn-primary:hover { opacity: 0.85; }
+  .r-btn-ghost {
+    border: 1px solid var(--color-border); color: var(--color-ink);
+  }
+  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-facts {
+    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--color-border);
+  }
+  .r-facts dt {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .r-facts dd {
+    margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3);
+  }
+
+  .r-section-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+
+  .r-work { padding: clamp(2rem, 5vw, 3rem) 0 clamp(3rem, 6vw, 5rem); }
+
+  /* ── side-by-side hover-expand, same mechanic as the live ProjectList.astro ──
+     Mobile-first plain stack (no hover to drive a collapse); the
+     side-by-side expand/collapse turns on only at the breakpoint where a
+     pointer with hover is also likely. */
+  .work-row { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .work-card {
+    position: relative; display: flex; flex-direction: column;
+    border: 1px solid var(--color-border); border-radius: 1.25rem;
+    text-decoration: none; color: inherit; background: var(--color-surface);
+    padding: 1.1rem;
+  }
+
+  .work-card-n {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em;
+    color: var(--color-ink-3); margin-bottom: 0.9rem; display: block;
+  }
+
+  .work-card-frame {
+    border: 1px solid var(--color-border); border-radius: 0.85rem; overflow: hidden;
+    background: var(--color-bg); margin-bottom: 1.1rem;
+  }
+  .work-card-chrome {
+    display: flex; align-items: center; gap: 0.3rem;
+    padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-border);
+  }
+  .work-card-chrome i {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--color-border);
+  }
+  .work-card-shot { aspect-ratio: 16 / 10; background: var(--color-surface); }
+  .work-card-shot img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+  }
+
+  .work-card-info { display: flex; flex-direction: column; flex: 1; }
+
+  .work-card-kicker {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em;
+    color: var(--color-ink-3); margin: 0 0 0.6rem;
+  }
+  .work-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+    font-weight: 600; line-height: 1.2; letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 0.6rem; max-width: 30rem;
+  }
+  .work-card-blurb {
+    font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); max-width: 32rem; margin: 0 0 1.25rem;
+  }
+
+  .work-card-foot {
+    margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .work-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .work-card-tags span {
+    font-size: 0.75rem; color: var(--color-ink-2);
+    border: 1px solid var(--color-border); border-radius: 100px; padding: 0.4rem 0.85rem;
+  }
+  .work-card-arrow {
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    border: 1px solid var(--color-border); color: var(--color-ink);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (hover: hover) {
+    .work-card:hover .work-card-arrow {
+      background: var(--color-ink); border-color: var(--color-ink); color: var(--color-bg);
+      transform: rotate(45deg);
+    }
+  }
+
+  .work-card-label { display: none; }
+
+  @media (min-width: 900px) {
+    .work-row { flex-direction: row; align-items: stretch; height: clamp(26rem, 44vw, 30rem); gap: 0.75rem; }
+    .work-card {
+      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden;
+      transition: flex-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .work-card.is-featured { flex: 3 1 0; }
+    .work-row:hover .work-card { flex: 1 1 0; }
+    .work-row:hover .work-card:hover { flex: 3.2 1 0; }
+
+    .work-card-n, .work-card-frame, .work-card-info { display: none; }
+    .work-card-label {
+      display: block; writing-mode: vertical-rl; text-orientation: mixed;
+      font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em;
+      color: var(--color-ink-3); white-space: nowrap; overflow: hidden; max-height: 100%;
+    }
+
+    /* Custom-property toggle, not ancestor-qualified selectors on a shared
+       trailing compound selector — see ProjectList.astro's comment for why:
+       Lightning CSS (Tailwind v4's minifier) silently "factors" and drops
+       the ancestor qualifier off one branch when rules sharing a trailing
+       selector are written side by side, applying it unconditionally.
+       Confirmed by inspecting compiled dist CSS. One concrete rule per
+       element here, so there's nothing left for it to merge unsafely. */
+    .work-card-n, .work-card-frame, .work-card-info {
+      display: var(--expanded-display, none);
+    }
+    .work-card-label { display: var(--collapsed-display, block); }
+    .work-card.is-featured {
+      --expanded-display: block; --collapsed-display: none;
+    }
+    .work-row:hover .work-card:hover {
+      --expanded-display: block; --collapsed-display: none;
+    }
+    .work-row:hover .work-card:not(:hover) {
+      --expanded-display: none; --collapsed-display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card, .work-card-arrow { transition: none; }
+  }
+
+  .r-how { padding: clamp(2rem, 5vw, 3rem) 0 clamp(3rem, 6vw, 5rem); }
+  .r-how-head {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.25rem); letter-spacing: -0.02em;
+    color: var(--color-ink); margin: 0 0 2.5rem; max-width: 30rem;
+  }
+  .r-how-list {
+    display: grid; grid-template-columns: 1fr; gap: 2rem;
+    padding-top: 2rem; border-top: 1px solid var(--color-border);
+  }
+  .r-how-item h3 { font-size: 1rem; font-weight: 600; color: var(--color-ink); margin: 0.5rem 0 0.5rem; }
+  .r-how-item p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .r-how-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0; }
+
+  @media (min-width: 768px) {
+    .r-how-list { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .r-about-teaser { padding: clamp(2rem, 5vw, 3rem) 0 clamp(4rem, 8vw, 6rem); max-width: 42rem; }
+  .r-about-p { font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.5rem; }
+  .r-text-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
+    text-decoration: none; border-bottom: 1px solid var(--color-border);
+  }
+  .r-text-link:hover { border-color: var(--color-ink); }
+
+  /* ── copy sections ── */
+  .r-hero-facts {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.04em;
+    color: var(--color-ink-3); margin: 0 0 1.75rem;
+  }
+  .r-cta-row { margin-bottom: 0; }
+
+  .r-prose { max-width: 42rem; padding: clamp(2rem, 5vw, 3.5rem) 0; }
+  .r-prose p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-prose .r-prose-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-prose .r-prose-close { color: var(--color-ink); font-weight: 500; margin-top: 1.5rem; }
+  .r-questions { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .r-questions li {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.125rem, 2vw, 1.375rem); color: var(--color-ink);
+    padding: 0.85rem 0; border-top: 1px solid var(--color-border);
+  }
+  .r-questions li:last-child { border-bottom: 1px solid var(--color-border); }
+
+  .work-card-tagline {
+    font-family: var(--font-display); font-weight: 600; font-size: 1rem; line-height: 1.4;
+    letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.6rem; max-width: 32rem;
+  }
+  .work-card-info .work-card-title { margin-bottom: 0.4rem; }
+
+  .r-h2 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem); color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-lab { padding: clamp(2rem, 5vw, 3.5rem) 0; }
+  .r-prose-inline { max-width: 40rem; }
+  .r-prose-inline p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-lab-card {
+    display: block; max-width: 46rem; margin-top: 1.5rem; padding: 1.75rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
+    text-decoration: none; color: inherit; transition: border-color 0.2s;
+  }
+  .r-lab-card:hover { border-color: var(--color-ink-3); }
+  .r-lab-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
+    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.75rem;
+  }
+  .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
+  .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+
+  .r-bring { display: grid; grid-template-columns: 1fr; gap: 2rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+  @media (min-width: 768px) { .r-bring { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 3rem; } }
+
+  .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
+  .r-talk-head {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95;
+    font-size: clamp(2.75rem, 9vw, 6rem); color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+  .r-talk-p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); max-width: 36rem; margin: 0 0 2rem; }
+</style>
