@@ -98,82 +98,82 @@
   @media (min-width: 1024px) { .container-pg { --spacing-page-x: 4rem; } }
 }
 
-/* ─── Hero entrance animation ─────────────────────────────────────────────── */
-@keyframes hero-up {
-  from { opacity: 0; transform: translateY(20px); }
+/* ─── Motion tokens ───────────────────────────────────────────────────────
+ * One scale for the whole site. Durations stay short: anything the reader is
+ * scrolling or clicking toward has to be readable before its animation ends.
+ * JS mirrors these in src/lib/motion.ts.
+ */
+:root {
+  --dur-micro: 140ms;      /* colour, border, arrow, focus            */
+  --dur-fast: 200ms;       /* small UI, tab and gallery swaps         */
+  --dur-normal: 280ms;     /* content entrance                        */
+  --dur-slow: 420ms;       /* card expansion, hero entrance           */
+  --dur-narrative: 600ms;  /* concept diagram transformations only    */
+
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);        /* arriving       */
+  --ease-exit: cubic-bezier(0.7, 0, 0.84, 0);         /* leaving        */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);        /* A to B         */
+  --ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);  /* spatial change */
+
+  --dist-small: 4px;
+  --dist-medium: 12px;
+}
+
+/* ─── Entrance motion ─────────────────────────────────────────────────────
+ * Two mechanisms, deliberately different:
+ *
+ *  .enter        On-load entrance for the hero. One coordinated group, three
+ *                tiers (--tier 0/1/2) so the headline lands first and
+ *                supporting copy and actions follow. Plain CSS animation, so
+ *                it runs without waiting for JS.
+ *
+ *  [data-reveal] Scroll entrance for a whole section or group, not for each
+ *                paragraph. Toggled by an IntersectionObserver in Base.astro.
+ *                Hidden only once JS has set `.js` on <html>, so a failed or
+ *                blocked script never leaves the page invisible.
+ */
+@keyframes enter {
+  from { opacity: 0; transform: translateY(var(--dist-medium)); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-.hero-item {
-  opacity: 0;
-  animation-name: hero-up;
-  animation-duration: 0.65s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  animation-fill-mode: forwards;
+.enter {
+  animation: enter var(--dur-slow) var(--ease-enter) both;
+  animation-delay: calc(var(--tier, 0) * 70ms);
 }
 
-/* ─── Scroll-reveal system ───────────────────────────────────────────────── */
-/*
- * Add data-reveal to any element to opt into scroll-triggered reveal.
- * Add data-delay="1|2|3|4" for stagger offsets.
- * Toggled by IntersectionObserver in Base.astro.
- */
 [data-reveal] {
-  opacity: 0;
-  transform: translateY(28px);
   transition:
-    opacity  0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--dur-normal) var(--ease-enter),
+    transform var(--dur-normal) var(--ease-enter);
+}
+.js [data-reveal]:not(.revealed) {
+  opacity: 0;
+  transform: translateY(var(--dist-medium));
+}
+/* Content that arrives with a page navigation is already being faded in by the
+   view transition, so it appears in place instead of animating twice. */
+[data-reveal][data-instant] { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .enter { animation: none; }
+  .js [data-reveal]:not(.revealed) { opacity: 1; transform: none; }
+  [data-reveal] { transition: none; }
+  html { scroll-behavior: auto; }
 }
 
-[data-reveal].revealed {
-  opacity: 1;
-  transform: translateY(0);
+/* ─── Page transition ─────────────────────────────────────────────────────
+ * Short crossfade; the nav is persisted, so only the page body changes.
+ */
+::view-transition-old(root) {
+  animation-duration: var(--dur-micro);
+  animation-timing-function: var(--ease-exit);
 }
-
-[data-reveal][data-delay="1"] { transition-delay:  90ms; }
-[data-reveal][data-delay="2"] { transition-delay: 180ms; }
-[data-reveal][data-delay="3"] { transition-delay: 270ms; }
-[data-reveal][data-delay="4"] { transition-delay: 360ms; }
-
-/* ─── Gradient orb drift animations ──────────────────────────────────────── */
-@keyframes orb-drift-1 {
-  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
-  20%       { transform: translate(70px, -55px)  scale(1.09); }
-  45%       { transform: translate(-35px, 75px)  scale(0.93); }
-  65%       { transform: translate(90px, 45px)   scale(1.07); }
-  80%       { transform: translate(-55px, -25px) scale(0.97); }
+::view-transition-new(root) {
+  animation-duration: var(--dur-fast);
+  animation-timing-function: var(--ease-enter);
 }
-@keyframes orb-drift-2 {
-  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
-  30%       { transform: translate(-75px, 45px)  scale(1.08); }
-  55%       { transform: translate(55px, -65px)  scale(0.94); }
-  80%       { transform: translate(45px, 55px)   scale(1.05); }
-}
-@keyframes orb-drift-3 {
-  0%, 100% { transform: translate(0px, 0px)    scale(1);    }
-  40%       { transform: translate(50px, 35px)   scale(1.12); }
-  70%       { transform: translate(-45px, -35px) scale(0.88); }
-}
-
-/* ─── Circular badge spin ─────────────────────────────────────────────────── */
-@keyframes badge-spin {
-  to { transform: rotate(360deg); }
-}
-.animate-badge-spin {
-  animation: badge-spin 22s linear infinite;
-}
-
-@keyframes dot-vibrate {
-  0%, 82%, 100% { transform: translate(0, 0); }
-  84%  { transform: translate(-1.5px, 0); }
-  86%  { transform: translate(1.5px,  0); }
-  88%  { transform: translate(-1px,   0); }
-  90%  { transform: translate(1px,    0); }
-  92%  { transform: translate(0,      0); }
-}
-.animate-dot-vibrate {
-  animation: dot-vibrate 4.5s ease-in-out infinite;
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 1ms; }
 }
 
 /* ─── Noise grain overlay ─────────────────────────────────────────────────── */
@@ -208,125 +208,6 @@ body::before {
   }
 }
 
-/* ─── Projects timeline (ProjectsTimeline.tsx) ─────────────────────────────
- * Scroll-driven horizontal rail. Lives here rather than in a React <style>
- * tag because React SSR escapes quotes inside style content, which breaks
- * hydration on selectors like [aria-current="true"].
- */
-.pt-rail {
-  display: flex;
-  gap: 1.75rem;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  perspective: 1400px;
-  perspective-origin: 50% 45%;
-  padding-block: 2.5rem 3rem;
-  --pt-card-w: clamp(280px, 80vw, 440px);
-  --pt-gutter: 1.5rem;
-  padding-inline: max(var(--pt-gutter), calc(50% - var(--pt-card-w) / 2));
-}
-@media (min-width: 640px)  { .pt-rail { --pt-gutter: 2.5rem; } }
-@media (min-width: 1024px) { .pt-rail { --pt-gutter: 4rem; } }
-.pt-rail::-webkit-scrollbar { display: none; }
-.pt-rail:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; }
-
-.pt-card {
-  flex: 0 0 var(--pt-card-w);
-  scroll-snap-align: center;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 1.5rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg);
-  text-decoration: none;
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
-  transition: border-color .25s ease, box-shadow .35s ease;
-}
-.pt-card:hover { border-color: var(--color-ink-3); }
-.pt-card[aria-current=true] { box-shadow: 0 24px 70px -30px rgba(0,0,0,.42); }
-.dark .pt-card[aria-current=true] { box-shadow: 0 24px 70px -28px rgba(0,0,0,.85); }
-
-.pt-visual { aspect-ratio: 16 / 10; overflow: hidden; }
-.pt-body { display: flex; flex-direction: column; flex: 1; padding: 1.75rem; }
-
-.pt-ruler {
-  position: relative;
-  height: 30px;
-  border-top: 1px solid var(--color-border);
-}
-.pt-ticks { position: absolute; inset: 0; display: flex; justify-content: space-between; }
-.pt-tick { width: 1px; height: 6px; background: var(--color-border); }
-.pt-tick--major { height: 12px; background: var(--color-ink-3); }
-
-.pt-playhead {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 2px;
-  height: 18px;
-  background: var(--color-ink);
-  border-radius: 1px;
-  transition: left .18s cubic-bezier(.22, 1, .36, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pt-rail { scroll-behavior: auto; }
-  .pt-playhead { transition: none; }
-}
-
-/* ─── Rolling-label buttons ────────────────────────────────────────────────
- * Hover animation modelled on motion.dev's nav/CTA buttons: two stacked
- * copies of the label inside an overflow-hidden box. At rest the outgoing
- * copy sits at 0% and the incoming copy is parked above at -100%; on hover
- * both shift down 100%, so the label rolls over to a fresh copy.
- *
- * Pure CSS rather than a Motion component so it works identically in .astro
- * files and React islands with no hydration cost.
- *
- * Markup:
- *   <a class="roll-btn" aria-label="See the work">
- *     <span class="roll" aria-hidden="true">
- *       <span class="roll-copy">See the work ↓</span>
- *       <span class="roll-copy roll-copy--in">See the work ↓</span>
- *     </span>
- *   </a>
- */
-.roll {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-.roll-copy {
-  display: block;
-  white-space: nowrap;
-  color: inherit;
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  transform: translateY(0%);
-  transition: transform .44s cubic-bezier(.22, 1, .36, 1);
-}
-.roll-copy--in {
-  position: absolute;
-  inset: 0;
-  transform: translateY(-100%);
-}
-
-/* trigger from the button/link, so the whole control is the hover target */
-.roll-btn:hover .roll-copy,
-.roll-btn:focus-visible .roll-copy { transform: translateY(100%); }
-.roll-btn:hover .roll-copy--in,
-.roll-btn:focus-visible .roll-copy--in { transform: translateY(0%); }
-
-@media (prefers-reduced-motion: reduce) {
-  .roll-copy { transition: none; }
-}
-
 /* ─── Print ───────────────────────────────────────────────────────────────
  * Astro scopes a component's <style> to that component's own elements, so a
  * `header, footer { display:none }` rule written inside resume.astro never
@@ -355,25 +236,25 @@ body::before {
    against neighbouring media blocks that are all rounded. */
 .gal { --gal-r: 1.25rem; }
 .gal-tabs { flex-wrap:wrap;gap:.4rem;margin-bottom:1rem;display:flex }
-.gal-tab { border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-ink-3);cursor:pointer;border-radius:100px;align-items:baseline;gap:.5rem;padding:.5rem .9rem;font-size:.8125rem;line-height:1;transition:color .2s,border-color .2s,background-color .2s;display:inline-flex }
+.gal-tab { border:1px solid var(--color-border);background:var(--color-bg);color:var(--color-ink-3);cursor:pointer;border-radius:100px;align-items:baseline;gap:.5rem;padding:.5rem .9rem;font-size:.8125rem;line-height:1;transition:color var(--dur-micro),border-color var(--dur-micro),background-color var(--dur-micro);display:inline-flex }
 .gal-tab:hover { color:var(--color-ink);border-color:var(--color-ink-3) }
 .gal-tab-n { font-variant-numeric:tabular-nums;opacity:.6;font-size:.6875rem }
 .gal-tab-t { font-weight:500 }
 .gal-tab[aria-selected=true] { background:var(--color-ink);border-color:var(--color-ink);color:var(--color-bg) }
 .gal-tab[aria-selected=true] .gal-tab-n { opacity:.55 }
 .gal-stage { border:1px solid var(--color-border);border-radius:var(--gal-r);background:var(--color-surface);display:grid;position:relative;overflow:hidden }
-.gal-panel { opacity:0;visibility:hidden;grid-area:1/1;margin:0;transition:opacity .34s,transform .34s,visibility .34s;transform:scale(1.008) }
+.gal-panel { opacity:0;visibility:hidden;grid-area:1/1;margin:0;transition:opacity var(--dur-normal) var(--ease-enter),transform var(--dur-normal) var(--ease-enter),visibility var(--dur-normal);transform:scale(1.008) }
 .gal-panel[data-active] { opacity:1;visibility:visible;transform:none }
 .gal-panel img { width:100%;height:auto;display:block }
 .gal-foot { justify-content:space-between;align-items:flex-start;gap:1.5rem;margin-top:.9rem;display:flex }
 .gal-cap { color:var(--color-ink-2);max-width:46rem;margin:0;font-size:.875rem;line-height:1.6;display:grid }
 .gal-cap strong { color:var(--color-ink);font-weight:600 }
-.gal-cap-i { visibility:hidden;opacity:0;grid-area:1/1;transition:opacity .3s,visibility .3s }
+.gal-cap-i { visibility:hidden;opacity:0;grid-area:1/1;transition:opacity var(--dur-normal) var(--ease-enter),visibility var(--dur-normal) }
 .gal-cap-i[data-active] { visibility:visible;opacity:1 }
 .gal-nav { flex-shrink:0;align-items:center;gap:.4rem;display:flex }
 .gal-count { color:var(--color-ink-3);font-variant-numeric:tabular-nums;margin-right:.4rem;font-size:.75rem }
 .gal-count b { color:var(--color-ink);font-weight:600 }
-.gal-arrow { border:1px solid var(--color-border);background:var(--color-bg);width:2.25rem;height:2.25rem;color:var(--color-ink-2);cursor:pointer;border-radius:100px;justify-content:center;align-items:center;font-size:.875rem;transition:color .2s,border-color .2s,background-color .2s;display:inline-flex }
+.gal-arrow { border:1px solid var(--color-border);background:var(--color-bg);width:2.25rem;height:2.25rem;color:var(--color-ink-2);cursor:pointer;border-radius:100px;justify-content:center;align-items:center;font-size:.875rem;transition:color var(--dur-micro),border-color var(--dur-micro),background-color var(--dur-micro);display:inline-flex }
 .gal-arrow:hover { background:var(--color-ink);border-color:var(--color-ink);color:var(--color-bg) }
 /* These five were authored inside media queries. My recovery from the built
    bundle stripped the wrappers, so a mobile-only rule hid the tab labels at
@@ -420,7 +301,7 @@ h1, h2, h3,
   border-radius: 50%;
   background: var(--color-ink);
   flex-shrink: 0;
-  transition: background 0.2s ease;
+  transition: background-color var(--dur-micro) var(--ease-enter);
 }
 .brand:hover .brand-dot { background: var(--color-ink-3); }
 
@@ -476,57 +357,4 @@ h1, h2, h3,
   text-transform: uppercase;
   line-height: 1.4;
   color: var(--color-ink-3);
-}
-
-/* Ground behind the hero portrait. The cutout overlaps its top edge, so it
-   reads as a figure standing in front of a surface rather than a photo card. */
-/* Hero portrait.
-
-   No frame and no clipping wrapper. The plate has its own studio background,
-   so the photograph is the object rather than something sitting inside one.
-
-   Depth comes from two independent motions: this element drifts with the
-   scroll (Framer Motion, inline transform) and the image inside floats on a
-   slow loop (CSS keyframes). They have to stay on separate elements, because
-   an inline transform overrides an animated one. */
-.hero-photo {
-  flex: 0 0 auto;
-  align-self: center;
-  width: clamp(240px, 26vw, 360px);
-  /* the copy column is capped at max-w-xl, so without this the photo floats in
-     the middle of the leftover space instead of holding the right margin */
-  margin-left: auto;
-}
-
-.hero-portrait {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 0.86 / 1;
-  object-fit: cover;
-  /* biased upward so the crop sits under the chin, not across it */
-  object-position: 50% 24%;
-  border-radius: 16px;
-  box-shadow: 0 22px 54px rgb(20 14 8 / 0.22);
-  animation: heroFloat 7s ease-in-out infinite;
-}
-
-@keyframes heroFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-12px); }
-}
-
-/* The plate is light grey: it glares against a dark page, so it gets a slight
-   grade down and a shadow that reads on black rather than on paper. */
-.dark .hero-portrait {
-  filter: brightness(0.88) contrast(1.04);
-  box-shadow: 0 22px 54px rgb(0 0 0 / 0.55);
-}
-
-@media (max-width: 767px) {
-  .hero-photo { width: min(72vw, 300px); align-self: center; margin-left: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-portrait { animation: none; }
 }

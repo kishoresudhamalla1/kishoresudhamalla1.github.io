@@ -243,14 +243,23 @@ export function initCursorGrid(container: HTMLElement, opts: CursorGridOptions =
     return [e.clientX - rect.left, e.clientY - rect.top];
   }
 
+  // Only a mouse should light the grid (a touch drag would paint a trail while
+  // the page scrolls), and nothing should run while the hero is off-screen.
+  let visible = true;
+  const vio = new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+  });
+  vio.observe(container);
+
   function onPointerMove(e: PointerEvent) {
+    if (!visible || (e.pointerType && e.pointerType !== "mouse")) return;
     const [x, y] = toLocal(e);
     energize(x, y);
     wake();
   }
 
   function onPointerDown(e: PointerEvent) {
-    if (!p.clickPulse) return;
+    if (!p.clickPulse || !visible) return;
     const [x, y] = toLocal(e);
     pulses.push({ x, y, t0: performance.now() });
     wake();
@@ -269,6 +278,7 @@ export function initCursorGrid(container: HTMLElement, opts: CursorGridOptions =
   return function destroy() {
     cancelAnimationFrame(raf);
     ro.disconnect();
+    vio.disconnect();
     window.removeEventListener("pointermove", onPointerMove);
     window.removeEventListener("pointerdown", onPointerDown);
     canvas.remove();

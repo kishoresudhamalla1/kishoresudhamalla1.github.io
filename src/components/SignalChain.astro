@@ -1,19 +1,15 @@
 ---
 /**
- * Animated version of the Signal -> Moment -> AI-recommended Playbook ->
- * Admin customization -> Employee experience chain. Abstract and
- * geometric on purpose (nodes, a line, a traveling pulse) -- not a
- * cartoon illustration, so it stays consistent with the rest of the site
- * and doesn't drift into the "generic AI imagery" the brief says to avoid.
+ * Signal -> Moment -> AI-recommended Playbook -> Admin customization ->
+ * Employee experience, as a quiet diagram: nodes on a line, and a pulse that
+ * travels it, holding at each stage.
  *
- * Two motions, both gated by prefers-reduced-motion:
- *  1. On scroll into view: the line draws left-to-right (or top-to-bottom
- *     on mobile) and the nodes land in sequence -- same IntersectionObserver
- *     convention AIProcess.astro and CaseHero.astro already use elsewhere
- *     on this site, so it reads as the same "house style" of motion.
- *  2. Afterward, a small pulse loops along the line, pausing briefly at
- *     each node, representing a signal moving through the system stage by
- *     stage rather than instantly.
+ * Motion:
+ *  1. On first view the line draws and the nodes land, once.
+ *  2. Afterwards a small pulse loops along the line. It is positioned from the
+ *     real node centres (measured, not assumed) and moves with `transform`
+ *     only, so it never triggers layout. It pauses whenever the diagram is
+ *     off-screen, and does not run at all under reduced motion.
  */
 
 const STEPS = [
@@ -40,30 +36,47 @@ const STEPS = [
 </div>
 
 <script>
+  import { prefersReducedMotion, watchVisibility, motion } from "../lib/motion";
+
   function initSignalChain() {
     document.querySelectorAll<HTMLElement>("[data-sc]").forEach((root) => {
       if (root.dataset.scReady) return;
       root.dataset.scReady = "1";
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        root.classList.add("is-in", "is-settled");
+      const track = root.querySelector<HTMLElement>(".sc-track")!;
+      const nodes = Array.from(root.querySelectorAll<HTMLElement>(".sc-node"));
+
+      // Where each node's centre sits inside the track, as the pulse's stops.
+      const measure = () => {
+        const t = track.getBoundingClientRect();
+        nodes.forEach((n, i) => {
+          const r = n.getBoundingClientRect();
+          track.style.setProperty(`--x${i}`, `${(r.left - t.left + r.width / 2).toFixed(1)}px`);
+          track.style.setProperty(`--y${i}`, `${(r.top - t.top + r.height / 2).toFixed(1)}px`);
+        });
+      };
+      measure();
+      new ResizeObserver(measure).observe(track);
+
+      if (prefersReducedMotion()) {
+        root.classList.add("is-in");
         return;
       }
 
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            if (!e.isIntersecting) return;
+      // Entrance (once), then the loop, which only runs while visible.
+      let entered = false;
+      watchVisibility(
+        root,
+        (visible) => {
+          root.classList.toggle("is-paused", !visible);
+          if (visible && !entered) {
+            entered = true;
             root.classList.add("is-in");
-            io.unobserve(e.target);
-            // Let the draw-in finish before the loop starts, so the two
-            // motions never visually compete.
-            window.setTimeout(() => root.classList.add("is-settled"), 1400);
-          });
+            window.setTimeout(() => root.classList.add("is-settled"), motion.duration.narrative + 300);
+          }
         },
-        { threshold: 0.3 }
+        "0px"
       );
-      io.observe(root);
     });
   }
   initSignalChain();
@@ -90,16 +103,16 @@ const STEPS = [
     content: ""; position: absolute; inset: 0;
     background: var(--color-ink);
     transform: scaleY(0); transform-origin: top;
-    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform var(--dur-narrative) var(--ease-move);
   }
   .is-in .sc-line::before { transform: scaleY(1); }
 
   .sc-step {
     position: relative;
     display: flex; align-items: center; gap: 1rem;
-    opacity: 0; transform: translateX(-6px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    transition-delay: calc(var(--i) * 140ms + 150ms);
+    opacity: 0; transform: translateX(calc(var(--dist-small) * -1));
+    transition: opacity var(--dur-normal) var(--ease-enter), transform var(--dur-normal) var(--ease-enter);
+    transition-delay: calc(var(--i) * 60ms + 120ms);
   }
   .is-in .sc-step { opacity: 1; transform: none; }
 
@@ -110,7 +123,7 @@ const STEPS = [
     background: var(--color-bg);
     border: 1.5px solid var(--color-ink-3);
     margin-left: -1.5rem;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: border-color var(--dur-normal) var(--ease-enter);
   }
   .is-in .sc-step .sc-node { border-color: var(--color-ink); }
 
@@ -119,38 +132,39 @@ const STEPS = [
     font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
   }
 
-  /* the traveling pulse -- a small glowing dot that loops along the line,
-     pausing briefly at each node. Vertical track (mobile-first layout, see
-     below for why the row-based desktop version is the override). */
+  /* The pulse: parked at the track origin and moved with transform alone. The
+     stops (--x0..--x4, --y0..--y4) are the measured node centres, so it lands
+     exactly on each node whatever the layout (column on mobile, row on
+     desktop) or the label wrapping. */
   .sc-dot {
     position: absolute; z-index: 3;
-    left: 5px; top: 0.5rem;
-    width: 9px; height: 9px; margin-left: -4px; margin-top: -4px;
+    left: 0; top: 0;
+    width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px;
     border-radius: 50%;
     background: var(--color-ink);
     box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
     opacity: 0;
+    transform: translate(var(--x0, 0px), var(--y0, 0px));
   }
-  .is-settled .sc-dot {
-    animation: sc-pulse-v 7s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  .is-settled .sc-dot { animation: sc-pulse 7s linear infinite; }
+  .is-paused .sc-dot { animation-play-state: paused; }
+
+  @keyframes sc-pulse {
+    0%   { transform: translate(var(--x0), var(--y0)); opacity: 0; animation-timing-function: ease-out; }
+    4%   { transform: translate(var(--x0), var(--y0)); opacity: 1; }
+    14%  { transform: translate(var(--x0), var(--y0)); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+    25%  { transform: translate(var(--x1), var(--y1)); }
+    35%  { transform: translate(var(--x1), var(--y1)); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+    46%  { transform: translate(var(--x2), var(--y2)); }
+    56%  { transform: translate(var(--x2), var(--y2)); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+    67%  { transform: translate(var(--x3), var(--y3)); }
+    77%  { transform: translate(var(--x3), var(--y3)); animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+    88%  { transform: translate(var(--x4), var(--y4)); opacity: 1; }
+    96%  { transform: translate(var(--x4), var(--y4)); opacity: 0; }
+    100% { transform: translate(var(--x4), var(--y4)); opacity: 0; }
   }
 
-  @keyframes sc-pulse-v {
-    0%   { top: 0.5rem; opacity: 0; }
-    4%   { opacity: 1; }
-    14%  { top: 0.5rem; opacity: 1; }
-    25%  { top: 25.25%; }
-    35%  { top: 25.25%; }
-    46%  { top: 50%; }
-    56%  { top: 50%; }
-    67%  { top: 74.75%; }
-    77%  { top: 74.75%; }
-    88%  { top: calc(100% - 0.5rem); opacity: 1; }
-    96%  { opacity: 0; }
-    100% { top: calc(100% - 0.5rem); opacity: 0; }
-  }
-
-  /* Desktop: row layout, horizontal line, pulse moves left-to-right. */
+  /* Desktop: a row, with the line running horizontally. */
   @media (min-width: 720px) {
     .sc-track {
       flex-direction: row; align-items: flex-start;
@@ -165,35 +179,17 @@ const STEPS = [
 
     .sc-step {
       flex: 1; flex-direction: column; align-items: flex-start; gap: 0.9rem;
-      transform: translateY(-6px);
+      transform: translateY(calc(var(--dist-small) * -1));
     }
     .is-in .sc-step { transform: none; }
     .sc-node { margin-left: 0; }
     .sc-label { max-width: 9rem; line-height: 1.4; }
-
-    .sc-dot {
-      left: 0.5rem; top: 5px; margin-top: -4px;
-    }
-    .is-settled .sc-dot { animation-name: sc-pulse-h; }
-
-    @keyframes sc-pulse-h {
-      0%   { left: 0.5rem; opacity: 0; }
-      4%   { opacity: 1; }
-      14%  { left: 0.5rem; opacity: 1; }
-      25%  { left: 25%; }
-      35%  { left: 25%; }
-      46%  { left: 50%; }
-      56%  { left: 50%; }
-      67%  { left: 75%; }
-      77%  { left: 75%; }
-      88%  { left: calc(100% - 0.5rem); opacity: 1; }
-      96%  { opacity: 0; }
-      100% { left: calc(100% - 0.5rem); opacity: 0; }
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sc-line::before, .sc-step { transition: none; }
+    .sc-line::before, .sc-step, .sc-node { transition: none; }
+    .sc-step { opacity: 1; transform: none; }
+    .sc-line::before { transform: none; }
     .sc-dot { display: none; }
   }
 </style>

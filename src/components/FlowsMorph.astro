@@ -1,0 +1,252 @@
+---
+/**
+ * Flows -> Journeys -> Playbooks, as one diagram in three states.
+ *
+ * The same five steps (Trigger, Collect info, Approval, Notify, Complete)
+ * exist in every state. What changes is the relationship between them:
+ *
+ *   Flows      separate transactional automations, each a small island
+ *   Journeys   the same steps become one connected, guided sequence
+ *   Playbooks  that sequence is wrapped as a reusable unit; a signal enters
+ *              it and an admin reviews it before it reaches anyone
+ *
+ * The reader chooses the state (a tab control, not scroll), so they set the
+ * pace and the page never moves under them. Each change is a single move:
+ * the chips travel with `transform`, and the connecting lines are hidden
+ * while they travel and drawn once the chips have arrived.
+ *
+ * State is held in custom properties on the figure, with one concrete rule
+ * per element; see the note in pages/index.astro about the Lightning CSS
+ * merge bug that rules out per-state ancestor-qualified selectors here.
+ *
+ * The steps are the same ones named in the case study's own illustration
+ * (hero video). Nothing here claims a capability beyond what the case study
+ * already states.
+ */
+
+const STATES = [
+  { id: "flows", label: "Flows", caption: "Transactional automation. Each flow does its job; nothing connects them into one experience." },
+  { id: "journeys", label: "Journeys", caption: "A guided employee experience, built on top of Flows. The same steps, now one connected sequence." },
+  { id: "playbooks", label: "Playbooks", caption: "AI recognizes a signal and recommends a Journey as a reusable unit. The admin still decides." },
+];
+
+const CHIPS = ["Trigger", "Collect info", "Approval", "Notify", "Complete"];
+---
+
+<figure class="fm" data-fm data-state="flows">
+  <div class="fm-tabs" role="tablist" aria-label="Stage of the evolution">
+    {STATES.map((s, i) => (
+      <button
+        type="button"
+        role="tab"
+        class="fm-tab"
+        data-fm-tab={s.id}
+        aria-selected={i === 0 ? "true" : "false"}
+        tabindex={i === 0 ? 0 : -1}
+      >
+        <span class="fm-tab-n">0{i + 1}</span>{s.label}
+      </button>
+    ))}
+  </div>
+
+  <div class="fm-stage">
+    <svg class="fm-svg" viewBox="0 0 720 220" role="img" aria-label="The same five steps, shown as separate flows, then a connected journey, then a reusable playbook">
+      <!-- playbook container -->
+      <rect class="fm-pb" x="0" y="64" width="720" height="104" rx="18" />
+      <text class="fm-pb-label" x="18" y="90">PLAYBOOK</text>
+
+      <!-- journey line, drawn after the chips arrive -->
+      <path class="fm-path" d="M78 130 H638" pathLength="1" />
+
+      <!-- flow-pair connectors, shown only while the pairs are at rest -->
+      <path class="fm-link" d="M140 60 H176" />
+      <path class="fm-link" d="M384 180 H420" />
+
+      <!-- playbook extras: the signal in, the admin check before it ships -->
+      <g class="fm-extra">
+        <circle cx="24" cy="30" r="5" class="fm-signal" />
+        <text x="38" y="34" class="fm-note">Signal</text>
+        <path d="M24 36 V64" class="fm-dash" />
+        <g class="fm-admin">
+          <rect x="576" y="12" width="124" height="32" rx="10" />
+          <text x="638" y="32" text-anchor="middle">Admin review</text>
+        </g>
+        <path d="M638 44 V64" class="fm-dash" />
+      </g>
+
+      {CHIPS.map((c, i) => (
+        <g class={`fm-chip fm-chip--${i + 1}`}>
+          <rect width="124" height="40" rx="12" />
+          <text x="62" y="25" text-anchor="middle">{c}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+
+  <div class="fm-captions" aria-live="polite">
+    {STATES.map((s, i) => (
+      <p class="fm-caption" data-fm-caption={s.id} data-active={i === 0 ? "" : undefined}>{s.caption}</p>
+    ))}
+  </div>
+</figure>
+
+<script>
+  function initFlowsMorph() {
+    document.querySelectorAll<HTMLElement>("[data-fm]").forEach((root) => {
+      if (root.dataset.fmReady) return;
+      root.dataset.fmReady = "1";
+
+      const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-fm-tab]"));
+      const caps = Array.from(root.querySelectorAll<HTMLElement>("[data-fm-caption]"));
+
+      const select = (id: string, focus = false) => {
+        root.dataset.state = id;
+        tabs.forEach((t) => {
+          const on = t.dataset.fmTab === id;
+          t.setAttribute("aria-selected", String(on));
+          t.tabIndex = on ? 0 : -1;
+          if (on && focus) t.focus();
+        });
+        caps.forEach((c) => {
+          if (c.dataset.fmCaption === id) c.setAttribute("data-active", "");
+          else c.removeAttribute("data-active");
+        });
+      };
+
+      tabs.forEach((t, i) => {
+        t.addEventListener("click", () => select(t.dataset.fmTab!));
+        t.addEventListener("keydown", (e) => {
+          const dir = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+          if (!dir) return;
+          e.preventDefault();
+          select(tabs[(i + dir + tabs.length) % tabs.length].dataset.fmTab!, true);
+        });
+      });
+    });
+  }
+  initFlowsMorph();
+  document.addEventListener("astro:page-load", initFlowsMorph);
+</script>
+
+<style>
+  .fm { margin: 1.5rem 0 2rem; }
+
+  /* ── state: positions and which connectors are visible ───────────────── */
+  .fm[data-state="flows"] {
+    --c1x: 16px;  --c1y: 40px;
+    --c2x: 176px; --c2y: 40px;
+    --c3x: 260px; --c3y: 160px;
+    --c4x: 420px; --c4y: 160px;
+    --c5x: 580px; --c5y: 70px;
+    --link-o: 1;  --link-delay: 380ms;
+    --path-off: 1; --path-delay: 0ms;
+    --pb-o: 0;    --pb-s: 0.985; --pb-delay: 0ms;
+    --extra-o: 0; --extra-delay: 0ms;
+  }
+  .fm[data-state="journeys"] {
+    --c1x: 16px;  --c1y: 110px;
+    --c2x: 156px; --c2y: 110px;
+    --c3x: 296px; --c3y: 110px;
+    --c4x: 436px; --c4y: 110px;
+    --c5x: 576px; --c5y: 110px;
+    --link-o: 0;  --link-delay: 0ms;
+    --path-off: 0; --path-delay: 300ms;
+    --pb-o: 0;    --pb-s: 0.985; --pb-delay: 0ms;
+    --extra-o: 0; --extra-delay: 0ms;
+  }
+  .fm[data-state="playbooks"] {
+    --c1x: 16px;  --c1y: 110px;
+    --c2x: 156px; --c2y: 110px;
+    --c3x: 296px; --c3y: 110px;
+    --c4x: 436px; --c4y: 110px;
+    --c5x: 576px; --c5y: 110px;
+    --link-o: 0;  --link-delay: 0ms;
+    --path-off: 0; --path-delay: 0ms;
+    --pb-o: 1;    --pb-s: 1;     --pb-delay: 120ms;
+    --extra-o: 1; --extra-delay: 320ms;
+  }
+
+  /* ── controls ────────────────────────────────────────────────────────── */
+  .fm-tabs { display: inline-flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .fm-tab {
+    display: inline-flex; align-items: baseline; gap: 0.5rem;
+    padding: 0.5rem 0.95rem; border-radius: 100px;
+    border: 1px solid var(--color-border); background: var(--color-bg);
+    color: var(--color-ink-3); font: inherit; font-size: 0.8125rem; font-weight: 500;
+    line-height: 1; cursor: pointer;
+    transition: color var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter),
+                background-color var(--dur-micro) var(--ease-enter);
+  }
+  .fm-tab:hover { color: var(--color-ink); border-color: var(--color-ink-3); }
+  .fm-tab[aria-selected="true"] { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-bg); }
+  .fm-tab:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  .fm-tab-n { font-family: var(--font-mono); font-size: 0.6875rem; opacity: 0.6; }
+
+  /* ── stage ───────────────────────────────────────────────────────────── */
+  .fm-stage {
+    border: 1px solid var(--color-border); border-radius: 1rem;
+    background: var(--color-surface); padding: clamp(0.75rem, 2.5vw, 1.5rem);
+    overflow-x: auto;
+  }
+  .fm-svg { display: block; width: 100%; min-width: 520px; height: auto; font-family: var(--font-sans); }
+
+  .fm-chip { transform: translate(var(--c1x), var(--c1y)); }
+  .fm-chip--2 { transform: translate(var(--c2x), var(--c2y)); }
+  .fm-chip--3 { transform: translate(var(--c3x), var(--c3y)); }
+  .fm-chip--4 { transform: translate(var(--c4x), var(--c4y)); }
+  .fm-chip--5 { transform: translate(var(--c5x), var(--c5y)); }
+  .fm-chip { transition: transform var(--dur-narrative) var(--ease-move); }
+  .fm-chip rect { fill: var(--color-bg); stroke: var(--color-border); stroke-width: 1.25; }
+  .fm-chip text { fill: var(--color-ink); font-size: 13px; font-weight: 600; }
+
+  /* connectors leave fast and arrive after the chips have */
+  .fm-link {
+    fill: none; stroke: var(--color-ink-3); stroke-width: 1.5; stroke-linecap: round;
+    opacity: var(--link-o);
+    transition: opacity var(--dur-micro) var(--ease-enter) var(--link-delay);
+  }
+  .fm-path {
+    fill: none; stroke: var(--color-ink-3); stroke-width: 1.5; stroke-linecap: round;
+    stroke-dasharray: 1; stroke-dashoffset: var(--path-off);
+    transition: stroke-dashoffset var(--dur-slow) var(--ease-move) var(--path-delay);
+  }
+
+  .fm-pb {
+    fill: var(--color-bg); stroke: var(--color-border); stroke-width: 1.25;
+    opacity: var(--pb-o);
+    transform-box: fill-box; transform-origin: center; transform: scale(var(--pb-s));
+    transition: opacity var(--dur-normal) var(--ease-enter) var(--pb-delay),
+                transform var(--dur-slow) var(--ease-enter) var(--pb-delay);
+  }
+  .fm-pb-label {
+    fill: var(--color-ink-3); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+    opacity: var(--pb-o);
+    transition: opacity var(--dur-normal) var(--ease-enter) var(--extra-delay);
+  }
+
+  .fm-extra {
+    opacity: var(--extra-o);
+    transition: opacity var(--dur-normal) var(--ease-enter) var(--extra-delay);
+  }
+  .fm-signal { fill: var(--color-ink); }
+  .fm-note { fill: var(--color-ink-2); font-size: 12px; font-weight: 500; }
+  .fm-dash { fill: none; stroke: var(--color-ink-3); stroke-width: 1.25; stroke-dasharray: 3 4; }
+  .fm-admin rect { fill: var(--color-bg); stroke: var(--color-ink-3); stroke-width: 1.25; }
+  .fm-admin text { fill: var(--color-ink); font-size: 12px; font-weight: 600; }
+
+  /* ── captions: one sentence per state, cross-faded in place ──────────── */
+  .fm-captions { display: grid; margin-top: 1rem; }
+  .fm-caption {
+    grid-area: 1 / 1; margin: 0 !important;
+    font-size: 0.9375rem !important; line-height: 1.6 !important; color: var(--color-ink-2) !important;
+    max-width: 40rem;
+    opacity: 0; transition: opacity var(--dur-micro) var(--ease-exit);
+  }
+  .fm-caption[data-active] {
+    opacity: 1; transition: opacity var(--dur-normal) var(--ease-enter) var(--dur-micro);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fm-chip, .fm-link, .fm-path, .fm-pb, .fm-pb-label, .fm-extra, .fm-caption, .fm-caption[data-active] { transition: none; }
+  }
+</style>

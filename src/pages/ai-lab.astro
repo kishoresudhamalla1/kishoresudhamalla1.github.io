@@ -44,10 +44,10 @@ const CONCEPTS = [
 ---
 
 <Base title="AI Lab — Kishore Sudhamalla">
-  <section class="container-pg r-lab-hero">
-    <p class="r-eyebrow" data-reveal>AI Lab</p>
-    <h1 data-reveal>Where I build, not just design, AI-native ideas.</h1>
-    <p class="r-lede" data-reveal>
+  <section class="container-pg r-lab-hero" data-reveal>
+    <p class="r-eyebrow">AI Lab</p>
+    <h1>Where I build, not just design, AI-native ideas.</h1>
+    <p class="r-lede">
       This is a working record, not a marketing page. Some of what's here
       shipped and runs on real data. Some is a question I'm still exploring
       and haven't built yet — those are labeled conceptual, with no results
@@ -94,11 +94,11 @@ const CONCEPTS = [
   </section>
 
   <!-- Conceptual experiments -->
-  <section class="container-pg r-lab-concepts">
-    <p class="r-case-label" data-reveal>Conceptual · not yet built</p>
+  <section class="container-pg r-lab-concepts" data-reveal>
+    <p class="r-case-label">Conceptual · not yet built</p>
     <div class="r-concept-grid">
       {CONCEPTS.map((c) => (
-        <div class="r-concept-card" data-reveal>
+        <div class="r-concept-card">
           <div class="r-concept-top">
             <h3>{c.title}</h3>
             <span class="r-concept-status">{c.status}</span>
@@ -140,7 +140,7 @@ const CONCEPTS = [
   .r-real-card {
     display: grid; grid-template-columns: 1fr; gap: 1.5rem;
     padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 1.25rem;
-    text-decoration: none; color: inherit; transition: border-color 0.2s;
+    text-decoration: none; color: inherit; transition: border-color var(--dur-micro) var(--ease-enter);
   }
   .r-real-card:hover { border-color: var(--color-ink-3); }
   .r-real-media { border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-surface); }

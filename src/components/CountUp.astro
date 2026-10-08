@@ -60,7 +60,7 @@
           const hasGroups = (el.dataset.countGroups ?? "") === "1";
           // Stagger within a group so a row of four reads left to right.
           const delay = Number(el.dataset.countDelay || 0);
-          const DURATION = 1400;
+          const DURATION = 800;
 
           const run = (start: number) => {
             const tick = (now: number) => {
@@ -102,7 +102,7 @@
       const group = el.closest("[data-count-group]") || el.parentElement?.parentElement || document.body;
       const i = seen.get(group) ?? 0;
       seen.set(group, i + 1);
-      el.dataset.countDelay = String(i * 90);
+      el.dataset.countDelay = String(i * 60);
 
       if (reduce) {
         el.textContent = text;   // no animation; final value stands

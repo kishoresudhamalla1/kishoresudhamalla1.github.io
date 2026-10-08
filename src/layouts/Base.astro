@@ -88,6 +88,16 @@ const {
         }
         window.__theme = { resolve: resolve, apply: apply, set: set };
         document.documentElement.classList.toggle("dark", resolve() === "dark");
+        // `js` gates the hidden initial state of [data-reveal] (see global.css),
+        // so a blocked or failed script can never leave the page invisible. A
+        // view-transition swap replaces <html>'s attributes, so it is re-added,
+        // and `__navSwapAt` tells the reveal script this content arrived with a
+        // page transition rather than from a cold load.
+        document.documentElement.classList.add("js");
+        document.addEventListener("astro:after-swap", function () {
+          document.documentElement.classList.add("js");
+          window.__navSwapAt = performance.now();
+        });
         document.addEventListener("astro:after-swap", apply);
         setInterval(apply, 60000);
         document.addEventListener("visibilitychange", function () {
@@ -120,51 +130,54 @@ const {
 
 
 <script>
+  import { prefersReducedMotion, watchVisibility } from "../lib/motion";
+
+  // Scroll reveal. Observes whole groups (one [data-reveal] per section), and
+  // reveals as soon as a group's top edge is within the viewport, so the
+  // reader never scrolls ahead of the content. Groups that are already in view
+  // when a page arrives through a view transition appear in place.
   function initReveal() {
-    const els = document.querySelectorAll("[data-reveal]");
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]:not(.revealed)"));
     if (!els.length) return;
+
+    const swapAt: number = (window as any).__navSwapAt ?? -Infinity;
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            io.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          // Within the view transition's window: appear in place.
+          if (performance.now() - swapAt < 600) el.setAttribute("data-instant", "");
+          el.classList.add("revealed");
+          io.unobserve(el);
         });
       },
-      { rootMargin: "-60px 0px", threshold: 0.05 }
+      { rootMargin: "0px 0px -6% 0px", threshold: 0 }
     );
     els.forEach((el) => io.observe(el));
   }
   initReveal();
   document.addEventListener("astro:page-load", initReveal);
-</script>
 
-<script>
-  function initParallax() {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const els = Array.from(document.querySelectorAll("[data-parallax]"));
-    if (!els.length) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const vh = window.innerHeight;
-      for (const el of els) {
-        const speed = parseFloat(el.dataset.parallax || "0.08");
-        const anchor = el.parentElement ?? el;
-        const r = anchor.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) continue;
-        const offset = (r.top + r.height / 2 - vh / 2) * -speed;
-        el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+  // Ambient video (hero loops, product recordings): play only while visible,
+  // and never autoplay for people who have asked for reduced motion -- the
+  // poster frame stands in.
+  function initVideo() {
+    document.querySelectorAll<HTMLVideoElement>("video[autoplay]").forEach((v) => {
+      if (v.dataset.motionReady) return;
+      v.dataset.motionReady = "1";
+      if (prefersReducedMotion()) {
+        v.pause();
+        v.removeAttribute("autoplay");
+        return;
       }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    update();
+      watchVisibility(v, (visible) => {
+        if (visible) v.play().catch(() => {});
+        else v.pause();
+      });
+    });
   }
-  initParallax();
-  document.addEventListener("astro:page-load", initParallax);
+  initVideo();
+  document.addEventListener("astro:page-load", initVideo);
 </script>

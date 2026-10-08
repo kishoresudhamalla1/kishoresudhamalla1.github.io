@@ -16,6 +16,7 @@ import DecisionBlock from "../../components/DecisionBlock.astro";
 import ContentNeeded from "../../components/ContentNeeded.astro";
 import ConfidentialityNotice from "../../components/ConfidentialityNotice.astro";
 import SignalChain from "../../components/SignalChain.astro";
+import FlowsMorph from "../../components/FlowsMorph.astro";
 ---
 
 <Base title="Flows → Journeys → Playbooks — Kishore Sudhamalla">
@@ -113,22 +114,7 @@ import SignalChain from "../../components/SignalChain.astro";
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">System</p>
       <h2>The evolution, as a model.</h2>
-      <div class="r-evolution">
-        <div class="r-evo-step">
-          <p class="r-evo-n">Flows</p>
-          <p class="r-evo-d">Transactional automation.</p>
-        </div>
-        <div class="r-evo-arrow" aria-hidden="true">↓</div>
-        <div class="r-evo-step">
-          <p class="r-evo-n">Journeys</p>
-          <p class="r-evo-d">A guided employee experience, built on top of Flows.</p>
-        </div>
-        <div class="r-evo-arrow" aria-hidden="true">↓</div>
-        <div class="r-evo-step">
-          <p class="r-evo-n">Playbooks</p>
-          <p class="r-evo-d">AI recognizes a signal, recommends a Journey — the admin still decides.</p>
-        </div>
-      </div>
+      <FlowsMorph />
 
       <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
       <SignalChain />
@@ -211,23 +197,6 @@ import SignalChain from "../../components/SignalChain.astro";
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
 
-  .r-evolution {
-    display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;
-    margin: 1.5rem 0 2rem;
-  }
-  .r-evo-step {
-    padding: 1rem 1.25rem; border: 1px solid var(--color-border); border-radius: 0.75rem;
-    width: 100%;
-  }
-  .r-evo-n { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--color-ink); margin: 0 0 0.25rem; }
-  .r-evo-d { font-size: 0.875rem; color: var(--color-ink-2); margin: 0; }
-  .r-evo-arrow { color: var(--color-ink-3); padding-left: 1.25rem; }
-
   .r-evo-chain-label { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0 0 0.75rem; }
 
-  @media (min-width: 640px) {
-    .r-evolution { flex-direction: row; align-items: stretch; }
-    .r-evo-step { flex: 1; }
-    .r-evo-arrow { display: flex; align-items: center; padding: 0 0.25rem; transform: rotate(-90deg); }
-  }
 </style>

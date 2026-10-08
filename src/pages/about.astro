@@ -29,10 +29,10 @@ const TIMELINE = [
 ---
 
 <Base title="About — Kishore Sudhamalla">
-  <section class="container-pg r-about">
-    <p class="r-eyebrow" data-reveal>About</p>
+  <section class="container-pg r-about" data-reveal>
+    <p class="r-eyebrow">About</p>
 
-    <p class="r-bio" data-reveal>
+    <p class="r-bio">
       I like difficult problems. I've spent most of my career designing
       products where complexity is unavoidable. For the last nine years,
       I've worked on Darwinbox, a global HCM platform used across 120+
@@ -40,17 +40,17 @@ const TIMELINE = [
       Journeys, Flows, HR Documents, Core HR, Extensibility and AI
       experiences.
     </p>
-    <p class="r-bio" data-reveal>
+    <p class="r-bio">
       What interests me now is what happens when these systems become
       intelligent. Instead of asking users to navigate increasingly complex
       software, I want to explore products that understand context,
       recognize intent and help people act.
     </p>
-    <p class="r-bio" data-reveal>
+    <p class="r-bio">
       My next chapter is focused on AI-native product design.
     </p>
 
-    <dl class="r-facts" data-reveal>
+    <dl class="r-facts">
       {FACTS.map((f) => (
         <div>
           <dt>{f.value}</dt>
@@ -59,17 +59,17 @@ const TIMELINE = [
       ))}
     </dl>
 
-    <div class="r-links" data-reveal>
+    <div class="r-links">
       <a href="/resume" class="r-btn r-btn-primary">Résumé ↓</a>
       <a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noreferrer" class="r-btn r-btn-ghost">LinkedIn ↗</a>
     </div>
   </section>
 
-  <section class="container-pg r-timeline-section">
-    <p class="r-case-label" data-reveal>Path here</p>
+  <section class="container-pg r-timeline-section" data-reveal>
+    <p class="r-case-label">Path here</p>
     <div class="r-timeline">
       {TIMELINE.map((item, i) => (
-        <div class="r-timeline-row" data-reveal>
+        <div class="r-timeline-row">
           <p class="r-timeline-n">{String(i + 1).padStart(2, "0")}</p>
           <div>
             <h3>{item.t}</h3>
@@ -107,7 +107,7 @@ const TIMELINE = [
   .r-btn {
     display: inline-flex; align-items: center; justify-content: center;
     padding: 0.8rem 1.6rem; border-radius: 100px;
-    font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: all 0.2s;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: opacity var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter), background-color var(--dur-micro) var(--ease-enter);
   }
   .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
   .r-btn-primary:hover { opacity: 0.85; }

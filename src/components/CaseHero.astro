@@ -40,8 +40,10 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
 
 <section class="ch" data-ch>
   <div class="ch-inner container-pg">
-    <!-- plane 1, copy, travels fastest of the two text planes -->
-    <div class="ch-copy" data-ch-layer data-ch-speed="-0.14">
+    <!-- copy: static. Text that drifts against the page is harder to read and
+         says nothing about the work; only the product window and its callouts
+         carry depth. -->
+    <div class="ch-copy">
       <p class="ch-eyebrow"><span class="ch-rule"></span>{eyebrow}</p>
       <h1 class="ch-title" set:html={title} />
       <p class="ch-lede">{lede}</p>
@@ -58,7 +60,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
 
     <!-- plane 2, the product window, slowest -->
     <div class="ch-stage">
-      <div class="ch-window" data-ch-layer data-ch-speed="-0.05">
+      <div class="ch-window" data-ch-layer data-ch-speed="-0.04">
         <div class="ch-chrome">
           <span class="ch-dot"></span><span class="ch-dot"></span><span class="ch-dot"></span>
           <span class="ch-url">{alt}</span>
@@ -86,7 +88,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
         <figure
           class={`ch-card ch-card--${i + 1}`}
           data-ch-layer
-          data-ch-speed={i === 0 ? "-0.26" : "-0.19"}
+          data-ch-speed={i === 0 ? "-0.12" : "-0.09"}
         >
           <figcaption class="ch-card-top">
             <span class="ch-card-eyebrow">{c.eyebrow}</span>
@@ -167,7 +169,6 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
     position: relative;
     z-index: 3;
     max-width: 46rem;
-    will-change: transform;
   }
 
   .ch-eyebrow {
@@ -295,6 +296,6 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ch-copy, .ch-window, .ch-card { will-change: auto; }
+    .ch-window, .ch-card { will-change: auto; }
   }
 </style>

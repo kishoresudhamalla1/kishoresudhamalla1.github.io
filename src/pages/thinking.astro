@@ -20,26 +20,26 @@ const TOPICS = [
 ---
 
 <Base title="Thinking — Kishore Sudhamalla">
-  <section class="container-pg r-thinking-hero">
-    <p class="r-eyebrow" data-reveal>Thinking</p>
-    <h1 data-reveal>Notes on enterprise systems and AI-native design.</h1>
-    <p class="r-lede" data-reveal>
+  <section class="container-pg r-thinking-hero" data-reveal>
+    <p class="r-eyebrow">Thinking</p>
+    <h1>Notes on enterprise systems and AI-native design.</h1>
+    <p class="r-lede">
       This section is a placeholder structure, not a published archive.
       Nothing below has been written yet — listed as topics worth writing
       about, not as existing articles.
     </p>
   </section>
 
-  <section class="container-pg r-thinking-list">
+  <section class="container-pg r-thinking-list" data-reveal>
     {TOPICS.map((t) => (
-      <div class="r-topic-row" data-reveal>
+      <div class="r-topic-row">
         <span class="r-topic-title">{t}</span>
         <span class="r-topic-status">Not yet written</span>
       </div>
     ))}
   </section>
 
-  <section class="container-pg r-thinking-note">
+  <section class="container-pg r-thinking-note" data-reveal>
     <ContentNeeded note="No real published writing exists in the current site or repo to pull from. Replace this list with actual pieces as they're written — do not pre-fill summaries or dates for posts that don't exist yet." />
   </section>
 </Base>

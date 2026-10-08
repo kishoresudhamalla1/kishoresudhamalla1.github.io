@@ -48,3 +48,10 @@ All `🔴 PLACEHOLDER` sections are marked inline. Typical replacements:
 
 ## Node requirement
 Node 20+. Run `npm install && npm run dev` once Node is available.
+
+## Motion
+- Tokens live in `src/styles/global.css` (`--dur-*`, `--ease-*`, `--dist-*`) and are mirrored in `src/lib/motion.ts`. Use them; don't add one-off durations.
+- Scroll entrance: put `data-reveal` on a **section or group**, never on each paragraph. Hero uses `.enter` with `--tier` instead.
+- Animate `transform` and `opacity`. The one deliberate exception is the work-card `flex-grow` (its content is faded around the move so text never visibly re-wraps).
+- Every loop, video or canvas must pause off-screen (`watchVisibility`) and respect `prefers-reduced-motion`.
+- Conditional state on a shared child selector goes through custom properties, one concrete rule per element (Lightning CSS merge bug; see `pages/index.astro`).
