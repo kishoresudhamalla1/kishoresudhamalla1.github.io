@@ -6,7 +6,7 @@
 .labs .ma-edge--peer { stroke-dasharray: 3 6; stroke: var(--color-border); transition: stroke var(--dur-fast) var(--ease-enter); }
 .labs .ma-edge--peer.is-conflict { stroke: var(--lab-warn); stroke-width: 2.5; }
 .labs .ma-conflict rect { fill: var(--lab-warn-soft); stroke: var(--lab-warn); }
-.labs .ma-conflict text { fill: var(--lab-warn); font-size: 11px; font-weight: 700; }
+.labs .ma-conflict text { fill: var(--lab-warn); font-size: 14px; font-weight: 700; }
 .labs .ma-node-btn {
   width: 100%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 0.3rem; text-align: left; cursor: pointer;
   font-family: var(--font-sans); padding: 0.55rem 0.8rem; background: var(--color-bg); color: var(--color-ink);
@@ -18,8 +18,8 @@
 .labs .ma-node.is-done .ma-node-btn { border-color: var(--lab-ok); }
 .labs .ma-node.is-reconcile .ma-node-btn { border-color: var(--lab-warn); background: var(--lab-warn-soft); }
 .labs .ma-node.is-sel .ma-node-btn { box-shadow: 0 0 0 3px color-mix(in srgb, var(--lab-agent) 22%, transparent); }
-.labs .ma-node-name { font-weight: 700; font-size: 0.875rem; }
-.labs .ma-node-state { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--color-ink-2); }
+.labs .ma-node-name { font-weight: 700; font-size: 1.2rem; }
+.labs .ma-node-state { display: flex; align-items: center; gap: 0.4rem; font-size: 1rem; color: var(--color-ink-2); }
 .labs .ma-banner { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; margin: 0.6rem 0 0; padding: 0.65rem 0.85rem; border-radius: 0.55rem; background: var(--lab-warn-soft); }
 .labs .ma-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); }
 .labs .ma-log li { display: grid; grid-template-columns: 2.4rem 1fr; gap: 0.5rem; }
