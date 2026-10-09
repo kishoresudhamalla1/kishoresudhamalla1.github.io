@@ -30,3 +30,5 @@
 .labs .ma-tag.is-res { color: var(--lab-user); background: var(--lab-user-soft); }
 .labs .ma-tag.is-cod { color: var(--lab-agent); background: var(--lab-agent-soft); }
 @media (prefers-reduced-motion: reduce) { .labs .ma-edge--flow { animation: none; } }
+.labs .ma-scroll { overflow-x: auto; }
+.labs .ma-scroll .ma-svg { min-width: 34rem; }

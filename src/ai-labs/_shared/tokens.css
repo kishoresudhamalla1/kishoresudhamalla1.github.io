@@ -118,7 +118,7 @@
 .labs .lab-chip--agent:hover { background: var(--lab-agent-soft); border-color: var(--lab-agent); }
 .labs .lab-chip.is-active { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-bg); }
 
-.labs .lab-seg { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.25rem; border: 1px solid var(--color-border); border-radius: 100px; background: var(--color-surface); }
+.labs .lab-seg { display: inline-flex; flex-wrap: wrap; gap: 0.25rem; padding: 0.25rem; border: 1px solid var(--color-border); border-radius: 1.2rem; background: var(--color-surface); max-width: 100%; }
 .labs .lab-seg-i {
   font: inherit; font-size: 0.8125rem; font-weight: 500; padding: 0.4rem 0.85rem; cursor: pointer;
   border: 0; border-radius: 100px; background: transparent; color: var(--color-ink-3);

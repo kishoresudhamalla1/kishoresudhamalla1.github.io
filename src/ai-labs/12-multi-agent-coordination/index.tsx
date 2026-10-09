@@ -85,7 +85,7 @@ export default function MultiAgentCoordination() {
           </Button>
         }
       >
-        <svg className="ma-svg" viewBox="0 0 680 330" role="group" aria-label="Agent graph">
+        <div className="ma-scroll"><svg className="ma-svg" viewBox="0 0 680 330" role="group" aria-label="Agent graph">
           {(["res", "wri", "cod"] as NodeId[]).map((to) => {
             const a = NODES.sup;
             const b = NODES[to];
@@ -125,7 +125,7 @@ export default function MultiAgentCoordination() {
               </g>
             );
           })}
-        </svg>
+        </svg></div>
 
         {conflictOn(t) && (
           <p className="ma-banner lab-in" role="status">
