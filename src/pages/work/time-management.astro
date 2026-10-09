@@ -47,6 +47,17 @@ const IMG = "/images/work/time-management";
     ]}
   />
 
+  <section class="container-pg r-film" data-reveal>
+    <p class="r-case-label">Film · with sound</p>
+    <div class="r-film-frame">
+      <video controls muted playsinline preload="metadata" poster={`${IMG}/tm-hero-film-poster.jpg`}
+        aria-label="A seventy second animated film of the Time Management redesign: the module before, one front door, the employee, manager and HRBP dashboards, one system for three roles, and the adoption numbers">
+        <source src={`${IMG}/tm-hero-film.mp4`} type="video/mp4" />
+      </video>
+    </div>
+    <p class="r-film-note">Seventy seconds. Press play and unmute. The dashboards are rebuilt from the shipped screens; names are demo data.</p>
+  </section>
+
   <article class="container-pg r-case">
     <!-- Context -->
     <section class="r-case-section" data-reveal>
@@ -321,6 +332,10 @@ const IMG = "/images/work/time-management";
 </Base>
 
 <style>
+  .r-film { padding-block: clamp(1.5rem, 4vw, 3rem) 0; }
+  .r-film-frame { border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden; background: #000; max-width: 72rem; }
+  .r-film-frame video { display: block; width: 100%; height: auto; }
+  .r-film-note { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0.75rem 0 0; }
   .r-case { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(4rem, 8vw, 6rem); }
   .r-case-section > :is(p, h2, h3, blockquote, ul, ol, .r-case-label, .cn, .r-decisions, .r-sub-label) { max-width: var(--measure); }
   .r-case-section { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
