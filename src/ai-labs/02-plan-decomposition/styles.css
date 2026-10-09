@@ -1,0 +1,43 @@
+.labs .pd-goal { margin: 0 0 1rem; }
+.labs .pd-goal strong { color: var(--color-ink); }
+.labs .pd-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.labs .pd-item {
+  border: 1px solid var(--color-border); border-radius: 0.6rem; background: var(--color-bg);
+  transition: border-color var(--dur-fast) var(--ease-enter), background-color var(--dur-fast) var(--ease-enter), opacity var(--dur-fast) var(--ease-enter);
+}
+.labs .pd-item--active { border-color: var(--lab-agent); background: var(--lab-agent-soft); }
+.labs .pd-item--failed { border-color: var(--lab-danger); background: var(--lab-danger-soft); }
+.labs .pd-item--skipped { opacity: 0.6; }
+.labs .pd-item--done .pd-label { color: var(--color-ink-2); }
+.labs .pd-item.is-over { border-color: var(--lab-user); box-shadow: 0 -2px 0 var(--lab-user); }
+.labs .pd-item.is-drag { opacity: 0.45; }
+.labs .pd-item.is-fresh { animation: pd-insert 0.5s var(--ease-enter) both; }
+@keyframes pd-insert {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); max-height: 0; }
+  to { opacity: 1; transform: none; max-height: 8rem; }
+}
+.labs .pd-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0.75rem; min-height: 2.6rem; }
+.labs .pd-handle { color: var(--color-ink-3); cursor: grab; display: inline-flex; }
+.labs .pd-handle.is-off { opacity: 0.25; cursor: default; }
+.labs .pd-item[draggable="true"]:active { cursor: grabbing; }
+.labs .pd-kind { color: var(--lab-agent); display: inline-flex; }
+.labs .pd-label { font-size: 0.9rem; color: var(--color-ink); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.labs .pd-tools { display: inline-flex; gap: 0.2rem; }
+.labs .pd-tools button {
+  width: 1.7rem; height: 1.7rem; border-radius: 0.4rem; border: 1px solid transparent; background: transparent; cursor: pointer;
+  color: var(--color-ink-3); font: inherit; font-size: 0.8rem; display: inline-flex; align-items: center; justify-content: center;
+  transition: color var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter);
+}
+.labs .pd-tools button:hover:not(:disabled) { color: var(--color-ink); border-color: var(--color-border); }
+.labs .pd-tools button:disabled { opacity: 0.3; cursor: default; }
+.labs .pd-branch { padding: 0 0.75rem 0.8rem 2.9rem; }
+.labs .pd-branch p { margin: 0 0 0.6rem; font-size: 0.8125rem; line-height: 1.55; color: var(--color-ink); }
+.labs .pd-branch strong { color: var(--lab-danger); }
+.labs .pd-add { margin-top: 0.9rem; }
+.labs .pd-add .lab-input { flex: 1; min-width: 12rem; }
+.labs .pd-controls { margin-top: 1rem; }
+.labs .pd-finished { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9375rem; padding: 0.9rem 1.1rem; border-radius: var(--lab-r); background: var(--lab-ok-soft); }
+
+@media (prefers-reduced-motion: reduce) {
+  .labs .pd-item.is-fresh { animation: none; }
+}

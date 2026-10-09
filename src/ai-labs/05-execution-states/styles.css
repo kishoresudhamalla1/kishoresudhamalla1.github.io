@@ -1,0 +1,41 @@
+.labs .es-stage {
+  border: 1px solid var(--color-border); border-radius: var(--lab-r); padding: 1rem 1.1rem;
+  background: var(--color-surface); display: flex; flex-direction: column; gap: 0.9rem;
+  transition: border-color var(--dur-fast) var(--ease-enter), background-color var(--dur-fast) var(--ease-enter);
+}
+.labs .es-stage[data-state="waiting"] { border-color: var(--lab-warn); background: var(--lab-warn-soft); }
+.labs .es-stage[data-state="failed"] { border-color: var(--lab-danger); }
+.labs .es-stage-top { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.labs .es-body { animation: lab-in var(--dur-normal) var(--ease-enter) both; min-height: 4.5rem; }
+.labs .es-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; }
+.labs .es-steps li { display: flex; align-items: center; gap: 0.6rem; transition: color var(--dur-fast) var(--ease-enter); }
+.labs .es-stream { margin: 0; font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink); }
+.labs .es-caret {
+  display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em;
+  background: var(--lab-agent); animation: lab-blink 1s steps(1) infinite;
+}
+.labs .es-ask {
+  border: 1px solid var(--lab-warn); background: var(--lab-warn-soft); border-radius: 0.6rem;
+  padding: 0.8rem 0.95rem; display: flex; flex-direction: column; gap: 0.5rem;
+}
+.labs .es-ask strong { color: var(--lab-warn); font-size: 0.875rem; }
+.labs .es-ask p { margin: 0; }
+.labs .es-actions { margin-top: 0.1rem; }
+.labs .es-caption { margin: 0.9rem 0 0; max-width: 42rem; }
+
+.labs .es-composer { display: flex; gap: 0.6rem; align-items: stretch; margin-bottom: 1rem; }
+.labs .es-composer-field {
+  flex: 1; display: flex; align-items: center; padding: 0.65rem 0.9rem; border-radius: 0.6rem;
+  border: 1px solid var(--color-border); background: var(--color-surface);
+}
+.labs .es-run { display: flex; flex-direction: column; gap: 0.85rem; }
+.labs .es-run-top { gap: 0.8rem; }
+.labs .es-longwait {
+  margin: 0; font-size: 0.8125rem; line-height: 1.55; color: var(--lab-agent);
+  background: var(--lab-agent-soft); border-radius: 0.5rem; padding: 0.55rem 0.8rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .labs .es-body { animation: none; }
+  .labs .es-caret { animation: none; }
+}

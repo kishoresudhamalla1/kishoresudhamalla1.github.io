@@ -1,0 +1,26 @@
+---
+import Base from "../../layouts/Base.astro";
+import AiLabs from "../../ai-labs/index";
+---
+
+<Base title="Agent UX patterns | AI Lab | Kishore Sudhamalla">
+  <section class="container-pg pt-hero" data-reveal>
+    <p class="pt-eyebrow">AI Lab</p>
+    <h1>Twelve agent UX patterns, built to be clicked.</h1>
+    <p class="pt-lede">
+      Each demo is a simulated agent with scripted latency and failures. Nothing here calls a real model. The point is the interaction design: what the person sees, decides and can undo at each moment.
+    </p>
+  </section>
+  <section class="container-pg pt-body">
+    <AiLabs client:only="react" />
+  </section>
+</Base>
+
+<style>
+  .pt-hero { padding-block: clamp(3rem, 7vw, 5rem) clamp(1.5rem, 3vw, 2.5rem); }
+  .pt-hero > * { max-width: var(--measure-head); }
+  .pt-eyebrow { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 1.25rem; }
+  .pt-hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.875rem, 4.5vw, 3rem); letter-spacing: -0.03em; line-height: 1.1; color: var(--color-ink); margin: 0 0 1.25rem; }
+  .pt-lede { font-size: 1.0625rem; line-height: 1.65; color: var(--color-ink-2); margin: 0; max-width: var(--measure); }
+  .pt-body { padding-block: 1rem clamp(4rem, 8vw, 6rem); }
+</style>

@@ -1,0 +1,24 @@
+.labs .hh-grid { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .labs .hh-grid { grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr); } }
+.labs .hh-log { display: flex; flex-direction: column; gap: 0.7rem; max-height: 24rem; overflow-y: auto; padding-right: 0.2rem; }
+.labs .hh-msg { max-width: 88%; }
+.labs .hh-msg p { margin: 0.15rem 0 0; font-size: 0.875rem; line-height: 1.55; padding: 0.55rem 0.8rem; border-radius: 0.7rem; background: var(--color-surface); color: var(--color-ink); }
+.labs .hh-msg.is-you { align-self: flex-end; text-align: right; }
+.labs .hh-msg.is-you p { background: var(--lab-user-soft); text-align: left; }
+.labs .hh-msg.is-agent p { background: var(--lab-agent-soft); }
+.labs .hh-msg.is-human p { background: var(--lab-ok-soft); }
+.labs .hh-msg.is-system { align-self: stretch; max-width: none; }
+.labs .hh-msg.is-system p { background: transparent; border: 1px dashed var(--color-ink-3); color: var(--color-ink-2); font-size: 0.8125rem; text-align: center; }
+.labs .hh-typing { display: inline-flex; gap: 4px; align-items: center; }
+.labs .hh-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--lab-agent); animation: lab-pulse-fill 1s ease-in-out infinite; }
+.labs .hh-typing i:nth-child(2) { animation-delay: 0.15s; }
+.labs .hh-typing i:nth-child(3) { animation-delay: 0.3s; }
+.labs .hh-strip { list-style: none; margin: 1rem 0 0; padding: 0.7rem 0.85rem; display: flex; gap: 1.2rem; flex-wrap: wrap; border-radius: 0.6rem; background: var(--color-surface); font-size: 0.8125rem; color: var(--color-ink-3); }
+.labs .hh-strip li { display: flex; align-items: center; gap: 0.5rem; transition: color var(--dur-fast) var(--ease-enter); }
+.labs .hh-strip li.is-done, .labs .hh-strip li.is-now { color: var(--color-ink); }
+.labs .hh-actions { margin-top: 1rem; }
+.labs .hh-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.8125rem; color: var(--color-ink); }
+.labs .hh-facts .lab-mono { display: inline-block; width: 4.5rem; }
+.labs .hh-test { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; padding: 0.7rem 0.85rem; border-radius: 0.55rem; background: var(--lab-ok-soft); }
+.labs .hh-test.is-fail { background: var(--lab-danger-soft); }
+@media (prefers-reduced-motion: reduce) { .labs .hh-typing i { animation: none; } }

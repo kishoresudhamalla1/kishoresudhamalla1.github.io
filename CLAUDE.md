@@ -24,11 +24,13 @@ src/
   pages/
     index.astro     ← homepage (hero, how I work, selected work, AI Lab, …)
     about.astro, ai-lab.astro, thinking.astro, resume.astro
+    ai-lab/patterns.astro ← mounts src/ai-labs (client:only="react")
     work/
       time-management.astro
       flows-journeys-playbooks.astro
       chatbot-to-agentic.astro   ← stub, content needed
       design-ops.astro           ← linked from the AI Lab
+  ai-labs/          ← 12 simulated agent-UX demos (React); shared harness in _shared/, shell index.tsx, registry.ts
   styles/
     global.css      ← Tailwind v4 @import + @theme + @variant dark
 ```

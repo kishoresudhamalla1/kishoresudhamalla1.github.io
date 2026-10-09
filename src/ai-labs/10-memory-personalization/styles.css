@@ -1,0 +1,15 @@
+.labs .mp-grid { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .labs .mp-grid { grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr); } }
+.labs .mp-tools { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.labs .mp-tools .lab-input { flex: 1; min-width: 10rem; }
+.labs .mp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.labs .mp-item { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; padding: 0.7rem 0.85rem; border-radius: 0.6rem; border: 1px solid var(--color-border); font-size: 0.875rem; }
+.labs .mp-item strong { color: var(--color-ink); font-weight: 600; }
+.labs .mp-item.is-declared { border-left: 3px solid var(--lab-user); }
+.labs .mp-item.is-inferred { border: 1px dashed var(--lab-agent); background: var(--lab-agent-soft); }
+.labs .mp-add { display: flex; gap: 0.6rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-border); }
+.labs .mp-add .lab-input { flex: 1; }
+.labs .mp-preview { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.875rem; line-height: 1.55; color: var(--color-ink); }
+.labs .mp-preview li { padding: 0.45rem 0.6rem; border-radius: 0.45rem; transition: background-color 0.4s ease; }
+.labs .mp-preview li.is-changed { background: var(--lab-ok-soft); animation: lab-in var(--dur-normal) var(--ease-enter) both; }
+.labs .mp-foot { margin: 1rem 0 0; }
