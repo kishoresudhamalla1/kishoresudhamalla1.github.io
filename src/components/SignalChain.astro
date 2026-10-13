@@ -47,12 +47,16 @@ const STEPS = [
       const nodes = Array.from(root.querySelectorAll<HTMLElement>(".sc-node"));
 
       // Where each node's centre sits inside the track, as the pulse's stops.
+      // Layout offsets, not getBoundingClientRect: the steps are mid-transform
+      // (translated and faded) during the entrance, and a bounding box would
+      // bake that offset into the stops and park the pulse beside the node.
       const measure = () => {
-        const t = track.getBoundingClientRect();
         nodes.forEach((n, i) => {
-          const r = n.getBoundingClientRect();
-          track.style.setProperty(`--x${i}`, `${(r.left - t.left + r.width / 2).toFixed(1)}px`);
-          track.style.setProperty(`--y${i}`, `${(r.top - t.top + r.height / 2).toFixed(1)}px`);
+          const step = n.offsetParent as HTMLElement;
+          const x = step.offsetLeft + n.offsetLeft + n.offsetWidth / 2;
+          const y = step.offsetTop + n.offsetTop + n.offsetHeight / 2;
+          track.style.setProperty(`--x${i}`, `${x.toFixed(1)}px`);
+          track.style.setProperty(`--y${i}`, `${y.toFixed(1)}px`);
         });
       };
       measure();
@@ -171,7 +175,7 @@ const STEPS = [
       padding-left: 0; padding-top: 1.5rem; gap: 0;
     }
     .sc-line {
-      left: 0.5rem; right: 0.5rem; top: 5px; bottom: auto;
+      left: 0.5rem; right: 0.5rem; top: calc(1.5rem + 5px); bottom: auto;
       height: 1px; width: auto;
     }
     .sc-line::before { transform: scaleX(0); transform-origin: left; }
