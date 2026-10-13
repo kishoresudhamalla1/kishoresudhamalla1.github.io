@@ -59,6 +59,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
     </div>
 
     <!-- plane 2, the product window, slowest -->
+    {(video || img) && (
     <div class="ch-stage">
       <div class="ch-window" data-ch-layer data-ch-speed="-0.04">
         <div class="ch-chrome">
@@ -99,6 +100,7 @@ const { eyebrow, title, lede, meta, img, video, poster, alt, cards = [] } = Astr
         </figure>
       ))}
     </div>
+    )}
   </div>
 </section>
 
