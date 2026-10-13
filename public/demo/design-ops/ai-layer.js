@@ -257,14 +257,25 @@
       const r = AI.ask(v);
       out.innerHTML = `
         <div class="ai-block">
-          <div class="ai-head">${badge}<span class="ai-title">${v}</span></div>
+          <div class="ai-head">${badge}<span class="ai-title">${v}</span><button type="button" class="ai-close" aria-label="Close answer">×</button></div>
           <p class="ai-cause">${r.answer}</p>
           ${r.rows.length ? `<p class="ai-evlabel">Rows it used</p><ul class="ai-ev">${r.rows.map(t=>`<li><b>${t.key}</b>, ${t.summary}</li>`).join("")}</ul>` : ""}
           <p class="ai-foot">Answered by filtering the same in-memory data the dashboard renders, the rows are shown so the answer is checkable.</p>
         </div>`;
+      out.classList.remove("show");
+      void out.offsetWidth; // restart the entrance animation for a new answer
       out.classList.add("show");
     };
-    input.addEventListener("keydown", (e) => { if (e.key === "Enter") run(); });
+    const hide = () => { out.classList.remove("show"); };
+    // The answer is a transient card, not a panel. It goes away when the person
+    // closes it, presses Esc, starts a new question, or clicks elsewhere.
+    out.addEventListener("click", (e) => { if (e.target.closest(".ai-close")) { hide(); input.focus(); } });
+    document.addEventListener("mousedown", (e) => { if (!bar.contains(e.target)) hide(); });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") run();
+      else if (e.key === "Escape") { hide(); input.blur(); }
+    });
+    input.addEventListener("input", hide);
 
     // Glow: the ring lights and turns while the user is actually typing, then
     // settles back to the still focus ring after a short idle.
