@@ -16,28 +16,31 @@ import Base from "../layouts/Base.astro";
 const WORK = [
   {
     n: "01",
+    short: "Time Management",
+    kicker: "01 \u2014 Enterprise HCM \u00b7 Web app",
     title: "Time Management",
-    tagline: "Making a complex workforce system easier to understand and act on.",
     blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets and workforce insights into a more coherent experience for employees, managers and HR teams.",
     tags: ["Product design", "Systems thinking", "Enterprise UX"],
     href: "/work/time-management",
-    img: "/images/work/time-management/tm-manager-dashboard-poster.jpg",
+    img: "/images/work/time-management/card-employee.jpg",
     featured: true,
   },
   {
     n: "02",
-    title: "From Flows → Journeys → AI Playbooks",
-    tagline: "Evolving enterprise workflows from transactions into intelligent experiences.",
+    short: "Flows to Playbooks",
+    kicker: "02 \u2014 Product strategy \u00b7 Web app",
+    title: "From Flows \u2192 Journeys \u2192 AI Playbooks",
     blurb: "A product evolution from individual workflow transactions to guided employee journeys and ultimately AI-assisted playbooks that can help orchestrate complex work.",
     tags: ["Product strategy", "Workflow design", "AI-native experiences"],
     href: "/work/flows-journeys-playbooks",
-    img: "/images/work/beyond-the-task/hero-illustration-poster.jpg",
+    img: "/images/work/journeys/card-templates.jpg",
     featured: false,
   },
   {
     n: "03",
-    title: "Chatbot → Agentic AI → AI-native experiences",
-    tagline: "Exploring what changes when AI moves from answering questions to getting work done.",
+    short: "Agentic AI",
+    kicker: "03 \u2014 Agentic UX \u00b7 Concept",
+    title: "Chatbot \u2192 Agentic AI \u2192 AI-native experiences",
     blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions and become part of the product experience itself.",
     tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
     href: "/work/chatbot-to-agentic",
@@ -89,34 +92,32 @@ const QUESTIONS = [
     <div class="work-row">
       {WORK.map((p) => (
         <a href={p.href} class:list={["work-card", p.featured && "is-featured"]}>
+          <div class="wc-media" aria-hidden="true">
+            <div class="wc-laptop">
+              <div class="wc-lid"><div class="wc-screen"><img src={p.img} alt="" loading="lazy" decoding="async" /></div></div>
+              <div class="wc-base"></div>
+            </div>
+          </div>
+
           <div class="work-card-body">
-          <span class="work-card-n" aria-hidden="true">{p.n}</span>
-
-          <div class="work-card-frame">
-            <span class="work-card-chrome" aria-hidden="true"><i></i><i></i><i></i></span>
-            <div class="work-card-shot">
-              <img src={p.img} alt="" loading="lazy" decoding="async" />
-            </div>
-          </div>
-
-          <div class="work-card-info">
-            <p class="work-card-title">{p.title}</p>
-            <p class="work-card-tagline">{p.tagline}</p>
-            <p class="work-card-blurb">{p.blurb}</p>
-            <div class="work-card-foot">
-              <div class="work-card-tags">
-                {p.tags.map((t) => <span>{t}</span>)}
+            <div class="work-card-info">
+              <p class="wc-kicker">{p.kicker}</p>
+              <p class="work-card-title">{p.title}</p>
+              <p class="work-card-blurb">{p.blurb}</p>
+              <div class="wc-foot">
+                <div class="work-card-tags">
+                  {p.tags.map((t) => <span>{t}</span>)}
+                </div>
+                <span class="work-card-arrow" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
               </div>
-              <span class="work-card-arrow" aria-hidden="true">
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-              </span>
             </div>
           </div>
-          </div>
 
-          <p class="work-card-label" aria-hidden="true">{p.n} &middot; {p.title}</p>
+          <p class="work-card-label" aria-hidden="true">{p.n} &mdash; {p.short}</p>
         </a>
       ))}
     </div>
@@ -271,84 +272,82 @@ const QUESTIONS = [
 
   .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
 
-  /* ── side-by-side hover-expand, same mechanic as the live ProjectList.astro ──
+  /* ── side-by-side hover-expand: one card open, the others fold to a spine ──
      Mobile-first plain stack (no hover to drive a collapse); the
      side-by-side expand/collapse turns on only at the breakpoint where a
-     pointer with hover is also likely. */
+     pointer with hover is also likely. Each project is shown on the same
+     floating laptop so three different products read as one set. */
   .work-row { display: flex; flex-direction: column; gap: 1.25rem; }
 
   .work-card {
     position: relative; display: flex; flex-direction: column;
-    border: 1px solid var(--color-border); border-radius: 1.25rem;
+    border: 1px solid var(--color-border); border-radius: 1.75rem;
     text-decoration: none; color: inherit; background: var(--color-surface);
-    padding: 1.1rem;
+    padding: 1.5rem;
   }
 
-  .work-card-n {
-    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em;
-    color: var(--color-ink-3); margin-bottom: 0.9rem; display: block;
+  /* the device */
+  .wc-media {
+    position: relative; width: 100%; max-width: 26rem; margin: 0 auto 1.5rem;
+    perspective: 1800px; pointer-events: none;
+  }
+  .wc-laptop { transform: rotateX(4deg) rotateY(-9deg); transform-style: preserve-3d; }
+  .wc-lid {
+    padding: 0.55rem 0.55rem 0.7rem; background: #161618;
+    border-radius: 0.9rem 0.9rem 0.25rem 0.25rem;
+    box-shadow: 0 34px 60px -26px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.09);
+  }
+  .wc-screen { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 0.35rem; background: #fff; }
+  .wc-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .wc-base {
+    position: relative; height: 0.7rem; margin: 0 -7%;
+    background: linear-gradient(#dcdee3, #b7bac2); border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 16px 24px -14px rgba(0,0,0,.45);
+  }
+  .wc-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; width: 16%; height: 0.28rem;
+    transform: translateX(-50%); background: #9a9da6; border-radius: 0 0 0.4rem 0.4rem;
   }
 
-  .work-card-frame {
-    border: 1px solid var(--color-border); border-radius: 0.85rem; overflow: hidden;
-    background: var(--color-bg); margin-bottom: 1.1rem;
-  }
-  .work-card-chrome {
-    display: flex; align-items: center; gap: 0.3rem;
-    padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--color-border);
-  }
-  .work-card-chrome i {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--color-border);
-  }
-  .work-card-shot { aspect-ratio: 16 / 10; background: var(--color-surface); }
-  .work-card-shot img {
-    width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
-  }
-
+  .work-card-body { display: flex; flex-direction: column; flex: 1; }
   .work-card-info { display: flex; flex-direction: column; flex: 1; }
 
-  .work-card-kicker {
-    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.03em;
-    color: var(--color-ink-3); margin: 0 0 0.6rem;
+  .wc-kicker {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.9rem;
   }
   .work-card-title {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.4vw, 1.75rem);
-    font-weight: 600; line-height: 1.2; letter-spacing: -0.02em;
-    color: var(--color-ink); margin: 0 0 0.6rem; max-width: 30rem;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 650; line-height: 1.1; letter-spacing: -0.03em;
+    color: var(--color-ink); margin: 0 0 0.9rem; max-width: 30rem;
   }
   .work-card-blurb {
-    font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); max-width: 32rem; margin: 0 0 1.25rem;
+    font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); max-width: 32rem; margin: 0 0 1.5rem;
   }
 
-  .work-card-foot {
-    margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
+  .wc-foot { margin-top: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
   .work-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .work-card-tags span {
-    font-size: 0.75rem; color: var(--color-ink-2);
-    border: 1px solid var(--color-border); border-radius: 100px; padding: 0.4rem 0.85rem;
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-2);
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-radius: 100px; padding: 0.5rem 1rem;
   }
   .work-card-arrow {
     flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
     width: 2.5rem; height: 2.5rem; border-radius: 50%;
-    border: 1px solid var(--color-border); color: var(--color-ink);
-    transition: background-color var(--dur-fast) var(--ease-enter), color var(--dur-fast) var(--ease-enter), border-color var(--dur-fast) var(--ease-enter), transform var(--dur-normal) var(--ease-emphasized);
+    background: var(--color-ink); color: var(--color-bg);
+    transition: transform var(--dur-normal) var(--ease-emphasized);
   }
   @media (hover: hover) {
-    .work-card:hover .work-card-arrow {
-      background: var(--color-ink); border-color: var(--color-ink); color: var(--color-bg);
-      transform: rotate(45deg);
-    }
+    .work-card:hover .work-card-arrow { transform: rotate(45deg); }
   }
-
-  .work-card-body { display: flex; flex-direction: column; flex: 1; }
   .work-card-label { display: none; }
 
   @media (min-width: 900px) {
-    .work-row { flex-direction: row; align-items: stretch; height: clamp(26rem, 44vw, 30rem); gap: 0.75rem; }
+    .work-row { flex-direction: row; align-items: stretch; height: clamp(36rem, 50vw, 40rem); gap: 0.75rem; }
     .work-card {
-      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden;
+      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
       transition: flex-grow var(--dur-slow) var(--ease-emphasized);
     }
     .work-card.is-featured { flex: 3 1 0; }
@@ -356,11 +355,12 @@ const QUESTIONS = [
     .work-row:hover .work-card:hover { flex: 3.2 1 0; }
 
     /*
-      The card's width is the only thing that animates. Its content is taken
-      out of flow and cross-faded around the move instead of switched with
-      display:none: the outgoing content is gone in ~90ms, before the card
-      narrows, and the incoming content fades in only once the card is ~90%
-      open, so the text never visibly re-wraps while the width is changing.
+      The card's width is the only thing that animates. Its text is taken out
+      of flow and cross-faded around the move instead of switched with
+      display:none: the outgoing text is gone in ~90ms, before the card
+      narrows, and the incoming text fades in only once the card is ~90%
+      open, so it never visibly re-wraps while the width is changing. The
+      laptop stays and dims, so a folded card still shows its project.
 
       State is driven through custom properties on the card, with exactly one
       concrete rule per child element. Writing these as separate
@@ -368,34 +368,44 @@ const QUESTIONS = [
       Lightning CSS (Tailwind v4 minifier) bug that drops the ancestor
       qualifier and applies one branch to every card.
     */
+    .wc-media {
+      position: absolute; left: 50%; top: 2rem; width: 24rem; max-width: none; margin: 0;
+      transform: translateX(-50%);
+      opacity: var(--media-o, 0.32);
+      transition: opacity var(--dur-slow) var(--ease-emphasized);
+    }
     .work-card-body {
-      position: absolute; inset: 1.1rem;
+      position: absolute; inset: 0; padding: 19.5rem 2rem 2rem 2rem;
       opacity: var(--body-o, 0);
       transition: opacity var(--body-dur, 90ms) var(--body-ease, var(--ease-exit)) var(--body-delay, 0ms);
     }
     .work-card-label {
-      display: block; writing-mode: vertical-rl; text-orientation: mixed;
-      font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em;
-      color: var(--color-ink-3); white-space: nowrap; overflow: hidden; max-height: 100%;
+      display: block; position: absolute; left: 50%; bottom: 1.75rem;
+      writing-mode: vertical-rl; transform: translateX(-50%) rotate(180deg);
+      font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-ink-2); white-space: nowrap; max-height: calc(100% - 3rem);
       opacity: var(--label-o, 1);
       transition: opacity var(--label-dur, 140ms) var(--ease-enter) var(--label-delay, 260ms);
     }
     .work-card.is-featured {
+      --media-o: 1;
       --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
       --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
     }
     .work-row:hover .work-card:hover {
+      --media-o: 1;
       --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
       --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
     }
     .work-row:hover .work-card:not(:hover) {
+      --media-o: 0.32;
       --body-o: 0; --body-dur: 90ms; --body-delay: 0ms;
       --label-o: 1; --label-dur: 140ms; --label-delay: 260ms;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .work-card, .work-card-arrow, .work-card-body, .work-card-label { transition: none; }
+    .work-card, .work-card-arrow, .work-card-body, .work-card-label, .wc-media { transition: none; }
   }
 
 
@@ -422,11 +432,6 @@ const QUESTIONS = [
   }
   .r-prose .r-prose-close { color: var(--color-ink); font-weight: 500; margin-top: 1.5rem; }
 
-  .work-card-tagline {
-    font-family: var(--font-display); font-weight: 600; font-size: 1rem; line-height: 1.4;
-    letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.6rem; max-width: 32rem;
-  }
-  .work-card-info .work-card-title { margin-bottom: 0.4rem; }
 
   .r-h2 {
     font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
