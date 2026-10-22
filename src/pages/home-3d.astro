@@ -452,12 +452,12 @@ const QUESTIONS = [
   @media (min-width: 900px) {
     .work-row { flex-direction: row; align-items: stretch; height: clamp(36rem, 50vw, 40rem); gap: 0.75rem; }
     .work-card {
-      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
+      flex: 0 0 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
       transition: flex-grow var(--dur-slow) var(--ease-emphasized);
     }
-    .work-card.is-featured { flex: 3 1 0; }
-    .work-row:hover .work-card { flex: 1 1 0; }
-    .work-row:hover .work-card:hover { flex: 3.2 1 0; }
+    .work-card.is-featured { flex-grow: 1; }
+    .work-row:hover .work-card { flex-grow: 0; }
+    .work-row:hover .work-card:hover { flex-grow: 1; }
 
     /*
       The card's width is the only thing that animates. Its text is taken out
@@ -493,19 +493,19 @@ const QUESTIONS = [
       transition: opacity var(--label-dur, 140ms) var(--ease-enter) var(--label-delay, 260ms);
     }
     .work-card.is-featured {
-      --scene-o: 1; --scene-pe: auto; --scene-dur: 300ms; --scene-delay: 240ms;
+      --scene-pe: auto;
       --media-o: 1;
       --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
       --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
     }
     .work-row:hover .work-card:hover {
-      --scene-o: 1; --scene-pe: auto; --scene-dur: 300ms; --scene-delay: 240ms;
+      --scene-pe: auto;
       --media-o: 1;
       --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
       --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
     }
     .work-row:hover .work-card:not(:hover) {
-      --scene-o: 0; --scene-pe: none; --scene-dur: 120ms; --scene-delay: 0ms;
+      --scene-pe: none;
       --media-o: 0.32;
       --body-o: 0; --body-dur: 90ms; --body-delay: 0ms;
       --label-o: 1; --label-dur: 140ms; --label-delay: 260ms;
@@ -521,13 +521,13 @@ const QUESTIONS = [
     .work-card { --play: paused; }
     .work-card.is-live { --play: running; }
     .work-card-body { opacity: 0; }
+    .wc-media { display: none; }
 
     .wp-scene {
       display: block; position: absolute; inset: 0; z-index: 2; overflow: hidden; border-radius: inherit;
       container-type: size; color: #f2f2f0; cursor: grab; user-select: none; -webkit-user-select: none;
       background: radial-gradient(120% 90% at 50% 0%, #181a22 0%, #08080a 62%);
-      opacity: var(--scene-o, 0); pointer-events: var(--scene-pe, none);
-      transition: opacity var(--scene-dur, 260ms) var(--ease-enter) var(--scene-delay, 200ms);
+      pointer-events: var(--scene-pe, none);
     }
     .wp-scene:active { cursor: grabbing; }
 
@@ -544,7 +544,7 @@ const QUESTIONS = [
     .wp-tilt { transform-style: preserve-3d; will-change: transform; }
 
     .wp-sheet {
-      position: relative; height: 78cqh; aspect-ratio: 0.74; container-type: inline-size;
+      position: relative; width: min(57.7cqh, 86cqw); aspect-ratio: 0.74; container: sheet / inline-size;
       border-radius: 1rem;
       background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1));
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -571,6 +571,21 @@ const QUESTIONS = [
       background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
     }
 
+    /* the same sheet at every size; what it shows depends on how much room it has */
+    .wp-word, .wp-kick, .wp-hint, .wp-cta, .wp-l, .wp-title, .wp-tags, .wp-brief, .wp-side, .wp-foot {
+      transition: opacity 220ms var(--ease-enter);
+    }
+    .wp-n { transition: font-size 260ms var(--ease-enter); }
+    @container (max-width: 330px) {
+      .wp-word, .wp-kick, .wp-hint, .wp-cta { opacity: 0; }
+      .wp-stage { place-items: start center; padding-top: 1.75rem; }
+    }
+    @container sheet (max-width: 230px) {
+      .wp-l, .wp-title, .wp-tags, .wp-brief, .wp-side, .wp-foot { opacity: 0; }
+      .wp-n { font-size: 34cqw; margin: 0 !important; text-align: center; }
+      .wp-face { padding: 10cqw 4cqw; }
+    }
+    .work-card-label { z-index: 3; color: rgba(242, 242, 240, 0.62); }
     .wp-kick, .wp-hint {
       position: absolute; margin: 0; font-family: var(--font-mono); font-size: 0.6875rem;
       letter-spacing: 0.16em; text-transform: uppercase; color: rgba(242,242,240,.4); pointer-events: none;
