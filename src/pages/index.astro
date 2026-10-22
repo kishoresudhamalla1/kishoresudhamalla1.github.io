@@ -213,6 +213,9 @@ const QUESTIONS = [
     --hue: 0;
     --g1: #8aa4f0; --g2: #b4c3ff; --g3: #f0ece0; --g4: #e4c690; --g5: #e2a07c; --g6: #d9908f;
     transition: --hue 800ms var(--ease-enter);
+    /* on landing the colour sweeps in once, holds, and settles back to rest;
+       from then on it is the hover effect */
+    animation: hue-intro 4.4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s 1;
   }
   :global(html:not(.dark)) .r-h1 { --g1: #3b4fc4; --g2: #4f63d6; --g3: #7a6a45; --g4: #a8742b; --g5: #b3563a; --g6: #a8465f; }
   .r-h1-accent {
@@ -226,8 +229,9 @@ const QUESTIONS = [
       color-mix(in srgb, var(--g5) calc(var(--hue) * 100%), var(--color-ink-2)),
       color-mix(in srgb, var(--g6) calc(var(--hue) * 100%), var(--color-ink-2)));
   }
+  @keyframes hue-intro { 0% { --hue: 0; } 28% { --hue: 1; } 72% { --hue: 1; } 100% { --hue: 0; } }
   @media (hover: hover) { .r-h1:hover { --hue: 1; } }
-  @media (prefers-reduced-motion: reduce) { .r-h1 { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .r-h1 { transition: none; animation: none; } }
   .r-lede {
     font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
     color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;
