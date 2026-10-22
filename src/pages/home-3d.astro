@@ -1,0 +1,675 @@
+---
+/**
+ * Redesign option — homepage, rewritten to the user's supplied copy
+ * (hero, "a little about how I work", three selected-work cards, "how I
+ * think about AI-native products", AI Lab, "what I bring", "a note on
+ * leadership", "currently exploring", "let's talk").
+ *
+ * Copy is the user's verbatim; no stats or claims were added. Two things to
+ * confirm: the third card ("Chatbot → Agentic AI → AI-native experiences")
+ * links to a stub page with no case-study content yet, and its image is a
+ * conceptual diagram, not product work. The earlier 16+/9/1.6M+/120+ stat
+ * row was dropped because the new hero line replaces it.
+ */
+import Base from "../layouts/Base.astro";
+
+const WORK = [
+  {
+    n: "01",
+    short: "Time Management",
+    word: "TIME", l1: "Enterprise HCM.", l2: "2023 to 2024.", ptitle: "Time Management.",
+    pblurb: "A mature enterprise time management product used across global workforces, redesigned for employees, managers and HR teams.",
+    kicker: "01 \u2014 Enterprise HCM \u00b7 Web app",
+    title: "Time Management",
+    blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets and workforce insights into a more coherent experience for employees, managers and HR teams.",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
+    href: "/work/time-management",
+    img: "/images/work/time-management/card-employee.jpg",
+    featured: true,
+  },
+  {
+    n: "02",
+    short: "Flows to Playbooks",
+    word: "PLAYBOOKS", l1: "Product strategy.", l2: "Journeys shipped.", ptitle: "Flows to Playbooks.",
+    pblurb: "From individual workflow transactions to guided employee journeys and AI-assisted playbooks.",
+    kicker: "02 \u2014 Product strategy \u00b7 Web app",
+    title: "From Flows \u2192 Journeys \u2192 AI Playbooks",
+    blurb: "A product evolution from individual workflow transactions to guided employee journeys and ultimately AI-assisted playbooks that can help orchestrate complex work.",
+    tags: ["Product strategy", "Workflow design", "AI-native experiences"],
+    href: "/work/flows-journeys-playbooks",
+    img: "/images/work/journeys/card-templates.jpg",
+    featured: false,
+  },
+  {
+    n: "03",
+    short: "Agentic AI",
+    word: "AGENTIC", l1: "Agentic UX.", l2: "Concept.", ptitle: "Chatbot to Agentic AI.",
+    pblurb: "The shift from assistants that answer to agents that understand intent, use tools and take action.",
+    kicker: "03 \u2014 Agentic UX \u00b7 Concept",
+    title: "Chatbot \u2192 Agentic AI \u2192 AI-native experiences",
+    blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions and become part of the product experience itself.",
+    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
+    href: "/work/chatbot-to-agentic",
+    img: "/images/work/agentic/hero-diagram.svg",
+    featured: false,
+  },
+];
+
+const QUESTIONS = [
+  "What does the system know?",
+  "What can it decide?",
+  "What should it do?",
+  "When should a person be involved?",
+  "How do we know it worked?",
+];
+
+---
+
+<Base title="Kishore Sudhamalla | Home (paper preview)">
+  <!-- Hero -->
+  <section class="r-hero-wrap">
+  <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
+  <div class="container-pg r-hero">
+    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
+    <h1 class="r-h1 enter" style="--tier:0">
+      I design complex enterprise products into
+      <span class="r-h1-accent">simpler, more intelligent experiences.</span>
+    </h1>
+
+    <p class="r-lede enter" style="--tier:1">
+      I work at the intersection of product design, systems thinking and AI, turning workflows, rules and business complexity into experiences that help people understand, decide and act.
+    </p>
+
+    <p class="r-hero-facts enter" style="--tier:1">
+      16+ years in design · 9 years in enterprise products · AI-native product design
+    </p>
+
+    <div class="r-cta-row enter" style="--tier:2">
+      <a href="#work" class="r-btn r-btn-primary">View my work</a>
+      <a href="/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
+    </div>
+  </div>
+  </section>
+
+  <!-- Selected work — side by side, hover expands one, collapses the others -->
+  <section id="work" class="container-pg r-work" data-reveal>
+    <p class="r-section-label">Selected work</p>
+
+    <div class="work-row">
+      {WORK.map((p) => (
+        <a href={p.href} class:list={["work-card", p.featured && "is-featured"]}>
+          <div class="wc-media" aria-hidden="true">
+            <div class="wc-laptop">
+              <div class="wc-lid"><div class="wc-screen"><img src={p.img} alt="" loading="lazy" decoding="async" /></div></div>
+              <div class="wc-base"></div>
+            </div>
+          </div>
+
+          <div class="wp-scene" aria-hidden="true" style={`--n:${p.word.length}`}>
+            <p class="wp-word">{p.word}</p>
+            <div class="wp-stage">
+              <div class="wp-sway">
+                <div class="wp-tilt">
+                  <div class="wp-sheet">
+                    <div class="wp-face">
+                      <p class="wp-n">{p.n}.</p>
+                      <p class="wp-l">{p.l1}</p>
+                      <p class="wp-l">{p.l2}</p>
+                      <p class="wp-title">{p.ptitle}</p>
+                      <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+                      <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
+                      <p class="wp-side">&mdash; CASE {p.n}</p>
+                      <p class="wp-foot"><b>Kishore.</b> selected work</p>
+                    </div>
+                    <div class="wp-glare"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="wp-kick">{p.kicker}</p>
+            <p class="wp-hint"><b>Drag</b> to turn it</p>
+            <span class="wp-cta">View case study
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+          </div>
+
+          <div class="work-card-body">
+            <div class="work-card-info">
+              <p class="wc-kicker">{p.kicker}</p>
+              <p class="work-card-title">{p.title}</p>
+              <p class="work-card-blurb">{p.blurb}</p>
+              <div class="wc-foot">
+                <div class="work-card-tags">
+                  {p.tags.map((t) => <span>{t}</span>)}
+                </div>
+                <span class="work-card-arrow" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="work-card-label" aria-hidden="true">{p.n} &mdash; {p.short}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- A little about how I work -->
+  <section class="container-pg r-prose" data-reveal>
+    <p class="r-section-label">A little about how I work</p>
+    <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
+    <p>The screen is usually just where the complexity becomes visible.</p>
+    <p>I like getting underneath it: understanding the system, finding where people struggle and figuring out what the product should do differently.</p>
+    <p>With AI, that becomes even more interesting.</p>
+    <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask and when it should step back.</p>
+    <p class="r-prose-close">That's the kind of work I enjoy.</p>
+  </section>
+
+  <!-- How I think about AI-native products -->
+  <section class="container-pg r-think" data-reveal>
+    <p class="r-section-label">How I think about AI-native products</p>
+    <div class="r-think-grid">
+      <div class="r-think-copy">
+        <p class="r-think-lead">AI isn't just another feature to add to an existing interface.</p>
+        <p>It changes how people interact with products.</p>
+        <p>Instead of asking users to find the right screen, understand the right workflow and perform every step themselves, we can start with intent and let the system help with the work.</p>
+        <p>But that only works when people understand what the system is doing and remain in control when it matters.</p>
+      </div>
+      <div class="r-think-side">
+        <p class="r-think-intro">I think about AI experiences through a few simple questions:</p>
+        <ol class="r-think-q">
+          {QUESTIONS.map((q, i) => (
+            <li><span class="r-think-n">{String(i + 1).padStart(2, "0")}</span><span>{q}</span></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+    <p class="r-think-close">That's where I spend a lot of my time.</p>
+  </section>
+
+  <!-- AI Lab -->
+  <section class="container-pg r-lab" data-reveal>
+    <p class="r-section-label">AI Lab</p>
+    <h2 class="r-h2">Designing by building</h2>
+    <div class="r-prose-inline">
+      <p>I'm using AI and code to explore new ways of designing products, workflows and systems.</p>
+      <p>The AI Lab is where I take ideas beyond Figma, build working prototypes, test how they behave and learn what changes when AI becomes part of the product itself.</p>
+      <p>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
+    </div>
+
+    <a href="/ai-lab" class="r-lab-card">
+      <h3>Design Ops</h3>
+      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean and help designers decide what to do next?</p>
+      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval and verification.</p>
+      <div class="work-card-tags">
+        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+      </div>
+      <span class="r-text-link">Explore AI Lab →</span>
+    </a>
+  </section>
+
+  <!-- Let's talk -->
+  <section id="contact" class="r-talk" data-reveal>
+    <div class="container-pg">
+      <h2 class="r-talk-head">Let's talk</h2>
+      <p class="r-talk-p">If you're building complex products, rethinking enterprise workflows or figuring out what AI-native experiences should actually look like, I'd love to compare notes.</p>
+      <a href="mailto:build@kishoresudhamalla.com" class="r-btn r-btn-primary">Get in touch</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { initCursorGrid } from "../lib/cursorGrid";
+
+  // Faint cursor-reactive grid behind the hero. --color-ink's dark value is
+  // scoped to `.dark body`, so it has to be read off body, and re-read on
+  // the site's `themechange` event (dispatched on document).
+  function mountHeroGrid() {
+    const el = document.querySelector<HTMLElement>("[data-cursor-grid]");
+    if (!el || el.dataset.ready) return;
+    el.dataset.ready = "1";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const opts = () => ({
+      color: getComputedStyle(document.body).getPropertyValue("--color-ink").trim() || "#0d0d0c",
+      cellSize: 60, radius: 150, maxOpacity: 0.22, holdTime: 250,
+      fadeDuration: 650, lineWidth: 0.75, gridOpacity: 0, fillOpacity: 0, cellRadius: 4,
+    });
+    let destroy = initCursorGrid(el, opts());
+    document.addEventListener("themechange", () => {
+      destroy();
+      destroy = initCursorGrid(el, opts());
+    });
+  }
+  mountHeroGrid();
+  document.addEventListener("astro:page-load", mountHeroGrid);
+
+  // ── paper scene: tilt toward the pointer, drag to turn, run only when open ──
+  function initPaper() {
+    const row = document.querySelector<HTMLElement>(".work-row");
+    if (!row || row.dataset.paper) return;
+    row.dataset.paper = "1";
+    const mq = window.matchMedia("(min-width: 900px) and (hover: hover)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cards = Array.from(row.querySelectorAll<HTMLElement>(".work-card"));
+
+    type S = { card: HTMLElement; scene: HTMLElement; tilt: HTMLElement; sheet: HTMLElement;
+      rx: number; ry: number; tx: number; ty: number; yaw: number; vel: number; drag: boolean; lastX: number; moved: number; };
+    const st: S[] = cards.map((card) => ({
+      card, scene: card.querySelector<HTMLElement>(".wp-scene")!, tilt: card.querySelector<HTMLElement>(".wp-tilt")!,
+      sheet: card.querySelector<HTMLElement>(".wp-sheet")!, rx: 0, ry: 0, tx: 0, ty: 0, yaw: 0, vel: 0, drag: false, lastX: 0, moved: 0,
+    }));
+
+    let active = 0, raf = 0;
+    const setActive = (i: number) => {
+      active = i;
+      cards.forEach((c, k) => c.classList.toggle("is-live", k === i));
+      if (mq.matches && !raf) raf = requestAnimationFrame(tick);
+    };
+
+    st.forEach((s, i) => {
+      s.card.addEventListener("pointerenter", () => setActive(i));
+      s.card.addEventListener("focusin", () => setActive(i));
+      s.scene.addEventListener("pointermove", (e) => {
+        const r = s.scene.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        if (s.drag) {
+          const dx = e.clientX - s.lastX; s.lastX = e.clientX; s.moved += Math.abs(dx);
+          s.yaw += dx * 0.55; s.vel = dx;
+        } else { s.tx = nx * 2; s.ty = ny * 2; }
+        const sr = s.sheet.getBoundingClientRect();
+        s.sheet.style.setProperty("--gx", `${((e.clientX - sr.left) / sr.width) * 100}%`);
+        s.sheet.style.setProperty("--gy", `${((e.clientY - sr.top) / sr.height) * 100}%`);
+      });
+      s.scene.addEventListener("pointerleave", () => { s.tx = 0; s.ty = 0; });
+      s.scene.addEventListener("pointerdown", (e) => { s.drag = true; s.lastX = e.clientX; s.moved = 0; s.vel = 0; s.scene.setPointerCapture(e.pointerId); });
+      const up = () => { s.drag = false; };
+      s.scene.addEventListener("pointerup", up);
+      s.scene.addEventListener("pointercancel", up);
+      // a drag turns the sheet; only a plain click opens the case study
+      s.scene.addEventListener("click", (e) => { if (s.moved > 6) e.preventDefault(); });
+    });
+
+    function tick() {
+      raf = 0;
+      if (!mq.matches) return;
+      const s = st[active];
+      s.rx += (-s.ty * 9 - s.rx) * 0.1;
+      s.ry += (s.tx * 13 - s.ry) * 0.1;
+      if (!s.drag) {
+        if (!reduce) s.yaw += s.vel * 0.55;
+        s.vel *= 0.94;
+        if (Math.abs(s.vel) < 0.3) {
+          // settle on the nearest whole turn
+          const home = Math.round(s.yaw / 360) * 360;
+          s.yaw += (home - s.yaw) * 0.08;
+        }
+      }
+      s.tilt.style.transform = `rotateX(${s.rx.toFixed(2)}deg) rotateY(${(s.ry + s.yaw).toFixed(2)}deg)`;
+      raf = requestAnimationFrame(tick);
+    }
+    mq.addEventListener("change", () => { if (mq.matches && !raf) raf = requestAnimationFrame(tick); });
+    row.addEventListener("pointerleave", () => setActive(0));
+    setActive(0);
+  }
+  initPaper();
+  document.addEventListener("astro:page-load", initPaper);
+</script>
+
+<style>
+  .r-hero-wrap { position: relative; overflow: hidden; }
+  .r-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .r-hero-wrap > .r-hero { position: relative; z-index: 1; }
+  .r-hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem); }
+  .r-hero > * { max-width: var(--measure); }
+  .r-hero > .r-h1 { max-width: var(--measure-head); }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .r-h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
+    margin: 0 0 1.5rem;
+  }
+  .r-h1-accent { color: var(--color-ink-2); }
+  .r-lede {
+    font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
+    color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;
+  }
+  .r-cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+  .r-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    transition: opacity var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter), background-color var(--dur-micro) var(--ease-enter);
+  }
+  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
+  .r-btn-primary:hover { opacity: 0.85; }
+  .r-btn-ghost {
+    border: 1px solid var(--color-border); color: var(--color-ink);
+  }
+  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-facts {
+    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
+    padding-top: 1.75rem; border-top: 1px solid var(--color-border);
+  }
+  .r-facts dt {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .r-facts dd {
+    margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3);
+  }
+
+  .r-section-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+
+  .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
+
+  /* ── side-by-side hover-expand: one card open, the others fold to a spine ──
+     Mobile-first plain stack (no hover to drive a collapse); the
+     side-by-side expand/collapse turns on only at the breakpoint where a
+     pointer with hover is also likely. Each project is shown on the same
+     floating laptop so three different products read as one set. */
+  .work-row { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .work-card {
+    position: relative; display: flex; flex-direction: column;
+    border: 1px solid var(--color-border); border-radius: 1.75rem;
+    text-decoration: none; color: inherit; background: var(--color-surface);
+    padding: 1.5rem;
+  }
+
+  /* the device */
+  .wc-media {
+    position: relative; width: 100%; max-width: 26rem; margin: 0 auto 1.5rem;
+    perspective: 1800px; pointer-events: none;
+  }
+  .wc-laptop { transform: rotateX(4deg) rotateY(-9deg); transform-style: preserve-3d; }
+  .wc-lid {
+    padding: 0.55rem 0.55rem 0.7rem; background: #161618;
+    border-radius: 0.9rem 0.9rem 0.25rem 0.25rem;
+    box-shadow: 0 34px 60px -26px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.09);
+  }
+  .wc-screen { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 0.35rem; background: #fff; }
+  .wc-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .wc-base {
+    position: relative; height: 0.7rem; margin: 0 -7%;
+    background: linear-gradient(#dcdee3, #b7bac2); border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 16px 24px -14px rgba(0,0,0,.45);
+  }
+  .wc-base::after {
+    content: ""; position: absolute; left: 50%; top: 0; width: 16%; height: 0.28rem;
+    transform: translateX(-50%); background: #9a9da6; border-radius: 0 0 0.4rem 0.4rem;
+  }
+
+  .work-card-body { display: flex; flex-direction: column; flex: 1; }
+  .work-card-info { display: flex; flex-direction: column; flex: 1; }
+
+  .wc-kicker {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.9rem;
+  }
+  .work-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 650; line-height: 1.1; letter-spacing: -0.03em;
+    color: var(--color-ink); margin: 0 0 0.9rem; max-width: 30rem;
+  }
+  .work-card-blurb {
+    font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); max-width: 32rem; margin: 0 0 1.5rem;
+  }
+
+  .wc-foot { margin-top: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
+  .work-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .work-card-tags span {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-2);
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-radius: 100px; padding: 0.5rem 1rem;
+  }
+  .work-card-arrow {
+    flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    background: var(--color-ink); color: var(--color-bg);
+    transition: transform var(--dur-normal) var(--ease-emphasized);
+  }
+  @media (hover: hover) {
+    .work-card:hover .work-card-arrow { transform: rotate(45deg); }
+  }
+  .work-card-label { display: none; }
+
+  @media (min-width: 900px) {
+    .work-row { flex-direction: row; align-items: stretch; height: clamp(36rem, 50vw, 40rem); gap: 0.75rem; }
+    .work-card {
+      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
+      transition: flex-grow var(--dur-slow) var(--ease-emphasized);
+    }
+    .work-card.is-featured { flex: 3 1 0; }
+    .work-row:hover .work-card { flex: 1 1 0; }
+    .work-row:hover .work-card:hover { flex: 3.2 1 0; }
+
+    /*
+      The card's width is the only thing that animates. Its text is taken out
+      of flow and cross-faded around the move instead of switched with
+      display:none: the outgoing text is gone in ~90ms, before the card
+      narrows, and the incoming text fades in only once the card is ~90%
+      open, so it never visibly re-wraps while the width is changing. The
+      laptop stays and dims, so a folded card still shows its project.
+
+      State is driven through custom properties on the card, with exactly one
+      concrete rule per child element. Writing these as separate
+      ancestor-qualified rules against a shared child selector triggers a
+      Lightning CSS (Tailwind v4 minifier) bug that drops the ancestor
+      qualifier and applies one branch to every card.
+    */
+    .wc-media {
+      position: absolute; left: 50%; top: 2rem; width: 24rem; max-width: none; margin: 0;
+      transform: translateX(-50%);
+      opacity: var(--media-o, 0.32);
+      transition: opacity var(--dur-slow) var(--ease-emphasized);
+    }
+    .work-card-body {
+      position: absolute; inset: 0; padding: 19.5rem 2rem 2rem 2rem;
+      opacity: var(--body-o, 0);
+      transition: opacity var(--body-dur, 90ms) var(--body-ease, var(--ease-exit)) var(--body-delay, 0ms);
+    }
+    .work-card-label {
+      display: block; position: absolute; left: 50%; bottom: 1.75rem;
+      writing-mode: vertical-rl; transform: translateX(-50%) rotate(180deg);
+      font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-ink-2); white-space: nowrap; max-height: calc(100% - 3rem);
+      opacity: var(--label-o, 1);
+      transition: opacity var(--label-dur, 140ms) var(--ease-enter) var(--label-delay, 260ms);
+    }
+    .work-card.is-featured {
+      --scene-o: 1; --scene-pe: auto; --scene-dur: 300ms; --scene-delay: 240ms;
+      --media-o: 1;
+      --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
+      --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
+    }
+    .work-row:hover .work-card:hover {
+      --scene-o: 1; --scene-pe: auto; --scene-dur: 300ms; --scene-delay: 240ms;
+      --media-o: 1;
+      --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
+      --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
+    }
+    .work-row:hover .work-card:not(:hover) {
+      --scene-o: 0; --scene-pe: none; --scene-dur: 120ms; --scene-delay: 0ms;
+      --media-o: 0.32;
+      --body-o: 0; --body-dur: 90ms; --body-delay: 0ms;
+      --label-o: 1; --label-dur: 140ms; --label-delay: 260ms;
+    }
+  }
+
+  /* ── the paper scene (desktop with a pointer only) ───────────────────────
+     A translucent sheet floats in front of a giant wordmark and tilts toward
+     the pointer. Pure CSS 3D plus a few lines of script for the pointer; no
+     WebGL. Only the open card runs. Mobile and touch keep the laptop cards. */
+  .wp-scene { display: none; }
+  @media (min-width: 900px) and (hover: hover) {
+    .work-card { --play: paused; }
+    .work-card.is-live { --play: running; }
+    .work-card-body { opacity: 0; }
+
+    .wp-scene {
+      display: block; position: absolute; inset: 0; z-index: 2; overflow: hidden; border-radius: inherit;
+      container-type: size; color: #f2f2f0; cursor: grab; user-select: none; -webkit-user-select: none;
+      background: radial-gradient(120% 90% at 50% 0%, #181a22 0%, #08080a 62%);
+      opacity: var(--scene-o, 0); pointer-events: var(--scene-pe, none);
+      transition: opacity var(--scene-dur, 260ms) var(--ease-enter) var(--scene-delay, 200ms);
+    }
+    .wp-scene:active { cursor: grabbing; }
+
+    .wp-word {
+      position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); margin: 0;
+      font-family: var(--font-display); font-weight: 650; letter-spacing: -0.055em; line-height: 0.8;
+      font-size: calc(96cqw / (var(--n, 8) * 0.62)); white-space: nowrap;
+      color: rgba(242, 242, 240, 0.13);
+    }
+    .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; }
+    .wp-sway {
+      animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused);
+    }
+    .wp-tilt { transform-style: preserve-3d; will-change: transform; }
+
+    .wp-sheet {
+      position: relative; height: 78cqh; aspect-ratio: 0.74; container-type: inline-size;
+      border-radius: 1rem;
+      background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      -webkit-backdrop-filter: blur(7px) saturate(1.2); backdrop-filter: blur(7px) saturate(1.2);
+      box-shadow: 0 34px 70px -22px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .wp-sheet::before {
+      content: ""; position: absolute; inset: 3cqw; border: 1px solid rgba(255,255,255,.13); border-radius: 0.6rem;
+      pointer-events: none;
+    }
+    .wp-face { position: absolute; inset: 0; padding: 8cqw 8cqw; font-family: var(--font-display); }
+    .wp-face p, .wp-face ul { margin: 0; }
+    .wp-n { font-size: 15cqw; font-weight: 700; line-height: 1; margin-bottom: 6cqw !important; color: #fff; }
+    .wp-l { font-size: 8.4cqw; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; color: rgba(255,255,255,.5); }
+    .wp-title { font-size: 9.6cqw; font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin: 2cqw 0 6cqw !important; }
+    .wp-tags { list-style: none; padding: 0; font-family: var(--font-sans); font-size: 3.4cqw; font-weight: 600; line-height: 1.5; color: rgba(255,255,255,.9); }
+    .wp-brief { position: absolute; left: 50%; right: 8cqw; bottom: 22cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+    .wp-brief .wp-bh { font-weight: 700; color: rgba(255,255,255,.92); margin-bottom: 1.4cqw; font-size: 3cqw; }
+    .wp-side { position: absolute; right: 3.4cqw; bottom: 22cqw; writing-mode: vertical-rl; font-family: var(--font-mono); font-size: 2.4cqw; letter-spacing: 0.14em; color: rgba(255,255,255,.55); }
+    .wp-foot { position: absolute; left: 8cqw; bottom: 8cqw; font-size: 4cqw; font-weight: 600; color: rgba(255,255,255,.6); }
+    .wp-foot b { color: #fff; font-weight: 700; }
+    .wp-glare {
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
+      background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
+    }
+
+    .wp-kick, .wp-hint {
+      position: absolute; margin: 0; font-family: var(--font-mono); font-size: 0.6875rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: rgba(242,242,240,.4); pointer-events: none;
+    }
+    .wp-kick { left: 1.6rem; top: 1.5rem; }
+    .wp-hint { left: 0; right: 0; bottom: 1.6rem; text-align: center; font-size: 0.625rem; color: rgba(242,242,240,.3); }
+    .wp-hint b { font-weight: 600; }
+    .wp-cta {
+      position: absolute; right: 1.5rem; bottom: 1.3rem; display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-mono); font-size: 0.75rem; color: #08080a; background: #f2f2f0;
+      border-radius: 100px; padding: 0.6rem 0.9rem 0.6rem 1.1rem; cursor: pointer;
+    }
+  }
+  @keyframes wp-sway {
+    0%, 100% { transform: translateY(0) rotateX(2deg) rotateY(-5deg); }
+    50% { transform: translateY(-1.2%) rotateX(-2deg) rotateY(5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wp-scene { transition: none; }
+    .wp-sway { animation: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card, .work-card-arrow, .work-card-body, .work-card-label, .wc-media { transition: none; }
+  }
+
+
+
+  .r-text-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
+    text-decoration: none; border-bottom: 1px solid var(--color-border);
+  }
+  .r-text-link:hover { border-color: var(--color-ink); }
+
+  /* ── copy sections ── */
+  .r-hero-facts {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.04em;
+    color: var(--color-ink-3); margin: 0 0 1.75rem;
+  }
+  .r-cta-row { margin-bottom: 0; }
+
+  .r-prose { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-prose > * { max-width: var(--measure); }
+  .r-prose p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-prose .r-prose-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-prose .r-prose-close { color: var(--color-ink); font-weight: 500; margin-top: 1.5rem; }
+
+
+  .r-h2 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem); color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-lab { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-prose-inline { max-width: var(--measure); }
+  .r-prose-inline p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-lab-card {
+    display: block; max-width: var(--measure); margin-top: 1.5rem; padding: 1.75rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
+    text-decoration: none; color: inherit; transition: border-color var(--dur-micro) var(--ease-enter);
+  }
+  .r-lab-card:hover { border-color: var(--color-ink-3); }
+  .r-lab-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
+    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.75rem;
+  }
+  .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
+  .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+
+
+  .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
+  .r-talk-head {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95;
+    font-size: clamp(2.75rem, 9vw, 6rem); color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+  .r-talk-p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2rem; }
+
+  /* How I think about AI-native products */
+  .r-think { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-think-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .r-think-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+  }
+  .r-think-copy p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; max-width: 36rem; }
+  .r-think-copy .r-think-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-think-intro { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-think-q { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-border); }
+  .r-think-q li {
+    display: grid; grid-template-columns: 2.25rem 1fr; align-items: baseline; gap: 0.5rem;
+    padding: 1rem 0; border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.0625rem, 1.8vw, 1.25rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-think-n { font-family: var(--font-mono); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--color-ink-3); }
+  .r-think-close { font-size: 1.0625rem; font-weight: 500; color: var(--color-ink); margin: 2rem 0 0; }
+</style>
