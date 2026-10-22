@@ -1,0 +1,131 @@
+---
+/**
+ * A film with a liquid-metal play control.
+ *
+ * The control is a brushed-metal disc whose finish slowly turns, brightens
+ * toward the pointer and speeds up on hover, with a ring that pulses when it
+ * is pressed. It is pure CSS plus a few lines to follow the pointer. It
+ * unmutes the film because pressing it is the viewer's choice to hear it, then
+ * hands over to the native controls for seek and volume. It returns whenever
+ * the film is paused or ends, so there is always an obvious way to resume.
+ */
+interface Props { src: string; poster: string; label: string; }
+const { src, poster, label } = Astro.props;
+---
+
+<div class="fp" data-fp>
+  <video muted playsinline preload="metadata" poster={poster} aria-label={label}>
+    <source src={src} type="video/mp4" />
+  </video>
+  <button type="button" class="fp-btn" aria-label="Play the film with sound">
+    <span class="fp-ring" aria-hidden="true"></span>
+    <span class="fp-metal" aria-hidden="true"></span>
+    <span class="fp-glint" aria-hidden="true"></span>
+    <svg class="fp-icon" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z" fill="currentColor" /></svg>
+  </button>
+</div>
+
+<script>
+  function initFilmPlayers() {
+    document.querySelectorAll<HTMLElement>("[data-fp]").forEach((root) => {
+      if (root.dataset.ready) return;
+      root.dataset.ready = "1";
+      const video = root.querySelector("video")!;
+      const btn = root.querySelector<HTMLButtonElement>(".fp-btn")!;
+
+      const sync = () => root.classList.toggle("is-playing", !video.paused && !video.ended);
+      video.addEventListener("play", sync);
+      video.addEventListener("pause", sync);
+      video.addEventListener("ended", sync);
+
+      btn.addEventListener("click", () => {
+        btn.classList.remove("is-press");
+        void btn.offsetWidth;
+        btn.classList.add("is-press");
+        // the viewer asked for the film, so play it with its sound, and give
+        // them the native bar for scrubbing and volume from here on
+        video.muted = false;
+        video.controls = true;
+        video.play().catch(() => { video.muted = true; video.play(); });
+      });
+
+      // light the metal toward the pointer
+      btn.addEventListener("pointermove", (e) => {
+        const r = btn.getBoundingClientRect();
+        btn.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+        btn.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+      });
+    });
+  }
+  initFilmPlayers();
+  document.addEventListener("astro:page-load", initFilmPlayers);
+</script>
+
+<style>
+  @property --fp-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+  .fp { position: relative; line-height: 0; }
+  .fp video { display: block; width: 100%; height: auto; }
+
+  .fp-btn {
+    --size: 88px; --stroke: 3px; --spin: 9s; --mx: 32%; --my: 24%;
+    position: absolute; left: 50%; top: 50%; width: var(--size); height: var(--size);
+    margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+    padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer;
+    color: #14141a; isolation: isolate;
+    transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
+    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+  }
+  /* outline: the same finish, but only a thin turning ring */
+  .fp-btn::before {
+    content: ""; position: absolute; inset: 0; border-radius: 50%; z-index: 0;
+    background: conic-gradient(from var(--fp-a), #f4f6ff, #8f9bd6, #fff4f8, #78b4c9, #f4f6ff 50%, #b79ad8, #f9fbff, #8f9bd6, #f4f6ff);
+    animation: fp-turn var(--spin) linear infinite;
+  }
+  /* the body: brushed metal with a tint, lit toward the pointer */
+  .fp-metal {
+    position: absolute; inset: var(--stroke); border-radius: 50%; z-index: 1; overflow: hidden;
+    background:
+      radial-gradient(70% 70% at var(--mx) var(--my), rgba(255,255,255,.95), rgba(255,255,255,0) 62%),
+      conic-gradient(from calc(var(--fp-a) * -1), #d9deef, #9aa3c4, #eef0fa, #7f89ad, #dfe3f2, #a8a1c9, #eef0fa, #9aa3c4, #d9deef);
+    animation: fp-turn calc(var(--spin) * 1.6) linear infinite;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,.85), inset 0 -6px 12px rgba(40,46,80,.35);
+  }
+  .fp-glint {
+    position: absolute; inset: var(--stroke); border-radius: 50%; z-index: 2; pointer-events: none; overflow: hidden;
+  }
+  .fp-glint::after {
+    content: ""; position: absolute; top: -20%; bottom: -20%; width: 38%; left: -60%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent);
+    transform: skewX(-18deg);
+  }
+  .fp-ring {
+    position: absolute; inset: 0; border-radius: 50%; z-index: -1;
+    border: 2px solid rgba(255,255,255,.55); opacity: 0; transform: scale(1);
+  }
+  .fp-icon { position: relative; z-index: 3; margin-left: 4px; filter: drop-shadow(0 1px 0 rgba(255,255,255,.5)); }
+
+  .fp-btn:hover { transform: scale(1.07); --spin: 4s; }
+  .fp-btn:hover .fp-glint::after { animation: fp-sweep 900ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .fp-btn:active { transform: scale(0.95); }
+  .fp-btn:focus-visible { outline: 3px solid #8f9bff; outline-offset: 6px; }
+  .fp-btn.is-press .fp-ring { animation: fp-pulse 700ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+  /* once it is playing the control steps aside */
+  .fp.is-playing .fp-btn { opacity: 0; transform: scale(0.82); pointer-events: none; }
+
+  @keyframes fp-turn { to { --fp-a: 360deg; } }
+  @keyframes fp-sweep { from { left: -60%; } to { left: 130%; } }
+  @keyframes fp-pulse {
+    0% { opacity: 0.9; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.9); }
+  }
+
+  @media (max-width: 640px) { .fp-btn { --size: 68px; } .fp-icon { width: 24px; height: 24px; } }
+  @media (prefers-reduced-motion: reduce) {
+    .fp-btn::before, .fp-metal { animation: none; }
+    .fp-btn:hover .fp-glint::after, .fp-btn.is-press .fp-ring { animation: none; }
+    .fp-btn { transition: opacity 150ms ease; }
+    .fp-btn:hover, .fp-btn:active { transform: none; }
+  }
+</style>

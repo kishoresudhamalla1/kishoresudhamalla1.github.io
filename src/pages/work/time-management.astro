@@ -21,6 +21,7 @@
  */
 import Base from "../../layouts/Base.astro";
 import CaseHero from "../../components/CaseHero.astro";
+import FilmPlayer from "../../components/FilmPlayer.astro";
 import DecisionBlock from "../../components/DecisionBlock.astro";
 import ContentNeeded from "../../components/ContentNeeded.astro";
 
@@ -50,12 +51,9 @@ const IMG = "/images/work/time-management";
   <section class="container-pg r-film" data-reveal>
     <p class="r-case-label">Film · with sound</p>
     <div class="r-film-frame">
-      <video controls muted playsinline preload="metadata" poster={`${IMG}/tm-hero-film-poster.jpg`}
-        aria-label="A seventy second animated film of the Time Management redesign: the module before, one front door, the employee, manager and HRBP dashboards, one system for three roles, and the adoption numbers">
-        <source src={`${IMG}/tm-hero-film.mp4`} type="video/mp4" />
-      </video>
+      <FilmPlayer src={`${IMG}/tm-hero-film.mp4`} poster={`${IMG}/tm-hero-film-poster.jpg`} label="A seventy second animated film of the Time Management redesign: the module before, one front door, the employee, manager and HRBP dashboards, one system for three roles, and the adoption numbers" />
     </div>
-    <p class="r-film-note">Seventy seconds. Press play and unmute. The dashboards are rebuilt from the shipped screens; names are demo data.</p>
+    <p class="r-film-note">Seventy seconds, with sound. The dashboards are rebuilt from the shipped screens; names are demo data.</p>
   </section>
 
   <article class="container-pg r-case">

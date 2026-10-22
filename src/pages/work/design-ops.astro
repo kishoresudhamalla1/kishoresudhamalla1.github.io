@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import ScreenGallery from "../../components/ScreenGallery.astro";
 import LiveDemo from "../../components/LiveDemo.astro";
 import CaseHero from "../../components/CaseHero.astro";
+import FilmPlayer from "../../components/FilmPlayer.astro";
 
 const IMG = "/images/work/design-ops";
 // BASE_URL is "/" at root but "/repo" (no trailing slash) when ASTRO_BASE is set,
@@ -351,15 +352,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
       </p>
 
       <div class="demo mb-4" data-reveal>
-        <video
-          controls muted playsinline preload="metadata"
-          poster={`${IMG}/ops-demo-poster.jpg`}
-          aria-label="A two minute animated tour of every Design Ops feature with music: Jira setup, pods, quarter planning, delivery tracking, the work view, ticket drill-down, the executive summary, the eight rule flags, asking the board, root-cause explanations, an agent that proposes a change, the approval step, and the decision log that measures whether it worked"
-        >
-          <source src={`${IMG}/ops-demo.mp4`} type="video/mp4" />
-        </video>
+        <FilmPlayer src={`${IMG}/ops-demo.mp4`} poster={`${IMG}/ops-demo-poster.jpg`} label="A two minute animated tour of every Design Ops feature with music: Jira setup, pods, quarter planning, delivery tracking, the work view, ticket drill-down, the executive summary, the eight rule flags, asking the board, root-cause explanations, an agent that proposes a change, the approval step, and the decision log that measures whether it worked" />
       </div>
-      <p class="cs-label mb-12">Tour with sound. Press play and unmute.</p>
+      <p class="cs-label mb-12">Tour with sound. Press play.</p>
 
       <p class="cs-lede max-w-2xl mb-6">
         Now use it yourself. Switch the quarter, open a ticket that has slipped, regroup
