@@ -66,7 +66,7 @@ const QUESTIONS = [
   <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
   <div class="container-pg r-hero">
     <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
-    <h1 class="r-h1 enter" style="--tier:0">
+    <h1 class="r-h1 enter" style="--tier:0" data-glare data-text="I design complex enterprise products into simpler, more intelligent experiences.">
       I design complex enterprise products into
       <span class="r-h1-accent">simpler, more intelligent experiences.</span>
     </h1>
@@ -163,6 +163,20 @@ const QUESTIONS = [
   // Faint cursor-reactive grid behind the hero. --color-ink's dark value is
   // scoped to `.dark body`, so it has to be read off body, and re-read on
   // the site's `themechange` event (dispatched on document).
+  // hover glare on the headline: pass the cursor position to the light
+  function mountHeadlineGlare() {
+    const h = document.querySelector<HTMLElement>("[data-glare]");
+    if (!h || h.dataset.glareReady) return;
+    h.dataset.glareReady = "1";
+    h.addEventListener("pointermove", (e) => {
+      const r = h.getBoundingClientRect();
+      h.style.setProperty("--gx", `${e.clientX - r.left}px`);
+      h.style.setProperty("--gy", `${e.clientY - r.top}px`);
+    });
+  }
+  mountHeadlineGlare();
+  document.addEventListener("astro:page-load", mountHeadlineGlare);
+
   function mountHeroGrid() {
     const el = document.querySelector<HTMLElement>("[data-cursor-grid]");
     if (!el || el.dataset.ready) return;
@@ -203,7 +217,26 @@ const QUESTIONS = [
     line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
     margin: 0 0 1.5rem;
   }
-  .r-h1-accent { color: var(--color-ink-2); }
+  .r-h1-accent { color: var(--color-ink-2); transition: color 600ms var(--ease-enter); }
+  /* hover: a soft light follows the cursor across the letters, and the accent
+     line warms up. The light is a copy of the headline clipped to its glyphs,
+     so it only ever shows on the type. */
+  .r-h1 { position: relative; --glare: rgba(150, 162, 255, 1); }
+  :global(.light) .r-h1, :global(html:not(.dark)) .r-h1 { --glare: rgba(79, 70, 229, 1); }
+  .r-h1::after {
+    content: attr(data-text); position: absolute; inset: 0; pointer-events: none; user-select: none;
+    color: transparent; -webkit-background-clip: text; background-clip: text;
+    background-image: radial-gradient(circle 150px at var(--gx, 50%) var(--gy, 50%), var(--glare), transparent 70%);
+    opacity: 0; transition: opacity 450ms var(--ease-enter);
+  }
+  @media (hover: hover) {
+    .r-h1:hover::after { opacity: 1; }
+    .r-h1:hover .r-h1-accent { color: color-mix(in srgb, var(--color-ink) 62%, var(--color-ink-2)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .r-h1::after { display: none; }
+    .r-h1-accent { transition: none; }
+  }
   .r-lede {
     font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
     color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;
