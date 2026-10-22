@@ -66,7 +66,7 @@ const QUESTIONS = [
   <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
   <div class="container-pg r-hero">
     <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
-    <h1 class="r-h1 enter" style="--tier:0" data-glare data-text="I design complex enterprise products into simpler, more intelligent experiences.">
+    <h1 class="r-h1 enter" style="--tier:0">
       I design complex enterprise products into
       <span class="r-h1-accent">simpler, more intelligent experiences.</span>
     </h1>
@@ -163,20 +163,6 @@ const QUESTIONS = [
   // Faint cursor-reactive grid behind the hero. --color-ink's dark value is
   // scoped to `.dark body`, so it has to be read off body, and re-read on
   // the site's `themechange` event (dispatched on document).
-  // hover glare on the headline: pass the cursor position to the light
-  function mountHeadlineGlare() {
-    const h = document.querySelector<HTMLElement>("[data-glare]");
-    if (!h || h.dataset.glareReady) return;
-    h.dataset.glareReady = "1";
-    h.addEventListener("pointermove", (e) => {
-      const r = h.getBoundingClientRect();
-      h.style.setProperty("--gx", `${e.clientX - r.left}px`);
-      h.style.setProperty("--gy", `${e.clientY - r.top}px`);
-    });
-  }
-  mountHeadlineGlare();
-  document.addEventListener("astro:page-load", mountHeadlineGlare);
-
   function mountHeroGrid() {
     const el = document.querySelector<HTMLElement>("[data-cursor-grid]");
     if (!el || el.dataset.ready) return;
@@ -217,26 +203,25 @@ const QUESTIONS = [
     line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
     margin: 0 0 1.5rem;
   }
-  .r-h1-accent { color: var(--color-ink-2); transition: color 600ms var(--ease-enter); }
-  /* hover: a soft light follows the cursor across the letters, and the accent
-     line warms up. The light is a copy of the headline clipped to its glyphs,
-     so it only ever shows on the type. */
-  .r-h1 { position: relative; --glare: rgba(150, 162, 255, 1); }
-  :global(.light) .r-h1, :global(html:not(.dark)) .r-h1 { --glare: rgba(79, 70, 229, 1); }
-  .r-h1::after {
-    content: attr(data-text); position: absolute; inset: 0; pointer-events: none; user-select: none;
+  /* hover: the accent line colours in, white to lavender to orchid (dark) or
+     indigo to violet to pink (light). The stops are mixed from the resting grey
+     by --hue, so the whole line fades in as one continuous colour transition. */
+  @property --hue { syntax: "<number>"; inherits: true; initial-value: 0; }
+  .r-h1 {
+    --hue: 0; --ga: #f3f1ff; --gb: #d7c2ff; --gc: #f19ae6;
+    transition: --hue 800ms var(--ease-enter);
+  }
+  :global(html:not(.dark)) .r-h1 { --ga: #4f46e5; --gb: #7c3aed; --gc: #db2777; }
+  .r-h1-accent {
     color: transparent; -webkit-background-clip: text; background-clip: text;
-    background-image: radial-gradient(circle 150px at var(--gx, 50%) var(--gy, 50%), var(--glare), transparent 70%);
-    opacity: 0; transition: opacity 450ms var(--ease-enter);
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background-image: linear-gradient(90deg,
+      color-mix(in srgb, var(--ga) calc(var(--hue) * 100%), var(--color-ink-2)),
+      color-mix(in srgb, var(--gb) calc(var(--hue) * 100%), var(--color-ink-2)),
+      color-mix(in srgb, var(--gc) calc(var(--hue) * 100%), var(--color-ink-2)));
   }
-  @media (hover: hover) {
-    .r-h1:hover::after { opacity: 1; }
-    .r-h1:hover .r-h1-accent { color: color-mix(in srgb, var(--color-ink) 62%, var(--color-ink-2)); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .r-h1::after { display: none; }
-    .r-h1-accent { transition: none; }
-  }
+  @media (hover: hover) { .r-h1:hover { --hue: 1; } }
+  @media (prefers-reduced-motion: reduce) { .r-h1 { transition: none; } }
   .r-lede {
     font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
     color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;
