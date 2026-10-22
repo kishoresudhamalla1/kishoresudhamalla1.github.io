@@ -17,9 +17,9 @@ const WORK = [
   {
 n: "01",
     short: "Agentic AI",
-    word: "AGENTIC", l1: "Agentic UX.", l2: "Concept.", ptitle: "Chatbot to Agentic AI.",
+    word: "AGENTIC", l1: "Agentic UX.", l2: "Live.", ptitle: "Chatbot to Agentic AI.",
     pblurb: "The shift from assistants that answer to agents that understand intent, use tools and take action.",
-    kicker: "01 \u2014 Agentic UX \u00b7 Concept",
+    kicker: "01 \u2014 Agentic UX \u00b7 Live",
     title: "Chatbot \u2192 Agentic AI \u2192 AI-native experiences",
     blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions and become part of the product experience itself.",
     tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
@@ -119,8 +119,6 @@ const QUESTIONS = [
                       <p class="wp-title">{p.ptitle}</p>
                       <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
                       <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
-                      <p class="wp-side">&mdash; CASE {p.n}</p>
-                      <p class="wp-foot"><b>Kishore.</b> selected work</p>
                     </div>
                     <div class="wp-glare"></div>
                   </div>
@@ -556,11 +554,8 @@ const QUESTIONS = [
     .wp-l { font-size: 8.4cqw; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; color: rgba(255,255,255,.5); }
     .wp-title { font-size: 9.6cqw; font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin: 2cqw 0 6cqw !important; }
     .wp-tags { list-style: none; padding: 0; font-family: var(--font-sans); font-size: 3.4cqw; font-weight: 600; line-height: 1.5; color: rgba(255,255,255,.9); }
-    .wp-brief { position: absolute; left: 50%; right: 8cqw; bottom: 22cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+    .wp-brief { position: absolute; left: 50%; right: 8cqw; bottom: 9cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
     .wp-brief .wp-bh { font-weight: 700; color: rgba(255,255,255,.92); margin-bottom: 1.4cqw; font-size: 3cqw; }
-    .wp-side { position: absolute; right: 3.4cqw; bottom: 22cqw; writing-mode: vertical-rl; font-family: var(--font-mono); font-size: 2.4cqw; letter-spacing: 0.14em; color: rgba(255,255,255,.55); }
-    .wp-foot { position: absolute; left: 8cqw; bottom: 8cqw; font-size: 4cqw; font-weight: 600; color: rgba(255,255,255,.6); }
-    .wp-foot b { color: #fff; font-weight: 700; }
     .wp-glare {
       position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
       background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
@@ -569,7 +564,7 @@ const QUESTIONS = [
     /* the same scene at every size: the open card shows the sheet and the wide
        wordmark, a folded card shows the wordmark running up its spine. The two
        cross-fade as the card opens, so they read as one element changing size. */
-    .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta, .wp-l, .wp-title, .wp-tags, .wp-brief, .wp-side, .wp-foot {
+    .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta, .wp-l, .wp-title, .wp-tags, .wp-brief {
       transition: opacity 480ms var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
     }
     .wp-word-v {
