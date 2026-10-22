@@ -1,0 +1,249 @@
+---
+/**
+ * Paper cards: each project is a translucent sheet floating in front of a giant
+ * wordmark. On desktop with a pointer the row is an accordion (one card always
+ * open, the rest fold to a spine); elsewhere the cards stack. Used by the
+ * homepage "Selected work" and the AI Lab "Built" row.
+ */
+export interface PaperItem {
+  n: string; short: string; word: string; l1: string; l2?: string; ptitle: string; pblurb: string;
+  wordN?: number; kicker: string; tags: string[]; href: string; title: string; featured?: boolean;
+}
+interface Props { items: PaperItem[] }
+const { items } = Astro.props;
+---
+
+    <div class="work-row" data-paper-row>
+      {items.map((p) => (
+        <a href={p.href} class:list={["work-card", p.featured && "is-open"]} aria-label={p.title}>
+          <div class="wp-scene" aria-hidden="true" style={`--n:${p.wordN ?? p.word.length}`}>
+            <p class="wp-word">{p.word}</p>
+            <p class="wp-word-v">{p.word}</p>
+            <div class="wp-stage">
+              <div class="wp-sway">
+                <div class="wp-tilt">
+                  <div class="wp-sheet">
+                    <div class="wp-face">
+                      <p class="wp-n">{p.n}.</p>
+                      <p class="wp-l">{p.l1}</p>
+                      {p.l2 && <p class="wp-l">{p.l2}</p>}
+                      <p class="wp-title">{p.ptitle}</p>
+                      <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+                      <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
+                    </div>
+                    <div class="wp-glare"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="wp-kick">{p.kicker}</p>
+            <p class="wp-hint"><b>Drag</b> to turn it</p>
+            <span class="wp-cta">View case study
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+          </div>
+
+          <p class="work-card-label" aria-hidden="true">{p.n} &mdash; {p.short}</p>
+        </a>
+      ))}
+    </div>
+
+<style>
+  /* ── Selected work ───────────────────────────────────────────────────────
+     Each project is a translucent sheet floating in front of a giant wordmark.
+     On desktop with a pointer the row is an accordion: one card is always open
+     and the others fold to a spine that keeps the wordmark. Pure CSS 3D plus a
+     few lines of script, no WebGL. Elsewhere the cards simply stack.
+
+     State is driven through custom properties on the card, with exactly one
+     concrete rule per child element. Writing these as separate
+     ancestor-qualified rules against a shared child selector triggers a
+     Lightning CSS (Tailwind v4 minifier) bug that drops the ancestor
+     qualifier and applies one branch to every card. */
+  .work-row { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .work-card {
+    position: relative; display: block; height: 32rem; overflow: hidden;
+    border: 1px solid var(--color-border); border-radius: 1.25rem;
+    text-decoration: none; color: inherit; background: #08080a;
+    --play: running;
+  }
+  .work-card-label { display: none; }
+
+  .wp-scene {
+    position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+    container-type: size; color: #f2f2f0; user-select: none; -webkit-user-select: none;
+    background: radial-gradient(120% 90% at 50% 0%, #181a22 0%, #08080a 62%);
+  }
+  .wp-word {
+    position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); margin: 0;
+    font-family: var(--font-display); font-weight: 650; letter-spacing: -0.055em; line-height: 0.8;
+    font-size: calc(96cqw / (var(--n, 8) * 0.62)); white-space: nowrap;
+    color: rgba(242, 242, 240, 0.13);
+  }
+  .wp-word-v {
+    position: absolute; left: 50%; top: 40%; margin: 0; opacity: 0;
+    writing-mode: vertical-rl; transform: translate(-50%, -50%) rotate(180deg);
+    font-family: var(--font-display); font-weight: 650; letter-spacing: -0.04em; line-height: 0.8;
+    font-size: 64cqw; white-space: nowrap; color: rgba(242, 242, 240, 0.13);
+  }
+  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 2.75rem 0 4.5rem; }
+  .wp-sway { animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused); }
+  .wp-tilt { transform-style: preserve-3d; will-change: transform; }
+
+  .wp-sheet {
+    position: relative; width: min(57.7cqh, 86cqw); aspect-ratio: 0.74; container: sheet / inline-size;
+    border-radius: 1rem;
+    background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1));
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(7px) saturate(1.2); backdrop-filter: blur(7px) saturate(1.2);
+    box-shadow: 0 34px 70px -22px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .wp-sheet::before {
+    content: ""; position: absolute; inset: 3cqw; border: 1px solid rgba(255,255,255,.13); border-radius: 0.6rem;
+    pointer-events: none;
+  }
+  .wp-face { position: absolute; inset: 0; padding: 8cqw; font-family: var(--font-display); }
+  .wp-face p, .wp-face ul { margin: 0; }
+  .wp-n { font-size: 15cqw; font-weight: 700; line-height: 1; margin-bottom: 6cqw !important; color: #fff; }
+  .wp-l { font-size: 8.4cqw; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; color: rgba(255,255,255,.5); }
+  .wp-title { font-size: 9.6cqw; font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin: 2cqw 0 6cqw !important; }
+  .wp-tags { list-style: none; padding: 0; font-family: var(--font-sans); font-size: 3.4cqw; font-weight: 600; line-height: 1.5; color: rgba(255,255,255,.9); }
+  .wp-brief { position: absolute; left: 50%; right: 8cqw; bottom: 9cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+  .wp-brief .wp-bh { font-weight: 700; color: rgba(255,255,255,.92); margin-bottom: 1.4cqw; font-size: 3cqw; }
+  .wp-glare {
+    position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
+    background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
+  }
+  .wp-kick, .wp-hint {
+    position: absolute; margin: 0; font-family: var(--font-mono); font-size: 0.6875rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: rgba(242,242,240,.4); pointer-events: none;
+  }
+  .wp-kick { left: 1.6rem; top: 1.5rem; }
+  .wp-hint { display: none; left: 0; right: 0; bottom: 1.6rem; text-align: center; font-size: 0.625rem; color: rgba(242,242,240,.3); }
+  .wp-hint b { font-weight: 600; }
+  .wp-cta {
+    position: absolute; right: 1.5rem; bottom: 1.3rem; display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-mono); font-size: 0.75rem; color: #08080a; background: #f2f2f0;
+    border-radius: 100px; padding: 0.6rem 0.9rem 0.6rem 1.1rem;
+  }
+  .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta {
+    transition: opacity 480ms var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
+  }
+  @keyframes wp-sway {
+    0%, 100% { transform: translateY(0) rotateX(2deg) rotateY(-5deg); }
+    50% { transform: translateY(-1.2%) rotateX(-2deg) rotateY(5deg); }
+  }
+
+  /* desktop with a pointer: the accordion */
+  @media (min-width: 900px) and (hover: hover) {
+    .work-row { flex-direction: row; align-items: stretch; height: clamp(36rem, 50vw, 40rem); gap: 0.75rem; }
+    .work-card {
+      height: auto; flex: 0 0 4.5rem; min-width: 4.5rem;
+      transition: flex-grow var(--wp-dur, 820ms) var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
+      --play: paused; --scene-pe: none;
+      --label-o: 1; --label-dur: 320ms; --label-delay: 420ms;
+    }
+    .work-card.is-open {
+      flex-grow: 1; --play: running; --scene-pe: auto;
+      --label-o: 0; --label-dur: 160ms; --label-delay: 0ms;
+    }
+    .wp-scene { cursor: grab; pointer-events: var(--scene-pe, none); }
+    .wp-scene:active { cursor: grabbing; }
+    .wp-hint { display: block; }
+    .wp-stage { padding: 0; }
+    .work-card-label {
+      display: block; position: absolute; left: 50%; bottom: 1.75rem; z-index: 3;
+      writing-mode: vertical-rl; transform: translateX(-50%) rotate(180deg);
+      font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(242, 242, 240, 0.62); white-space: nowrap; max-height: calc(100% - 3rem);
+      opacity: var(--label-o, 1);
+      transition: opacity var(--label-dur, 320ms) var(--ease-enter) var(--label-delay, 420ms);
+    }
+    /* a folded card keeps the wordmark, running up its spine; the two
+       cross-fade as the card opens so they read as one element changing size */
+    @container (max-width: 330px) {
+      .wp-word, .wp-sheet, .wp-kick, .wp-hint, .wp-cta { opacity: 0; }
+      .wp-word-v { opacity: 1; }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .work-card, .work-card-label, .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta { transition: none; }
+    .wp-sway { animation: none; }
+  }
+</style>
+
+<script>
+  // ── paper scene: tilt toward the pointer, drag to turn, run only when open ──
+  function initPaper() {
+    const row = document.querySelector<HTMLElement>("[data-paper-row]");
+    if (!row || row.dataset.paper) return;
+    row.dataset.paper = "1";
+    const mq = window.matchMedia("(min-width: 900px) and (hover: hover)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cards = Array.from(row.querySelectorAll<HTMLElement>(".work-card"));
+
+    type S = { card: HTMLElement; scene: HTMLElement; tilt: HTMLElement; sheet: HTMLElement;
+      rx: number; ry: number; tx: number; ty: number; yaw: number; vel: number; drag: boolean; lastX: number; moved: number; };
+    const st: S[] = cards.map((card) => ({
+      card, scene: card.querySelector<HTMLElement>(".wp-scene")!, tilt: card.querySelector<HTMLElement>(".wp-tilt")!,
+      sheet: card.querySelector<HTMLElement>(".wp-sheet")!, rx: 0, ry: 0, tx: 0, ty: 0, yaw: 0, vel: 0, drag: false, lastX: 0, moved: 0,
+    }));
+
+    let active = 0, raf = 0, intent = 0;
+    const setActive = (i: number) => {
+      active = i;
+      cards.forEach((c, k) => { c.classList.toggle("is-open", k === i); c.classList.toggle("is-live", k === i); });
+      if (mq.matches && !raf) raf = requestAnimationFrame(tick);
+    };
+    // a short intent delay so sweeping across the row doesn't make the cards flicker
+    const want = (i: number, ms = 90) => { clearTimeout(intent); intent = window.setTimeout(() => setActive(i), ms); };
+
+    st.forEach((s, i) => {
+      s.card.addEventListener("pointerenter", () => want(i));
+      s.card.addEventListener("focusin", () => want(i, 0));
+      s.scene.addEventListener("pointermove", (e) => {
+        const r = s.scene.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        if (s.drag) {
+          const dx = e.clientX - s.lastX; s.lastX = e.clientX; s.moved += Math.abs(dx);
+          s.yaw += dx * 0.55; s.vel = dx;
+        } else { s.tx = nx * 2; s.ty = ny * 2; }
+        const sr = s.sheet.getBoundingClientRect();
+        s.sheet.style.setProperty("--gx", `${((e.clientX - sr.left) / sr.width) * 100}%`);
+        s.sheet.style.setProperty("--gy", `${((e.clientY - sr.top) / sr.height) * 100}%`);
+      });
+      s.scene.addEventListener("pointerleave", () => { s.tx = 0; s.ty = 0; });
+      s.scene.addEventListener("pointerdown", (e) => { s.drag = true; s.lastX = e.clientX; s.moved = 0; s.vel = 0; s.scene.setPointerCapture(e.pointerId); });
+      const up = () => { s.drag = false; };
+      s.scene.addEventListener("pointerup", up);
+      s.scene.addEventListener("pointercancel", up);
+      // a drag turns the sheet; only a plain click opens the case study
+      s.scene.addEventListener("click", (e) => { if (s.moved > 6) e.preventDefault(); });
+    });
+
+    function tick() {
+      raf = 0;
+      if (!mq.matches) return;
+      const s = st[active];
+      s.rx += (-s.ty * 9 - s.rx) * 0.1;
+      s.ry += (s.tx * 13 - s.ry) * 0.1;
+      if (!s.drag) {
+        if (!reduce) s.yaw += s.vel * 0.55;
+        s.vel *= 0.94;
+        if (Math.abs(s.vel) < 0.3) {
+          // settle on the nearest whole turn
+          const home = Math.round(s.yaw / 360) * 360;
+          s.yaw += (home - s.yaw) * 0.08;
+        }
+      }
+      s.tilt.style.transform = `rotateX(${s.rx.toFixed(2)}deg) rotateY(${(s.ry + s.yaw).toFixed(2)}deg)`;
+      raf = requestAnimationFrame(tick);
+    }
+    mq.addEventListener("change", () => { if (mq.matches && !raf) raf = requestAnimationFrame(tick); });
+    row.addEventListener("pointerleave", () => want(0, 260));
+    setActive(0);
+  }
+  initPaper();
+  document.addEventListener("astro:page-load", initPaper);
+</script>
