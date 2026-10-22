@@ -15,37 +15,43 @@ import Base from "../layouts/Base.astro";
 
 const WORK = [
   {
-    n: "01",
-    short: "Time Management",
-    kicker: "01 \u2014 Enterprise HCM \u00b7 Web app",
-    title: "Time Management",
-    blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets and workforce insights into a more coherent experience for employees, managers and HR teams.",
-    tags: ["Product design", "Systems thinking", "Enterprise UX"],
-    href: "/work/time-management",
-    img: "/images/work/time-management/card-employee.jpg",
+n: "01",
+    short: "Agentic AI",
+    word: "AGENTIC", l1: "Agentic AI Transition Story.", l2: "", ptitle: "Chatbot to Agentic AI.",
+    pblurb: "The shift from assistants that answer to agents that understand intent, use tools and take action.",
+    kicker: "01 \u2014 Agentic UX \u00b7 Live",
+    title: "Chatbot \u2192 Agentic AI \u2192 AI-native experiences",
+    blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions and become part of the product experience itself.",
+    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
+    href: "/work/chatbot-to-agentic",
+    img: "/images/work/agentic/hero-diagram.svg",
     featured: true,
   },
   {
-    n: "02",
+n: "02",
     short: "Flows to Playbooks",
+    word: "PLAYBOOKS", l1: "Product strategy.", l2: "Journeys shipped.", ptitle: "Flows to Playbooks.",
+    pblurb: "From individual workflow transactions to guided employee journeys and AI-assisted playbooks.",
     kicker: "02 \u2014 Product strategy \u00b7 Web app",
     title: "From Flows \u2192 Journeys \u2192 AI Playbooks",
     blurb: "A product evolution from individual workflow transactions to guided employee journeys and ultimately AI-assisted playbooks that can help orchestrate complex work.",
     tags: ["Product strategy", "Workflow design", "AI-native experiences"],
     href: "/work/flows-journeys-playbooks",
     img: "/images/work/journeys/card-templates.jpg",
-    featured: false,
+    featured: false
   },
   {
     n: "03",
-    short: "Agentic AI",
-    kicker: "03 \u2014 Agentic UX \u00b7 Concept",
-    title: "Chatbot \u2192 Agentic AI \u2192 AI-native experiences",
-    blurb: "A look at the shift from conversational assistants to agents that understand intent, use tools, take actions and become part of the product experience itself.",
-    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
-    href: "/work/chatbot-to-agentic",
-    img: "/images/work/agentic/hero-diagram.svg",
-    featured: false,
+    short: "Time Management",
+    word: "TIME", l1: "Enterprise HCM.", l2: "2023 to 2024.", ptitle: "Time Management.",
+    pblurb: "A mature enterprise time management product used across global workforces, redesigned for employees, managers and HR teams.",
+    kicker: "03 \u2014 Enterprise HCM \u00b7 Web app",
+    title: "Time Management",
+    blurb: "A redesign of a mature enterprise time management product used across global workforces. I brought together attendance, leave, timesheets and workforce insights into a more coherent experience for employees, managers and HR teams.",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
+    href: "/work/time-management",
+    img: "/images/work/time-management/card-employee.jpg",
+    featured: false
   },
 ];
 
@@ -91,12 +97,39 @@ const QUESTIONS = [
 
     <div class="work-row">
       {WORK.map((p) => (
-        <a href={p.href} class:list={["work-card", p.featured && "is-featured"]}>
+        <a href={p.href} class:list={["work-card", p.featured && "is-open"]}>
           <div class="wc-media" aria-hidden="true">
             <div class="wc-laptop">
               <div class="wc-lid"><div class="wc-screen"><img src={p.img} alt="" loading="lazy" decoding="async" /></div></div>
               <div class="wc-base"></div>
             </div>
+          </div>
+
+          <div class="wp-scene" aria-hidden="true" style={`--n:${p.word.length}`}>
+            <p class="wp-word">{p.word}</p>
+            <p class="wp-word-v">{p.word}</p>
+            <div class="wp-stage">
+              <div class="wp-sway">
+                <div class="wp-tilt">
+                  <div class="wp-sheet">
+                    <div class="wp-face">
+                      <p class="wp-n">{p.n}.</p>
+                      <p class="wp-l">{p.l1}</p>
+                      {p.l2 && <p class="wp-l">{p.l2}</p>}
+                      <p class="wp-title">{p.ptitle}</p>
+                      <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
+                      <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
+                    </div>
+                    <div class="wp-glare"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="wp-kick">{p.kicker}</p>
+            <p class="wp-hint"><b>Drag</b> to turn it</p>
+            <span class="wp-cta">View case study
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
           </div>
 
           <div class="work-card-body">
@@ -212,6 +245,79 @@ const QUESTIONS = [
   }
   mountHeroGrid();
   document.addEventListener("astro:page-load", mountHeroGrid);
+
+  // ── paper scene: tilt toward the pointer, drag to turn, run only when open ──
+  function initPaper() {
+    const row = document.querySelector<HTMLElement>(".work-row");
+    if (!row || row.dataset.paper) return;
+    row.dataset.paper = "1";
+    const mq = window.matchMedia("(min-width: 900px) and (hover: hover)");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const cards = Array.from(row.querySelectorAll<HTMLElement>(".work-card"));
+
+    type S = { card: HTMLElement; scene: HTMLElement; tilt: HTMLElement; sheet: HTMLElement;
+      rx: number; ry: number; tx: number; ty: number; yaw: number; vel: number; drag: boolean; lastX: number; moved: number; };
+    const st: S[] = cards.map((card) => ({
+      card, scene: card.querySelector<HTMLElement>(".wp-scene")!, tilt: card.querySelector<HTMLElement>(".wp-tilt")!,
+      sheet: card.querySelector<HTMLElement>(".wp-sheet")!, rx: 0, ry: 0, tx: 0, ty: 0, yaw: 0, vel: 0, drag: false, lastX: 0, moved: 0,
+    }));
+
+    let active = 0, raf = 0, intent = 0;
+    const setActive = (i: number) => {
+      active = i;
+      cards.forEach((c, k) => { c.classList.toggle("is-open", k === i); c.classList.toggle("is-live", k === i); });
+      if (mq.matches && !raf) raf = requestAnimationFrame(tick);
+    };
+    // a short intent delay so sweeping across the row doesn't make the cards flicker
+    const want = (i: number, ms = 90) => { clearTimeout(intent); intent = window.setTimeout(() => setActive(i), ms); };
+
+    st.forEach((s, i) => {
+      s.card.addEventListener("pointerenter", () => want(i));
+      s.card.addEventListener("focusin", () => want(i, 0));
+      s.scene.addEventListener("pointermove", (e) => {
+        const r = s.scene.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+        if (s.drag) {
+          const dx = e.clientX - s.lastX; s.lastX = e.clientX; s.moved += Math.abs(dx);
+          s.yaw += dx * 0.55; s.vel = dx;
+        } else { s.tx = nx * 2; s.ty = ny * 2; }
+        const sr = s.sheet.getBoundingClientRect();
+        s.sheet.style.setProperty("--gx", `${((e.clientX - sr.left) / sr.width) * 100}%`);
+        s.sheet.style.setProperty("--gy", `${((e.clientY - sr.top) / sr.height) * 100}%`);
+      });
+      s.scene.addEventListener("pointerleave", () => { s.tx = 0; s.ty = 0; });
+      s.scene.addEventListener("pointerdown", (e) => { s.drag = true; s.lastX = e.clientX; s.moved = 0; s.vel = 0; s.scene.setPointerCapture(e.pointerId); });
+      const up = () => { s.drag = false; };
+      s.scene.addEventListener("pointerup", up);
+      s.scene.addEventListener("pointercancel", up);
+      // a drag turns the sheet; only a plain click opens the case study
+      s.scene.addEventListener("click", (e) => { if (s.moved > 6) e.preventDefault(); });
+    });
+
+    function tick() {
+      raf = 0;
+      if (!mq.matches) return;
+      const s = st[active];
+      s.rx += (-s.ty * 9 - s.rx) * 0.1;
+      s.ry += (s.tx * 13 - s.ry) * 0.1;
+      if (!s.drag) {
+        if (!reduce) s.yaw += s.vel * 0.55;
+        s.vel *= 0.94;
+        if (Math.abs(s.vel) < 0.3) {
+          // settle on the nearest whole turn
+          const home = Math.round(s.yaw / 360) * 360;
+          s.yaw += (home - s.yaw) * 0.08;
+        }
+      }
+      s.tilt.style.transform = `rotateX(${s.rx.toFixed(2)}deg) rotateY(${(s.ry + s.yaw).toFixed(2)}deg)`;
+      raf = requestAnimationFrame(tick);
+    }
+    mq.addEventListener("change", () => { if (mq.matches && !raf) raf = requestAnimationFrame(tick); });
+    row.addEventListener("pointerleave", () => want(0, 260));
+    setActive(0);
+  }
+  initPaper();
+  document.addEventListener("astro:page-load", initPaper);
 </script>
 
 <style>
@@ -281,7 +387,7 @@ const QUESTIONS = [
 
   .work-card {
     position: relative; display: flex; flex-direction: column;
-    border: 1px solid var(--color-border); border-radius: 1.75rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem;
     text-decoration: none; color: inherit; background: var(--color-surface);
     padding: 1.5rem;
   }
@@ -347,12 +453,10 @@ const QUESTIONS = [
   @media (min-width: 900px) {
     .work-row { flex-direction: row; align-items: stretch; height: clamp(36rem, 50vw, 40rem); gap: 0.75rem; }
     .work-card {
-      flex: 0 1 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
-      transition: flex-grow var(--dur-slow) var(--ease-emphasized);
+      flex: 0 0 4.5rem; min-width: 4.5rem; overflow: hidden; padding: 0;
+      transition: flex-grow var(--wp-dur, 820ms) var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
     }
-    .work-card.is-featured { flex: 3 1 0; }
-    .work-row:hover .work-card { flex: 1 1 0; }
-    .work-row:hover .work-card:hover { flex: 3.2 1 0; }
+    .work-card.is-open { flex-grow: 1; }
 
     /*
       The card's width is the only thing that animates. Its text is taken out
@@ -372,7 +476,7 @@ const QUESTIONS = [
       position: absolute; left: 50%; top: 2rem; width: 24rem; max-width: none; margin: 0;
       transform: translateX(-50%);
       opacity: var(--media-o, 0.32);
-      transition: opacity var(--dur-slow) var(--ease-emphasized);
+      transition: opacity var(--wp-dur, 820ms) var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
     }
     .work-card-body {
       position: absolute; inset: 0; padding: 19.5rem 2rem 2rem 2rem;
@@ -387,21 +491,113 @@ const QUESTIONS = [
       opacity: var(--label-o, 1);
       transition: opacity var(--label-dur, 140ms) var(--ease-enter) var(--label-delay, 260ms);
     }
-    .work-card.is-featured {
+    .work-card.is-open {
+      --scene-pe: auto;
       --media-o: 1;
-      --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
-      --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
+      --body-o: 1; --body-dur: 320ms; --body-delay: 420ms; --body-ease: var(--ease-enter);
+      --label-o: 0; --label-dur: 160ms; --label-delay: 0ms;
     }
-    .work-row:hover .work-card:hover {
-      --media-o: 1;
-      --body-o: 1; --body-dur: var(--dur-fast); --body-delay: 220ms; --body-ease: var(--ease-enter);
-      --label-o: 0; --label-dur: 60ms; --label-delay: 0ms;
-    }
-    .work-row:hover .work-card:not(:hover) {
+    .work-card:not(.is-open) {
+      --scene-pe: none;
       --media-o: 0.32;
-      --body-o: 0; --body-dur: 90ms; --body-delay: 0ms;
-      --label-o: 1; --label-dur: 140ms; --label-delay: 260ms;
+      --body-o: 0; --body-dur: 160ms; --body-delay: 0ms;
+      --label-o: 1; --label-dur: 320ms; --label-delay: 420ms;
     }
+  }
+
+  /* ── the paper scene (desktop with a pointer only) ───────────────────────
+     A translucent sheet floats in front of a giant wordmark and tilts toward
+     the pointer. Pure CSS 3D plus a few lines of script for the pointer; no
+     WebGL. Only the open card runs. Mobile and touch keep the laptop cards. */
+  .wp-scene { display: none; }
+  @media (min-width: 900px) and (hover: hover) {
+    .work-card { --play: paused; }
+    .work-card.is-live { --play: running; }
+    .work-card-body { opacity: 0; }
+    .wc-media { display: none; }
+
+    .wp-scene {
+      display: block; position: absolute; inset: 0; z-index: 2; overflow: hidden; border-radius: inherit;
+      container-type: size; color: #f2f2f0; cursor: grab; user-select: none; -webkit-user-select: none;
+      background: radial-gradient(120% 90% at 50% 0%, #181a22 0%, #08080a 62%);
+      pointer-events: var(--scene-pe, none);
+    }
+    .wp-scene:active { cursor: grabbing; }
+
+    .wp-word {
+      position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); margin: 0;
+      font-family: var(--font-display); font-weight: 650; letter-spacing: -0.055em; line-height: 0.8;
+      font-size: calc(96cqw / (var(--n, 8) * 0.62)); white-space: nowrap;
+      color: rgba(242, 242, 240, 0.13);
+    }
+    .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; }
+    .wp-sway {
+      animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused);
+    }
+    .wp-tilt { transform-style: preserve-3d; will-change: transform; }
+
+    .wp-sheet {
+      position: relative; width: min(57.7cqh, 86cqw); aspect-ratio: 0.74; container: sheet / inline-size;
+      border-radius: 1rem;
+      background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1));
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      -webkit-backdrop-filter: blur(7px) saturate(1.2); backdrop-filter: blur(7px) saturate(1.2);
+      box-shadow: 0 34px 70px -22px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.4), inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    .wp-sheet::before {
+      content: ""; position: absolute; inset: 3cqw; border: 1px solid rgba(255,255,255,.13); border-radius: 0.6rem;
+      pointer-events: none;
+    }
+    .wp-face { position: absolute; inset: 0; padding: 8cqw 8cqw; font-family: var(--font-display); }
+    .wp-face p, .wp-face ul { margin: 0; }
+    .wp-n { font-size: 15cqw; font-weight: 700; line-height: 1; margin-bottom: 6cqw !important; color: #fff; }
+    .wp-l { font-size: 8.4cqw; font-weight: 500; line-height: 1.1; letter-spacing: -0.03em; color: rgba(255,255,255,.5); }
+    .wp-title { font-size: 9.6cqw; font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; color: #fff; margin: 2cqw 0 6cqw !important; }
+    .wp-tags { list-style: none; padding: 0; font-family: var(--font-sans); font-size: 3.4cqw; font-weight: 600; line-height: 1.5; color: rgba(255,255,255,.9); }
+    .wp-brief { position: absolute; left: 50%; right: 8cqw; bottom: 9cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+    .wp-brief .wp-bh { font-weight: 700; color: rgba(255,255,255,.92); margin-bottom: 1.4cqw; font-size: 3cqw; }
+    .wp-glare {
+      position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
+      background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
+    }
+
+    /* the same scene at every size: the open card shows the sheet and the wide
+       wordmark, a folded card shows the wordmark running up its spine. The two
+       cross-fade as the card opens, so they read as one element changing size. */
+    .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta, .wp-l, .wp-title, .wp-tags, .wp-brief {
+      transition: opacity 480ms var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
+    }
+    .wp-word-v {
+      position: absolute; left: 50%; top: 40%; margin: 0; opacity: 0;
+      writing-mode: vertical-rl; transform: translate(-50%, -50%) rotate(180deg);
+      font-family: var(--font-display); font-weight: 650; letter-spacing: -0.04em; line-height: 0.8;
+      font-size: 64cqw; white-space: nowrap; color: rgba(242, 242, 240, 0.13);
+    }
+    @container (max-width: 330px) {
+      .wp-word, .wp-sheet, .wp-kick, .wp-hint, .wp-cta { opacity: 0; }
+      .wp-word-v { opacity: 1; }
+    }
+    .work-card-label { z-index: 3; color: rgba(242, 242, 240, 0.62); }
+    .wp-kick, .wp-hint {
+      position: absolute; margin: 0; font-family: var(--font-mono); font-size: 0.6875rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: rgba(242,242,240,.4); pointer-events: none;
+    }
+    .wp-kick { left: 1.6rem; top: 1.5rem; }
+    .wp-hint { left: 0; right: 0; bottom: 1.6rem; text-align: center; font-size: 0.625rem; color: rgba(242,242,240,.3); }
+    .wp-hint b { font-weight: 600; }
+    .wp-cta {
+      position: absolute; right: 1.5rem; bottom: 1.3rem; display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-mono); font-size: 0.75rem; color: #08080a; background: #f2f2f0;
+      border-radius: 100px; padding: 0.6rem 0.9rem 0.6rem 1.1rem; cursor: pointer;
+    }
+  }
+  @keyframes wp-sway {
+    0%, 100% { transform: translateY(0) rotateX(2deg) rotateY(-5deg); }
+    50% { transform: translateY(-1.2%) rotateX(-2deg) rotateY(5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wp-scene { transition: none; }
+    .wp-sway { animation: none; }
   }
 
   @media (prefers-reduced-motion: reduce) {
