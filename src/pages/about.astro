@@ -1,14 +1,18 @@
 ---
 /**
- * Redesign option — About.
+ * About — timeline layout option.
  *
- * Bio text is the brief's own "core story" paragraph verbatim, plus the
- * existing About.astro's career-journey timeline (already real, unchanged
- * content) and the same facts used across the rest of this option — no new
- * claims introduced here.
+ * Same content as about.astro, restructured as a dated rail: roles most recent
+ * first, each one pinned beside its entries while they scroll past.
+ *
+ * Darwinbox titles and dates are taken verbatim from LinkedIn, which is the
+ * source of record and supersedes the sub-role dates in resume.astro (those
+ * still read 2021–2024 / 2017–2021 and need updating).
+ *
+ * Darwinbox roles carry month precision; WTA and the earlier roles are year
+ * ranges because no month-level dates exist for them yet.
  */
 import Base from "../layouts/Base.astro";
-import Experience from "../components/Experience.astro";
 
 const FACTS = [
   { value: "16+", label: "Years in design" },
@@ -17,144 +21,593 @@ const FACTS = [
   { value: "120+", label: "Countries" },
 ];
 
-const TIMELINE = [
-  { t: "Visual design", d: "Learning craft, communication and visual problem solving." },
-  { t: "UX & product design", d: "Moving from communicating information to understanding users, workflows and product problems." },
-  { t: "Startup product design", d: "Learning to design with speed, ambiguity and limited resources." },
-  { t: "Darwinbox, early design team", d: "Helping establish product design foundations while the company scaled from startup to unicorn." },
-  { t: "Enterprise product design", d: "Complex workflows, business rules, permissions, configurations and global product requirements." },
-  { t: "Hands-on IC work", d: "Staying close to the work: mapping a workflow, questioning an interaction, reviewing a prototype and exploring a new product idea." },
-  { t: "AI-native product design", d: "Applying years of enterprise systems experience to products that can understand intent, reason, act and collaborate with people." },
+const EDUCATION = [
+  { name: "ISBM", note: "Bachelor's in Visual Communications" },
+  { name: "Xperian", note: "Digital Product Design" },
+  { name: "IBM", note: "Enterprise Design Thinking · Essentials for AI" },
+];
+
+const ERAS = [
+  {
+    place: "Darwinbox",
+    context: "Global HCM platform, used across 120+ countries",
+    span: "Sep 2017 – Sep 2026",
+    entries: [
+      {
+        year: "Apr 2024 – Sep 2026",
+        title: "Associate Director UX",
+        lead: true,
+        notes: [
+          "Leading <strong>AI-native and agentic experience design</strong> across the platform: defining where the system acts autonomously, where it assists, and where human-in-the-loop approval is required. Designing the permission boundaries, explainability and failure-recovery behaviour around every autonomous action.",
+          "<strong>Contributing hands-on</strong>, not from a distance — mapping the workflow, building the prototype, questioning the interaction, and working the details through with product and engineering until the experience holds up.",
+          "Setting design direction across six product areas — Time Management, Core, Payroll, Benefits, Extensibility and Workflows &amp; Journeys — taking the hardest problem in each myself, and shaping how the platform evolves toward <strong>AI-native experiences</strong>.",
+          "Partnering directly with product and engineering leaders on the hardest calls: product direction, system trade-offs and design quality across teams. Mentorship happens inside that work, not as a separate management layer.",
+        ],
+      },
+      {
+        year: "Apr 2023 – May 2024",
+        title: "Senior Manager UX",
+        notes: [
+          "Rebuilt Time Management, an eight-year-old enterprise module that had become increasingly difficult to use as Darwinbox expanded across customers and markets. Reorganised the experience around what managers need to understand and decide first, rather than exposing the complexity of the underlying product structure.",
+          "Validated the new model with 8 enterprise clients across Southeast Asia before global rollout. The work contributed to Darwinbox's Workforce Management moving from 2.9 → 3.5 in the Gartner Magic Quadrant by 2025.",
+        ],
+      },
+      {
+        year: "Sep 2020 – Apr 2023",
+        title: "Manager UX",
+        notes: [
+          "Led the design of Workflows &amp; Journeys, a platform layer connecting HR events such as onboarding, transfers, promotions and exits to the systems that execute them across country rules, business logic and role permissions. Shipped across 120+ countries.",
+          "Worked closely with product and engineering to turn a complex platform model into a framework organisations could use to create and manage their own employee journeys.",
+        ],
+      },
+      {
+        year: "Sep 2017 – Sep 2020",
+        title: "Senior Product Designer",
+        kicker: "Founding designer",
+        notes: [
+          "Joined as an early founding member of the design team and helped establish the foundations for product design as the company scaled rapidly. Built the initial design language and style guide, introduced reusable patterns, and established a design review practice that held product quality without losing the speed a startup needs.",
+          "This period covered Darwinbox's evolution from an early-stage startup into a unicorn, while the product, customer base and design organisation grew alongside the business.",
+        ],
+      },
+    ],
+  },
+  {
+    place: "WTA Studios",
+    context: "Product design for web and mobile",
+    span: "2015 – 2017",
+    entries: [
+      {
+        year: "2015 – 2017",
+        title: "Product Designer",
+        notes: [
+          "End-to-end design for multiple web and mobile products. Introduced design thinking to cross-functional teams and began mentoring junior designers.",
+        ],
+      },
+    ],
+  },
+  {
+    place: "Earlier roles",
+    context: "Six years across every medium, before specialising in product",
+    span: "2009 – 2015",
+    entries: [
+      {
+        year: "2009 – 2015",
+        title: "UI/UX · Visual · Graphic Designer",
+        notes: [
+          "Wave Crest Group (enterprise dashboards), Green Gold Animation (the Chhota Bheem franchise) and Anil Bhanu Core Design.",
+        ],
+      },
+    ],
+  },
+];
+
+const RECOGNITION = [
+  "Five Best Contributor of the Quarter awards at Darwinbox",
+  "Best Graphic Designer of the Year — <em>Chhota Bheem and the Curse of Damyaan</em>",
+  "Presented at the SEA UX Roadshow across Singapore, the Philippines &amp; Thailand",
 ];
 ---
 
 <Base title="About | Kishore Sudhamalla">
-  <section class="container-pg r-about" data-reveal>
-    <div class="r-about-grid">
-    <div class="r-about-copy">
-    <p class="r-eyebrow">About</p>
+  <!-- ── Intro ── -->
+  <section class="container-pg ab-intro" data-reveal>
+    <div class="ab-intro-grid">
+      <div class="ab-intro-copy">
+        <p class="ab-kicker">Kishore Sudhamalla / Still hands-on</p>
+        <h1 class="ab-title">About <em>me.</em></h1>
 
-    <p class="r-bio">
-      I like difficult problems. I've spent most of my career designing
-      products where complexity is unavoidable. For the last nine years I've worked on Darwinbox, a global HCM platform used across 120+
-      countries. I've worked across Time Management, Payroll, Benefits,
-      Journeys, Flows, HR Documents, Core HR, Extensibility and AI
-      experiences.
-    </p>
-    <p class="r-bio">
-      I've spent years leading designers and shaping product direction and I still work close to the work: opening Figma when the problem is hard, building a prototype when the idea isn't clear and getting into the details with product and engineering until the experience makes sense. That's how I work as a Principal Designer.
-    </p>
-    <p class="r-bio">
-      What interests me now is what happens when these systems become
-      intelligent. Instead of asking users to navigate increasingly complex
-      software, I want to explore products that understand context,
-      recognize intent and help people act.
-    </p>
-    <p class="r-bio">
-      My next chapter is focused on AI-native product design.
-    </p>
+        <p class="ab-bio">
+          I like difficult problems. I've spent most of my career designing
+          products where complexity is unavoidable. For the last nine years
+          I've worked on Darwinbox, a global HCM platform used across 120+
+          countries — across Time Management, Payroll, Benefits, Journeys,
+          Flows, HR Documents, Core HR, Extensibility and AI experiences.
+        </p>
+        <p class="ab-bio">
+          I've spent years leading designers and shaping product direction, and
+          I still work close to the work: opening Figma when the problem is
+          hard, building a prototype when the idea isn't clear, and getting into
+          the details with product and engineering until the experience makes
+          sense. That's how I work as a Principal Designer.
+        </p>
+        <p class="ab-bio">
+          What interests me now is what happens when these systems become
+          intelligent. Instead of asking people to navigate increasingly complex
+          software, I want to build products that understand context, recognise
+          intent and help people act.
+        </p>
 
-    <dl class="r-facts">
-      {FACTS.map((f) => (
-        <div>
-          <dt>{f.value}</dt>
-          <dd>{f.label}</dd>
+        <div class="ab-jump">
+          <a href="#experience">Experience ↓</a>
+          <a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noreferrer">LinkedIn ↗</a>
         </div>
-      ))}
-    </dl>
+      </div>
 
-    <div class="r-links">
-      <a href="/resume" class="r-btn r-btn-primary">Résumé ↓</a>
-      <a href="https://linkedin.com/in/kishuxer" target="_blank" rel="noreferrer" class="r-btn r-btn-ghost">LinkedIn ↗</a>
-    </div>
-    </div>
+      <figure class="ab-photo">
+        <picture>
+          <source srcset="/images/kishore-portrait.webp" type="image/webp" />
+          <img
+            src="/images/kishore-portrait.jpg"
+            alt="Kishore Kumar Sudhamalla"
+            width="780"
+            height="907"
+            decoding="async"
+          />
+        </picture>
+      </figure>
 
-    <figure class="r-about-photo">
-      <picture>
-        <source srcset="/images/kishore-portrait.webp" type="image/webp" />
-        <img src="/images/kishore-portrait.jpg" alt="Kishore Kumar Sudhamalla" width="780" height="907" decoding="async" />
-      </picture>
-    </figure>
-    </div>
-  </section>
-
-  <section class="container-pg r-timeline-section" data-reveal>
-    <p class="r-case-label">Path here</p>
-    <div class="r-timeline">
-      {TIMELINE.map((item, i) => (
-        <div class="r-timeline-row">
-          <p class="r-timeline-n">{String(i + 1).padStart(2, "0")}</p>
+      <dl class="ab-facts">
+        {FACTS.map((f) => (
           <div>
-            <h3>{item.t}</h3>
-            <p>{item.d}</p>
+            <dt>{f.value}</dt>
+            <dd>{f.label}</dd>
           </div>
-        </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- ── Experience timeline ── -->
+  <section class="container-pg ab-chron" id="experience" data-reveal>
+    <p class="ab-kicker">Career</p>
+    <h2 class="ab-title ab-title--sm">Experience</h2>
+    <p class="ab-sub">Most recent first.</p>
+
+    <div class="chron">
+      {ERAS.map((era) => (
+        <section class="chron-era">
+          {/* Pins while its own entries scroll past, released by the next era. */}
+          <header class="chron-era-head">
+            <p class="chron-era-span">{era.span}</p>
+            <h3 class="chron-era-name">{era.place}</h3>
+            <p class="chron-era-ctx">{era.context}</p>
+          </header>
+
+          <ol class="chron-list">
+            {era.entries.map((e) => (
+              <li class="chron-entry" data-lead={e.lead ? "" : undefined}>
+                <p class="chron-year">{e.year}</p>
+                <div class="chron-body">
+                  {e.kicker && <p class="chron-entry-k">{e.kicker}</p>}
+                  <h4 class="chron-entry-t">{e.title}</h4>
+                  {e.notes.map((n) => (
+                    <p class="chron-entry-d"><Fragment set:html={n} /></p>
+                  ))}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
       ))}
     </div>
   </section>
 
-  <Experience />
+  <!-- ── Education ── -->
+  <section class="container-pg ab-rec" data-reveal>
+    <h2 class="ab-h2">Education &amp; certifications</h2>
+    <ul class="ab-rec-list">
+      {EDUCATION.map((e) => (
+        <li>
+          <span class="ab-rec-n">{e.name}</span>
+          <span class="ab-rec-d">{e.note}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ── Recognition ── -->
+  <section class="container-pg ab-rec" data-reveal>
+    <h2 class="ab-h2">Recognition &amp; speaking</h2>
+    <ul class="ab-rec-list">
+      {RECOGNITION.map((r) => (
+        <li><Fragment set:html={r} /></li>
+      ))}
+    </ul>
+
+    <div class="ab-cta">
+      <a href="/resume" class="ab-btn ab-btn--primary">Résumé ↓</a>
+      <a href="/work/time-management" class="ab-btn ab-btn--ghost">Selected work →</a>
+    </div>
+  </section>
 </Base>
 
+<script>
+  /**
+   * Lights the experience entry currently in the reading band under the sticky
+   * era header. Measured on every scroll frame rather than on IntersectionObserver
+   * callbacks — those only fire when a threshold is crossed, so the highlight
+   * went stale between entries and could disagree with the pinned era.
+   */
+  function initTimeline() {
+    const entries = [...document.querySelectorAll<HTMLElement>(".chron-entry")];
+    if (!entries.length) return;
+
+    let raf = 0;
+    let last: HTMLElement | null = null;
+
+    const update = () => {
+      raf = 0;
+      // The band sits just below the sticky header, where the eye rests.
+      const band = Math.max(140, window.innerHeight * 0.28);
+      let best: HTMLElement | null = null;
+      let bestDist = Infinity;
+
+      for (const el of entries) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 60 || r.top > window.innerHeight) continue;
+        // Prefer an entry whose body straddles the band, else the nearest start.
+        const d = r.top <= band && r.bottom >= band ? 0 : Math.abs(r.top - band);
+        if (d < bestDist) { bestDist = d; best = el; }
+      }
+
+      if (best !== last) {
+        last?.removeAttribute("data-at");
+        best?.setAttribute("data-at", "");
+        last = best;
+      }
+    };
+
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  initTimeline();
+  document.addEventListener("astro:page-load", initTimeline);
+</script>
+
 <style>
-  .r-about { padding-block: clamp(3rem, 7vw, 5rem) clamp(2.5rem, 5vw, 4rem); }
-  .r-about-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
-  .r-about-copy { max-width: var(--measure); }
-  .r-about-photo { margin: 0; order: -1; width: min(72vw, 260px); }
-  .r-about-photo img {
-    display: block; width: 100%; height: auto; aspect-ratio: 0.86 / 1;
-    object-fit: cover; object-position: 50% 24%; border-radius: 16px;
+  /* ── Shared type ── */
+  .ab-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .ab-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--color-ink);
+    margin: 0 0 1.75rem;
+  }
+  .ab-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-ink-3);
+  }
+  .ab-title--sm {
+    font-size: clamp(1.875rem, 4vw, 2.75rem);
+    margin-bottom: 0.5rem;
+  }
+  .ab-sub {
+    font-size: 0.9375rem;
+    color: var(--color-ink-3);
+    margin: 0 0 clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .ab-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.375rem;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    margin: 0 0 1.5rem;
+  }
+
+  /* Anchor target sits under a sticky nav, so the jump link needs clearance. */
+  #experience { scroll-margin-top: 5.5rem; }
+
+  /* ── Intro ── */
+  .ab-intro { padding-block: clamp(2rem, 5vw, 3.5rem) clamp(3rem, 6vw, 4.5rem); }
+  .ab-intro-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+  .ab-intro-copy { max-width: var(--measure); }
+  .ab-bio {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-ink-2);
+    margin: 0 0 1.25rem;
+  }
+
+  .ab-photo { margin: 0; order: -1; width: min(66vw, 240px); }
+  .ab-photo img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 0.86 / 1;
+    object-fit: cover; object-position: 50% 24%;
+    border-radius: 14px;
     box-shadow: 0 22px 54px rgb(20 14 8 / 0.18);
   }
-  /* the plate is light grey, so it gets graded down against a dark page */
-  :global(.dark) .r-about-photo img { filter: brightness(0.88) contrast(1.04); box-shadow: 0 22px 54px rgb(0 0 0 / 0.55); }
-  @media (min-width: 900px) {
-    .r-about-grid { grid-template-columns: minmax(0, 1fr) minmax(220px, 20rem); gap: clamp(3rem, 7vw, 6rem); align-items: start; }
-    .r-about-photo { order: 0; width: 100%; margin-top: 2.5rem; }
+  :global(.dark) .ab-photo img {
+    filter: brightness(0.88) contrast(1.04);
+    box-shadow: 0 22px 54px rgb(0 0 0 / 0.55);
   }
-  .r-eyebrow {
-    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
-    margin: 0 0 1.5rem;
-  }
-  .r-bio { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem; }
 
-  .r-facts {
-    display: flex; flex-wrap: wrap; gap: 2rem 3rem;
-    margin: 2rem 0; padding-top: 1.75rem; border-top: 1px solid var(--color-border);
+  @media (min-width: 900px) {
+    .ab-intro-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(190px, 15.5rem);
+      gap: 0 clamp(3rem, 7vw, 5.5rem);
+      align-items: start;
+    }
+    .ab-intro-copy { grid-column: 1; grid-row: 1; }
+    .ab-facts { grid-column: 1; grid-row: 2; }
+    /* The grid ends level with the stats, so the portrait comes to rest with
+       its bottom edge on the metric labels. Dropping the caption gives back
+       the sticky travel that the old bottom margin was buying. */
+    /* Portrait spans the bio AND the stats rows, so it stays pinned through
+       both instead of releasing where the bio ends. */
+    .ab-photo {
+      order: 0;
+      width: 100%;
+      grid-column: 2;
+      grid-row: 1 / 3;
+      position: sticky;
+      top: 5.5rem;
+      align-self: start;
+    }
   }
-  .r-facts dt {
-    font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(1.375rem, 2.2vw, 1.75rem); color: var(--color-ink);
+
+  .ab-jump { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+  .ab-jump a {
+    font-size: 0.8125rem;
+    color: var(--color-ink-2);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2px;
+    transition: color var(--dur-micro) var(--ease-enter),
+                border-color var(--dur-micro) var(--ease-enter);
+  }
+  .ab-jump a:hover { color: var(--color-ink); border-color: var(--color-ink); }
+
+  /* ── Facts ── */
+  .ab-facts {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.75rem 3.5rem;
+  }
+  .ab-facts dt {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
     font-variant-numeric: tabular-nums;
   }
-  .r-facts dd { margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3); }
+  .ab-facts dd {
+    margin: 0.3rem 0 0;
+    font-size: 0.75rem;
+    color: var(--color-ink-3);
+  }
 
-  .r-links { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .r-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: 0.8rem 1.6rem; border-radius: 100px;
-    font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: opacity var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter), background-color var(--dur-micro) var(--ease-enter);
+  /* ── Experience timeline ── */
+  .ab-chron {
+    padding-block: clamp(3.5rem, 7vw, 5rem);
+    border-top: 1px solid var(--color-border);
   }
-  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
-  .r-btn-primary:hover { opacity: 0.85; }
-  .r-btn-ghost { border: 1px solid var(--color-border); color: var(--color-ink); }
-  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
 
-  .r-case-label {
-    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
-    margin: 0 0 1.5rem;
+  .chron {
+    --chron-col: 15rem;
+    --chron-gap: clamp(2.5rem, 5vw, 4.5rem);
   }
-  .r-timeline-section { padding-bottom: clamp(4rem, 8vw, 6rem); }
-  .r-timeline-section > * { max-width: var(--measure); }
-  .r-timeline { display: flex; flex-direction: column; }
-  .r-timeline-row {
-    display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem;
-    padding: 1.25rem 0; border-top: 1px solid var(--color-border);
+
+  .chron-era {
+    position: relative;
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
   }
-  .r-timeline-row:last-child { border-bottom: 1px solid var(--color-border); }
-  .r-timeline-n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); margin: 0.15rem 0 0; }
-  .r-timeline-row h3 { font-size: 1rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.35rem; }
-  .r-timeline-row p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .chron-era:last-child { padding-bottom: 0; }
+
+  /* The rail is drawn per era but spans each era's full box, so the eras butt
+     together into one continuous line down the whole timeline. */
+  .chron-era::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+  }
+  .chron-era:first-child::before { top: 0.5rem; }
+
+  /* The era header pins while its own entries scroll past. `align-self: start`
+     is what makes it work in a grid — otherwise the item stretches to the row
+     height and sticky has no room to travel. */
+  .chron-era-head {
+    position: sticky;
+    top: 5.5rem;
+    align-self: start;
+    z-index: 2;
+    background: var(--color-bg);
+    padding-bottom: 1rem;
+  }
+  .chron-era-span {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-3);
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 0.5rem;
+  }
+  .chron-era-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .chron-era-ctx {
+    margin: 0.4rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-ink-3);
+  }
+
+  .chron-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .chron-entry {
+    position: relative;
+    padding: 0 0 2.25rem 1.75rem;
+  }
+  .chron-entry:last-child { padding-bottom: 0; }
+  .chron-entry::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.42rem;
+    width: 9px;
+    height: 9px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: 1px solid var(--color-ink-3);
+    transition:
+      background-color var(--dur-fast) var(--ease-enter),
+      border-color var(--dur-fast) var(--ease-enter),
+      transform var(--dur-fast) var(--ease-enter);
+  }
+  /* Entry currently in the reading band — set by the script above. */
+  .chron-entry[data-at]::before {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    transform: scale(1.25);
+  }
+  .chron-entry[data-at] .chron-year { color: var(--color-ink); }
+
+  .chron-year {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-ink-3);
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 0.3rem;
+    transition: color var(--dur-fast) var(--ease-enter);
+  }
+  .chron-entry-k {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.3rem;
+  }
+  .chron-entry-t {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0 0 0.5rem;
+  }
+  /* The current role carries the most detail, so it gets a little more room. */
+  .chron-entry[data-lead] .chron-entry-t { font-size: 1.1875rem; }
+
+  .chron-entry-d {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-ink-2);
+    margin: 0;
+    max-width: 38rem;
+  }
+  .chron-entry-d + .chron-entry-d { margin-top: 0.7rem; }
+  .chron-entry-d :global(strong) { font-weight: 600; color: var(--color-ink); }
+
+  /* Wide: era pinned in its own column, entries scrolling beside it. */
+  @media (min-width: 880px) {
+    .chron-era {
+      display: grid;
+      grid-template-columns: var(--chron-col) minmax(0, 1fr);
+      gap: 0 var(--chron-gap);
+      align-items: start;
+    }
+    .chron-era::before { left: calc(var(--chron-col) + var(--chron-gap)); }
+    /* In the two-column layout the entries never pass behind the header, so the
+       opaque backing isn't needed — and it was painting a flat patch over the
+       page's dark-mode gradient. */
+    .chron-era-head { padding-bottom: 0; background: none; }
+    .chron-entry { padding-left: 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chron-entry::before { transition: none; }
+  }
+
+  /* ── Education / Recognition ── */
+  .ab-rec {
+    padding-block: clamp(2.75rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--color-border);
+  }
+  .ab-rec:last-of-type { padding-bottom: clamp(4rem, 8vw, 6rem); }
+  .ab-rec-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 44rem;
+  }
+  .ab-rec-list li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1.25rem;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+  }
+  .ab-rec-list li:first-child { border-top: 0; padding-top: 0; }
+  .ab-rec-list :global(em) { font-style: italic; color: var(--color-ink); }
+  .ab-rec-n {
+    flex: 0 0 9rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .ab-rec-d { flex: 1 1 16rem; }
+
+  .ab-cta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.5rem; }
+  .ab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.6rem;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity var(--dur-micro) var(--ease-enter),
+                border-color var(--dur-micro) var(--ease-enter);
+  }
+  .ab-btn--primary { background: var(--color-ink); color: var(--color-bg); }
+  .ab-btn--primary:hover { opacity: 0.85; }
+  .ab-btn--ghost { border: 1px solid var(--color-border); color: var(--color-ink); }
+  .ab-btn--ghost:hover { border-color: var(--color-ink-3); }
 </style>

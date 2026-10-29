@@ -17,11 +17,12 @@ const { src, poster, label } = Astro.props;
   <video muted playsinline preload="metadata" poster={poster} aria-label={label}>
     <source src={src} type="video/mp4" />
   </video>
+  <span class="fp-scrim" aria-hidden="true"></span>
   <button type="button" class="fp-btn" aria-label="Play the film with sound">
     <span class="fp-ring" aria-hidden="true"></span>
     <span class="fp-metal" aria-hidden="true"></span>
     <span class="fp-glint" aria-hidden="true"></span>
-    <svg class="fp-icon" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z" fill="currentColor" /></svg>
+    <svg class="fp-icon" viewBox="8 5.2 11 13.6" width="22" height="27" shape-rendering="geometricPrecision" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 0 0 1.5.86l11-6.8a1 1 0 0 0 0-1.72l-11-6.8A1 1 0 0 0 8 5.2z" fill="currentColor" /></svg>
   </button>
 </div>
 
@@ -67,14 +68,28 @@ const { src, poster, label } = Astro.props;
   .fp { position: relative; line-height: 0; }
   .fp video { display: block; width: 100%; height: auto; }
 
+  /* Pausing mid-film brings the control back over whatever frame happens to
+     be showing — including the film's own title cards. Without this, the
+     control just sits on top of the content and can slice through text,
+     reading as broken rather than as a deliberate "paused" state. The scrim
+     dims the frame behind the control the same way a native video player
+     would, so reappearing reads as intentional regardless of what's beneath. */
+  .fp-scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(60% 60% at 50% 50%, rgba(8, 8, 14, 0.5), rgba(8, 8, 14, 0.18) 65%, transparent 100%);
+    opacity: 0; transition: opacity 320ms ease; pointer-events: none;
+  }
+  .fp:not(.is-playing) .fp-scrim { opacity: 1; }
+
   .fp-btn {
-    --size: 88px; --stroke: 3px; --spin: 9s; --mx: 32%; --my: 24%;
+    --size: 64px; --stroke: 3px; --spin: 9s; --mx: 32%; --my: 24%;
     position: absolute; left: 50%; top: 50%; width: var(--size); height: var(--size);
     margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
     padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer;
-    color: #14141a; isolation: isolate;
+    color: #14141a; isolation: isolate; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
     transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
-    filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.45));
+    box-shadow: 0 14px 22px rgba(0, 0, 0, 0.45);
   }
   /* outline: the same finish, but only a thin turning ring */
   .fp-btn::before {
@@ -103,7 +118,7 @@ const { src, poster, label } = Astro.props;
     position: absolute; inset: 0; border-radius: 50%; z-index: -1;
     border: 2px solid rgba(255,255,255,.55); opacity: 0; transform: scale(1);
   }
-  .fp-icon { position: relative; z-index: 3; margin-left: 4px; filter: drop-shadow(0 1px 0 rgba(255,255,255,.5)); }
+  .fp-icon { position: relative; z-index: 3; filter: drop-shadow(0 1px 0 rgba(255,255,255,.5)); }
 
   .fp-btn:hover { transform: scale(1.07); --spin: 4s; }
   .fp-btn:hover .fp-glint::after { animation: fp-sweep 900ms cubic-bezier(0.22, 1, 0.36, 1); }
@@ -121,7 +136,7 @@ const { src, poster, label } = Astro.props;
     100% { opacity: 0; transform: scale(1.9); }
   }
 
-  @media (max-width: 640px) { .fp-btn { --size: 68px; } .fp-icon { width: 24px; height: 24px; } }
+  @media (max-width: 640px) { .fp-btn { --size: 50px; } .fp-icon { width: 17px; height: 21px; } }
   @media (prefers-reduced-motion: reduce) {
     .fp-btn::before, .fp-metal { animation: none; }
     .fp-btn:hover .fp-glint::after, .fp-btn.is-press .fp-ring { animation: none; }

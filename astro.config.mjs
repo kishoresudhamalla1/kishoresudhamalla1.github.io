@@ -18,6 +18,8 @@ export default defineConfig({
     "/work/workflows-journeys": "/work/flows-journeys-playbooks",
     "/redesign": "/",
     "/redesign/about": "/about",
+    // The timeline layout was reviewed at /about-new before replacing /about.
+    "/about-new": "/about",
     "/redesign/ai-lab": "/ai-lab",
     "/redesign/thinking": "/thinking",
   },

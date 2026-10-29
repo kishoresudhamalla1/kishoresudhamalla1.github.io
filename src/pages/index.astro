@@ -203,35 +203,63 @@ const QUESTIONS = [
     line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
     margin: 0 0 1.5rem;
   }
-  /* hover: the accent line colours in, periwinkle to cream to sand to dusty
-     coral (dark) or the same hues deepened for a light page. Muted on purpose:
-     it picks up the site's indigo and warm off-white rather than a full spectrum. The stops are mixed
-     from the resting grey by --hue, so the whole line fades in as one
-     continuous colour transition. */
-  @property --hue { syntax: "<number>"; inherits: true; initial-value: 0; }
+  /* The accent line runs periwinkle → cream → amber → coral → rose. Colour is
+     the RESTING state: --hue sits at 1, and the stops only mix back toward grey
+     while the intro sweep plays. Hover adds a small saturation lift rather than
+     being the only way to see colour at all. */
+  @property --hue { syntax: "<number>"; inherits: true; initial-value: 1; }
   .r-h1 {
-    --hue: 0;
-    --g1: #8aa4f0; --g2: #b4c3ff; --g3: #f0ece0; --g4: #e4c690; --g5: #e2a07c; --g6: #d9908f;
+    --hue: 1;
+    --g1: #8ea7ff; --g2: #b9c6ff; --g3: #fdf3e3; --g4: #ffc97a; --g5: #ff9e74; --g6: #ff8aa0;
     transition: --hue 800ms var(--ease-enter);
-    /* on landing the colour sweeps in once, holds, and settles back to rest;
-       from then on it is the hover effect */
-    animation: hue-intro 4.4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s 1;
+    /* on landing the colour fills in once from grey, then stays */
+    animation: hue-intro 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s 1;
   }
-  :global(html:not(.dark)) .r-h1 { --g1: #3b4fc4; --g2: #4f63d6; --g3: #7a6a45; --g4: #a8742b; --g5: #b3563a; --g6: #a8465f; }
+  :global(html:not(.dark)) .r-h1 { --g1: #2f46d8; --g2: #4a5fe8; --g3: #8a6520; --g4: #c07a12; --g5: #d1512c; --g6: #c43a62; }
+  /* A second, independent layer: a soft light band that sweeps across the
+     already-coloured gradient every few seconds, the way a reference video of
+     Refero's headline does it. It never dips the base colour back to grey —
+     that read as pale — it rides on top of it, brightening whatever it
+     crosses and leaving the gradient's own colour everywhere else. */
+  @property --shine { syntax: "<percentage>"; inherits: true; initial-value: 160%; }
   .r-h1-accent {
+    --shine: 160%;
     color: transparent; -webkit-background-clip: text; background-clip: text;
     -webkit-box-decoration-break: clone; box-decoration-break: clone;
-    background-image: linear-gradient(90deg,
-      color-mix(in srgb, var(--g1) calc(var(--hue) * 100%), var(--color-ink-2)),
-      color-mix(in srgb, var(--g2) calc(var(--hue) * 100%), var(--color-ink-2)),
-      color-mix(in srgb, var(--g3) calc(var(--hue) * 100%), var(--color-ink-2)),
-      color-mix(in srgb, var(--g4) calc(var(--hue) * 100%), var(--color-ink-2)),
-      color-mix(in srgb, var(--g5) calc(var(--hue) * 100%), var(--color-ink-2)),
-      color-mix(in srgb, var(--g6) calc(var(--hue) * 100%), var(--color-ink-2)));
+    background-repeat: no-repeat;
+    background-size: 46% 100%, 100% 100%;
+    background-position: var(--shine) 0, 0 0;
+    background-image:
+      linear-gradient(100deg,
+        transparent 10%,
+        color-mix(in srgb, white 100%, transparent) 50%,
+        transparent 90%),
+      linear-gradient(90deg,
+        color-mix(in srgb, var(--g1) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g2) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g3) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g4) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g5) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g6) calc(var(--hue) * 100%), var(--color-ink-2)));
+    transition: filter var(--dur-normal) var(--ease-enter);
+    animation:
+      hue-intro 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s 1,
+      shine-sweep 7.5s cubic-bezier(0.4, 0, 0.2, 1) 2.2s infinite;
   }
-  @keyframes hue-intro { 0% { --hue: 0; } 28% { --hue: 1; } 72% { --hue: 1; } 100% { --hue: 0; } }
-  @media (hover: hover) { .r-h1:hover { --hue: 1; } }
-  @media (prefers-reduced-motion: reduce) { .r-h1 { transition: none; animation: none; } }
+  @keyframes hue-intro { from { --hue: 0; } to { --hue: 1; } }
+  /* Sits still off to the right for most of the cycle, crosses in ~1.3s,
+     then holds past the left edge until the next pass. */
+  @keyframes shine-sweep {
+    0%, 70% { --shine: 160%; }
+    92% { --shine: -90%; }
+    100% { --shine: -90%; }
+  }
+  @media (hover: hover) { .r-h1:hover .r-h1-accent { filter: saturate(1.18) brightness(1.07); } }
+  /* Reduced motion keeps the colour, drops both the intro sweep and the shine. */
+  @media (prefers-reduced-motion: reduce) {
+    .r-h1 { transition: none; }
+    .r-h1-accent { animation: none; }
+  }
   .r-lede {
     font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
     color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;

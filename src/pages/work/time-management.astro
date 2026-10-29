@@ -8,12 +8,7 @@
  * assets below are pulled from the live page and existing public/images —
  * nothing here is invented.
  *
- * One flagged conflict: the brief for this redesign states the WFM rating
- * moved "2.9 to 3.7." The live case study's own evidence (Gartner MQ figure
- * + impact stat tiles) says 2.9 to 3.5. Rather than silently pick one, this
- * page uses 3.5 (the figure the live page's own evidence supports) and
- * calls the discrepancy out explicitly so it can be confirmed against the
- * real Gartner source before anything ships.
+ * WFM rating: confirmed current Gartner score is 3.7 (up from 2.9).
  *
  * Also preserved as-is, per the brief's instruction not to overclaim
  * causation: the rating lift is described as something Time Management was
@@ -35,7 +30,7 @@ const IMG = "/images/work/time-management";
     lede="Reimagining enterprise time management for global scale. An eight-year-old module used daily for attendance, leaves, timesheets, approvals, payroll dependencies and global compliance, with zero prior UX investment."
     meta={[
       { k: "Role", v: "Associate Director, UX" },
-      { k: "Team", v: "3 designers · product · engineering" },
+      { k: "Team", v: "2 designers · 3 PMs · 2 frontend devs" },
       { k: "Timeline", v: "2023 – 2024" },
       { k: "Platform", v: "Darwinbox HCM · 120+ countries" },
     ]}
@@ -43,7 +38,7 @@ const IMG = "/images/work/time-management";
     poster={`${IMG}/tm-manager-dashboard-poster.jpg`}
     alt="Time Management manager dashboard"
     cards={[
-      { eyebrow: "Gartner WFM score", value: "3.5", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped. See the note on the 3.5 vs 3.7 discrepancy below." },
+      { eyebrow: "Gartner WFM score", value: "3.7", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped." },
       { eyebrow: "Manager play rate", value: "73.1%", label: "Highest on the platform", note: "The dashboard view managers actually opened rather than the one they were given." },
     ]}
   />
@@ -110,6 +105,21 @@ const IMG = "/images/work/time-management";
           tradeoffs="Less can be visible at once than in the 3-column version. Some secondary data moved behind a panel toggle instead of staying always on screen."
           result="Shipped as the production information architecture for the manager and employee dashboards."
         />
+
+        <div class="r-decision-visual">
+          <figure>
+            <div class="r-decision-visual-frame">
+              <img src={`${IMG}/image-1783857502682.png`} alt="3-column dashboard layout, exploration pulled from global layout research" loading="lazy" />
+            </div>
+            <figcaption>Option considered: 3-column layout</figcaption>
+          </figure>
+          <figure>
+            <div class="r-decision-visual-frame">
+              <img src={`${IMG}/image-1783857498993.png`} alt="2-column dashboard layout, exploration pulled from global layout research" loading="lazy" />
+            </div>
+            <figcaption>Decision: 2-column layout, shipped</figcaption>
+          </figure>
+        </div>
 
         <DecisionBlock
           number="2"
@@ -187,16 +197,25 @@ const IMG = "/images/work/time-management";
       <p class="r-case-label">Collaboration</p>
       <h2>How this got built.</h2>
       <p>
-        Delivered with a team of three designers alongside product and engineering over roughly a year. Research and validation involved direct conversations with enterprise clients: TVS, Bigbasket and Licious in primary research, and later an in-market roadshow across Singapore, the Philippines and Thailand. We presented the shipped direction to Busy Bees, Singlife, Toyota, Security Bank, JG Summit, Cebu Pacific, BPI and Darwinbox's own SEA team.
+        Delivered over roughly a year with a staff designer and myself hands-on, owning design direction, hands-on UX work and client validation, alongside two frontend developers and three product managers covering Leave, Attendance, and Scheduling & Timesheets. Research and validation involved direct conversations with enterprise clients: TVS, Bigbasket and Licious in primary research, and later an in-market roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE.
       </p>
+
+      <p class="r-sub-label">Clients we presented the shipped direction to</p>
+      <div class="r-logo-row">
+        {[
+          "Busy Bees", "Singlife", "Toyota", "Security Bank", "JG Summit",
+          "Cebu Pacific", "BPI", "Shalina Healthcare", "House of Shipping",
+          "Ghassan Aboud Group", "Darwinbox",
+        ].map((name) => <span class="r-logo-chip">{name}</span>)}
+      </div>
     </section>
 
-    <!-- Validation: the SEA roadshow, carried over from the original case study -->
+    <!-- Validation: the SEA + MENA roadshow, carried over from the original case study -->
     <section class="r-case-section r-wide" data-reveal>
       <p class="r-case-label">Validation</p>
-      <h2>Taken to 8 clients across Southeast Asia.</h2>
+      <h2>Taken to 11 clients across Southeast Asia and the Middle East.</h2>
       <p>
-        Before global rollout we ran a UX roadshow across Singapore, the Philippines and Thailand. We presented the designs to client teams and collected their reactions in the room.
+        Before global rollout we ran a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE. We presented the designs to client teams and collected their reactions in the room.
       </p>
 
       <p class="r-sub-label">Who we presented to</p>
@@ -209,7 +228,10 @@ const IMG = "/images/work/time-management";
           { name: "JG Summit Holdings", industry: "Multi-industry", country: "Philippines" },
           { name: "Cebu Pacific", industry: "Airline & Transportation", country: "Philippines" },
           { name: "BPI", industry: "Banking & Financial Services", country: "Philippines" },
-          { name: "Darwinbox", industry: "Internal teams", country: "Singapore & Philippines" },
+          { name: "Shalina Healthcare", industry: "Healthcare", country: "Dubai, UAE" },
+          { name: "House of Shipping", industry: "Maritime & Logistics Consultancy", country: "Dubai, UAE" },
+          { name: "Ghassan Aboud Group", industry: "Multi-industry", country: "Dubai, UAE" },
+          { name: "Darwinbox", industry: "Internal teams", country: "SEA & MENA" },
         ].map((c) => (
           <div class="r-roster-item">
             <p class="r-roster-name">{c.name}</p>
@@ -230,9 +252,13 @@ const IMG = "/images/work/time-management";
           { f: "toyota-team", alt: "The team with client stakeholders at Toyota" },
           { f: "client-team-group", alt: "Group photo with a client team following a session" },
           { f: "client-session-group", alt: "Group photo with client stakeholders around the working table" },
+          { f: "shalina-healthcare-team", ext: "jpg", alt: "With the Shalina Healthcare team in Dubai, marking their 40th anniversary" },
+          { f: "ghassan-aboud-group-session", ext: "jpg", alt: "Presenting to the Ghassan Aboud Group team in their Dubai boardroom" },
+          { f: "house-of-shipping-team", ext: "jpg", alt: "With the House of Shipping team at their Dubai global headquarters" },
+          { f: "dubai-expo-city-team", ext: "jpg", alt: "The team on site at Expo City Dubai during the MENA roadshow" },
         ].map((p) => (
           <figure class={`r-photo${p.wide ? " r-photo--wide" : ""}`}>
-            <img src={`${IMG}/roadshow/${p.f}.webp`} alt={p.alt} loading="lazy" decoding="async" />
+            <img src={`${IMG}/roadshow/${p.f}.${p.ext ?? "webp"}`} alt={p.alt} loading="lazy" decoding="async" />
           </figure>
         ))}
       </div>
@@ -281,31 +307,56 @@ const IMG = "/images/work/time-management";
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Outcome</p>
-      <h2>What shipped and what we know about its use.</h2>
+      <h2>What it replaced for a manager.</h2>
+
+      <p>
+        Before this, a manager's view of their team's time wasn't a dashboard. It was a report they had to go build: pull attendance data, cross-reference who was on leave, scan rows by hand to catch anything that needed attention. That took real time, every time, and it was easy to miss a pattern buried in a spreadsheet.
+      </p>
+      <p>
+        The redesigned dashboard puts that work on the screen instead of on the manager. Pending approvals, who hasn't logged in yet, who's been working without a break, who to flag for a pattern: all of it surfaces on its own, system-detected rather than manager-derived. The shift is from "go find out" to "it's already here":
+      </p>
+
+      <figure class="r-impact">
+        <div class="r-impact-img">
+          <img src={`${IMG}/tm-manager-dashboard-poster.jpg`} alt="Manager Time Dashboard with callouts showing pending requests, logged-in status, attendance patterns and system-detected team insights" loading="lazy" />
+          <span class="r-impact-dot" style="--x: 45%; --y: 29%;"><span>1</span></span>
+          <span class="r-impact-dot" style="--x: 93%; --y: 32%;"><span>2</span></span>
+          <span class="r-impact-dot" style="--x: 44%; --y: 63%;"><span>3</span></span>
+          <span class="r-impact-dot" style="--x: 86%; --y: 61%;"><span>4</span></span>
+        </div>
+        <ol class="r-impact-legend">
+          <li><b>Approvals, with context.</b> Each leave request shows when it was applied for, so a manager isn't approving blind. No separate lookup to see how recent or how urgent it is.</li>
+          <li><b>Who still needs a nudge.</b> "Not logged in" is a filtered list, not something a manager has to cross-check against a roster by hand.</li>
+          <li><b>Exceptions visible at a glance.</b> Absences and anomalies sit inside the same attendance view as everyone present. No separate exception report to pull.</li>
+          <li><b>Patterns the manager didn't have to look for.</b> The system flags things like employees overdue for time off or repeatedly clocking in late, judgment calls that used to depend on a manager noticing, now surfaced automatically.</li>
+        </ol>
+      </figure>
+
+      <p class="r-table-caption">
+        The engagement numbers below are from the Darwinbox community: demo recordings of this redesign, viewed by prospective and existing customers evaluating it, not production usage telemetry.
+      </p>
 
       <div class="r-stat-row">
-        <div><p class="r-stat-v">1.16M</p><p class="r-stat-l">Dashboard plays, employee + manager</p></div>
+        <div><p class="r-stat-v">1.16M</p><p class="r-stat-l">Demo plays, employee + manager</p></div>
         <div><p class="r-stat-v">73.1%</p><p class="r-stat-l">Highest manager play rate on the platform</p></div>
-        <div><p class="r-stat-v">3.5</p><p class="r-stat-l">Gartner WFM score (up from 2.9)</p></div>
+        <div><p class="r-stat-v">3.7</p><p class="r-stat-l">Gartner WFM score (up from 2.9)</p></div>
       </div>
 
       <table class="r-table">
         <thead>
-          <tr><th>Dashboard</th><th>Plays</th><th>Play rate</th><th>Unique visitors</th></tr>
+          <tr><th>Demo recording</th><th>Plays</th><th>Play rate</th><th>Unique viewers</th></tr>
         </thead>
         <tbody>
           <tr><td>Employee Time Dashboard</td><td>116,374</td><td>71.6%</td><td>147,357</td></tr>
           <tr><td>Manager Time Dashboard</td><td>28,547</td><td>73.1%</td><td>34,693</td></tr>
         </tbody>
       </table>
-      <p class="r-table-caption">Adoption in the first weeks after launch.</p>
+      <p class="r-table-caption">Community engagement with the demo recordings in the first weeks after launch.</p>
 
       <p>
         Darwinbox's Gartner Magic Quadrant Workforce Management score moved
-        from 2.9 to 3.5 between 2021 and 2024 and the company moved into Challenger status over that period. Time Management was cited as a contributing factor. The evidence here does not support saying the redesign alone caused the score to move, only that it was named as part of the reason.
+        from 2.9 to 3.7 between 2021 and 2024 and the company moved into Challenger status over that period. Time Management was cited as a contributing factor. The evidence here does not support saying the redesign alone caused the score to move, only that it was named as part of the reason.
       </p>
-
-      <ContentNeeded note="The brief for this redesign states the rating moved from 2.9 to 3.7. The source case study's own evidence (Gartner MQ figure, impact stat tiles) supports 2.9 to 3.5. Confirm which figure is current against the actual Gartner report before publishing. This page uses 3.5 pending that confirmation." />
 
       <blockquote>
         "Really great job on time management, excellent UI and features. The
@@ -323,7 +374,7 @@ const IMG = "/images/work/time-management";
       <p>
         The biggest lesson was committing to the data model earlier. We
         spent too long exploring the 3-column layout because it felt more
-        flexible, when the evidence for a simpler 2-column hierarchy was already there. The SEA roadshow was the most direct and highest-quality validation in the whole project, yet it happened near-final rather than at wireframe stage. By then good feedback could only go into the backlog instead of shaping core decisions that were already locked in. Validating earlier, even with rougher artifacts, would have let that feedback change the design.
+        flexible, when the evidence for a simpler 2-column hierarchy was already there. The SEA and MENA roadshow was the most direct and highest-quality validation in the whole project, yet it happened near-final rather than at wireframe stage. By then good feedback could only go into the backlog instead of shaping core decisions that were already locked in. Validating earlier, even with rougher artifacts, would have let that feedback change the design.
       </p>
     </section>
   </article>
@@ -361,6 +412,22 @@ const IMG = "/images/work/time-management";
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
 
+  .r-decision-visual {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+    max-width: 48rem;
+  }
+  .r-decision-visual figure { margin: 0; }
+  .r-decision-visual-frame {
+    height: 15rem; border-radius: 0.75rem; overflow: hidden;
+    border: 1px solid var(--color-border); background: var(--color-surface);
+  }
+  .r-decision-visual img {
+    width: 100%; height: 100%; display: block; object-fit: cover; object-position: top left;
+  }
+  .r-decision-visual figcaption {
+    margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
+  }
+
   .r-craft-compare, .r-craft-grid {
     display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1.5rem 0;
   }
@@ -375,6 +442,46 @@ const IMG = "/images/work/time-management";
     margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
   }
   .r-craft-note { margin-top: 1.5rem; margin-bottom: 0.75rem; }
+
+  .r-impact {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.75rem;
+    align-items: start; margin: 1.5rem 0 2rem; max-width: var(--measure-head);
+  }
+  .r-impact-img { position: relative; line-height: 0; }
+  .r-impact-img img {
+    width: 100%; display: block; border-radius: 0.75rem;
+    border: 1px solid var(--color-border); background: var(--color-surface);
+  }
+  .r-impact-dot {
+    position: absolute; left: var(--x); top: var(--y);
+    width: 1.5rem; height: 1.5rem; margin: -0.75rem 0 0 -0.75rem;
+    border-radius: 50%; background: var(--color-ink);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
+  }
+  .r-impact-dot span {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    color: var(--color-bg);
+  }
+  .r-impact-legend {
+    margin: 0; padding: 0; list-style: none; counter-reset: impact;
+    display: flex; flex-direction: column; gap: 1.1rem;
+  }
+  .r-impact-legend li {
+    counter-increment: impact; position: relative; padding-left: 2rem;
+    font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2);
+  }
+  .r-impact-legend li::before {
+    content: counter(impact); position: absolute; left: 0; top: 0.05rem;
+    width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--color-ink);
+    color: var(--color-bg); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .r-impact-legend b { color: var(--color-ink); font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .r-impact { grid-template-columns: 1fr; }
+  }
 
   .r-stat-row {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
@@ -397,7 +504,7 @@ const IMG = "/images/work/time-management";
   .r-table-caption { font-size: 0.75rem; color: var(--color-ink-3); margin: 0 0 1.5rem; }
 
   @media (max-width: 640px) {
-    .r-craft-compare, .r-craft-grid, .r-stat-row { grid-template-columns: 1fr; }
+    .r-craft-compare, .r-craft-grid, .r-stat-row, .r-decision-visual { grid-template-columns: 1fr; }
   }
 
   /* Validation (roadshow) */
@@ -413,6 +520,14 @@ const IMG = "/images/work/time-management";
   @media (min-width: 700px) { .r-roster { grid-template-columns: repeat(4, 1fr); } }
   .r-roster-item { background: var(--color-bg); padding: 1.1rem 1.2rem; }
   .r-roster-item p { margin: 0 !important; }
+
+  .r-logo-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .r-logo-chip {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em;
+    color: var(--color-ink-2); padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-border); border-radius: 999px;
+    background: var(--color-surface);
+  }
   .r-roster-name { font-size: 0.9375rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
   .r-roster-industry { font-size: 0.75rem !important; line-height: 1.45 !important; margin-top: 0.2rem !important; }
   .r-roster-country {
