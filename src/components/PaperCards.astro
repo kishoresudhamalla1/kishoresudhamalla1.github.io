@@ -37,10 +37,7 @@ const { items } = Astro.props;
               </div>
             </div>
             <p class="wp-kick">{p.kicker}</p>
-            <p class="wp-hint"><b>Drag</b> to turn it</p>
-            <span class="wp-cta">View case study
-              <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 12L12 4M12 4H5.5M12 4V10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
-            </span>
+            <p class="wp-hint">View case study</p>
           </div>
 
           <p class="work-card-label" aria-hidden="true">{p.n} &mdash; {p.short}</p>
@@ -121,13 +118,7 @@ const { items } = Astro.props;
   }
   .wp-kick { left: 1.6rem; top: 1.5rem; }
   .wp-hint { display: none; left: 0; right: 0; bottom: 1.6rem; text-align: center; font-size: 0.625rem; color: rgba(242,242,240,.3); }
-  .wp-hint b { font-weight: 600; }
-  .wp-cta {
-    position: absolute; right: 1.5rem; bottom: 1.3rem; display: inline-flex; align-items: center; gap: 0.6rem;
-    font-family: var(--font-mono); font-size: 0.75rem; color: #08080a; background: #f2f2f0;
-    border-radius: 100px; padding: 0.6rem 0.9rem 0.6rem 1.1rem;
-  }
-  .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta {
+  .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint {
     transition: opacity 480ms var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
   }
   @keyframes wp-sway {
@@ -163,12 +154,12 @@ const { items } = Astro.props;
     /* a folded card keeps the wordmark, running up its spine; the two
        cross-fade as the card opens so they read as one element changing size */
     @container (max-width: 330px) {
-      .wp-word, .wp-sheet, .wp-kick, .wp-hint, .wp-cta { opacity: 0; }
+      .wp-word, .wp-sheet, .wp-kick, .wp-hint { opacity: 0; }
       .wp-word-v { opacity: 1; }
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .work-card, .work-card-label, .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint, .wp-cta { transition: none; }
+    .work-card, .work-card-label, .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint { transition: none; }
     .wp-sway { animation: none; }
   }
 </style>
