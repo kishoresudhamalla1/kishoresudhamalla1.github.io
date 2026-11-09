@@ -1,45 +1,19 @@
 ---
 /**
- * Redesign option — Thinking.
+ * Thinking.
  *
- * No case study or component in this repo contains real published writing,
- * so this page does not invent any. It shows the structure the brief asked
- * for — topic placeholders — each clearly marked "Not yet written," rather
- * than fabricated article titles presented as if they existed.
+ * No case study or component in this repo contains real published writing
+ * yet, so this page does not invent any. Removed from site navigation on
+ * 2026-11-09; kept resolvable at /thinking for anyone who types the URL
+ * directly. See CONTENT-TODO.md (untracked, local only) for topic ideas.
  */
 import Base from "../layouts/Base.astro";
-import ContentNeeded from "../components/ContentNeeded.astro";
-
-const TOPICS = [
-  "AI traces, explained simply",
-  "From workflows to moments",
-  "Designing AI-native enterprise experiences",
-  "Enterprise UX and cognitive load",
-  "What changes when software becomes proactive",
-];
 ---
 
 <Base title="Thinking | Kishore Sudhamalla">
   <section class="container-pg r-thinking-hero" data-reveal>
     <p class="r-eyebrow">Thinking</p>
     <h1>Notes on enterprise systems and AI-native design.</h1>
-    <p class="r-lede">
-      This section is a placeholder structure, not a published archive.
-      Nothing below has been written yet. These are topics worth writing about rather than existing articles.
-    </p>
-  </section>
-
-  <section class="container-pg r-thinking-list" data-reveal>
-    {TOPICS.map((t) => (
-      <div class="r-topic-row">
-        <span class="r-topic-title">{t}</span>
-        <span class="r-topic-status">Not yet written</span>
-      </div>
-    ))}
-  </section>
-
-  <section class="container-pg r-thinking-note" data-reveal>
-    <ContentNeeded note="No real published writing exists in the current site or repo to pull from. Replace this list with actual pieces as they are written. Do not pre-fill summaries or dates for posts that do not exist yet." />
   </section>
 </Base>
 
@@ -56,22 +30,4 @@ const TOPICS = [
     font-size: clamp(1.75rem, 4vw, 2.5rem); letter-spacing: -0.03em; line-height: 1.15;
     color: var(--color-ink); margin: 0 0 1.25rem;
   }
-  .r-lede { font-size: 1rem; line-height: 1.65; color: var(--color-ink-2); margin: 0; }
-
-  .r-thinking-list { padding-bottom: 2rem; }
-  .r-thinking-list > * { max-width: var(--measure); }
-  .r-topic-row {
-    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-    padding: 1.25rem 0; border-top: 1px solid var(--color-border);
-  }
-  .r-topic-row:last-child { border-bottom: 1px solid var(--color-border); }
-  .r-topic-title { font-size: 1rem; color: var(--color-ink); }
-  .r-topic-status {
-    flex-shrink: 0;
-    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--color-ink-3);
-  }
-
-  .r-thinking-note { padding-bottom: clamp(4rem, 8vw, 6rem); }
-  .r-thinking-note > * { max-width: var(--measure); }
 </style>

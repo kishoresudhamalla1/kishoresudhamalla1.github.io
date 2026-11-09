@@ -9,39 +9,13 @@
  * Selected Work list, so it's surfaced here instead, linked to the real
  * page rather than duplicated.
  *
- * The other three experiments the brief suggested (UX Signals, Wireframe
- * Generator, Design QA Agent) have not been built in this repo. They're
- * shown as explicitly labeled "Conceptual" cards with no invented results,
- * per the content-integrity rule — a one-line description of the idea,
- * nothing claimed as built or measured.
+ * Unbuilt concept ideas (UX Signals, Wireframe Generator, Design QA Agent)
+ * removed from this page on 2026-11-09; see CONTENT-TODO.md (untracked,
+ * local only) if they get built later.
  */
 import Base from "../layouts/Base.astro";
 import PaperCards from "../components/PaperCards.astro";
-import ContentNeeded from "../components/ContentNeeded.astro";
 
-const CONCEPTS = [
-  {
-    title: "UX Signals",
-    status: "Conceptual",
-    explore: "Whether a BRD or product-context document can be turned into UX signals and open design questions before any screen gets drawn. The aim is to surface ambiguity early instead of discovering it mid-design.",
-    build: "Not yet built.",
-    learn: "Not applicable. Conceptual only.",
-  },
-  {
-    title: "Wireframe Generator",
-    status: "Conceptual",
-    explore: "Whether a short text description or rough sketch can be turned into a low-fidelity product structure fast enough to be useful as a starting point for design exploration rather than a replacement for it.",
-    build: "Not yet built.",
-    learn: "Not applicable. Conceptual only.",
-  },
-  {
-    title: "Design QA Agent",
-    status: "Conceptual",
-    explore: "Whether a design file or screenshot can be checked against usability and accessibility heuristics automatically and catch issues earlier than a manual review would.",
-    build: "Not yet built.",
-    learn: "Not applicable. Conceptual only.",
-  },
-];
 const BUILT = [
   {
     n: "01",
@@ -79,35 +53,13 @@ const BUILT = [
     <p class="r-eyebrow">AI Lab</p>
     <h1>Where I build AI-native ideas as well as design them.</h1>
     <p class="r-lede">
-      This is a working record, not a marketing page. Some of what's here shipped and runs on real data. Some is a question I'm still exploring and haven't built yet. Those are labeled conceptual and no results are claimed for them.
+      This is a working record, not a marketing page. What's here shipped and runs on real data.
     </p>
   </section>
 
   <section class="container-pg r-work" data-reveal>
     <p class="r-section-label">Built</p>
     <PaperCards items={BUILT} />
-  </section>
-
-  <!-- Conceptual experiments -->
-  <section class="container-pg r-lab-concepts" data-reveal>
-    <p class="r-case-label">Conceptual · not yet built</p>
-    <div class="r-concept-grid">
-      {CONCEPTS.map((c) => (
-        <div class="r-concept-card">
-          <div class="r-concept-top">
-            <h3>{c.title}</h3>
-            <span class="r-concept-status">{c.status}</span>
-          </div>
-          <p class="r-concept-label">What I wanted to explore</p>
-          <p>{c.explore}</p>
-          <p class="r-concept-label">What I built</p>
-          <p>{c.build}</p>
-          <p class="r-concept-label">What I learned</p>
-          <p>{c.learn}</p>
-        </div>
-      ))}
-    </div>
-    <ContentNeeded note="These three concepts are listed because they are directions worth exploring, not because any of them has been built. If one gets built, move it up to the 'Built' section above with real detail on what it does and what was learned. Do not backfill results here." />
   </section>
 </Base>
 
@@ -127,26 +79,10 @@ const BUILT = [
   }
   .r-lede { font-size: 1.0625rem; line-height: 1.65; color: var(--color-ink-2); margin: 0; }
 
-  .r-case-label, .r-section-label {
+  .r-section-label {
     font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
     margin: 0 0 1.5rem;
-  }
-
-  .r-lab-concepts { padding-bottom: clamp(4rem, 8vw, 6rem); }
-  .r-concept-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 2rem; }
-  .r-concept-card { padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 1rem; }
-  .r-concept-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
-  .r-concept-top h3 { font-size: 1.0625rem; font-weight: 600; color: var(--color-ink); margin: 0; }
-  .r-concept-status {
-    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--color-ink-3); border: 1px solid var(--color-border); border-radius: 100px; padding: 0.25rem 0.6rem;
-  }
-  .r-concept-label { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.3rem; font-family: var(--font-mono); }
-  .r-concept-card p:not(.r-concept-label) { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0 0 1rem; }
-
-  @media (min-width: 768px) {
-    .r-concept-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   .r-work { padding-block: clamp(1rem, 3vw, 2rem) clamp(3rem, 6vw, 4.5rem); }
