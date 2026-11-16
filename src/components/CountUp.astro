@@ -1,9 +1,11 @@
 ---
 /**
- * Scroll-triggered metric counters.
+ * Metric counters.
  *
  * Drop this once per page. It finds anything marked `data-count` and animates
- * its number when it first scrolls into view.
+ * its number up on load. The final value always stays exactly as written in
+ * the markup — it is never reset to zero, so a screenshot or link preview
+ * taken before any scroll still shows the correct number.
  *
  * The element's existing text is the source of truth — "1.16M", "73.1%",
  * "16+", "~9", "8 yrs" all work. Only the numeric run is animated; prefix and
@@ -49,38 +51,25 @@
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          io.unobserve(el);
+    const animate = (el: HTMLElement, p: Parsed, hasGroups: boolean, delay: number) => {
+      const DURATION = 800;
 
-          const p: Parsed = JSON.parse(el.dataset.countParsed!);
-          const hasGroups = (el.dataset.countGroups ?? "") === "1";
-          // Stagger within a group so a row of four reads left to right.
-          const delay = Number(el.dataset.countDelay || 0);
-          const DURATION = 800;
+      const run = (start: number) => {
+        const tick = (now: number) => {
+          const t = Math.min(1, (now - start) / DURATION);
+          // ease-out cubic: fast arrival, long settle — the number lands
+          // rather than crawling the last few units.
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent =
+            p.prefix + grouped(p.target * eased, p.decimals, hasGroups) + p.suffix;
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = p.prefix + grouped(p.target, p.decimals, hasGroups) + p.suffix;
+        };
+        requestAnimationFrame(tick);
+      };
 
-          const run = (start: number) => {
-            const tick = (now: number) => {
-              const t = Math.min(1, (now - start) / DURATION);
-              // ease-out cubic: fast arrival, long settle — the number lands
-              // rather than crawling the last few units.
-              const eased = 1 - Math.pow(1 - t, 3);
-              el.textContent =
-                p.prefix + grouped(p.target * eased, p.decimals, hasGroups) + p.suffix;
-              if (t < 1) requestAnimationFrame(tick);
-              else el.textContent = p.prefix + grouped(p.target, p.decimals, hasGroups) + p.suffix;
-            };
-            requestAnimationFrame(tick);
-          };
-
-          setTimeout(() => requestAnimationFrame((now) => run(now)), delay);
-        });
-      },
-      { threshold: 0.4, rootMargin: "0px 0px -8% 0px" }
-    );
+      setTimeout(() => requestAnimationFrame((now) => run(now)), delay);
+    };
 
     // Group counters by their nearest shared container so stagger is local.
     const seen = new Map<Element, number>();
@@ -92,37 +81,36 @@
 
       el.dataset.countReady = "1";
       el.dataset.countParsed = JSON.stringify(p);
-      el.dataset.countGroups = /\d,\d/.test(text) ? "1" : "0";
+      const hasGroups = /\d,\d/.test(text);
+      el.dataset.countGroups = hasGroups ? "1" : "0";
 
       // Reserve the final width so the layout cannot shift while digits change.
       el.style.setProperty("font-variant-numeric", "tabular-nums");
       el.style.setProperty("min-width", `${text.length}ch`);
       el.style.setProperty("display", "inline-block");
 
+      // The final value is already on the page (set by the markup itself),
+      // so first paint — including a screenshot or link preview taken before
+      // any script runs — always shows the correct number. Animate on top of
+      // that, immediately, without waiting to scroll into view.
+      if (reduce) return;
+
       const group = el.closest("[data-count-group]") || el.parentElement?.parentElement || document.body;
       const i = seen.get(group) ?? 0;
       seen.set(group, i + 1);
-      el.dataset.countDelay = String(i * 60);
+      const delay = i * 60;
+      el.dataset.countDelay = String(delay);
 
-      if (reduce) {
-        el.textContent = text;   // no animation; final value stands
-        return;
-      }
-
-      // Start from zero so the first paint doesn't flash the final figure.
-      el.textContent = p.prefix + grouped(0, p.decimals, false) + p.suffix;
-      io.observe(el);
+      animate(el, p, hasGroups, delay);
     });
   }
 
   /**
    * Snap every counter to its final value before printing.
    *
-   * Counters are set to zero on init and only animate once scrolled into
-   * view, so printing a page before that happened committed the placeholder
-   * to paper. On the resume that meant the headline metrics could print as
-   * "0 yrs", or mid-animation as "13+ yrs" instead of "16+ yrs" — the first
-   * numbers a reader sees, wrong, in the artefact that gets emailed on.
+   * Counters animate up from zero on load, so printing mid-animation could
+   * commit a partial figure to paper — "13+ yrs" instead of "16+ yrs" — the
+   * first numbers a reader sees, wrong, in the artefact that gets emailed on.
    */
   function settleCounters() {
     document.querySelectorAll<HTMLElement>("[data-count][data-count-parsed]").forEach((el) => {

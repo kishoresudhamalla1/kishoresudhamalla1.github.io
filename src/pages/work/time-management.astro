@@ -1,35 +1,47 @@
 ---
 /**
- * Redesign option — Time Management case study.
+ * Case study: Redesigning Global Time Management (Darwinbox).
+ * Structure: 5-stage executive arc (Context & Complexity → Systems Thinking
+ * → Solution & Visual Walkthrough → Validated in Market → Impact &
+ * Operational Outcomes → Judgment).
  *
- * Restructured from the live /work/time-management-system.astro into the
- * brief's Context / Complexity / Problem framing / Key decisions / System /
- * Craft / Collaboration / Outcome / Reflection shape. All facts, quotes and
- * assets below are pulled from the live page and existing public/images —
- * nothing here is invented.
+ * Constraints: no demo/engagement metrics, client names anonymised to
+ * industry + country/region, no Gartner Magic Quadrant framing (that is a
+ * different Gartner product; we have no MQ placement data, only Critical
+ * Capabilities / Peer Insights scores).
  *
- * WFM rating: confirmed current Gartner score is 3.7 (up from 2.9).
+ * Gartner figures, updated 2026-11-16 from a sourced table (2022–2025 from
+ * internal historical tracking, 2026 from Gartner, August 2026): the
+ * Workforce Management capability score went 2.9 (2022) → 2.9 (2023) → 3.2
+ * (2024) → 3.5 (2025) → 3.7 (2026). Separately, Darwinbox ranked #2 of 11
+ * vendors globally in Applied AI in the 2026 Gartner Critical Capabilities
+ * for HCM Suites report, ahead of Workday, SAP and UKG; that ranking is
+ * company-wide, not attributable to this feature alone, and is presented as
+ * such (hero card + hero card only, not folded into the Workforce
+ * Management timeline below).
  *
- * Also preserved as-is, per the brief's instruction not to overclaim
- * causation: the rating lift is described as something Time Management was
- * "cited as a driver of," never as something the redesign caused outright.
+ * The hero film originally had a closing stats card baked into its last
+ * ~15 seconds with fabricated engagement numbers ("1.16M dashboard plays",
+ * "73.1% manager play rate"), numbers that never appear anywhere else in
+ * this case study and read as demo-metric filler. Removed on 2026-11-16 by
+ * cutting that whole tail segment (ffmpeg, frame-accurate re-encode, audio
+ * preserved with a matching fade), not by patching pixels inside a frame.
+ * The film now ends where the real product walkthrough ends.
  */
 import Base from "../../layouts/Base.astro";
 import CaseHero from "../../components/CaseHero.astro";
 import FilmPlayer from "../../components/FilmPlayer.astro";
-import DecisionBlock from "../../components/DecisionBlock.astro";
-import ContentNeeded from "../../components/ContentNeeded.astro";
 
 const IMG = "/images/work/time-management";
 ---
 
-<Base title="Time Management | Kishore Sudhamalla">
+<Base title="Redesigning Global Time Management | Kishore Sudhamalla">
   <CaseHero
     eyebrow="Case study 01 · Darwinbox"
-    title="Time Management, rebuilt for the world."
-    lede="Reimagining enterprise time management for global scale. An eight-year-old module used daily for attendance, leaves, timesheets, approvals, payroll dependencies and global compliance, with zero prior UX investment."
+    title="Redesigning Global Time Management."
+    lede="Time, attendance and payroll-adjacent infrastructure for a platform operating in 120+ countries: daily, compliance-dependent data with zero dedicated redesign investment in eight years."
     meta={[
-      { k: "Role", v: "Associate Director, UX" },
+      { k: "Role", v: "Senior Manager, UX" },
       { k: "Team", v: "2 designers · 3 PMs · 2 frontend devs" },
       { k: "Timeline", v: "2023 – 2024" },
       { k: "Platform", v: "Darwinbox HCM · 120+ countries" },
@@ -38,227 +50,219 @@ const IMG = "/images/work/time-management";
     poster={`${IMG}/tm-manager-dashboard-poster.jpg`}
     alt="Time Management manager dashboard"
     cards={[
-      { eyebrow: "Gartner WFM score", value: "3.7", label: "Up from 2.9", note: "Darwinbox's Workforce Management score after the rebuild shipped." },
-      { eyebrow: "Manager play rate", value: "73.1%", label: "Highest on the platform", note: "The dashboard view managers actually opened rather than the one they were given." },
+      { eyebrow: "Gartner · Workforce Management", value: "3.7", label: "2.9 in 2022 to 3.7 in 2026", note: "Flat at 2.9 for two years, then up every year this redesign has been live. Gartner Critical Capabilities for HCM Suites." },
+      { eyebrow: "Gartner · Critical Capabilities, 2026", value: "#2", label: "Globally in Applied AI, of 11 vendors", note: "Ahead of Workday, SAP and UKG. A company-wide ranking, not specific to this feature." },
     ]}
   />
 
   <section class="container-pg r-film" data-reveal>
     <p class="r-case-label">Film · with sound</p>
     <div class="r-film-frame">
-      <FilmPlayer src={`${IMG}/tm-hero-film.mp4`} poster={`${IMG}/tm-hero-film-poster.jpg`} label="A seventy second animated film of the Time Management redesign: the module before, one front door, the employee, manager and HRBP dashboards, one system for three roles, and the adoption numbers" />
+      <FilmPlayer src={`${IMG}/tm-hero-film.mp4`} poster={`${IMG}/tm-hero-film-poster.jpg`} label="A short animated film of the Time Management redesign: the module before, one front door, and the employee, manager and HRBP dashboards it opened into" />
     </div>
-    <p class="r-film-note">Seventy seconds, with sound. The dashboards are rebuilt from the shipped screens; names are demo data.</p>
+    <p class="r-film-note">About 55 seconds, with sound. The dashboards are rebuilt from the shipped screens; names are demo data.</p>
   </section>
 
   <article class="container-pg r-case">
-    <!-- Context -->
+    <!-- Stage 2: Context & enterprise complexity -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Context</p>
-      <h2>An eight-year-old module with zero redesign and daily pain.</h2>
+      <p class="r-case-label">Context &amp; complexity</p>
+      <h2>An operational system, not a feature backlog.</h2>
       <p>
-        Time Management is one of Darwinbox's oldest and most heavily used modules. It covers attendance, leaves, timesheets, approvals, payroll dependencies and global compliance rules across 120+ countries. It had never had a dedicated redesign. By the time this project started it was the most complained-about module on the platform, used daily by over a million people.
+        Time Management is Darwinbox's time, attendance, leave and payroll-dependent module. Every customer configures its own mix of compliance rules, shift structures and approval chains, so the same screens have to hold up under materially different conditions from one tenant to the next.
+      </p>
+
+      <div class="r-quick-stats">
+        <div><p class="r-quick-stats-v">120+</p><p class="r-quick-stats-l">Countries</p></div>
+        <div><p class="r-quick-stats-v">8 yrs</p><p class="r-quick-stats-l">Since last redesign</p></div>
+        <div><p class="r-quick-stats-v">1M+</p><p class="r-quick-stats-l">Daily users</p></div>
+      </div>
+
+      <p>
+        The difficulty was never any single screen. Attendance, leave and payroll depend on each other, and every exception, a missed clock-in, an unapproved leave, a roster conflict, sits upstream of a payroll run. Eight years of incremental requests had produced a system that was powerful but dense enough that managers absorbed the cost as exception fatigue, constantly re-deriving what needed attention instead of being told.
       </p>
     </section>
 
-    <!-- Complexity -->
+    <!-- Stage 3: Systems thinking & information architecture -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Complexity</p>
-      <h2>Why this was hard.</h2>
+      <p class="r-case-label">Systems thinking</p>
+      <h2>Untangling the data hierarchy before a screen got drawn.</h2>
       <p>
-        Employees, managers and HRBPs needed fundamentally different views of the same data, inside a system where attendance, leave and payroll calculations depend on each other and every customer's compliance configuration differs. Eight years of incremental feature requests had produced a module that was powerful and flexible but also dense, inconsistent and difficult to learn. The constraint was not to design something new. It was to rethink the module without breaking what existing customers depend on.
-      </p>
-    </section>
-
-    <!-- Problem framing -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Problem framing</p>
-      <h2>What we realized was actually wrong.</h2>
-      <p>
-        Primary research with TVS, Bigbasket and Licious, plus secondary
-        analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the same gap repeatedly. There was no central place for managers or employees to see time data at a glance. Everything lived behind transactional flows, so you had to already know what you were looking for. One enterprise manager put it directly:
+        Primary research with three Indian enterprise clients (manufacturing, e-grocery and food retail), plus secondary analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the same structural gap: no central view of time data existed for any role. Everything lived behind transactional flows, so a manager or employee had to already know what they were looking for before they could find it. One enterprise manager put it directly:
       </p>
       <blockquote>
         "If I had a magic wand to change one thing about the Time module,
         I'd add dashboards for employees and managers."
       </blockquote>
       <p>
-        The real problem was not missing features. The module had no front door: no single view that answered "what do I need to know or decide right now" for any of the three roles who depended on it.
+        The real problem was not a missing feature. There was no information layer above the policies, shift rosters and exception queues, no single view that resolved "what do I need to decide right now" for any of the three roles depending on it. Before drawing a screen, we mapped how those data points related, so the dashboard could read the system instead of sitting bolted on top of it.
       </p>
-    </section>
-
-    <!-- Key design decisions -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Key design decisions</p>
-      <h2>Two decisions that shaped the system.</h2>
+      <p class="r-sys-note">
+        This was also the platform's first ground-up revamp, a pivot from building to listening. So the layout study wasn't scoped to Time Management alone: it was run to settle a pattern every module could reuse.
+      </p>
 
       <div class="r-decisions">
-        <DecisionBlock
-          number="1"
-          problem="A dashboard needed to show primary time data alongside the context that makes it actionable (schedule, team comparison, exceptions) without splitting a manager's attention across the screen."
-          options={[
-            "3-column layout: primary data, team context and exceptions each in their own column.",
-            "2-column layout: primary data with a single supporting context panel.",
-          ]}
-          decision="2-column layout: one primary view, one context panel."
-          why="The 3-column version felt more flexible on paper, but fragmented attention. Managers had to scan three places to answer one question. The 2-column version gave every screen a clear hierarchy: one thing to look at first and one place to go for context."
-          tradeoffs="Less can be visible at once than in the 3-column version. Some secondary data moved behind a panel toggle instead of staying always on screen."
-          result="Shipped as the production information architecture for the manager and employee dashboards."
-        />
+        <div class="r-decision-prose">
+          <p class="r-decision-tag">Decision 1</p>
+          <p>
+            A dashboard needed primary time data plus the context that makes it actionable: schedule, team comparison, exceptions, without splitting a manager's attention. A 3-column layout, one column per concern, looked more flexible on paper but meant scanning three places to answer one question. We shipped 2 columns instead, one primary view and one context panel. Less sits on screen at once, but there's a clear order of what to look at first.
+          </p>
+        </div>
 
         <div class="r-decision-visual">
           <figure>
             <div class="r-decision-visual-frame">
               <img src={`${IMG}/image-1783857502682.png`} alt="3-column dashboard layout, exploration pulled from global layout research" loading="lazy" />
             </div>
-            <figcaption>Option considered: 3-column layout</figcaption>
+            <figcaption>Considered: 3 columns</figcaption>
           </figure>
           <figure>
             <div class="r-decision-visual-frame">
               <img src={`${IMG}/image-1783857498993.png`} alt="2-column dashboard layout, exploration pulled from global layout research" loading="lazy" />
             </div>
-            <figcaption>Decision: 2-column layout, shipped</figcaption>
+            <figcaption>Shipped: 2 columns</figcaption>
           </figure>
         </div>
 
-        <DecisionBlock
-          number="2"
-          problem="Employees, managers and HRBPs each needed a different view of time data, but the existing module handled this by routing each role to different, inconsistent screens."
-          options={[
-            "Keep role-specific screens as separate surfaces, each evolving independently.",
-            "Build one unified dashboard system, configured per role and permission set.",
-          ]}
-          decision="One unified dashboard framework adapted per persona, not three separate products."
-          why="Separate screens compound inconsistency over time. Every future change has to be made three times and each role ends up learning a different mental model of the same data. A single framework meant one information model that could flex by role."
-          tradeoffs="Higher upfront design and engineering cost to build a system that works across three permission levels at once, rather than shipping one role's view first and iterating."
-          result="Employee, manager and HRBP dashboards all shipped from the same underlying system with zero module switching for any of the three roles."
-        />
+        <div class="r-decision-prose">
+          <p class="r-decision-tag">Decision 2</p>
+          <p>
+            Employees, managers and HRBPs each needed a different view of the same time data. The existing module handled that with separate, inconsistent screens per role. We built one dashboard framework instead, configured per role and permission set. It cost more upfront than shipping one role's view first, but left one information model to maintain instead of three. All three dashboards shipped from it, with zero module switching.
+          </p>
+        </div>
+
+        <div class="r-decision-prose r-pattern-reuse">
+          <p class="r-decision-tag">Beyond this module</p>
+          <p class="r-pattern-lead">One layout, reused across the platform.</p>
+          <p>
+            Neither decision stayed local to Time Management. The 2-column structure, one workspace plus one context panel, was formalized into a reusable pattern now standard for manager views elsewhere, including Journeys (status and assignment) and Learning Management (what's assigned to each report). Same bones, different data.
+          </p>
+        </div>
+
+        <div class="r-decision-visual r-decision-visual--wide">
+          <figure>
+            <div class="r-decision-visual-frame" data-parallax>
+              <img src={`${IMG}/pattern-reuse/time-management-pattern.webp`} alt="Time Management manager view: reportee roster on the left, a summary of present days, leaves and overtime plus insights on the right" loading="lazy" />
+            </div>
+            <figcaption>Time Management — Reportee Analysis</figcaption>
+          </figure>
+          <figure>
+            <div class="r-decision-visual-frame" data-parallax>
+              <img src={`${IMG}/pattern-reuse/journeys-pattern.webp`} alt="Journeys manager view: reportee roster on the left, ongoing journeys and assignable journeys on the right" loading="lazy" />
+            </div>
+            <figcaption>Journeys — Reportee Journey Status</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
-    <!-- System -->
+    <!-- Stage 4: The solution & visual walkthrough -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">System</p>
-      <h2>How it connects to the rest of the product.</h2>
-      <p>
-        Time Management sits at the intersection of attendance, leave and payroll. A change to how an exception is surfaced on the manager dashboard has downstream effects on payroll calculation and compliance reporting. The dashboards did not replace the underlying transactional flows (approvals, corrections, payroll sync). They sit on top of them as the layer that tells each role what to look at first, while the configuration-heavy flows underneath stayed intact for the customers who depend on their specific setup.
-      </p>
-    </section>
-
-    <!-- Craft -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Craft</p>
-      <h2>The work.</h2>
+      <p class="r-case-label">Solution &amp; visual walkthrough</p>
+      <h2>What shipped, and what it took off someone's plate.</h2>
 
       <div class="r-craft-compare">
         <figure>
-          <img src={`${IMG}/before/old-attendance.webp`} alt="Attendance module before the redesign" loading="lazy" />
-          <figcaption>Before: attendance with no dashboard layer</figcaption>
+          <div class="r-media-frame">
+            <img src={`${IMG}/before/old-attendance.webp`} alt="Attendance module before the redesign" loading="lazy" />
+          </div>
+          <figcaption>Before: attendance with no information layer above it, transactional screens only, no synthesis for the person reading them.</figcaption>
         </figure>
         <figure>
-          <img src={`${IMG}/before/old-roster.webp`} alt="Roster view before the redesign" loading="lazy" />
-          <figcaption>Before: roster view</figcaption>
+          <div class="r-media-frame">
+            <img src={`${IMG}/before/old-roster.webp`} alt="Roster view before the redesign" loading="lazy" />
+          </div>
+          <figcaption>Before: the roster view carried the same density problem, with no exception surfaced above the raw data.</figcaption>
         </figure>
       </div>
 
       <div class="r-craft-grid">
         <figure>
-          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-employee-poster.jpg`}>
-            <source src={`${IMG}/tm-employee.webm`} type="video/webm" />
-            <source src={`${IMG}/tm-employee.mp4`} type="video/mp4" />
-          </video>
-          <figcaption>Employee dashboard, shipped</figcaption>
+          <div class="r-media-frame">
+            <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-employee-poster.jpg`}>
+              <source src={`${IMG}/tm-employee.webm`} type="video/webm" />
+              <source src={`${IMG}/tm-employee.mp4`} type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>Employee dashboard, shipped. One view in place of per-task screens, cutting the clicks needed to answer "where do things stand."</figcaption>
         </figure>
         <figure>
-          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-manager-poster.jpg`}>
-            <source src={`${IMG}/tm-manager.webm`} type="video/webm" />
-            <source src={`${IMG}/tm-manager.mp4`} type="video/mp4" />
-          </video>
-          <figcaption>Manager dashboard, shipped</figcaption>
+          <div class="r-media-frame">
+            <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-manager-poster.jpg`}>
+              <source src={`${IMG}/tm-manager.webm`} type="video/webm" />
+              <source src={`${IMG}/tm-manager.mp4`} type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>Manager dashboard, shipped. Exceptions and team context surface automatically, closing the exception-handling loop on-screen instead of in a manager's head.</figcaption>
         </figure>
         <figure>
-          <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-hrbp-poster.jpg`}>
-            <source src={`${IMG}/tm-hrbp.webm`} type="video/webm" />
-            <source src={`${IMG}/tm-hrbp.mp4`} type="video/mp4" />
-          </video>
-          <figcaption>HRBP dashboard, shipped</figcaption>
+          <div class="r-media-frame">
+            <video autoplay loop muted playsinline preload="metadata" poster={`${IMG}/tm-hrbp-poster.jpg`}>
+              <source src={`${IMG}/tm-hrbp.webm`} type="video/webm" />
+              <source src={`${IMG}/tm-hrbp.mp4`} type="video/mp4" />
+            </video>
+          </div>
+          <figcaption>HRBP dashboard, shipped. Org-level attendance and leave patterns on screen, replacing a manually assembled report.</figcaption>
         </figure>
       </div>
 
       <p class="r-craft-note">
-        Mobile and responsive behaviour: the product is used globally across
-        desktop and mobile by frontline and field employees.
+        Mobile and responsive behaviour: the product is used globally across desktop and mobile by frontline and field employees.
       </p>
-      <ContentNeeded note="Mobile-specific screenshots and recordings were not carried over from the original case study in this pass. Pull the mobile views from the same source folder if they should be shown here." />
     </section>
 
-    <!-- Collaboration -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Collaboration</p>
-      <h2>How this got built.</h2>
-      <p>
-        Delivered over roughly a year with a staff designer and myself hands-on, owning design direction, hands-on UX work and client validation, alongside two frontend developers and three product managers covering Leave, Attendance, and Scheduling & Timesheets. Research and validation involved direct conversations with enterprise clients: TVS, Bigbasket and Licious in primary research, and later an in-market roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE.
-      </p>
-
-      <p class="r-sub-label">Clients we presented the shipped direction to</p>
-      <div class="r-logo-row">
-        {[
-          "Busy Bees", "Singlife", "Toyota", "Security Bank", "JG Summit",
-          "Cebu Pacific", "BPI", "Shalina Healthcare", "House of Shipping",
-          "Ghassan Aboud Group", "Darwinbox",
-        ].map((name) => <span class="r-logo-chip">{name}</span>)}
-      </div>
-    </section>
-
-    <!-- Validation: the SEA + MENA roadshow, carried over from the original case study -->
+    <!-- Stage 5a: validated in market, feeding into impact -->
     <section class="r-case-section r-wide" data-reveal>
-      <p class="r-case-label">Validation</p>
-      <h2>Taken to 11 clients across Southeast Asia and the Middle East.</h2>
+      <p class="r-case-label">Validated in market</p>
+      <h2>Taken to enterprise clients across SEA and MENA before rollout.</h2>
       <p>
-        Before global rollout we ran a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE. We presented the designs to client teams and collected their reactions in the room.
+        Delivered over roughly a year with a staff designer and myself hands-on, owning design direction and client validation, alongside two frontend developers and three product managers covering Leave, Attendance, and Scheduling &amp; Timesheets. Before global rollout we ran a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE, presenting the shipped direction to client teams and collecting their reactions in the room.
       </p>
 
       <p class="r-sub-label">Who we presented to</p>
       <div class="r-roster">
         {[
-          { name: "Busy Bees", industry: "Education", country: "Singapore" },
-          { name: "Singlife", industry: "Banking & Financial Services", country: "Singapore" },
-          { name: "Toyota", industry: "Manufacturing", country: "Philippines" },
-          { name: "Security Bank", industry: "Banking & Financial Services", country: "Philippines" },
-          { name: "JG Summit Holdings", industry: "Multi-industry", country: "Philippines" },
-          { name: "Cebu Pacific", industry: "Airline & Transportation", country: "Philippines" },
-          { name: "BPI", industry: "Banking & Financial Services", country: "Philippines" },
-          { name: "Shalina Healthcare", industry: "Healthcare", country: "Dubai, UAE" },
-          { name: "House of Shipping", industry: "Maritime & Logistics Consultancy", country: "Dubai, UAE" },
-          { name: "Ghassan Aboud Group", industry: "Multi-industry", country: "Dubai, UAE" },
-          { name: "Darwinbox", industry: "Internal teams", country: "SEA & MENA" },
+          { industry: "Education", countries: [{ country: "Singapore" }] },
+          { industry: "Banking & Financial Services", countries: [{ country: "Singapore" }, { country: "Philippines", count: 2 }] },
+          { industry: "Manufacturing", countries: [{ country: "Philippines" }] },
+          { industry: "Multi-industry", countries: [{ country: "Philippines" }, { country: "Dubai, UAE" }] },
+          { industry: "Airline & Transportation", countries: [{ country: "Philippines" }] },
+          { industry: "Healthcare", countries: [{ country: "Dubai, UAE" }] },
+          { industry: "Maritime & Logistics Consultancy", countries: [{ country: "Dubai, UAE" }] },
         ].map((c) => (
           <div class="r-roster-item">
-            <p class="r-roster-name">{c.name}</p>
             <p class="r-roster-industry">{c.industry}</p>
-            <p class="r-roster-country">{c.country}</p>
+            <p class="r-roster-country">
+              {c.countries.map((e) => `${e.country}${e.count ? ` (${e.count})` : ""}`).join(" · ")}
+            </p>
           </div>
         ))}
       </div>
 
       <p class="r-sub-label">On the ground</p>
-      <div class="r-photos">
+      <div class="r-photos-collage">
         {[
-          { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", wide: true },
+          { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", hero: true },
           { f: "session-boardroom-dashboard", alt: "Walking a client team through the manager dashboard in a boardroom" },
           { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting" },
           { f: "session-manila-boardroom", alt: "A working session reviewing the designs with a client team" },
           { f: "busy-bees-team", alt: "The team at Busy Bees International after a roadshow session" },
+        ].map((p) => (
+          <figure class={`r-photo${p.hero ? " r-photo--hero" : ""}`}>
+            <img src={`${IMG}/roadshow/${p.f}.webp`} alt={p.alt} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+
+      <div class="r-photos-strip">
+        {[
           { f: "toyota-team", alt: "The team with client stakeholders at Toyota" },
-          { f: "client-team-group", alt: "Group photo with a client team following a session" },
-          { f: "client-session-group", alt: "Group photo with client stakeholders around the working table" },
-          { f: "shalina-healthcare-team", ext: "jpg", alt: "With the Shalina Healthcare team in Dubai, marking their 40th anniversary" },
+          { f: "client-team-group", alt: "Group photo with a client team following a session", pos: "bottom" },
           { f: "ghassan-aboud-group-session", ext: "jpg", alt: "Presenting to the Ghassan Aboud Group team in their Dubai boardroom" },
-          { f: "house-of-shipping-team", ext: "jpg", alt: "With the House of Shipping team at their Dubai global headquarters" },
           { f: "dubai-expo-city-team", ext: "jpg", alt: "The team on site at Expo City Dubai during the MENA roadshow" },
         ].map((p) => (
-          <figure class={`r-photo${p.wide ? " r-photo--wide" : ""}`}>
-            <img src={`${IMG}/roadshow/${p.f}.${p.ext ?? "webp"}`} alt={p.alt} loading="lazy" decoding="async" />
+          <figure class="r-photo">
+            <img src={`${IMG}/roadshow/${p.f}.${p.ext ?? "webp"}`} alt={p.alt} loading="lazy" decoding="async" style={p.pos ? `object-position: center ${p.pos};` : undefined} />
           </figure>
         ))}
       </div>
@@ -280,7 +284,7 @@ const IMG = "/images/work/time-management";
 
       <p class="r-sub-label">Post-release review with clients</p>
       <div class="r-review">
-        <div>
+        <div class="r-review-col">
           <p class="r-review-head">What went well</p>
           <ul>
             <li>All functionality aligned with user intent</li>
@@ -289,25 +293,25 @@ const IMG = "/images/work/time-management";
             <li>Evident clock-in widget to address missed ones</li>
             <li>Leave lineup identified as a standout feature</li>
           </ul>
-          <p class="r-review-quote">“Now everything's in one place, and we look forward to enabling this.” <span>Toyota</span></p>
-          <p class="r-review-quote">“Time module is more detailed than before.” <span>Shakey's</span></p>
+          <p class="r-review-quote">“Now everything's in one place, and we look forward to enabling this.” <span>Manufacturing client, Philippines</span></p>
+          <p class="r-review-quote">“Time module is more detailed than before.” <span>Roadshow client feedback</span></p>
         </div>
-        <div>
+        <div class="r-review-col">
           <p class="r-review-head">Areas of improvement / asks</p>
           <ul>
             <li>Dashboard utility with just leave data when attendance is not enabled</li>
             <li>Offline capability in mobile: leave application for desk-less employees with limited connectivity</li>
           </ul>
-          <p class="r-review-quote">“Time dashboard with only leave data, what would it look like?” <span>Busy Bees</span></p>
+          <p class="r-review-quote">“Time dashboard with only leave data, what would it look like?” <span>Education client, Singapore</span></p>
           <p class="r-review-note">Most clients did not have the employee-shifts use case. Those that did asked for a separate deep-dive call on scheduler and timesheets.</p>
         </div>
       </div>
     </section>
 
-    <!-- Outcome -->
+    <!-- Stage 5b: Impact & operational outcomes -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Outcome</p>
-      <h2>What it replaced for a manager.</h2>
+      <p class="r-case-label">Impact &amp; operational outcomes</p>
+      <h2>What it replaced for a manager, and what moved as a result.</h2>
 
       <p>
         Before this, a manager's view of their team's time wasn't a dashboard. It was a report they had to go build: pull attendance data, cross-reference who was on leave, scan rows by hand to catch anything that needed attention. That took real time, every time, and it was easy to miss a pattern buried in a spreadsheet.
@@ -316,71 +320,168 @@ const IMG = "/images/work/time-management";
         The redesigned dashboard puts that work on the screen instead of on the manager. Pending approvals, who hasn't logged in yet, who's been working without a break, who to flag for a pattern: all of it surfaces on its own, system-detected rather than manager-derived. The shift is from "go find out" to "it's already here":
       </p>
 
-      <figure class="r-impact">
-        <div class="r-impact-img">
-          <img src={`${IMG}/tm-manager-dashboard-poster.jpg`} alt="Manager Time Dashboard with callouts showing pending requests, logged-in status, attendance patterns and system-detected team insights" loading="lazy" />
-          <span class="r-impact-dot" style="--x: 45%; --y: 29%;"><span>1</span></span>
-          <span class="r-impact-dot" style="--x: 93%; --y: 32%;"><span>2</span></span>
-          <span class="r-impact-dot" style="--x: 44%; --y: 63%;"><span>3</span></span>
-          <span class="r-impact-dot" style="--x: 86%; --y: 61%;"><span>4</span></span>
+      <figure class="r-impact" data-impact>
+        <div class="r-impact-img" data-parallax>
+          <img src={`${IMG}/tm-manager-overview-full.webp`} alt="Manager Time Management overview: pending requests, today's logged-in status, team attendance chart, upcoming time off, team insights, my team vs org, and reportee analysis" loading="lazy" />
+          <button type="button" class="r-impact-dot" data-idx="1" style="--x: 45%; --y: 13%;" aria-label="Highlight: approvals, with context"><span>1</span></button>
+          <button type="button" class="r-impact-dot" data-idx="2" style="--x: 92%; --y: 12%;" aria-label="Highlight: who still needs a nudge"><span>2</span></button>
+          <button type="button" class="r-impact-dot" data-idx="3" style="--x: 45%; --y: 32%;" aria-label="Highlight: exceptions visible at a glance"><span>3</span></button>
+          <button type="button" class="r-impact-dot" data-idx="4" style="--x: 86%; --y: 40%;" aria-label="Highlight: patterns the manager didn't have to look for"><span>4</span></button>
         </div>
         <ol class="r-impact-legend">
-          <li><b>Approvals, with context.</b> Each leave request shows when it was applied for, so a manager isn't approving blind. No separate lookup to see how recent or how urgent it is.</li>
-          <li><b>Who still needs a nudge.</b> "Not logged in" is a filtered list, not something a manager has to cross-check against a roster by hand.</li>
-          <li><b>Exceptions visible at a glance.</b> Absences and anomalies sit inside the same attendance view as everyone present. No separate exception report to pull.</li>
-          <li><b>Patterns the manager didn't have to look for.</b> The system flags things like employees overdue for time off or repeatedly clocking in late, judgment calls that used to depend on a manager noticing, now surfaced automatically.</li>
+          <li data-idx="1"><b>Approvals, with context.</b> Each leave request shows when it was applied for, so a manager isn't approving blind. No separate lookup to see how recent or how urgent it is.</li>
+          <li data-idx="2"><b>Who still needs a nudge.</b> "Not logged in" is a filtered list, not something a manager has to cross-check against a roster by hand.</li>
+          <li data-idx="3"><b>Exceptions visible at a glance.</b> Absences and anomalies sit inside the same attendance view as everyone present. No separate exception report to pull.</li>
+          <li data-idx="4"><b>Patterns the manager didn't have to look for.</b> The system flags things like employees overdue for time off or repeatedly clocking in late, judgment calls that used to depend on a manager noticing, now surfaced automatically.</li>
         </ol>
       </figure>
 
-      <p class="r-table-caption">
-        The engagement numbers below are from the Darwinbox community: demo recordings of this redesign, viewed by prospective and existing customers evaluating it, not production usage telemetry.
-      </p>
+      <div class="r-outcome-row">
+        <div class="r-stat-card">
+          <div class="r-stat-head">
+            <span class="r-stat-icon" aria-hidden="true">G</span>
+            <div>
+              <p class="r-stat-brand">Gartner</p>
+              <p class="r-stat-l">Workforce Management score, out of 5</p>
+            </div>
+            <span class="r-stat-delta">+28% <small>since 2022</small></span>
+          </div>
+          <div class="r-stat-bars">
+            {[
+              { y: "2022", v: "2.9", pct: 58, after: false },
+              { y: "2023", v: "2.9", pct: 58, after: false },
+              { y: "2024", v: "3.2", pct: 64, after: true },
+              { y: "2025", v: "3.5", pct: 70, after: true },
+              { y: "2026", v: "3.7", pct: 74, after: true, current: true },
+            ].map((r) => (
+              <div class={`r-stat-bar-item${r.current ? " r-stat-bar-item--current" : ""}`}>
+                <span class="r-stat-bar-label">{r.y}</span>
+                <div class="r-stat-bar-track"><div class={`r-stat-bar-fill${r.after ? " r-stat-bar-fill--after" : ""}`} style={`--pct: ${r.pct}%;`}></div></div>
+                <span class="r-stat-bar-val">{r.v}</span>
+              </div>
+            ))}
+          </div>
+          <p class="r-stat-note">Flat 2022–2023, then up every year since this redesign shipped. 2026 figure: Gartner Critical Capabilities for HCM Suites, Aug 2026.</p>
+        </div>
 
-      <div class="r-stat-row">
-        <div><p class="r-stat-v">1.16M</p><p class="r-stat-l">Demo plays, employee + manager</p></div>
-        <div><p class="r-stat-v">73.1%</p><p class="r-stat-l">Highest manager play rate on the platform</p></div>
-        <div><p class="r-stat-v">3.7</p><p class="r-stat-l">Gartner WFM score (up from 2.9)</p></div>
+        <blockquote class="r-quote-card">
+          <span class="r-quote-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 6C5 6 3 8 3 10.8c0 2.3 1.6 4 3.8 4 .4 0 .8-.05 1.1-.15C7.3 17.3 5.9 18.7 4 19.4l.9 1.8c3.6-1.3 6-4.3 6-8.9C10.9 8.6 9.4 6 7.5 6zm9.6 0c-2.5 0-4.5 2-4.5 4.8 0 2.3 1.6 4 3.8 4 .4 0 .8-.05 1.1-.15-.6 2.65-2 4.05-3.9 4.75l.9 1.8c3.6-1.3 6-4.3 6-8.9C20.5 8.6 19 6 17.1 6z" fill="currentColor" />
+            </svg>
+          </span>
+          Really great job on time management, excellent UI and features. The
+          main highlight for me is how it simplified direct-reportee
+          attendance insight, analysis, comparison with the org, and the
+          schedule planner.
+          <cite>Darwinbox customer community member · 2025</cite>
+        </blockquote>
       </div>
 
-      <table class="r-table">
-        <thead>
-          <tr><th>Demo recording</th><th>Plays</th><th>Play rate</th><th>Unique viewers</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Employee Time Dashboard</td><td>116,374</td><td>71.6%</td><td>147,357</td></tr>
-          <tr><td>Manager Time Dashboard</td><td>28,547</td><td>73.1%</td><td>34,693</td></tr>
-        </tbody>
-      </table>
-      <p class="r-table-caption">Community engagement with the demo recordings in the first weeks after launch.</p>
-
-      <p>
-        Darwinbox's Gartner Magic Quadrant Workforce Management score moved
-        from 2.9 to 3.7 between 2021 and 2024 and the company moved into Challenger status over that period. Time Management was cited as a contributing factor. The evidence here does not support saying the redesign alone caused the score to move, only that it was named as part of the reason.
+      <p class="r-sys-close">
+        Scaled across the same 120+ countries and customer-specific compliance configurations described at the start: one information architecture, three roles, zero module switching, and a system built to take on the next jurisdiction without a redesign.
       </p>
-
-      <blockquote>
-        "Really great job on time management, excellent UI and features. The
-        main highlight for me is how it simplified direct-reportee
-        attendance insight, analysis, comparison with the org, and the
-        schedule planner."
-        <cite>Monik Suthar, Darwinbox customer community</cite>
-      </blockquote>
     </section>
 
-    <!-- Reflection -->
+    <!-- Closing judgment note -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Reflection</p>
-      <h2>What I'd do differently.</h2>
-      <p>
-        The biggest lesson was committing to the data model earlier. We
-        spent too long exploring the 3-column layout because it felt more
-        flexible, when the evidence for a simpler 2-column hierarchy was already there. The SEA and MENA roadshow was the most direct and highest-quality validation in the whole project, yet it happened near-final rather than at wireframe stage. By then good feedback could only go into the backlog instead of shaping core decisions that were already locked in. Validating earlier, even with rougher artifacts, would have let that feedback change the design.
-      </p>
+      <p class="r-case-label">Judgment</p>
+      <h2>What I'd lock in earlier next time.</h2>
+      <p class="r-judgment-lead">What I would change if I ran it back.</p>
+      <ul class="r-judgment-list">
+        <li>
+          <b>Commit to the data model earlier.</b> We lost weeks chasing the theoretical flexibility of a three-column layout. The data hierarchy had already given us the answer; we just spent too long trying to make paper flexibility win over structural clarity.
+        </li>
+        <li>
+          <b>Get real-world eyes on wireframes, not polished code.</b> Taking our roadshow prototype out across Singapore, the Philippines, and Dubai delivered our highest-fidelity validation, but it landed too late in the cycle. Because the screens were nearly final, the incredible client feedback had to go into a backlog ticket instead of shaping the architecture. Showing rougher concepts sooner would have let the market actually steer the build rather than just applaud the finish line.
+        </li>
+      </ul>
     </section>
   </article>
 </Base>
 
+<script>
+  // Wire the numbered dots on the manager-dashboard screenshot to their
+  // matching legend lines, in both directions, by shared data-idx.
+  function initImpactLinks() {
+    const figure = document.querySelector<HTMLElement>("[data-impact]");
+    if (!figure || figure.dataset.wired) return;
+    figure.dataset.wired = "1";
+
+    const dots = Array.from(figure.querySelectorAll<HTMLElement>(".r-impact-dot"));
+    const items = Array.from(figure.querySelectorAll<HTMLElement>(".r-impact-legend li"));
+    const pairsFor = (idx: string | null) => ({
+      dot: dots.find((d) => d.dataset.idx === idx),
+      item: items.find((i) => i.dataset.idx === idx),
+    });
+
+    const setActive = (idx: string | null) => {
+      dots.forEach((d) => d.classList.toggle("is-active", d.dataset.idx === idx));
+      items.forEach((i) => i.classList.toggle("is-active", i.dataset.idx === idx));
+    };
+
+    dots.forEach((d) => {
+      d.addEventListener("pointerenter", () => setActive(d.dataset.idx ?? null));
+      d.addEventListener("focus", () => setActive(d.dataset.idx ?? null));
+      d.addEventListener("click", () => {
+        const { item } = pairsFor(d.dataset.idx ?? null);
+        item?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    });
+    items.forEach((i) => {
+      i.addEventListener("pointerenter", () => setActive(i.dataset.idx ?? null));
+      i.addEventListener("focus", () => setActive(i.dataset.idx ?? null));
+    });
+    figure.addEventListener("pointerleave", () => setActive(null));
+  }
+  initImpactLinks();
+  document.addEventListener("astro:page-load", initImpactLinks);
+
+  // Scroll parallax across the page's images: the impact dashboard, the
+  // pattern-reuse pair, decision visuals, before/after and dashboard shots,
+  // and the roadshow photos. Strength scales with the element's own size
+  // so a large screenshot drifts noticeably while small grid photos only
+  // shift a little, keeping a packed grid from feeling jittery.
+  function initParallax() {
+    const els = Array.from(
+      document.querySelectorAll<HTMLElement>(
+        "[data-parallax], .r-decision-visual-frame, .r-media-frame, .r-photo"
+      )
+    );
+    if (!els.length) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let raf = 0;
+
+    const apply = () => {
+      raf = 0;
+      if (reduce.matches) {
+        els.forEach((el) => (el.style.transform = ""));
+        return;
+      }
+      const vh = window.innerHeight;
+      els.forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const center = r.top + r.height / 2;
+        const progress = Math.max(-1, Math.min(1, (center - vh / 2) / vh));
+        const strength = Math.max(6, Math.min(20, r.width / 24));
+        el.style.transform = `translateY(${progress * -strength}px)`;
+      });
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    apply();
+  }
+  initParallax();
+  document.addEventListener("astro:page-load", initParallax);
+</script>
+
 <style>
+  /* ── Shared calm-card tokens: flat 3%-ink-tint surface, hairline 7%-ink
+       border, no shadows, 420ms hover to 6% / 16%. ── */
   .r-film { padding-block: clamp(1.5rem, 4vw, 3rem) 0; }
   .r-film-frame { border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden; background: #000; max-width: 72rem; }
   .r-film-frame video { display: block; width: 100%; height: auto; }
@@ -401,9 +502,39 @@ const IMG = "/images/work/time-management";
   .r-case-section p {
     font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem;
   }
+  .r-sys-close { font-size: 0.9375rem !important; color: var(--color-ink-3) !important; padding-top: 1.25rem; margin-top: 0.25rem !important; }
+  .r-sys-note { font-size: 0.875rem !important; color: var(--color-ink-3) !important; }
+
+  .r-quick-stats {
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;
+    margin: 1.5rem 0; padding: 1.25rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+  }
+  .r-quick-stats-v {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+    color: var(--color-ink) !important; margin: 0 !important; letter-spacing: -0.01em;
+  }
+  .r-quick-stats-l {
+    font-size: 0.75rem !important; color: var(--color-ink-3) !important; margin: 0.2rem 0 0 !important;
+  }
+  .r-judgment-lead {
+    font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 500;
+    letter-spacing: 0.02em; color: var(--color-ink-3) !important;
+    margin: 0 0 1rem !important;
+  }
+  .r-judgment-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+  .r-judgment-list li {
+    position: relative; font-size: 1rem; line-height: 1.7; color: var(--color-ink-2);
+    padding-left: 1.5rem;
+  }
+  .r-judgment-list li::before {
+    content: "–"; position: absolute; left: 0; top: 0; color: var(--color-ink-3);
+  }
+  .r-judgment-list li b { color: var(--color-ink); font-weight: 600; }
   .r-case-section blockquote {
-    margin: 1.5rem 0; padding: 1.25rem 1.5rem;
-    border-left: 2px solid var(--color-ink-3);
+    margin: 1.5rem 0; padding: 1.5rem 1.75rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
     font-size: 1.0625rem; line-height: 1.6; font-style: italic; color: var(--color-ink);
   }
   .r-case-section blockquote cite {
@@ -412,17 +543,49 @@ const IMG = "/images/work/time-management";
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
 
+  .r-pattern-reuse {
+    padding: 1.5rem 1.75rem; border-radius: 1rem;
+    background: color-mix(in srgb, var(--color-ink) 4%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 9%, transparent);
+  }
+  .r-pattern-lead {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem;
+    color: var(--color-ink) !important; letter-spacing: -0.01em;
+    margin: 0 0 0.6rem !important;
+  }
+
+  .r-decision-tag {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.6rem;
+  }
+  .r-decision-prose p:not(.r-decision-tag) { margin: 0; font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); }
+
   .r-decision-visual {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
     max-width: 48rem;
   }
+  .r-decision-visual--wide { max-width: none; }
+  /* Match the frame to the screenshots' own aspect ratio instead of a fixed
+     height, so there's no letterboxing: the fixed-height + object-fit:contain
+     combo left uneven dead space above/below these wider dashboard shots. */
+  .r-decision-visual--wide .r-decision-visual-frame { aspect-ratio: 8 / 5; height: auto; }
+  .r-decision-visual--wide .r-decision-visual img { object-fit: cover; object-position: top center; }
   .r-decision-visual figure { margin: 0; }
   .r-decision-visual-frame {
-    height: 15rem; border-radius: 0.75rem; overflow: hidden;
-    border: 1px solid var(--color-border); background: var(--color-surface);
+    height: 15rem; border-radius: 1.25rem; overflow: hidden; padding: 0.5rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+    transition: background-color 420ms ease, border-color 420ms ease;
+  }
+  @media (hover: hover) {
+    .r-decision-visual-frame:hover {
+      background: color-mix(in srgb, var(--color-ink) 6%, var(--color-bg));
+      border-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    }
   }
   .r-decision-visual img {
-    width: 100%; height: 100%; display: block; object-fit: cover; object-position: top left;
+    width: 100%; height: 100%; display: block; object-fit: contain; object-position: center;
+    border-radius: 0.75rem;
   }
   .r-decision-visual figcaption {
     margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
@@ -434,9 +597,20 @@ const IMG = "/images/work/time-management";
   .r-craft-compare { grid-template-columns: repeat(2, 1fr); }
   .r-craft-grid { grid-template-columns: repeat(3, 1fr); }
   .r-craft-compare figure, .r-craft-grid figure { margin: 0; }
+  .r-media-frame {
+    padding: 0.5rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+    transition: background-color 420ms ease, border-color 420ms ease;
+  }
+  @media (hover: hover) {
+    .r-media-frame:hover {
+      background: color-mix(in srgb, var(--color-ink) 6%, var(--color-bg));
+      border-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    }
+  }
   .r-craft-compare img, .r-craft-grid video {
-    width: 100%; border-radius: 0.75rem; border: 1px solid var(--color-border);
-    display: block; background: var(--color-surface);
+    width: 100%; border-radius: 0.75rem; display: block;
   }
   .r-craft-compare figcaption, .r-craft-grid figcaption {
     margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
@@ -447,35 +621,61 @@ const IMG = "/images/work/time-management";
     display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.75rem;
     align-items: start; margin: 1.5rem 0 2rem; max-width: var(--measure-head);
   }
-  .r-impact-img { position: relative; line-height: 0; }
+  .r-impact-img {
+    position: relative; line-height: 0; padding: 0.5rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+  }
   .r-impact-img img {
     width: 100%; display: block; border-radius: 0.75rem;
-    border: 1px solid var(--color-border); background: var(--color-surface);
   }
+  /* Fixed (theme-independent) colours: this dot sits on a photographic
+     screenshot that is always light, regardless of site theme, so tying its
+     fill to --color-ink (which flips to near-white in dark mode) made it
+     vanish into the white dashboard UI. Dark fill + light number, always. */
   .r-impact-dot {
     position: absolute; left: var(--x); top: var(--y);
-    width: 1.5rem; height: 1.5rem; margin: -0.75rem 0 0 -0.75rem;
-    border-radius: 50%; background: var(--color-ink);
+    width: 1.625rem; height: 1.625rem; margin: -0.8125rem 0 0 -0.8125rem;
+    border-radius: 50%; background: #121210; border: 1.5px solid rgba(255,255,255,0.65);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-ink) 18%, transparent);
+    padding: 0; cursor: pointer; appearance: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    transition: transform 220ms var(--ease-enter, ease), background-color 220ms ease, box-shadow 220ms ease;
   }
   .r-impact-dot span {
     font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
-    color: var(--color-bg);
+    color: #fdfdfb; pointer-events: none;
   }
+  .r-impact-dot:hover, .r-impact-dot:focus-visible, .r-impact-dot.is-active {
+    transform: scale(1.18);
+    background: #e8604a; box-shadow: 0 2px 10px rgba(232,96,74,0.5);
+  }
+
   .r-impact-legend {
     margin: 0; padding: 0; list-style: none; counter-reset: impact;
     display: flex; flex-direction: column; gap: 1.1rem;
   }
   .r-impact-legend li {
-    counter-increment: impact; position: relative; padding-left: 2rem;
+    counter-increment: impact; position: relative; padding: 0.4rem 0 0.4rem 2rem;
     font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2);
+    border-radius: 0.75rem; cursor: pointer;
+    transition: background-color 220ms ease;
   }
+  /* Lighter marker: a plain numeral in a thin outline, not a heavy filled
+     disc, the weight that read as "too heavy" before. */
   .r-impact-legend li::before {
-    content: counter(impact); position: absolute; left: 0; top: 0.05rem;
-    width: 1.5rem; height: 1.5rem; border-radius: 50%; background: var(--color-ink);
-    color: var(--color-bg); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+    content: counter(impact); position: absolute; left: 0; top: 0.45rem;
+    width: 1.375rem; height: 1.375rem; border-radius: 50%;
+    background: transparent; border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+    color: var(--color-ink-3); font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease;
+  }
+  .r-impact-legend li:hover, .r-impact-legend li.is-active {
+    background: color-mix(in srgb, var(--color-ink) 5%, transparent);
+  }
+  .r-impact-legend li:hover::before, .r-impact-legend li.is-active::before {
+    background: #e8604a; border-color: #e8604a; color: #fdfdfb;
   }
   .r-impact-legend b { color: var(--color-ink); font-weight: 600; }
 
@@ -483,28 +683,88 @@ const IMG = "/images/work/time-management";
     .r-impact { grid-template-columns: 1fr; }
   }
 
-  .r-stat-row {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
-    padding: 1.5rem 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
-    margin: 1.5rem 0;
+  .r-outcome-row {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; max-width: none;
   }
-  .r-stat-v {
-    font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--color-ink); margin: 0; font-variant-numeric: tabular-nums;
+  @media (min-width: 760px) {
+    .r-outcome-row { grid-template-columns: 0.95fr 1.05fr; align-items: stretch; }
   }
-  .r-stat-l { font-size: 0.75rem; color: var(--color-ink-3); margin: 0.25rem 0 0; }
 
-  .r-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 0.5rem; font-size: 0.875rem; }
-  .r-table th, .r-table td {
-    text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--color-border);
-    color: var(--color-ink-2);
+  .r-stat-card {
+    display: flex; flex-direction: column;
+    padding: 1.75rem 2rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
   }
-  .r-table th { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); }
-  .r-table td:first-child { color: var(--color-ink); font-weight: 500; }
-  .r-table-caption { font-size: 0.75rem; color: var(--color-ink-3); margin: 0 0 1.5rem; }
+  .r-stat-head { display: flex; align-items: flex-start; gap: 0.875rem; margin: 0 0 1.75rem; }
+  .r-stat-icon {
+    flex-shrink: 0; width: 2.5rem; height: 2.5rem; border-radius: 0.75rem;
+    display: flex; align-items: center; justify-content: center;
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    color: var(--color-ink);
+    font-family: var(--font-display); font-weight: 700; font-size: 1.125rem;
+  }
+  .r-stat-brand {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem;
+    color: var(--color-ink) !important; margin: 0 0 0.15rem !important; letter-spacing: -0.01em;
+  }
+  .r-stat-l { font-size: 0.75rem; color: var(--color-ink-3); margin: 0; }
+  .r-stat-delta {
+    margin-left: auto; flex-shrink: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: 0.9375rem; color: #e8604a; text-align: right; white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+  .r-stat-delta small {
+    display: block; font-family: var(--font-sans); font-weight: 500; font-size: 0.625rem;
+    letter-spacing: 0.03em; color: var(--color-ink-3); margin-top: 0.1rem;
+  }
+  .r-stat-bars { display: flex; flex-direction: column; gap: 0.85rem; flex: 1; justify-content: center; }
+  .r-stat-bar-item { display: grid; grid-template-columns: 3rem 1fr 2.75rem; align-items: center; gap: 0.75rem; }
+  .r-stat-bar-label { font-size: 0.75rem; color: var(--color-ink-3); font-variant-numeric: tabular-nums; }
+  .r-stat-bar-track {
+    height: 0.5rem; border-radius: 100px;
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    overflow: hidden;
+  }
+  .r-stat-bar-fill {
+    height: 100%; width: var(--pct); border-radius: 100px;
+    background: color-mix(in srgb, var(--color-ink) 35%, transparent);
+  }
+  .r-stat-bar-fill--after {
+    background: linear-gradient(90deg, #e8604a, #f08a6f);
+    box-shadow: 0 0 10px color-mix(in srgb, #e8604a 50%, transparent);
+  }
+  .r-stat-bar-val {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem;
+    color: var(--color-ink); text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .r-stat-bar-item--current .r-stat-bar-label,
+  .r-stat-bar-item--current .r-stat-bar-val { color: var(--color-ink); font-weight: 700; }
+  .r-stat-note {
+    font-size: 0.8125rem !important; line-height: 1.5 !important; color: var(--color-ink-3) !important;
+    margin: 1.5rem 0 0 !important; padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-ink) 8%, transparent);
+  }
+
+  .r-case-section blockquote.r-quote-card {
+    margin: 0; padding: 2rem 2.25rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+    display: flex; flex-direction: column; justify-content: center;
+    max-width: none;
+  }
+  .r-quote-mark {
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; width: 2.5rem; height: 2.5rem; border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--color-ink) 6%, transparent);
+    color: var(--color-ink-3);
+    margin-bottom: 1.25rem; font-style: normal;
+  }
+  .r-quote-mark svg { width: 1.25rem; height: 1.25rem; }
+  .r-case-section blockquote.r-quote-card { font-size: 1.1875rem; }
 
   @media (max-width: 640px) {
-    .r-craft-compare, .r-craft-grid, .r-stat-row, .r-decision-visual { grid-template-columns: 1fr; }
+    .r-craft-compare, .r-craft-grid, .r-decision-visual { grid-template-columns: 1fr; }
   }
 
   /* Validation (roadshow) */
@@ -513,54 +773,92 @@ const IMG = "/images/work/time-management";
     text-transform: uppercase; color: var(--color-ink-3); margin: 2.5rem 0 1rem !important;
   }
   .r-roster {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-    background: var(--color-border); border: 1px solid var(--color-border);
-    border-radius: 1rem; overflow: hidden;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
   }
   @media (min-width: 700px) { .r-roster { grid-template-columns: repeat(4, 1fr); } }
-  .r-roster-item { background: var(--color-bg); padding: 1.1rem 1.2rem; }
+  .r-roster-item {
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+    border-radius: 1.25rem; padding: 1.5rem 1.4rem;
+    transition: background-color 420ms ease, border-color 420ms ease;
+  }
+  @media (hover: hover) {
+    .r-roster-item:hover {
+      background: color-mix(in srgb, var(--color-ink) 6%, var(--color-bg));
+      border-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    }
+  }
   .r-roster-item p { margin: 0 !important; }
 
-  .r-logo-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .r-logo-chip {
-    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.02em;
-    color: var(--color-ink-2); padding: 0.45rem 0.85rem;
-    border: 1px solid var(--color-border); border-radius: 999px;
-    background: var(--color-surface);
-  }
-  .r-roster-name { font-size: 0.9375rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
-  .r-roster-industry { font-size: 0.75rem !important; line-height: 1.45 !important; margin-top: 0.2rem !important; }
+  .r-roster-industry { font-size: 0.9375rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
   .r-roster-country {
     font-size: 0.6875rem !important; letter-spacing: 0.05em; text-transform: uppercase;
     color: var(--color-ink-3) !important; margin-top: 0.5rem !important; line-height: 1.3 !important;
   }
 
-  .r-photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
-  @media (min-width: 800px) { .r-photos { grid-template-columns: repeat(4, 1fr); gap: 1rem; } }
-  .r-photo {
-    margin: 0; overflow: hidden; border-radius: 0.875rem; aspect-ratio: 4 / 3;
-    border: 1px solid var(--color-border); background: var(--color-surface);
+  /* Collage, not an album: one hero moment plus four supporting shots in an
+     asymmetric block, then a clean strip of the team-memento photos below.
+     Each photo keeps its own rounded corners and shadow rather than sitting
+     flush in a grid, so it reads as assembled rather than dumped. */
+  .r-photos-collage {
+    display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 9rem;
+    gap: 0.75rem; margin-bottom: 0.75rem;
   }
+  @media (min-width: 700px) {
+    .r-photos-collage { grid-template-columns: 1.3fr 1fr 1fr; grid-auto-rows: 10rem; }
+  }
+  .r-photo {
+    margin: 0; overflow: hidden; border-radius: 1rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    box-shadow: 0 10px 28px -16px rgba(0, 0, 0, 0.28);
+    transition: opacity 420ms ease, transform 420ms ease;
+  }
+  :global(.dark) .r-photo { box-shadow: 0 10px 28px -14px rgba(0, 0, 0, 0.6); }
+  @media (hover: hover) { .r-photo:hover { opacity: 0.9; transform: translateY(-2px); } }
   .r-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media (min-width: 800px) { .r-photo--wide { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; } }
+  /* Every photo in the collage fills its own grid cell exactly (no
+     aspect-ratio of its own) so row heights stay fixed and consistent —
+     an aspect-ratio here would shrink the item below its track, leaving
+     ragged gaps instead of the even margins between photos. */
+  .r-photos-collage .r-photo { height: 100%; }
+  .r-photo--hero { grid-row: span 2; }
+  @media (min-width: 700px) { .r-photo--hero { grid-column: 1; grid-row: 1 / 3; } }
+
+  .r-photos-strip {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+  @media (min-width: 700px) { .r-photos-strip { grid-template-columns: repeat(4, 1fr); gap: 1rem; } }
+  .r-photos-strip .r-photo { aspect-ratio: 3 / 2; }
 
   .r-validated { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
   @media (min-width: 800px) { .r-validated { grid-template-columns: repeat(4, 1fr); } }
   .r-validated-item {
-    padding: 1.1rem 1.2rem; border: 1px solid var(--color-border);
-    border-radius: 0.875rem; background: var(--color-surface);
+    padding: 1.5rem 1.4rem; border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+    border: 1px solid color-mix(in srgb, var(--color-ink) 7%, transparent);
+    transition: background-color 420ms ease, border-color 420ms ease;
+  }
+  @media (hover: hover) {
+    .r-validated-item:hover {
+      background: color-mix(in srgb, var(--color-ink) 6%, var(--color-bg));
+      border-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+    }
   }
   .r-validated-item p { margin: 0 !important; }
   .r-validated-t { font-size: 0.875rem !important; font-weight: 600; color: var(--color-ink) !important; line-height: 1.3 !important; }
   .r-validated-q { font-size: 0.75rem !important; font-style: italic; color: var(--color-ink-3) !important; margin-top: 0.3rem !important; line-height: 1.4 !important; }
 
-  .r-review { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-  @media (min-width: 800px) { .r-review { grid-template-columns: 1fr 1fr; gap: 3rem; } }
+  .r-review { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 800px) { .r-review { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+  .r-review-col {
+    padding: clamp(1.75rem, 3vw, 2.25rem); border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
+  }
   .r-review-head { font-weight: 600; color: var(--color-ink) !important; margin: 0 0 0.75rem !important; font-size: 0.9375rem !important; }
   .r-review ul { margin: 0 0 1.25rem; padding: 0; list-style: none; }
   .r-review li {
     font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink-2);
-    padding: 0.55rem 0 0.55rem 1rem; border-top: 1px solid var(--color-border); position: relative;
+    padding: 0.55rem 0; position: relative; padding-left: 1rem;
   }
   .r-review li::before { content: "–"; position: absolute; left: 0; color: var(--color-ink-3); }
   .r-review-quote { font-style: italic; color: var(--color-ink) !important; margin: 0 0 0.75rem !important; font-size: 0.9375rem !important; line-height: 1.55 !important; }
