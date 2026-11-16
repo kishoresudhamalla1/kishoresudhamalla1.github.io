@@ -17,6 +17,7 @@ import ConfidentialityNotice from "../../components/ConfidentialityNotice.astro"
 import SignalChain from "../../components/SignalChain.astro";
 import FlowsMorph from "../../components/FlowsMorph.astro";
 import ScreenGallery from "../../components/ScreenGallery.astro";
+import FilmPlayer from "../../components/FilmPlayer.astro";
 const J = "/images/work/journeys";
 const FL = "/images/work/flows";
 ---
@@ -25,25 +26,28 @@ const FL = "/images/work/flows";
   <CaseHero
     eyebrow="Case study 02 · Darwinbox"
     title="From Flows to Journeys to Playbooks."
-    lede="Rethinking employee experiences for an AI-native HCM platform. A product evolution story rather than a single redesign. Journeys is released and in use by clients. AI Playbooks is concept and prototype work."
+    lede="Rethinking employee experiences for an AI-native HCM platform. A product evolution story rather than a single redesign. Journeys is released and in use by clients. AI Playbooks is still in build and its scope may continue to change."
     meta={[
       { k: "Role", v: "Senior Manager, UX Design" },
-      { k: "Scope", v: "Product direction, Flows → Journeys → Playbooks" },
-      { k: "Status", v: "Journeys shipped · Playbooks conceptual" },
+      { k: "Scope", v: "Product strategy through craft, stakeholder communication, leadership buy-in" },
+      { k: "Status", v: "Journeys shipped · Playbooks in build" },
       { k: "Platform", v: "Darwinbox HCM" },
     ]}
     alt="From Flows to Journeys to Playbooks"
   />
 
-  <ConfidentialityNotice note="Flows and Journeys are released Darwinbox products. The AI Playbooks work is still a concept and is confidential, so its interface, behaviour and prototypes are withheld and it appears here only as conceptual illustration. This case study focuses on product strategy, design decisions and publicly communicable direction." />
+  <ConfidentialityNotice note="Flows and Journeys are released Darwinbox products. AI Playbooks is in build and confidential, so the screens shown for it further down are an early concept exploration, not the real or final interface, and its scope may continue to change after my time on the project. This case study focuses on product strategy, design decisions and publicly communicable direction." />
 
   <article class="container-pg r-case">
     <!-- Context -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Context</p>
-      <h2>Flows already existed. The opportunity was in the experience around them.</h2>
+      <h2>Flows already existed. The real gap was the experience around them.</h2>
       <p>
-        Darwinbox had Flows: transactional automation that moved a request through steps such as approvals, notifications and data updates. Flows worked but they were isolated. An employee going through an offboarding or a transfer would hit a series of disconnected tasks, each one correct on its own, with nothing connecting them into a single legible experience.
+        Darwinbox had Flows, which handled standard tasks like approvals, notifications and data updates. They worked fine individually, but they were completely isolated. An employee going through an offboarding or a transfer hit a series of disconnected steps, with nothing connecting them into a single clear experience.
+      </p>
+      <p>
+        There was also a hidden operational cost. Setting up a flow usually meant having an implementation or Customer Success rep sit with the admin, and every flow was built entirely from scratch. That made flow creation a major bottleneck.
       </p>
     </section>
 
@@ -52,7 +56,10 @@ const FL = "/images/work/flows";
       <p class="r-case-label">Complexity</p>
       <h2>Why this was hard.</h2>
       <p>
-        A guided experience needs to work for two very different people at once. The admin has to configure something flexible enough to cover many scenarios and customer-specific rules. The employee should never see that configuration complexity, only a clear next step. Layer AI on top and the difficulty compounds. The system has to decide when it is confident enough to propose something automatically and the admin has to stay able to trust and override every step of what it proposes.
+        A guided experience has to serve two very different people at once. Admins need deep flexibility to handle complex company rules, but employees should never see that complexity. They just need a clear next step.
+      </p>
+      <p>
+        Adding AI on top makes it even trickier. The system has to figure out when it is confident enough to suggest something automatically, while ensuring the admin always has final control to review and override whatever the AI proposes.
       </p>
     </section>
 
@@ -61,32 +68,53 @@ const FL = "/images/work/flows";
       <p class="r-case-label">Problem framing</p>
       <h2>The question changed twice.</h2>
       <p>
-        The first version of the problem was how to make guided experiences useful across many kinds of workflows. That became Journeys: a guided experience for the employee, configurable by the admin and built on top of the existing Flows.
+        First, we solved how to make guided experiences useful across different workflows. That became Journeys: a guided path for employees, configured by admins on top of existing Flows.
       </p>
       <p>
-        The second version of the problem came once Journeys existed. An admin still had to build every Journey from scratch, even though the system already had the employee data, the system events and the patterns that would let it suggest one. The question changed
-        from <em>"how can an admin create a better Journey?"</em> to
-        <em>"why should the admin have to manually create every Journey?"</em>
-        That reframing is what Playbooks responds to.
+        Once Journeys launched, we noticed a new problem: admins still had to build every Journey from scratch, even though the system already had the employee data and patterns to suggest one. The question shifted
+        from <em>"how do we help an admin build a better Journey?"</em> to
+        <em>"why should they have to build it manually at all?"</em>
+        That is what Playbooks solves.
+      </p>
+    </section>
+
+    <!-- Creation framework -->
+    <section class="r-case-section" data-reveal>
+      <p class="r-case-label">Framework</p>
+      <h2>Replacing blank pages with a smart creation schema.</h2>
+      <p>
+        Before this, clicking "Create Journey" meant building everything manually, field by field.
+      </p>
+      <p>
+        We fixed that by splitting the initial blank page into three choices:
+      </p>
+      <ul class="r-schema-list">
+        <li><strong>Predefined templates:</strong> battle-tested Darwinbox defaults admins can use right away.</li>
+        <li><strong>Prompt-driven creation:</strong> describing what you need in plain English and letting the system spin up a starting structure.</li>
+        <li><strong>From scratch:</strong> the old manual builder, kept as a fallback instead of the default.</li>
+      </ul>
+      <p>
+        This killed the configuration bottleneck. Admins could get a usable draft going instantly without needing a support call, which drastically sped up setup for enterprise clients. Better yet, other Darwinbox modules adopted the exact same three-way pattern.
       </p>
     </section>
 
     <!-- Key design decisions -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Key design decisions</p>
-      <h2>The decision that shaped Playbooks.</h2>
+      <h2>The core decision behind Playbooks.</h2>
 
       <div class="r-decisions">
         <DecisionBlock
           number="1"
-          problem="Once the system could recognize a signal or moment (a role change, a location transfer, a new joiner) well enough to suggest a Playbook, how much of the resulting experience should the AI control versus the admin?"
+          title="AI governance and the human-in-the-loop boundary"
+          problem="Once the system could recognize a signal (a role change, a transfer, a new hire) and suggest a Playbook, we had to decide how much control to give the AI."
           options={[
             "AI assembles and activates the Playbook directly and the admin reviews after the fact.",
             "AI recommends and proposes steps. The admin reviews, edits and approves before anything is assigned.",
           ]}
           decision="AI proposes. The admin remains responsible for reviewing, editing and approving before anything ships to an employee."
-          why="An HCM Playbook touches real employee experiences and often compliance-sensitive steps. The admin needs to stay the accountable party. AI should remove the blank-page problem of starting from scratch, not remove the admin's judgment from a decision that affects real people."
-          tradeoffs="Slower time to activation than a fully automated path. The UI also has to carry the extra weight of a clear review, edit and approve step rather than a single accept action."
+          why="An HCM Playbook touches real employee experiences and compliance-sensitive steps. The admin needs to stay the accountable party. AI should remove the blank-page problem of starting from scratch, not remove the admin's judgment from a decision that affects real people."
+          tradeoffs="Slower time to activation than a fully automated path. The interface also has to carry the extra weight of a clear review, edit and approve step rather than a single accept button."
           result="This human-in-the-loop model is the current design direction for Playbooks."
         />
       </div>
@@ -96,10 +124,28 @@ const FL = "/images/work/flows";
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">System</p>
       <h2>The evolution, as a model.</h2>
+      <p>
+        Seen end to end, this is not three separate projects. It is one architecture getting progressively more proactive:
+      </p>
+      <ol class="r-evo-list">
+        <li><strong>Flows:</strong> handled isolated transactional steps.</li>
+        <li><strong>Journeys:</strong> connected those steps into a guided experience with a generative creation path.</li>
+        <li><strong>Signals &amp; Playbooks:</strong> extends that same generative path from prompted creation to proactive system signals.</li>
+      </ol>
       <FlowsMorph />
 
       <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
       <SignalChain />
+
+      <p class="r-concept-label">Concept &middot; final design may change</p>
+      <div class="r-concept-film">
+        <FilmPlayer
+          src={`${J}/playbooks-concept/playbooks-walkthrough-remotion.mp4`}
+          poster={`${J}/playbooks-concept/playbooks-walkthrough-poster.jpg`}
+          label="A walkthrough of the Signals and Playbooks concept: the live signal canvas, drilling into a Flight Risk signal, asking the AI direct questions about it, the AI recommending a Playbook with its reasoning steps shown, the admin initiating it, and then refining the live Playbook by asking for a change in plain English"
+        />
+      </div>
+      <p class="r-concept-note">An internal concept exploration, not shipped product. Names and data shown are placeholders.</p>
     </section>
 
     <!-- Craft -->
@@ -111,14 +157,15 @@ const FL = "/images/work/flows";
       </p>
 <p class="r-sub-label">Flows: where it started</p>
       <figure class="r-video">
-        <video
-          autoplay loop muted playsinline preload="metadata"
-          poster={`${FL}/flows-recording-poster.jpg`}
-          aria-label="A screen recording of the My Flows list, starting a request from a form, grouping flows by category, and opening one flow to see each stage and who has acted"
-        >
-          <source src={`${FL}/flows-recording.webm`} type="video/webm" />
-          <source src={`${FL}/flows-recording.mp4`} type="video/mp4" />
-        </video>
+        <div class="r-video-frame">
+          <video
+            autoplay loop muted playsinline preload="metadata"
+            poster={`${FL}/flows-recording-clean-poster.jpg`}
+            aria-label="A screen recording of the My Flows list, starting a request from a form, grouping flows by category, and opening one flow to see each stage and who has acted"
+          >
+            <source src={`${FL}/flows-recording-clean.mp4`} type="video/mp4" />
+          </video>
+        </div>
         <figcaption>
           <strong>My Flows:</strong> every request an employee has started or is involved in, filterable by status and groupable by flow or category. Opening one shows each stage, who it is assigned to and who acted. Each flow is correct on its own, and nothing connects them into one experience.
         </figcaption>
@@ -185,16 +232,19 @@ const FL = "/images/work/flows";
       <p class="r-case-label">Collaboration</p>
       <h2>How this got built.</h2>
       <p>
-        Led as Senior Manager, UX Design. I worked with product leadership to define the Journeys to Playbooks direction, alongside product and engineering partners responsible for the underlying Flows engine and the AI recommendation layer.
+        Led as Senior Manager, UX Design, owning the direction from Flows through Journeys to Playbooks. The core team was small and cross-functional: one junior designer and me on design, one product manager, one member of the Center of Excellence, and three developers. I worked with product leadership to define the Journeys-to-Playbooks direction, with the CoE partner on the rollout and enablement side, and with the developers on the Flows engine and the emerging AI recommendation layer.
       </p>
     </section>
 
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
       <p class="r-case-label">Outcome</p>
-      <h2>What shipped and what was explored.</h2>
+      <h2>What shipped, and the adoption problem that came after.</h2>
       <p>
-        Journeys is released and in use by clients. AI Playbooks exists as concept and prototype work built around the admin-approval decision above. It is not presented here as a shipped, measured product.
+        Journeys launched successfully and is actively used by clients, replacing boring task lists with engaging workflows that visibly boosted module adoption and cut implementation overhead.
+      </p>
+      <p>
+        Shipping it was not the finish line. Once it was live, many clients did not actually know how to use it, the same gap we saw with Time Management. We ran client roadshows there too: walking them through what Journeys could do and turning the feature on right there with them in the room. That hands-on enablement turned Journeys into a core value driver instead of a forgotten feature.
       </p>
     </section>
 
@@ -203,7 +253,7 @@ const FL = "/images/work/flows";
       <p class="r-case-label">Reflection</p>
       <h2>What this work was really about.</h2>
       <p>
-        The interesting part of this project was not the UI for Journeys. It was the shift in the question itself, from "how do we help an admin build something" to "why does the admin have to build it at all." That is the same shift AI-native product design keeps forcing: less time designing the configuration screen and more time deciding how much judgment a system can responsibly take on and how it stays answerable to the person who is still accountable for the outcome.
+        The best part of this project was not just drawing screens for Journeys. It was shifting the mindset from <em>"how do we help admins build things faster"</em> to <em>"why do they need to build them at all,"</em> and staying involved after launch to make sure the work actually drove results. That is what hiring managers look for: designers who treat adoption and rollout as part of the design problem itself.
       </p>
     </section>
   </article>
@@ -231,7 +281,40 @@ const FL = "/images/work/flows";
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
 
+  .r-schema-list { margin: 0 0 1.25rem; padding: 0; list-style: none; }
+  .r-schema-list li {
+    position: relative; padding-left: 1.1rem; margin-bottom: 0.6rem;
+    font-size: 1rem; line-height: 1.7; color: var(--color-ink-2);
+  }
+  .r-schema-list li::before { content: "–"; position: absolute; left: 0; color: var(--color-ink-3); }
+  .r-schema-list strong { color: var(--color-ink); font-weight: 600; }
+
   .r-evo-chain-label { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0 0 0.75rem; }
+
+  .r-concept-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 2.5rem 0 1rem !important;
+  }
+  .r-concept-film { max-width: var(--measure-head); }
+  .r-concept-film :global(.fp) { border-radius: 1.25rem; }
+  .r-concept-note { font-size: 0.8125rem !important; color: var(--color-ink-3) !important; margin-top: 1rem !important; }
+
+  .r-evo-list {
+    margin: 0 0 1.5rem; padding: 0; list-style: none;
+    counter-reset: evo; display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .r-evo-list li {
+    counter-increment: evo; position: relative; padding-left: 2rem;
+    font-size: 1rem; line-height: 1.7; color: var(--color-ink-2);
+  }
+  .r-evo-list li::before {
+    content: counter(evo); position: absolute; left: 0; top: 0.1rem;
+    width: 1.375rem; height: 1.375rem; border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--color-ink) 22%, transparent);
+    color: var(--color-ink-3); font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .r-evo-list strong { color: var(--color-ink); font-weight: 600; }
 
 
   .r-sub-label {
@@ -239,10 +322,12 @@ const FL = "/images/work/flows";
     text-transform: uppercase; color: var(--color-ink-3); margin: 2.5rem 0 1rem !important;
   }
   .r-video { margin: 0; }
+  .r-video-frame {
+    overflow: hidden; border: 1px solid var(--color-border);
+    border-radius: var(--gal-r, 1.25rem); background: var(--color-surface);
+  }
   .r-video video {
-    display: block; width: 100%; height: auto; aspect-ratio: 1920 / 1188;
-    border: 1px solid var(--color-border); border-radius: var(--gal-r, 1.25rem);
-    background: var(--color-surface);
+    display: block; width: calc(100% + 10px); max-width: none; margin-left: -3px; height: auto; aspect-ratio: 1920 / 1188;
   }
   .r-video figcaption {
     margin-top: 0.9rem; max-width: var(--measure);

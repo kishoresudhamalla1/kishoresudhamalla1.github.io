@@ -14,7 +14,7 @@ const { src, poster, label } = Astro.props;
 ---
 
 <div class="fp" data-fp>
-  <video muted playsinline preload="metadata" poster={poster} aria-label={label}>
+  <video muted playsinline preload="metadata" poster={poster} aria-label={label} controlsList="nodownload" disablePictureInPicture>
     <source src={src} type="video/mp4" />
   </video>
   <span class="fp-scrim" aria-hidden="true"></span>

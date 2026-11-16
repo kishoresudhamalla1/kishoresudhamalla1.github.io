@@ -1,0 +1,354 @@
+---
+/**
+ * DRAFT — homepage with the asymmetric "selected work" layout (WorkGridV2)
+ * in place of PaperCards' glass/accordion treatment, per the 2026-11-15
+ * request. Not linked from nav or anywhere else. Everything outside the
+ * Work section is identical to index.astro; if this layout is approved,
+ * swap PaperCards for WorkGridV2 directly in index.astro and delete this
+ * file — otherwise delete this file and keep index.astro as-is.
+ */
+import Base from "../layouts/Base.astro";
+import WorkGridV2 from "../components/WorkGridV2.astro";
+
+// Reordered so the flagship (Time Management) renders first — WorkGridV2
+// treats items[0] as the flagship. Catalog numbers (n) stay as in index.astro.
+const WORK_V2 = [
+  {
+    n: "03",
+    ptitle: "Redesigning Global Time Management.",
+    pblurb: "A mature enterprise time management product used across global workforces, redesigned for employees, managers and HR teams.",
+    title: "Time Management",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
+    href: "/work/time-management",
+  },
+  {
+    n: "01",
+    ptitle: "Designing Agentic Workflows.",
+    pblurb: "The shift from assistants that answer to agents that understand intent, use tools and take action.",
+    title: "Chatbot → Agentic AI → AI-native experiences",
+    tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
+    href: "/work/chatbot-to-agentic",
+  },
+  {
+    n: "02",
+    ptitle: "Orchestrating Moments That Matter.",
+    pblurb: "From individual workflow transactions to guided employee journeys and AI-assisted playbooks.",
+    title: "From Flows → Journeys → AI Playbooks",
+    tags: ["Product strategy", "Workflow design", "AI-native experiences"],
+    href: "/work/flows-journeys-playbooks",
+  },
+];
+
+const QUESTIONS = [
+  "What does the system know?",
+  "What can it decide?",
+  "What should it do?",
+  "When should a person be involved?",
+  "How do we know it worked?",
+];
+
+---
+
+<Base title="Kishore Sudhamalla | Principal Product Designer (draft)">
+  <div class="r-draft-bar container-pg">
+    <span><strong>Draft</strong> — asymmetric work-section layout. Not published, not linked anywhere.</span>
+    <a href="/">← Back to the live homepage</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="r-hero-wrap">
+  <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
+  <div class="container-pg r-hero">
+    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
+    <h1 class="r-h1 enter" style="--tier:0">
+      I design complex enterprise products into
+      <span class="r-h1-accent">simpler, more intelligent experiences.</span>
+    </h1>
+
+    <p class="r-lede enter" style="--tier:1">
+      I work at the intersection of product design, systems thinking and AI, turning workflows, rules and business complexity into experiences that help people understand, decide and act.
+    </p>
+
+    <p class="r-hero-facts enter" style="--tier:1">
+      16+ years in design · 9 years in enterprise products · AI-native product design
+    </p>
+
+    <div class="r-cta-row enter" style="--tier:2">
+      <a href="#work" class="r-btn r-btn-primary">View my work</a>
+      <a href="/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
+    </div>
+  </div>
+  </section>
+
+  <!-- Selected work — asymmetric: flagship wide, two supporting cards stacked -->
+  <section id="work" class="container-pg r-work" data-reveal>
+    <p class="r-section-label">Selected work</p>
+
+    <WorkGridV2 items={WORK_V2} />
+  </section>
+
+  <!-- A little about how I work -->
+  <section class="container-pg r-prose" data-reveal>
+    <p class="r-section-label">A little about how I work</p>
+    <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
+    <p>The screen is usually just where the complexity becomes visible.</p>
+    <p>I like getting underneath it: understanding the system, finding where people struggle and figuring out what the product should do differently.</p>
+    <p>With AI, that becomes even more interesting.</p>
+    <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask and when it should step back.</p>
+    <p class="r-prose-close">That's the kind of work I enjoy.</p>
+  </section>
+
+  <!-- How I think about AI-native products -->
+  <section class="container-pg r-think" data-reveal>
+    <p class="r-section-label">How I think about AI-native products</p>
+    <div class="r-think-grid">
+      <div class="r-think-copy">
+        <p class="r-think-lead">AI isn't just another feature to add to an existing interface.</p>
+        <p>It changes how people interact with products.</p>
+        <p>Instead of asking users to find the right screen, understand the right workflow and perform every step themselves, we can start with intent and let the system help with the work.</p>
+        <p>But that only works when people understand what the system is doing and remain in control when it matters.</p>
+      </div>
+      <div class="r-think-side">
+        <p class="r-think-intro">I think about AI experiences through a few simple questions:</p>
+        <ol class="r-think-q">
+          {QUESTIONS.map((q, i) => (
+            <li><span class="r-think-n">{String(i + 1).padStart(2, "0")}</span><span>{q}</span></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+    <p class="r-think-close">That's where I spend a lot of my time.</p>
+  </section>
+
+  <!-- AI Lab -->
+  <section class="container-pg r-lab" data-reveal>
+    <p class="r-section-label">AI Lab</p>
+    <h2 class="r-h2">Designing by building</h2>
+    <div class="r-prose-inline">
+      <p>I'm using AI and code to explore new ways of designing products, workflows and systems.</p>
+      <p>The AI Lab is where I take ideas beyond Figma, build working prototypes, test how they behave and learn what changes when AI becomes part of the product itself.</p>
+      <p>I'm particularly interested in what happens when AI stops being a destination inside a product and starts becoming part of how the product works.</p>
+    </div>
+
+    <a href="/ai-lab" class="r-lab-card">
+      <h3>Design Ops</h3>
+      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean and help designers decide what to do next?</p>
+      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval and verification.</p>
+      <div class="work-card-tags">
+        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+      </div>
+      <span class="r-text-link">Explore AI Lab →</span>
+    </a>
+  </section>
+
+  <!-- Let's talk -->
+  <section id="contact" class="r-talk" data-reveal>
+    <div class="container-pg">
+      <h2 class="r-talk-head">Let's talk</h2>
+      <p class="r-talk-p">If you're building complex products, rethinking enterprise workflows or figuring out what AI-native experiences should actually look like, I'd love to compare notes.</p>
+      <a href="mailto:build@kishoresudhamalla.com" class="r-btn r-btn-primary">Get in touch</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { initCursorGrid } from "../lib/cursorGrid";
+
+  function mountHeroGrid() {
+    const el = document.querySelector<HTMLElement>("[data-cursor-grid]");
+    if (!el || el.dataset.ready) return;
+    el.dataset.ready = "1";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const opts = () => ({
+      color: getComputedStyle(document.body).getPropertyValue("--color-ink").trim() || "#0d0d0c",
+      cellSize: 60, radius: 150, maxOpacity: 0.22, holdTime: 250,
+      fadeDuration: 650, lineWidth: 0.75, gridOpacity: 0, fillOpacity: 0, cellRadius: 4,
+    });
+    let destroy = initCursorGrid(el, opts());
+    document.addEventListener("themechange", () => {
+      destroy();
+      destroy = initCursorGrid(el, opts());
+    });
+  }
+  mountHeroGrid();
+  document.addEventListener("astro:page-load", mountHeroGrid);
+
+</script>
+
+<style>
+  .r-draft-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;
+    padding: 0.75rem 1.25rem; margin-top: 1rem; border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border: 1px solid var(--color-border); font-size: 0.8125rem; color: var(--color-ink-2);
+  }
+  .r-draft-bar strong { color: var(--color-ink); }
+  .r-draft-bar a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 2px; }
+
+  .r-hero-wrap { position: relative; overflow: hidden; }
+  .r-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .r-hero-wrap > .r-hero { position: relative; z-index: 1; }
+  .r-hero { padding-block: clamp(3rem, 8vw, 6rem) clamp(2.5rem, 5vw, 4rem); }
+  .r-hero > * { max-width: var(--measure); }
+  .r-hero > .r-h1 { max-width: var(--measure-head); }
+  .r-eyebrow {
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.25rem;
+  }
+  .r-h1 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    line-height: 1.05; letter-spacing: -0.03em; color: var(--color-ink);
+    margin: 0 0 1.5rem;
+  }
+  @property --hue { syntax: "<number>"; inherits: true; initial-value: 1; }
+  .r-h1 {
+    --hue: 1;
+    --g1: #8ea7ff; --g2: #b9c6ff; --g3: #fdf3e3; --g4: #ffc97a; --g5: #ff9e74; --g6: #ff8aa0;
+    transition: --hue 800ms var(--ease-enter);
+    animation: hue-intro 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s 1;
+  }
+  :global(html:not(.dark)) .r-h1 { --g1: #2f46d8; --g2: #4a5fe8; --g3: #8a6520; --g4: #c07a12; --g5: #d1512c; --g6: #c43a62; }
+  @property --shine { syntax: "<percentage>"; inherits: true; initial-value: 160%; }
+  .r-h1-accent {
+    --shine: 160%;
+    color: transparent; -webkit-background-clip: text; background-clip: text;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background-repeat: no-repeat;
+    background-size: 46% 100%, 100% 100%;
+    background-position: var(--shine) 0, 0 0;
+    background-image:
+      linear-gradient(100deg,
+        transparent 10%,
+        color-mix(in srgb, white 100%, transparent) 50%,
+        transparent 90%),
+      linear-gradient(90deg,
+        color-mix(in srgb, var(--g1) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g2) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g3) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g4) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g5) calc(var(--hue) * 100%), var(--color-ink-2)),
+        color-mix(in srgb, var(--g6) calc(var(--hue) * 100%), var(--color-ink-2)));
+    transition: filter var(--dur-normal) var(--ease-enter);
+    animation:
+      hue-intro 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s 1,
+      shine-sweep 7.5s cubic-bezier(0.4, 0, 0.2, 1) 2.2s infinite;
+  }
+  @keyframes hue-intro { from { --hue: 0; } to { --hue: 1; } }
+  @keyframes shine-sweep {
+    0%, 70% { --shine: 160%; }
+    92% { --shine: -90%; }
+    100% { --shine: -90%; }
+  }
+  @media (hover: hover) { .r-h1:hover .r-h1-accent { filter: saturate(1.18) brightness(1.07); } }
+  @media (prefers-reduced-motion: reduce) {
+    .r-h1 { transition: none; }
+    .r-h1-accent { animation: none; }
+  }
+  .r-lede {
+    font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
+    color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2.25rem;
+  }
+  .r-cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3rem; }
+  .r-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    transition: opacity var(--dur-micro) var(--ease-enter), border-color var(--dur-micro) var(--ease-enter), background-color var(--dur-micro) var(--ease-enter);
+  }
+  .r-btn-primary { background: var(--color-ink); color: var(--color-bg); }
+  .r-btn-primary:hover { opacity: 0.85; }
+  .r-btn-ghost {
+    border: 1px solid var(--color-border); color: var(--color-ink);
+  }
+  .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-section-label {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 1.5rem;
+  }
+
+  .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
+
+  .work-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .work-card-tags span {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-2);
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    border-radius: 100px; padding: 0.5rem 1rem;
+  }
+
+  .r-text-link {
+    font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
+    text-decoration: none; border-bottom: 1px solid var(--color-border);
+  }
+  .r-text-link:hover { border-color: var(--color-ink); }
+
+  .r-hero-facts {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.04em;
+    color: var(--color-ink-3); margin: 0 0 1.75rem;
+  }
+  .r-cta-row { margin-bottom: 0; }
+
+  .r-prose { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-prose > * { max-width: var(--measure); }
+  .r-prose p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-prose .r-prose-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-prose .r-prose-close { color: var(--color-ink); font-weight: 500; margin-top: 1.5rem; }
+
+
+  .r-h2 {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem); color: var(--color-ink); margin: 0 0 1.25rem;
+  }
+  .r-lab { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-prose-inline { max-width: var(--measure); }
+  .r-prose-inline p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-lab-card {
+    display: block; max-width: var(--measure); margin-top: 1.5rem; padding: 1.75rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
+    text-decoration: none; color: inherit; transition: border-color var(--dur-micro) var(--ease-enter);
+  }
+  .r-lab-card:hover { border-color: var(--color-ink-3); }
+  .r-lab-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
+    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.75rem;
+  }
+  .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
+  .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+
+
+  .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
+  .r-talk-head {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.04em; line-height: 0.95;
+    font-size: clamp(2.75rem, 9vw, 6rem); color: var(--color-ink); margin: 0 0 1.5rem;
+  }
+  .r-talk-p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 2rem; }
+
+  .r-think { padding-block: clamp(2rem, 5vw, 3.5rem); }
+  .r-think-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+  @media (min-width: 900px) {
+    .r-think-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+  }
+  .r-think-copy p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; max-width: 36rem; }
+  .r-think-copy .r-think-lead {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-think-intro { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+  .r-think-q { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-border); }
+  .r-think-q li {
+    display: grid; grid-template-columns: 2.25rem 1fr; align-items: baseline; gap: 0.5rem;
+    padding: 1rem 0; border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.0625rem, 1.8vw, 1.25rem); line-height: 1.3; color: var(--color-ink);
+  }
+  .r-think-n { font-family: var(--font-mono); font-weight: 500; font-size: 0.6875rem; letter-spacing: 0.06em; color: var(--color-ink-3); }
+  .r-think-close { font-size: 1.0625rem; font-weight: 500; color: var(--color-ink); margin: 2rem 0 0; }
+</style>
