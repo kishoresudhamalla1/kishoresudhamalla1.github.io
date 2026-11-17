@@ -18,11 +18,17 @@ import SignalChain from "../../components/SignalChain.astro";
 import FlowsMorph from "../../components/FlowsMorph.astro";
 import ScreenGallery from "../../components/ScreenGallery.astro";
 import FilmPlayer from "../../components/FilmPlayer.astro";
+import PasswordGate from "../../components/PasswordGate.astro";
 const J = "/images/work/journeys";
 const FL = "/images/work/flows";
 ---
 
 <Base title="Flows → Journeys → Playbooks | Kishore Sudhamalla">
+  <PasswordGate
+    password="1919"
+    storageKey="flows-journeys-playbooks"
+    reason="This case study covers AI Playbooks work still in build at my former company. Message me and I'll share the password."
+  >
   <CaseHero
     eyebrow="Case study 02 · Darwinbox"
     title="From Flows to Journeys to Playbooks."
@@ -257,6 +263,7 @@ const FL = "/images/work/flows";
       </p>
     </section>
   </article>
+  </PasswordGate>
 </Base>
 
 <style>
