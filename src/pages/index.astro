@@ -86,11 +86,15 @@ const QUESTIONS = [
   </div>
   </section>
 
-  <!-- Selected work — side by side, hover expands one, collapses the others -->
+  <!-- Selected work — all three open and visible at once (grid variant). An
+       earlier accordion version (one card open, others folded to a spine)
+       hid two of three projects behind a hover; kept as PaperCards'
+       variant="accordion", the default, for reuse if this ever wants that
+       collapsed treatment again. -->
   <section id="work" class="container-pg r-work" data-reveal>
     <p class="r-section-label">Selected work</p>
 
-    <PaperCards items={WORK} />
+    <PaperCards items={WORK} variant="grid" />
   </section>
 
   <!-- A little about how I work -->

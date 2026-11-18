@@ -1,0 +1,85 @@
+---
+/**
+ * A case-study section kicker with a small coloured icon chip, for the
+ * sections that have no screenshot or film of their own (Context, Systems
+ * thinking, Judgment, …) — "plain text headings" feedback on the case
+ * studies. One icon + accent colour per theme, reused consistently across
+ * sections and (if adopted) pages, so the colour becomes a small system
+ * rather than per-page decoration.
+ */
+type IconKey =
+  | "film"
+  | "context"
+  | "systems"
+  | "craft"
+  | "validated"
+  | "impact"
+  | "judgment";
+
+interface Props {
+  icon: IconKey;
+}
+const { icon } = Astro.props;
+
+const ICONS: Record<IconKey, { color: string; path: string }> = {
+  film: {
+    color: "#6b6ab3", // violet — the opening film
+    path: `<rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10h18M7 6.5 9.2 10M12.4 6.5l2.2 3.5M17.8 6.5 20 10"/><path d="M10.6 13.1v2.8l2.3-1.4-2.3-1.4z" fill="currentColor" stroke="none"/>`,
+  },
+  context: {
+    color: "#5b7c99", // slate blue — orienting in a complex system
+    path: `<circle cx="12" cy="12" r="8.4"/><path d="m14.6 9.4-1.7 4.1-4.1 1.7 1.7-4.1 4.1-1.7z"/>`,
+  },
+  systems: {
+    color: "#4f8a7c", // teal — structure and relationships
+    path: `<circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17.5" r="2"/><path d="M7.6 8.2 10.4 16M16.4 8.2 13.6 16M8 7h8"/>`,
+  },
+  craft: {
+    color: "#c17a4a", // terracotta — building and shipping
+    path: `<rect x="3.2" y="3.2" width="7.6" height="7.6" rx="1.4"/><rect x="13.2" y="3.2" width="7.6" height="7.6" rx="1.4"/><rect x="3.2" y="13.2" width="7.6" height="7.6" rx="1.4"/><rect x="13.2" y="13.2" width="7.6" height="7.6" rx="1.4"/>`,
+  },
+  validated: {
+    color: "#6b8e4e", // moss — client validation in market
+    path: `<path d="M12 3.4 19 6v5.6c0 4.3-2.9 7.3-7 8.6-4.1-1.3-7-4.3-7-8.6V6l7-2.6z"/><path d="m9 12 2.1 2.1L15.3 9.8"/>`,
+  },
+  impact: {
+    color: "#b8604f", // rust — the measured outcome
+    path: `<path d="M4 19V11M10 19V6.5M16 19v-8M20 19V9"/>`,
+  },
+  judgment: {
+    color: "#8a6a9e", // plum — reflection, what I'd change
+    path: `<path d="M9 18.2h6M9.8 21h4.4"/><path d="M12 3.2a5.6 5.6 0 0 1 3.1 10.3c-.6.4-.95 1-.95 1.6v.6h-4.3v-.6c0-.6-.35-1.2-.95-1.6A5.6 5.6 0 0 1 12 3.2z"/>`,
+  },
+};
+const def = ICONS[icon];
+---
+
+<p class="sl" style={`--sl-color: ${def.color}`}>
+  <span class="sl-chip" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={def.path} />
+  </span>
+  <span class="sl-text"><slot /></span>
+</p>
+
+<style>
+  .sl {
+    display: flex; align-items: center; gap: 0.5rem;
+    margin: 0 0 0.75rem !important;
+  }
+  .sl-chip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.5rem; height: 1.5rem; flex-shrink: 0;
+    border-radius: 0.4rem;
+    background: color-mix(in srgb, var(--sl-color) 16%, transparent);
+    color: var(--sl-color);
+  }
+  :global(.dark) .sl-chip {
+    background: color-mix(in srgb, var(--sl-color) 26%, transparent);
+    color: color-mix(in srgb, var(--sl-color) 85%, white);
+  }
+  .sl-chip svg { width: 0.9375rem; height: 0.9375rem; }
+  .sl-text {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+  }
+</style>

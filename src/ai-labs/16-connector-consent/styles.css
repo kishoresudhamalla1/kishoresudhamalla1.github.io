@@ -1,0 +1,20 @@
+.labs .cc-request { display: flex; flex-direction: column; gap: 1rem; max-width: 30rem; }
+.labs .cc-request-h { display: flex; align-items: flex-start; gap: 0.75rem; }
+.labs .cc-icon {
+  flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 0.6rem; display: inline-flex; align-items: center; justify-content: center;
+  background: var(--lab-agent-soft); color: var(--lab-agent); font-weight: 700; font-size: 0.9375rem;
+}
+.labs .cc-t { margin: 0 0 0.2rem; font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); }
+.labs .cc-can { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; color: var(--color-ink-2); }
+.labs .cc-can li { display: flex; align-items: center; gap: 0.55rem; }
+.labs .cc-can li :first-child { color: var(--lab-ok); flex-shrink: 0; }
+.labs .cc-scope { display: flex; flex-direction: column; gap: 0.5rem; }
+.labs .cc-scope-k { margin: 0; }
+.labs .cc-radio { display: flex; align-items: center; gap: 0.45rem; font-size: 0.875rem; color: var(--color-ink); cursor: pointer; }
+.labs .cc-radio input { accent-color: var(--lab-agent); }
+
+.labs .cc-inventory { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.labs .cc-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.8rem; border: 1px solid var(--color-border); border-radius: 0.6rem; }
+.labs .cc-note { margin: 0 0 1rem; }
+.labs .cc-upgrade { display: flex; flex-direction: column; align-items: flex-start; gap: 0.6rem; padding: 0.9rem 1rem; border-radius: 0.6rem; border: 1px solid color-mix(in srgb, var(--lab-warn) 45%, var(--color-border)); background: var(--lab-warn-soft); max-width: 30rem; }
+.labs .cc-upgrade p { margin: 0; color: var(--color-ink); }

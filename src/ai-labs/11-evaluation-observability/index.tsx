@@ -111,7 +111,7 @@ function Waterfall({ run }: { run: Run }) {
             <span className="eo-span-name" style={{ paddingLeft: `${s.depth * 1.1}rem` }}>
               <span className={cx("eo-chev", open === s.id && "is-open")}><Icon name="chevron" size={11} /></span>
               <Badge tone={s.error ? "danger" : (KIND_TONE[s.kind] as "agent")}>{s.kind}</Badge>
-              {s.label}
+              <span className="eo-span-label" title={s.label}>{s.label}</span>
             </span>
             <span className="eo-track" aria-hidden="true">
               <i style={{ left: `${(s.start / total) * 100}%`, width: `${Math.max(1.5, (s.dur / total) * 100)}%` }} className={cx(s.error && "is-error", s.skipped && "is-skipped")} />

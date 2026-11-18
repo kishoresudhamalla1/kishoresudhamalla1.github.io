@@ -1,0 +1,10 @@
+.labs .ac-card { display: flex; flex-direction: column; gap: 0.9rem; max-width: 36rem; }
+.labs .ac-q { margin: 0; color: var(--color-ink-2); }
+.labs .ac-a { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.9rem 1rem; border-radius: 0.6rem; background: var(--color-surface); }
+.labs .ac-a.is-locked { background: var(--lab-danger-soft); }
+.labs .ac-a-top { justify-content: space-between; }
+.labs .ac-answer { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink); }
+.labs .ac-verify { margin-top: -0.2rem; }
+.labs .ac-gate { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border-radius: 0.6rem; border: 1px solid color-mix(in srgb, var(--lab-danger) 40%, var(--color-border)); }
+.labs .ac-gate-t { margin: 0; }
+.labs .ac-sent { color: var(--lab-ok); }

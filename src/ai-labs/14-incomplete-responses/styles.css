@@ -1,0 +1,12 @@
+.labs .ir-mode-copy { margin: 0 0 1rem; }
+.labs .ir-card { display: flex; flex-direction: column; gap: 0.9rem; max-width: 36rem; }
+.labs .ir-q { margin: 0; color: var(--color-ink-2); }
+.labs .ir-a { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9375rem; color: var(--color-ink); }
+.labs .ir-a p { margin: 0; line-height: 1.6; }
+.labs .ir-missing { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; font-size: 0.875rem; color: var(--color-ink-2); }
+.labs .ir-chips { margin-top: 0.2rem; }
+.labs .ir-answer { margin: 0; padding: 0.9rem 1rem; border-radius: 0.6rem; background: var(--lab-user-soft); color: var(--color-ink); font-size: 0.9375rem; }
+.labs .ir-fail { display: flex; flex-direction: column; gap: 0.6rem; }
+.labs .ir-fail > p { margin: 0; display: flex; align-items: center; gap: 0.55rem; font-size: 0.9375rem; color: var(--color-ink); }
+.labs .ir-escal { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 0.9rem 1rem; border-radius: 0.6rem; background: var(--lab-agent-soft); }
+.labs .ir-escal p { margin: 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.6; }

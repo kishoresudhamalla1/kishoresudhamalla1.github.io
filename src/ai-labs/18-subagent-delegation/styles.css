@@ -1,0 +1,11 @@
+.labs .sd-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; max-width: 36rem; }
+.labs .sd-call { border: 1px solid var(--color-border); border-radius: 0.65rem; padding: 0.7rem 0.9rem; background: var(--color-bg); }
+.labs .sd-call-h { display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; font: inherit; font-size: 0.875rem; color: var(--color-ink); background: none; border: 0; padding: 0; cursor: pointer; }
+.labs .sd-call-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.labs .sd-chev { flex-shrink: 0; display: inline-flex; color: var(--color-ink-3); transition: transform var(--dur-fast) var(--ease-enter); }
+.labs .sd-chev.is-open { transform: rotate(90deg); }
+.labs .sd-steps { list-style: none; margin: 0.6rem 0 0; padding: 0.6rem 0 0 1.9rem; border-top: 1px dashed var(--color-border); display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.8125rem; color: var(--color-ink-2); }
+.labs .sd-steps li { display: flex; align-items: center; gap: 0.55rem; }
+.labs .sd-result { margin: 0.5rem 0 0 1.9rem; color: var(--color-ink-2); }
+.labs .sd-answer { display: flex; flex-direction: column; gap: 0.7rem; padding: 1rem 1.1rem; border-radius: 0.65rem; background: var(--lab-agent-soft); max-width: 36rem; }
+.labs .sd-answer p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink); }

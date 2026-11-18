@@ -31,6 +31,7 @@
 import Base from "../../layouts/Base.astro";
 import CaseHero from "../../components/CaseHero.astro";
 import FilmPlayer from "../../components/FilmPlayer.astro";
+import SectionLabel from "../../components/SectionLabel.astro";
 
 const IMG = "/images/work/time-management";
 ---
@@ -56,7 +57,7 @@ const IMG = "/images/work/time-management";
   />
 
   <section class="container-pg r-film" data-reveal>
-    <p class="r-case-label">Film · with sound</p>
+    <SectionLabel icon="film">Film · with sound</SectionLabel>
     <div class="r-film-frame">
       <FilmPlayer src={`${IMG}/tm-hero-film.mp4`} poster={`${IMG}/tm-hero-film-poster.jpg`} label="A short animated film of the Time Management redesign: the module before, one front door, and the employee, manager and HRBP dashboards it opened into" />
     </div>
@@ -66,7 +67,7 @@ const IMG = "/images/work/time-management";
   <article class="container-pg r-case">
     <!-- Stage 2: Context & enterprise complexity -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Context &amp; complexity</p>
+      <SectionLabel icon="context">Context &amp; complexity</SectionLabel>
       <h2>An operational system, not a feature backlog.</h2>
       <p>
         Time Management is Darwinbox's time, attendance, leave and payroll-dependent module. Every customer configures its own mix of compliance rules, shift structures and approval chains, so the same screens have to hold up under materially different conditions from one tenant to the next.
@@ -78,18 +79,24 @@ const IMG = "/images/work/time-management";
         <div><p class="r-quick-stats-v">1M+</p><p class="r-quick-stats-l">Daily users</p></div>
       </div>
 
-      <p>
-        The difficulty was never any single screen. Attendance, leave and payroll depend on each other, and every exception, a missed clock-in, an unapproved leave, a roster conflict, sits upstream of a payroll run. Eight years of incremental requests had produced a system that was powerful but dense enough that managers absorbed the cost as exception fatigue, constantly re-deriving what needed attention instead of being told.
-      </p>
+      <p>The difficulty was never any single screen:</p>
+      <ul class="r-point-list">
+        <li>Attendance, leave and payroll depend on each other, so every exception, a missed clock-in, an unapproved leave, a roster conflict, sits upstream of a payroll run.</li>
+        <li>Eight years of incremental requests had produced a system that was powerful but dense.</li>
+        <li>Managers absorbed that density as exception fatigue, constantly re-deriving what needed attention instead of being told.</li>
+      </ul>
     </section>
 
     <!-- Stage 3: Systems thinking & information architecture -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Systems thinking</p>
+      <SectionLabel icon="systems">Systems thinking</SectionLabel>
       <h2>Untangling the data hierarchy before a screen got drawn.</h2>
-      <p>
-        Primary research with three Indian enterprise clients (manufacturing, e-grocery and food retail), plus secondary analysis across Kronos, Workday, BambooHR and ZingHR, surfaced the same structural gap: no central view of time data existed for any role. Everything lived behind transactional flows, so a manager or employee had to already know what they were looking for before they could find it. One enterprise manager put it directly:
-      </p>
+      <p>Research surfaced the same structural gap everywhere: no central view of time data existed for any role, so a manager or employee had to already know what they were looking for before they could find it.</p>
+      <ul class="r-point-list r-point-list--tight">
+        <li><b>Primary research:</b> three Indian enterprise clients, across manufacturing, e-grocery and food retail.</li>
+        <li><b>Secondary analysis:</b> Kronos, Workday, BambooHR and ZingHR.</li>
+      </ul>
+      <p>One enterprise manager put it directly:</p>
       <blockquote>
         "If I had a magic wand to change one thing about the Time module,
         I'd add dashboards for employees and managers."
@@ -104,9 +111,11 @@ const IMG = "/images/work/time-management";
       <div class="r-decisions">
         <div class="r-decision-prose">
           <p class="r-decision-tag">Decision 1</p>
-          <p>
-            A dashboard needed primary time data plus the context that makes it actionable: schedule, team comparison, exceptions, without splitting a manager's attention. A 3-column layout, one column per concern, looked more flexible on paper but meant scanning three places to answer one question. We shipped 2 columns instead, one primary view and one context panel. Less sits on screen at once, but there's a clear order of what to look at first.
-          </p>
+          <p>A dashboard needed primary time data plus context: schedule, team comparison, exceptions, without splitting a manager's attention.</p>
+          <ul class="r-point-list r-point-list--tight">
+            <li><b>Considered:</b> a 3-column layout, one column per concern. Looked flexible on paper, but meant scanning three places to answer one question.</li>
+            <li><b>Shipped:</b> 2 columns instead, one primary view and one context panel. Less sits on screen at once, but there's a clear order of what to look at first.</li>
+          </ul>
         </div>
 
         <div class="r-decision-visual">
@@ -126,9 +135,12 @@ const IMG = "/images/work/time-management";
 
         <div class="r-decision-prose">
           <p class="r-decision-tag">Decision 2</p>
-          <p>
-            Employees, managers and HRBPs each needed a different view of the same time data. The existing module handled that with separate, inconsistent screens per role. We built one dashboard framework instead, configured per role and permission set. It cost more upfront than shipping one role's view first, but left one information model to maintain instead of three. All three dashboards shipped from it, with zero module switching.
-          </p>
+          <p>Employees, managers and HRBPs each needed a different view of the same time data.</p>
+          <ul class="r-point-list r-point-list--tight">
+            <li><b>Before:</b> the existing module handled that with separate, inconsistent screens per role.</li>
+            <li><b>Shipped:</b> one dashboard framework instead, configured per role and permission set. Cost more upfront than shipping one role's view first, but left one information model to maintain instead of three.</li>
+            <li><b>Result:</b> all three dashboards shipped from it, with zero module switching.</li>
+          </ul>
         </div>
 
         <div class="r-decision-prose r-pattern-reuse">
@@ -158,7 +170,7 @@ const IMG = "/images/work/time-management";
 
     <!-- Stage 4: The solution & visual walkthrough -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Solution &amp; visual walkthrough</p>
+      <SectionLabel icon="craft">Solution &amp; visual walkthrough</SectionLabel>
       <h2>What shipped, and what it took off someone's plate.</h2>
 
       <div class="r-craft-compare">
@@ -213,11 +225,13 @@ const IMG = "/images/work/time-management";
 
     <!-- Stage 5a: validated in market, feeding into impact -->
     <section class="r-case-section r-wide" data-reveal>
-      <p class="r-case-label">Validated in market</p>
+      <SectionLabel icon="validated">Validated in market</SectionLabel>
       <h2>Taken to enterprise clients across SEA and MENA before rollout.</h2>
-      <p>
-        Delivered over roughly a year with a staff designer and myself hands-on, owning design direction and client validation, alongside two frontend developers and three product managers covering Leave, Attendance, and Scheduling &amp; Timesheets. Before global rollout we ran a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE, presenting the shipped direction to client teams and collecting their reactions in the room.
-      </p>
+      <p>Delivered over roughly a year, with a staff designer and myself hands-on, owning design direction and client validation.</p>
+      <ul class="r-point-list r-point-list--tight">
+        <li><b>Team:</b> two frontend developers and three product managers, covering Leave, Attendance, and Scheduling &amp; Timesheets.</li>
+        <li><b>Before global rollout:</b> a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE, presenting the shipped direction to client teams and collecting their reactions in the room.</li>
+      </ul>
 
       <p class="r-sub-label">Who we presented to</p>
       <div class="r-roster">
@@ -242,14 +256,14 @@ const IMG = "/images/work/time-management";
       <p class="r-sub-label">On the ground</p>
       <div class="r-photos-collage">
         {[
-          { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", hero: true },
+          { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", hero: true, posX: "68%" },
           { f: "session-boardroom-dashboard", alt: "Walking a client team through the manager dashboard in a boardroom" },
-          { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting" },
+          { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting", posX: "68%" },
           { f: "session-manila-boardroom", alt: "A working session reviewing the designs with a client team" },
           { f: "busy-bees-team", alt: "The team at Busy Bees International after a roadshow session" },
         ].map((p) => (
           <figure class={`r-photo${p.hero ? " r-photo--hero" : ""}`}>
-            <img src={`${IMG}/roadshow/${p.f}.webp`} alt={p.alt} loading="lazy" decoding="async" />
+            <img src={`${IMG}/roadshow/${p.f}.webp`} alt={p.alt} loading="lazy" decoding="async" style={p.posX ? `object-position: ${p.posX} center;` : undefined} />
           </figure>
         ))}
       </div>
@@ -310,14 +324,18 @@ const IMG = "/images/work/time-management";
 
     <!-- Stage 5b: Impact & operational outcomes -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Impact &amp; operational outcomes</p>
+      <SectionLabel icon="impact">Impact &amp; operational outcomes</SectionLabel>
       <h2>What it replaced for a manager, and what moved as a result.</h2>
 
+      <p>Before this, a manager's view of their team's time wasn't a dashboard. It was a report they had to go build:</p>
+      <ul class="r-point-list r-point-list--tight">
+        <li>Pull attendance data.</li>
+        <li>Cross-reference who was on leave.</li>
+        <li>Scan rows by hand to catch anything that needed attention.</li>
+      </ul>
+      <p>That took real time, every time, and it was easy to miss a pattern buried in a spreadsheet.</p>
       <p>
-        Before this, a manager's view of their team's time wasn't a dashboard. It was a report they had to go build: pull attendance data, cross-reference who was on leave, scan rows by hand to catch anything that needed attention. That took real time, every time, and it was easy to miss a pattern buried in a spreadsheet.
-      </p>
-      <p>
-        The redesigned dashboard puts that work on the screen instead of on the manager. Pending approvals, who hasn't logged in yet, who's been working without a break, who to flag for a pattern: all of it surfaces on its own, system-detected rather than manager-derived. The shift is from "go find out" to "it's already here":
+        The redesigned dashboard puts that work on the screen instead of on the manager, system-detected rather than manager-derived. The shift is from "go find out" to "it's already here":
       </p>
 
       <figure class="r-impact" data-impact>
@@ -327,12 +345,14 @@ const IMG = "/images/work/time-management";
           <button type="button" class="r-impact-dot" data-idx="2" style="--x: 92%; --y: 12%;" aria-label="Highlight: who still needs a nudge"><span>2</span></button>
           <button type="button" class="r-impact-dot" data-idx="3" style="--x: 45%; --y: 32%;" aria-label="Highlight: exceptions visible at a glance"><span>3</span></button>
           <button type="button" class="r-impact-dot" data-idx="4" style="--x: 86%; --y: 40%;" aria-label="Highlight: patterns the manager didn't have to look for"><span>4</span></button>
+          <button type="button" class="r-impact-dot" data-idx="5" style="--x: 44%; --y: 78%;" aria-label="Highlight: a full reportee record, on demand"><span>5</span></button>
         </div>
         <ol class="r-impact-legend">
           <li data-idx="1"><b>Approvals, with context.</b> Each leave request shows when it was applied for, so a manager isn't approving blind. No separate lookup to see how recent or how urgent it is.</li>
           <li data-idx="2"><b>Who still needs a nudge.</b> "Not logged in" is a filtered list, not something a manager has to cross-check against a roster by hand.</li>
           <li data-idx="3"><b>Exceptions visible at a glance.</b> Absences and anomalies sit inside the same attendance view as everyone present. No separate exception report to pull.</li>
           <li data-idx="4"><b>Patterns the manager didn't have to look for.</b> The system flags things like employees overdue for time off or repeatedly clocking in late, judgment calls that used to depend on a manager noticing, now surfaced automatically.</li>
+          <li data-idx="5"><b>A full reportee record, on demand.</b> Picking one report surfaces their attendance for the rolling month, average work duration, and the insights the system noticed, not just lateness or leave, but someone consistently overworking too, so a manager can tell them to take a break, all in one glance instead of a separate pull-up.</li>
         </ol>
       </figure>
 
@@ -385,10 +405,10 @@ const IMG = "/images/work/time-management";
 
     <!-- Closing judgment note -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Judgment</p>
+      <SectionLabel icon="judgment">Judgment</SectionLabel>
       <h2>What I'd lock in earlier next time.</h2>
       <p class="r-judgment-lead">What I would change if I ran it back.</p>
-      <ul class="r-judgment-list">
+      <ul class="r-point-list">
         <li>
           <b>Commit to the data model earlier.</b> We lost weeks chasing the theoretical flexibility of a three-column layout. The data hierarchy had already given us the answer; we just spent too long trying to make paper flexibility win over structural clarity.
         </li>
@@ -523,15 +543,17 @@ const IMG = "/images/work/time-management";
     letter-spacing: 0.02em; color: var(--color-ink-3) !important;
     margin: 0 0 1rem !important;
   }
-  .r-judgment-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.25rem; }
-  .r-judgment-list li {
+  .r-point-list { list-style: none; margin: 0 0 1.25rem; padding: 0; display: flex; flex-direction: column; gap: 1.25rem; }
+  .r-point-list li {
     position: relative; font-size: 1rem; line-height: 1.7; color: var(--color-ink-2);
     padding-left: 1.5rem;
   }
-  .r-judgment-list li::before {
+  .r-point-list li::before {
     content: "–"; position: absolute; left: 0; top: 0; color: var(--color-ink-3);
   }
-  .r-judgment-list li b { color: var(--color-ink); font-weight: 600; }
+  .r-point-list li b { color: var(--color-ink); font-weight: 600; }
+  .r-point-list--tight { gap: 0.75rem; margin-bottom: 1.25rem; }
+  .r-point-list--tight li { font-size: 0.9375rem; }
   .r-case-section blockquote {
     margin: 1.5rem 0; padding: 1.5rem 1.75rem; border-radius: 1.25rem;
     background: color-mix(in srgb, var(--color-ink) 3%, var(--color-bg));
@@ -558,7 +580,10 @@ const IMG = "/images/work/time-management";
     font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.6rem;
   }
-  .r-decision-prose p:not(.r-decision-tag) { margin: 0; font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); }
+  .r-decision-prose p:not(.r-decision-tag) { margin: 0 0 0.75rem; font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); }
+  .r-decision-prose p:not(.r-decision-tag):last-child { margin-bottom: 0; }
+  .r-decision-prose .r-point-list { margin-bottom: 0; }
+  .r-decision-prose .r-point-list li { font-size: 0.9375rem; }
 
   .r-decision-visual {
     display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;

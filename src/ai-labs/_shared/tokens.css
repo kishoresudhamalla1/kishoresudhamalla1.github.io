@@ -128,7 +128,7 @@
 .labs .lab-seg-i.is-active { background: var(--color-bg); color: var(--color-ink); box-shadow: 0 0 0 1px var(--color-border); }
 
 .labs .lab-badge {
-  display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px;
+  display: inline-flex; flex-shrink: 0; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px;
   font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
   border: 1px solid var(--color-border); color: var(--color-ink-2); background: var(--color-surface);
 }

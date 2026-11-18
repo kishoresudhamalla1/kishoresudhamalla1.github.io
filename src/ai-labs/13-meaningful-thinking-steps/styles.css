@@ -1,0 +1,5 @@
+.labs .mt-run { display: flex; flex-direction: column; gap: 0.7rem; max-width: 34rem; align-items: flex-start; }
+.labs .mt-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; font-size: 0.875rem; width: 100%; }
+.labs .mt-steps li { display: flex; align-items: center; gap: 0.6rem; }
+.labs .mt-elapsed { margin: 0; }
+.labs .mt-answer { margin: 0; padding: 0.9rem 1rem; border-radius: 0.6rem; background: var(--lab-ok-soft); color: var(--color-ink); font-size: 0.9375rem; width: 100%; }

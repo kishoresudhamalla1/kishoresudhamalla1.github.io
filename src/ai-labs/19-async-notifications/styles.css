@@ -1,0 +1,27 @@
+.labs .an-list { list-style: none; margin: 0 0 0.75rem; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; max-width: 34rem; }
+.labs .an-row { border: 1px solid var(--color-border); border-radius: 0.6rem; overflow: hidden; }
+.labs .an-row.is-failed { border-color: color-mix(in srgb, var(--lab-danger) 40%, var(--color-border)); }
+.labs .an-row-h {
+  display: flex; align-items: center; gap: 0.6rem; width: 100%; text-align: left; font: inherit; font-size: 0.875rem;
+  color: var(--color-ink); background: none; border: 0; padding: 0.65rem 0.8rem; cursor: pointer;
+}
+.labs .an-dot { flex-shrink: 0; width: 0.5rem; height: 0.5rem; border-radius: 50%; }
+.labs .an-dot--ok { background: var(--lab-ok); }
+.labs .an-dot--bad { background: var(--lab-danger); }
+.labs .an-dot--wait { background: var(--lab-warn); }
+.labs .an-row-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.labs .an-time { flex-shrink: 0; }
+.labs .an-detail { padding: 0 0.8rem 0.8rem 1.65rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.labs .an-detail p { margin: 0; font-size: 0.8438rem; line-height: 1.55; color: var(--color-ink-2); }
+.labs .an-mute { align-self: flex-start; font: inherit; font-size: 0.75rem; color: var(--lab-agent); background: none; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0; }
+
+.labs .an-digest {
+  display: flex; align-items: center; gap: 0.6rem; width: 100%; max-width: 34rem; text-align: left; font: inherit; font-size: 0.8125rem;
+  color: var(--color-ink-2); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.6rem;
+  padding: 0.6rem 0.8rem; cursor: pointer;
+}
+.labs .an-chev { flex-shrink: 0; display: inline-flex; color: var(--color-ink-3); transition: transform var(--dur-fast) var(--ease-enter); }
+.labs .an-chev.is-open { transform: rotate(90deg); }
+
+.labs .an-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--color-ink); cursor: pointer; }
+.labs .an-check input { accent-color: var(--lab-agent); }

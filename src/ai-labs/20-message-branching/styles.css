@@ -1,0 +1,22 @@
+.labs .mb-thread { display: flex; flex-direction: column; gap: 0.75rem; max-width: 32rem; }
+.labs .mb-msg { border-radius: 0.75rem; padding: 0.85rem 1rem; font-size: 0.9375rem; line-height: 1.6; }
+.labs .mb-msg p { margin: 0; }
+.labs .mb-msg--user { background: var(--lab-user-soft); color: var(--color-ink); align-self: flex-end; max-width: 88%; }
+.labs .mb-msg--assistant { background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-ink); }
+.labs .mb-msg-foot { justify-content: flex-end; margin-top: 0.6rem; }
+.labs .mb-edit-btn { font: inherit; font-size: 0.75rem; font-weight: 600; color: var(--lab-agent); background: none; border: 0; cursor: pointer; padding: 0; }
+.labs .mb-edit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.labs .mb-pager {
+  display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-ink-3);
+  margin-right: auto;
+}
+.labs .mb-pager button { display: inline-flex; color: inherit; background: none; border: 0; cursor: pointer; padding: 0.1rem; }
+.labs .mb-pager button:first-child svg { transform: rotate(180deg); }
+.labs .mb-pager button:disabled { opacity: 0.3; cursor: not-allowed; }
+.labs .mb-edit { display: flex; flex-direction: column; gap: 0.6rem; }
+.labs .mb-stream { position: relative; }
+.labs .mb-caret { display: inline-block; width: 2px; height: 1em; background: var(--color-ink); margin-left: 2px; vertical-align: -0.15em; animation: lab-blink 0.9s step-end infinite; }
+.labs .mb-stopped {
+  display: inline-block; margin-left: 0.5rem; font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--lab-warn); vertical-align: middle;
+}

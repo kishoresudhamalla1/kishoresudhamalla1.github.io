@@ -102,14 +102,13 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     padding: 0.4rem 0.8rem; background: var(--color-surface);
   }
 
-  /* rule-says / needed-to-know contrast */
-  .split { display: grid; gap: 1rem; }
+  /* rule-says / needed-to-know contrast. Plain text either side of a single
+     divider, not two boxes: a card affordance on static prose read as
+     clickable, which it isn't. */
+  .split { display: grid; gap: 2rem 3rem; padding-top: 1.75rem; border-top: 1px solid var(--color-border); }
   @media (min-width: 800px) { .split { grid-template-columns: 1fr 1fr; } }
-  .split-col {
-    border: 1px solid var(--color-border); border-radius: 1rem; padding: 1.75rem;
-    background: var(--color-bg);
-  }
-  .split-col--alt { border-color: var(--color-ink-3); }
+  .split-col { padding-left: 1.1rem; border-left: 2px solid var(--color-border); }
+  .split-col--alt { border-left-color: var(--color-ink); }
   .split-k {
     font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--color-ink-3); margin-bottom: 0.9rem;
@@ -236,11 +235,6 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     border: 1px solid var(--color-border); border-radius: 0.85rem;
     padding: 1rem 1.15rem; background: var(--color-bg); min-width: 0;
   }
-  .pipe-node--rule { border-color: var(--color-ink-3); }
-  .pipe-node--ai {
-    border-color: var(--color-ink); border-width: 1.5px;
-    background: var(--color-surface);
-  }
   .pipe-n-t {
     font-size: 0.9375rem; font-weight: 600; letter-spacing: -0.015em;
     color: var(--color-ink); margin-bottom: 0.2rem;
@@ -289,6 +283,48 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     font-size: 0.75rem; color: var(--color-ink-2);
     border: 1px solid var(--color-border); border-radius: 100px; padding: 0.35rem 0.85rem;
   }
+
+  /* ── the PRD this shipped against ── */
+  .prd { counter-reset: prd; display: flex; flex-direction: column; gap: 1.75rem; }
+  .prd-item { counter-increment: prd; position: relative; padding-left: 2.75rem; }
+  .prd-item::before {
+    content: counter(prd); position: absolute; left: 0; top: 0.1rem;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    border: 1px solid var(--color-border); color: var(--color-ink-3);
+    font-family: var(--font-mono, inherit); font-size: 0.8125rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .prd-head { display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.5rem; }
+  .prd-t {
+    font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.015em; color: var(--color-ink);
+  }
+  .prd-badge {
+    font-size: 0.625rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0.2rem 0.55rem; border-radius: 100px;
+  }
+  .prd-badge--new       { color: #3157c7; background: #eaeffc; }
+  .prd-badge--timeless   { color: #2f6b4a; background: #eef7f2; }
+  .prd-badge--upgraded   { color: #8a6410; background: #fdf8ea; }
+  .prd-badge--merged     { color: #b4582f; background: #fdeee6; }
+  :global(.dark) .prd-badge--new       { color: #a9bdf5; background: rgba(60,95,220,.16); }
+  :global(.dark) .prd-badge--timeless  { color: #8ecfab; background: rgba(90,170,124,.14); }
+  :global(.dark) .prd-badge--upgraded  { color: #dcc07a; background: rgba(220,180,80,.14); }
+  :global(.dark) .prd-badge--merged    { color: #e79a6e; background: rgba(226,140,80,.14); }
+  .prd-b { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 0.4rem; }
+  .prd-b:last-child { margin-bottom: 0; }
+  .prd-b b { color: var(--color-ink); font-weight: 600; font-style: normal; }
+  .prd-b em { font-style: italic; }
+  .prd-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+  .prd-list li { font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2); }
+  .prd-list li b { color: var(--color-ink); font-weight: 600; }
+
+  .prd-callout {
+    margin-top: 0.5rem; padding: 1.25rem 1.5rem; border-radius: 0.75rem;
+    border-left: 3px solid var(--color-ink);
+    background: var(--color-surface);
+    font-size: 0.9375rem; line-height: 1.7; color: var(--color-ink-2);
+  }
+  .prd-callout b { color: var(--color-ink); font-weight: 700; }
 </style>
 
   <!-- Back -->
@@ -404,10 +440,157 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 02 LANDSCAPE ══ -->
+  <!-- ══ 02 THE PRD ══ -->
+  <section class="bg-[var(--color-surface)] sec-y" data-reveal>
+    <div class="container-pg">
+      <p class="cs-label mb-4">02. The PRD this shipped against</p>
+      <h2 class="cs-h2 mb-4 max-w-2xl">Written before the prototype existed.</h2>
+      <p class="cs-lede max-w-2xl mb-12">
+        Solo and unassigned, so nobody was going to ask for this document. Wrote it anyway,
+        in the 2026 shape: the prototype above shows <em>what</em>. This is the <em>why</em>,
+        <em>how it's measured</em>, and <em>when it would get rolled back</em>.
+      </p>
+
+      <ol class="prd">
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">The decision this records</p>
+            <span class="prd-badge prd-badge--new">New</span>
+          </div>
+          <p class="prd-b">
+            We built two versions: a rule-only risk engine, and a second layer that explains
+            what the rules flagged instead of flagging anything itself. Shipping the second,
+            because a wrong model output should be able to change the wording of a risk and
+            never its existence.
+          </p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Opportunity framing</p>
+            <span class="prd-badge prd-badge--timeless">Timeless</span>
+          </div>
+          <p class="prd-b"><b>Core problem:</b> Jira reports tickets, not whether a team is on pace.</p>
+          <p class="prd-b">
+            <b>Data:</b> the weekly review was a rebuilt-by-hand export, every time. Three real
+            moments exposed the gap: <em>"Jira says 74, this shows 84"</em> (a pagination bug
+            double-counting tickets), an offhand comment about one overdue ticket that led to a
+            "today" constant frozen since the build (every date calc quietly said on track,
+            forever), and "status says at risk, detail shows nothing" surfacing from three views
+            that each derived risk differently.
+          </p>
+          <p class="prd-b"><b>Hypothesis:</b> if delivery status came from one system instead of a rebuilt export, slips would surface when they happened, not in the review where it's already too late to act.</p>
+          <p class="prd-b"><b>Strategy fit:</b> extends the system the team already lives in (Jira) rather than replacing it, which is the lowest-friction way to get an unsponsored internal tool actually adopted.</p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">The prototype</p>
+            <span class="prd-badge prd-badge--new">New</span>
+          </div>
+          <p class="prd-b">
+            <b>Link:</b> the two-minute tour and the live demo above, running on sample data:
+            Jira sync, the delivery view, a root-cause explanation, the approval step, and the
+            decision log that checks its own advice.
+          </p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Features &amp; behaviour contract</p>
+            <span class="prd-badge prd-badge--timeless">Timeless</span>
+          </div>
+          <p class="prd-b">
+            <b>Edge cases found building it:</b> a hardcoded "today" that never advanced, the same
+            risk bug rediscovered in three separate views before fixing all three at once, and a
+            sync that could double-count a ticket edited mid-page.
+          </p>
+          <p class="prd-b">
+            <b>Tracking:</b> every changelog field move, every AI decision (accept, investigate,
+            dismiss), the baseline captured at decision time, and the verified outcome against it.
+          </p>
+          <p class="prd-b">
+            <b>Behaviour contract:</b> for "Dates Drifted," input is a changelog with three date
+            moves. Good output cites the PRD change and the concurrent-load note, at high
+            confidence. Bad output asserts a cause with nothing cited. Reject condition: any
+            output that writes to Jira without a human approving the exact record first.
+          </p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Success measurement &amp; evals</p>
+            <span class="prd-badge prd-badge--upgraded">Upgraded</span>
+          </div>
+          <p class="prd-b">
+            <b>Metric to graduate:</b> the signal a decision targeted moves favourably against the
+            baseline captured at decision time, "Held," not just the absence of complaints.
+            Guardrail: never return a verdict before enough time has passed to judge it. V1
+            declared "Held" the moment a decision was made, since nothing had moved yet; it now
+            says "too early to judge" and waits.
+          </p>
+          <p class="prd-b">
+            <b>Golden set:</b> all three decision types run against sample tickets with every
+            citation checked by hand before trusting the output shape. The model call itself is
+            currently stubbed, so this evaluates the interaction design, not a model's accuracy,
+            flagged as a known gap rather than hidden.
+          </p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Scope &amp; non-goals</p>
+            <span class="prd-badge prd-badge--merged">Merged</span>
+          </div>
+          <p class="prd-b"><b>In:</b> Jira sync, the rule engine, delivery and capacity views, root-cause explanation, the weekly paragraph, ask-the-board, and the decision log with approval-gated write-back.</p>
+          <p class="prd-b"><b>Non-goals, cut on purpose because the data behind them doesn't exist yet:</b></p>
+          <ul class="prd-list">
+            <li><b>Design-system deviation</b>, needs component-adoption data from Figma, a second integration.</li>
+            <li><b>Alignment risk</b>, needs initiatives linked to product priorities, a link that rarely exists without deliberate tagging.</li>
+            <li><b>Strategic vs. reactive mix and design debt</b>, no agreed definition or consistent tagging exists; any number here would be invented.</li>
+          </ul>
+          <p class="prd-b"><b>Side effect worth accepting:</b> state lives in memory, snapshotted to localStorage, single-machine by design, a real tradeoff for zero infrastructure cost on a tool nobody else is paid to maintain.</p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Rollout &amp; rollback</p>
+            <span class="prd-badge prd-badge--timeless">Timeless</span>
+          </div>
+          <p class="prd-b"><b>Exposure:</b> one working design org, Jira sync live, used weekly in the delivery review.</p>
+          <p class="prd-b"><b>Ramp gate:</b> earns continued use by removing the manual rebuild, not by clearing a target number set in advance.</p>
+          <p class="prd-b"><b>Kill switch:</b> unnecessary by design. The ticket panel is read-only with one "Open in Jira" link, and nothing writes until a person approves the exact record, so there's no autonomous action to roll back.</p>
+        </li>
+
+        <li class="prd-item">
+          <div class="prd-head">
+            <p class="prd-t">Release criteria &amp; change log</p>
+            <span class="prd-badge prd-badge--timeless">Timeless</span>
+          </div>
+          <p class="prd-b"><b>Definition of done:</b> the Jira sync, rule engine and views ship and hold up in daily use, confirmed by using it in a real weekly review rather than a demo of one.</p>
+          <p class="prd-b">
+            <b>Change log:</b> v1, the rule engine, shipped and in daily use. v2, this AI
+            explanation, decision, approval and verification loop, is a working prototype on the
+            same live data with the model call stubbed. Not built yet: a real model call,
+            semantic field mapping, per-person cadence anomalies, probabilistic landing.
+          </p>
+        </li>
+      </ol>
+
+      <div class="prd-callout mt-12">
+        <b>The rule I held this to:</b> every claim above has to trace to something earlier on
+        this page, a quote, a bug, a screen, a cut feature. If I couldn't point to where a line
+        came from, it didn't go in. The gap people used to fill with "trust me" is the one this
+        page is written to close.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ 03 LANDSCAPE ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">02. What already exists</p>
+      <p class="cs-label mb-4">03. What already exists</p>
       <h2 class="cs-h2 mb-4 max-w-3xl">I checked before building anything.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         It mostly exists in pieces. None of the pieces treats the design workflow itself as
@@ -449,10 +632,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 03 THE CEILING OF RULES, the pivot ══ -->
+  <!-- ══ 04 THE CEILING OF RULES, the pivot ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">03. Why rules were not enough</p>
+      <p class="cs-label mb-4">04. Why rules were not enough</p>
       <h2 class="cs-h2 mb-4 max-w-2xl">
         Eight flags. Every one a symptom, none a cause.
       </h2>
@@ -490,10 +673,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 04 THE AI LAYER ══ -->
+  <!-- ══ 05 THE AI LAYER ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">04. The AI layer</p>
+      <p class="cs-label mb-4">05. The AI layer</p>
       <h2 class="cs-h2 mb-4 max-w-2xl">
         Rules decide what's true. AI explains what it means.
       </h2>
@@ -510,17 +693,17 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
             <p class="pipe-n-s">System of record</p>
           </div>
           <span class="pipe-arrow" aria-hidden="true"></span>
-          <div class="pipe-node pipe-node--rule">
+          <div class="pipe-node">
             <p class="pipe-n-t">Deterministic rules</p>
             <p class="pipe-n-s">Same input, same output, every run</p>
           </div>
           <span class="pipe-arrow" aria-hidden="true"></span>
-          <div class="pipe-node pipe-node--rule">
+          <div class="pipe-node">
             <p class="pipe-n-t">Flags &amp; counts</p>
             <p class="pipe-n-s">What is true</p>
           </div>
           <span class="pipe-arrow pipe-arrow--ai" aria-hidden="true"></span>
-          <div class="pipe-node pipe-node--ai">
+          <div class="pipe-node">
             <p class="pipe-n-t">AI layer</p>
             <p class="pipe-n-s">What it means, and why</p>
           </div>
@@ -624,10 +807,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 05 THE CLOSED LOOP ══ -->
+  <!-- ══ 06 THE CLOSED LOOP ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">05. Closing the loop</p>
+      <p class="cs-label mb-4">06. Closing the loop</p>
       <h2 class="cs-h2 mb-4 max-w-3xl">A recommendation nobody measures is just a confident opinion.</h2>
       <p class="cs-lede max-w-2xl mb-10">
         The system could explain a slip and propose a move, then nothing. No record of
@@ -678,8 +861,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
             memory.
           </p>
         </div>
-        <div class="card" style="border-color:var(--color-ink)">
-          <p class="card-k" style="color:var(--color-ink)">Rule 03</p>
+        <div class="card">
+          <p class="card-k">Rule 03</p>
           <p class="card-t">It must be able to say it was wrong</p>
           <p class="card-b">
             A verdict is only worth something if the other verdict was possible. Failed
@@ -697,10 +880,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 06 WHAT I CHOSE NOT TO BUILD ══ -->
+  <!-- ══ 07 WHAT I CHOSE NOT TO BUILD ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">06. What I chose not to build</p>
+      <p class="cs-label mb-4">07. What I chose not to build</p>
       <h2 class="cs-h2 mb-4 max-w-3xl">The hard part isn't the AI. It's the data you don't have.</h2>
       <p class="cs-lede max-w-2xl mb-8">
         It is easy to draw a product with a design-health score on it. It is harder to say
@@ -738,10 +921,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 07 HOW IT WAS BUILT ══ -->
+  <!-- ══ 08 HOW IT WAS BUILT ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">07. How it was built</p>
+      <p class="cs-label mb-4">08. How it was built</p>
       <h2 class="cs-h2 mb-4 max-w-2xl">Constraints chosen on purpose.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         No spec, no backend and no budget for tooling. Three decisions I'd defend rather
@@ -813,10 +996,10 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     </div>
   </section>
 
-  <!-- ══ 08 OUTCOME AND REFLECTION ══ -->
+  <!-- ══ 09 OUTCOME AND REFLECTION ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">08. What it changed</p>
+      <p class="cs-label mb-4">09. What it changed</p>
       <h2 class="cs-h2 mb-4 max-w-2xl">An operations problem, solved with a dashboard.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         The dashboard didn't make the weekly rebuild faster. It removed the need for it.

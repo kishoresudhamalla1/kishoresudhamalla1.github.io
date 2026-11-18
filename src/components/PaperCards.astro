@@ -9,13 +9,18 @@ export interface PaperItem {
   n: string; short: string; word: string; l1: string; l2?: string; ptitle: string; pblurb: string;
   wordN?: number; kicker: string; tags: string[]; href: string; title: string; featured?: boolean;
 }
-interface Props { items: PaperItem[] }
-const { items } = Astro.props;
+interface Props {
+  items: PaperItem[];
+  /** "accordion" (default): one card open, others folded to a spine. "grid":
+   *  every card open and visible at once, laid out as a responsive grid. */
+  variant?: "accordion" | "grid";
+}
+const { items, variant = "accordion" } = Astro.props;
 ---
 
-    <div class="work-row" data-paper-row>
+    <div class:list={["work-row", variant === "grid" && "work-row--grid"]} data-paper-row data-variant={variant}>
       {items.map((p) => (
-        <a href={p.href} class:list={["work-card", p.featured && "is-open"]} aria-label={p.title}>
+        <a href={p.href} class:list={["work-card", (p.featured || variant === "grid") && "is-open"]} aria-label={p.title}>
           <div class="wp-scene" aria-hidden="true" style={`--n:${p.wordN ?? p.word.length}`}>
             <p class="wp-word">{p.word}</p>
             <p class="wp-word-v">{p.word}</p>
@@ -165,6 +170,27 @@ const { items } = Astro.props;
       .wp-word-v { opacity: 1; }
     }
   }
+
+  /* grid variant: every card open at once, same sheet, glare, sway and
+     drag-to-turn as the accordion's open card, just arranged two up with
+     the third wrapping to its own row at the same size, not stretched.
+     Unlike the accordion this isn't gated to hover-capable desktops, so
+     tablets and phones get the same two-column arrangement and the hint
+     text; only the drag tilt itself depends on the device sending pointer
+     events, which includes touch as well as a mouse. */
+  .work-row--grid .wp-hint { display: block; }
+  .work-row--grid .wp-scene { cursor: grab; }
+  .work-row--grid .wp-scene:active { cursor: grabbing; }
+  @media (min-width: 640px) {
+    .work-row--grid {
+      flex-direction: row; flex-wrap: wrap; align-items: flex-start; height: auto; gap: 1.25rem;
+    }
+    .work-row--grid .work-card {
+      /* flex-grow: 0, or a card alone on the last row (the third) stretches
+         to fill the whole line instead of staying the other two's width. */
+      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 28rem;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .work-card, .work-card-label, .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint { transition: none; }
     .wp-sway { animation: none; }
@@ -173,10 +199,15 @@ const { items } = Astro.props;
 
 <script>
   // ── paper scene: tilt toward the pointer, drag to turn, run only when open ──
+  // A page can have more than one row (e.g. the homepage's accordion plus its
+  // grid duplicate below), so every row found gets its own instance.
   function initPaper() {
-    const row = document.querySelector<HTMLElement>("[data-paper-row]");
-    if (!row || row.dataset.paper) return;
+    document.querySelectorAll<HTMLElement>("[data-paper-row]").forEach(initRow);
+  }
+  function initRow(row: HTMLElement) {
+    if (row.dataset.paper) return;
     row.dataset.paper = "1";
+    const isGrid = row.dataset.variant === "grid";
     const mq = window.matchMedia("(min-width: 900px) and (hover: hover)");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const cards = Array.from(row.querySelectorAll<HTMLElement>(".work-card"));
@@ -198,8 +229,10 @@ const { items } = Astro.props;
     const want = (i: number, ms = 90) => { clearTimeout(intent); intent = window.setTimeout(() => setActive(i), ms); };
 
     st.forEach((s, i) => {
-      s.card.addEventListener("pointerenter", () => want(i));
-      s.card.addEventListener("focusin", () => want(i, 0));
+      if (!isGrid) {
+        s.card.addEventListener("pointerenter", () => want(i));
+        s.card.addEventListener("focusin", () => want(i, 0));
+      }
       s.scene.addEventListener("pointermove", (e) => {
         const r = s.scene.getBoundingClientRect();
         const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
@@ -210,6 +243,7 @@ const { items } = Astro.props;
         const sr = s.sheet.getBoundingClientRect();
         s.sheet.style.setProperty("--gx", `${((e.clientX - sr.left) / sr.width) * 100}%`);
         s.sheet.style.setProperty("--gy", `${((e.clientY - sr.top) / sr.height) * 100}%`);
+        if (mq.matches && !raf) raf = requestAnimationFrame(tick);
       });
       s.scene.addEventListener("pointerleave", () => { s.tx = 0; s.ty = 0; });
       s.scene.addEventListener("pointerdown", (e) => { s.drag = true; s.lastX = e.clientX; s.moved = 0; s.vel = 0; s.scene.setPointerCapture(e.pointerId); });
@@ -220,27 +254,37 @@ const { items } = Astro.props;
       s.scene.addEventListener("click", (e) => { if (s.moved > 6) e.preventDefault(); });
     });
 
+    // In the accordion only the open card is visible, but tilt now runs over
+    // every card (cheap at this count) so the grid variant gets independent
+    // hover tilt per card without a second code path.
     function tick() {
       raf = 0;
       if (!mq.matches) return;
-      const s = st[active];
-      s.rx += (-s.ty * 9 - s.rx) * 0.1;
-      s.ry += (s.tx * 13 - s.ry) * 0.1;
-      if (!s.drag) {
-        if (!reduce) s.yaw += s.vel * 0.55;
-        s.vel *= 0.94;
-        if (Math.abs(s.vel) < 0.3) {
-          // settle on the nearest whole turn
-          const home = Math.round(s.yaw / 360) * 360;
-          s.yaw += (home - s.yaw) * 0.08;
+      let settled = true;
+      st.forEach((s) => {
+        s.rx += (-s.ty * 9 - s.rx) * 0.1;
+        s.ry += (s.tx * 13 - s.ry) * 0.1;
+        if (!s.drag) {
+          if (!reduce) s.yaw += s.vel * 0.55;
+          s.vel *= 0.94;
+          if (Math.abs(s.vel) < 0.3) {
+            // settle on the nearest whole turn
+            const home = Math.round(s.yaw / 360) * 360;
+            s.yaw += (home - s.yaw) * 0.08;
+          }
         }
-      }
-      s.tilt.style.transform = `rotateX(${s.rx.toFixed(2)}deg) rotateY(${(s.ry + s.yaw).toFixed(2)}deg)`;
-      raf = requestAnimationFrame(tick);
+        s.tilt.style.transform = `rotateX(${s.rx.toFixed(2)}deg) rotateY(${(s.ry + s.yaw).toFixed(2)}deg)`;
+        if (Math.abs(s.rx) > 0.02 || Math.abs(s.ry) > 0.02 || Math.abs(s.tx) > 0.001 || Math.abs(s.ty) > 0.001 || Math.abs(s.vel) > 0.05) settled = false;
+      });
+      if (!settled) raf = requestAnimationFrame(tick);
     }
     mq.addEventListener("change", () => { if (mq.matches && !raf) raf = requestAnimationFrame(tick); });
-    row.addEventListener("pointerleave", () => want(0, 260));
-    setActive(0);
+    if (isGrid) {
+      cards.forEach((c) => c.classList.add("is-open", "is-live"));
+    } else {
+      row.addEventListener("pointerleave", () => want(0, 260));
+      setActive(0);
+    }
   }
   initPaper();
   document.addEventListener("astro:page-load", initPaper);

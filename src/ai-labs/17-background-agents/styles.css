@@ -1,0 +1,12 @@
+.labs .bg-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem; max-width: 30rem; }
+.labs .bg-steps li { display: flex; align-items: center; gap: 0.6rem; }
+.labs .bg-notice { display: flex; flex-direction: column; gap: 0.4rem; padding: 0.8rem 1rem; border-radius: 0.6rem; background: var(--lab-agent-soft); }
+.labs .bg-notice p { margin: 0; }
+.labs .bg-result { display: flex; flex-direction: column; gap: 0.7rem; max-width: 32rem; }
+.labs .bg-result p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink); }
+
+.labs .bg-away { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem 0; max-width: 28rem; }
+.labs .bg-chip {
+  display: inline-flex; align-items: center; gap: 0.55rem; font-size: 0.8125rem; color: var(--color-ink);
+  border: 1px solid var(--color-border); border-radius: 100px; padding: 0.5rem 1rem; background: var(--color-surface);
+}
