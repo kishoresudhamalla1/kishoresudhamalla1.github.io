@@ -8,6 +8,9 @@
 export interface PaperItem {
   n: string; short: string; word: string; l1: string; l2?: string; ptitle: string; pblurb: string;
   wordN?: number; kicker: string; tags: string[]; href: string; title: string; featured?: boolean;
+  /** Not finished yet: a small status mark on the sheet, and the hint reads
+   *  "Coming soon" instead of implying a case study is there to open. */
+  inProgress?: boolean;
 }
 interface Props {
   items: PaperItem[];
@@ -29,7 +32,10 @@ const { items, variant = "accordion" } = Astro.props;
                 <div class="wp-tilt">
                   <div class="wp-sheet">
                     <div class="wp-face">
-                      <p class="wp-n">{p.n}.</p>
+                      <div class="wp-n-row">
+                        <p class="wp-n">{p.n}.</p>
+                        {p.inProgress && <span class="wp-status">In progress</span>}
+                      </div>
                       <p class="wp-title">{p.ptitle}</p>
                       <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
                       <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
@@ -40,7 +46,7 @@ const { items, variant = "accordion" } = Astro.props;
               </div>
             </div>
             <p class="wp-kick">{p.kicker}</p>
-            <p class="wp-hint">View case study</p>
+            <p class="wp-hint">{p.inProgress ? "Coming soon" : "View case study"}</p>
           </div>
 
           <p class="work-card-label" aria-hidden="true">{p.n} &mdash; {p.short}</p>
@@ -105,7 +111,13 @@ const { items, variant = "accordion" } = Astro.props;
   }
   .wp-face { position: absolute; inset: 0; padding: 11cqw 9cqw; font-family: var(--font-display); }
   .wp-face p, .wp-face ul { margin: 0; }
-  .wp-n { font-size: 15cqw; font-weight: 700; line-height: 1; margin-bottom: 9cqw !important; color: #fff; }
+  .wp-n-row { display: flex; align-items: center; gap: 3cqw; margin-bottom: 9cqw !important; }
+  .wp-n { font-size: 15cqw; font-weight: 700; line-height: 1; margin-bottom: 0 !important; color: #fff; }
+  .wp-status {
+    font-family: var(--font-sans); font-size: 2.4cqw; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 1cqw 2.4cqw; border-radius: 999px; white-space: nowrap;
+    border: 1px solid rgba(240, 178, 85, 0.4); color: #f0b255; background: rgba(240, 178, 85, 0.12);
+  }
   .wp-title { font-size: 10.2cqw; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; color: #fff; margin: 0 0 8cqw !important; }
   .wp-tags {
     list-style: none; padding: 0; margin: 0 0 6cqw !important; display: flex; flex-wrap: wrap; gap: 1.6cqw;

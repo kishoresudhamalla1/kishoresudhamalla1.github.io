@@ -13,6 +13,7 @@
  */
 import Base from "../layouts/Base.astro";
 import PaperCards from "../components/PaperCards.astro";
+import SectionLabel from "../components/SectionLabel.astro";
 
 const WORK = [
   {
@@ -47,6 +48,7 @@ n: "03",
     tags: ["Agentic UX", "AI interaction design", "Human-AI collaboration"],
     href: "/work/chatbot-to-agentic",
     featured: false,
+    inProgress: true,
   },
 ];
 
@@ -92,25 +94,27 @@ const QUESTIONS = [
        variant="accordion", the default, for reuse if this ever wants that
        collapsed treatment again. -->
   <section id="work" class="container-pg r-work" data-reveal>
-    <p class="r-section-label">Selected work</p>
+    <SectionLabel icon="craft">Selected work</SectionLabel>
 
     <PaperCards items={WORK} variant="grid" />
   </section>
 
   <!-- A little about how I work -->
   <section class="container-pg r-prose" data-reveal>
-    <p class="r-section-label">A little about how I work</p>
-    <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
-    <p>The screen is usually just where the complexity becomes visible.</p>
-    <p>I like getting underneath it: understanding the system, finding where people struggle and figuring out what the product should do differently.</p>
-    <p>With AI, that becomes even more interesting.</p>
-    <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask and when it should step back.</p>
-    <p class="r-prose-close">That's the kind of work I enjoy.</p>
+    <SectionLabel icon="context">A little about how I work</SectionLabel>
+    <div class="r-prose-rail">
+      <p class="r-prose-lead">Complex products rarely have a single UX problem.</p>
+      <p>The screen is usually just where the complexity becomes visible.</p>
+      <p>I like getting underneath it: understanding the system, finding where people struggle and figuring out what the product should do differently.</p>
+      <p>With AI, that becomes even more interesting.</p>
+      <p>The question is no longer just how people navigate a product. It is also what the product should understand, what it should do on their behalf, when it should ask and when it should step back.</p>
+      <p class="r-prose-close">That's the kind of work I enjoy.</p>
+    </div>
   </section>
 
   <!-- How I think about AI-native products -->
   <section class="container-pg r-think" data-reveal>
-    <p class="r-section-label">How I think about AI-native products</p>
+    <SectionLabel icon="systems">How I think about AI-native products</SectionLabel>
     <div class="r-think-grid">
       <div class="r-think-copy">
         <p class="r-think-lead">AI isn't just another feature to add to an existing interface.</p>
@@ -132,7 +136,7 @@ const QUESTIONS = [
 
   <!-- AI Lab -->
   <section class="container-pg r-lab" data-reveal>
-    <p class="r-section-label">AI Lab</p>
+    <SectionLabel icon="impact">AI Lab</SectionLabel>
     <h2 class="r-h2">Designing by building</h2>
     <div class="r-prose-inline">
       <p>I'm using AI and code to explore new ways of designing products, workflows and systems.</p>
@@ -295,11 +299,6 @@ const QUESTIONS = [
     margin: 0.25rem 0 0; font-size: 0.75rem; color: var(--color-ink-3);
   }
 
-  .r-section-label {
-    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
-    margin: 0 0 1.5rem;
-  }
 
   .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
 
@@ -326,6 +325,10 @@ const QUESTIONS = [
 
   .r-prose { padding-block: clamp(2rem, 5vw, 3.5rem); }
   .r-prose > * { max-width: var(--measure); }
+  .r-prose-rail {
+    max-width: var(--measure); border-left: 2px solid var(--color-border);
+    padding-left: clamp(1.1rem, 2.5vw, 1.5rem);
+  }
   .r-prose p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.1rem; }
   .r-prose .r-prose-lead {
     font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;

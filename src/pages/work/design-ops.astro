@@ -5,6 +5,7 @@ import ScreenGallery from "../../components/ScreenGallery.astro";
 import LiveDemo from "../../components/LiveDemo.astro";
 import CaseHero from "../../components/CaseHero.astro";
 import FilmPlayer from "../../components/FilmPlayer.astro";
+import SectionLabel from "../../components/SectionLabel.astro";
 
 const IMG = "/images/work/design-ops";
 // BASE_URL is "/" at root but "/repo" (no trailing slash) when ASTRO_BASE is set,
@@ -13,8 +14,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 ---
 
 <Base
-  title="Building an AI that explains why delivery slipped. Kishore Sudhamalla"
-  description="An AI layer designed and built solo against a live Jira board: it explains why a commitment moved, cites the records it read, writes back only after approval, and measures whether the fix held."
+  title="Turning live Jira boards into clear delivery decisions. Kishore Sudhamalla"
+  description="A deterministic rule engine on a live Jira board, shipped and used weekly, with an AI layer on top that explains why a commitment moved, cites the records it read, writes back only after approval, and measures whether the fix held."
 >
 
 <style>
@@ -69,18 +70,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   .card-b { font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); }
 
   .stat-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    display: grid; grid-template-columns: repeat(1, 1fr); gap: 1px;
     background: var(--color-border); border: 1px solid var(--color-border);
     border-radius: 1rem; overflow: hidden;
   }
-  @media (min-width: 800px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 700px) { .stat-grid { grid-template-columns: repeat(3, 1fr); } }
   .stat { background: var(--color-bg); padding: 1.6rem 1.4rem; }
   .stat-n {
-    font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800;
-    letter-spacing: -0.04em; line-height: 1; color: var(--color-ink); margin-bottom: 0.4rem;
+    font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1; color: var(--color-ink); margin-bottom: 0.5rem;
   }
-  .stat-l { font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); }
-  .stat-s { font-size: 0.75rem; color: var(--color-ink-3); margin-top: 0.15rem; }
+  .stat-l { font-size: 0.875rem; font-weight: 600; color: var(--color-ink); margin-bottom: 0.3rem; }
+  .stat-s { font-size: 0.8125rem; line-height: 1.55; color: var(--color-ink-3); }
 
   /* video */
   .demo { border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden;
@@ -122,6 +123,8 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   /* AI layers */
   .layers { display: grid; gap: 1rem; }
   @media (min-width: 900px) { .layers { grid-template-columns: 1fr 1fr; } }
+  .layers--3 { grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .layers--3 { grid-template-columns: repeat(3, 1fr); } }
   .layer {
     border: 1px solid var(--color-border); border-radius: 1rem;
     padding: 1.6rem 1.75rem; background: var(--color-bg);
@@ -154,6 +157,20 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   .layer-io dd {
     margin: 0; font-size: 0.875rem; line-height: 1.6; color: var(--color-ink-2);
   }
+
+  /* small coloured icon chip, reused inside layer/card heads for the
+     UX & IA trade-offs — same system as SectionLabel's chip. */
+  .mini-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.75rem; height: 1.75rem; flex-shrink: 0; border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--mc) 16%, transparent);
+    color: var(--mc);
+  }
+  :global(.dark) .mini-icon {
+    background: color-mix(in srgb, var(--mc) 26%, transparent);
+    color: color-mix(in srgb, var(--mc) 85%, white);
+  }
+  .mini-icon svg { width: 1rem; height: 1rem; }
 
   /* ── landscape table ── */
   .land { border-top: 1px solid var(--color-border); }
@@ -337,12 +354,12 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 
   <!-- ══ HERO ══ -->
   <CaseHero
-    eyebrow="AI-native · Agentic UX · 0 → 1"
-    title="Building an AI that explains why delivery slipped."
-    lede="I designed and built a system that reads a live Jira board, then added the layer I actually wanted to design: an AI that explains why a commitment moved, cites the records it read, and proposes one action. Nothing writes back without human-in-the-loop approval of the exact change. Then it measures whether the fix held."
+    eyebrow="Design ops · Systems · AI-native UX"
+    title="Turning live Jira boards into clear delivery decisions."
+    lede="I designed and built a system that reads a live Jira board. The Jira sync and deterministic rule engine are shipped and used weekly: that part is done and running. On that same live data, I then added the layer I actually wanted to design: an AI that explains why a commitment moved, cites the records it read, and proposes one action, a working prototype today with the model call stubbed. Nothing writes back without human-in-the-loop approval of the exact change, and the system measures whether the fix held."
     meta={[
       { k: "Role", v: "UX designer, solo, end to end" },
-      { k: "Shipped", v: "In daily use, 2026" },
+      { k: "Shipped", v: "Jira sync & rule engine, in daily use. AI layer is a live prototype" },
       { k: "Scope", v: "Jira sync → intelligence layer" },
       { k: "Users", v: "A working design org" },
     ]}
@@ -350,7 +367,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     alt="Design Ops, delivery overview"
     cards={[
       {
-        eyebrow: "AI · root cause",
+        eyebrow: "AI · root cause (prototype)",
         value: "High",
         label: "Requirements weren't ready",
         note: "Cited: two date changes, 27 days of slip, and the ticket's own note.",
@@ -371,7 +388,9 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
         <p class="tldr-k">In short</p>
         <p class="tldr-b">
           The weekly delivery review used to start by rebuilding the picture by hand from
-          a Jira export. It now starts from the decisions.
+          a Jira export. It now starts from the decisions. The rule engine behind that is
+          shipped. The AI explanation layer on top is a working prototype on the same live
+          data, called out again where it matters below.
         </p>
       </div>
     </div>
@@ -412,13 +431,18 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
     <div class="container-pg">
       <div class="grid lg:grid-cols-[1fr_1.3fr] gap-16 items-start">
         <div class="lg:sticky lg:top-24">
-          <p class="cs-label mb-4">01. The problem</p>
+          <SectionLabel icon="context">01. The problem</SectionLabel>
           <h2 class="cs-h2 mb-6">Jira reports tickets.<br>It doesn't report a team.</h2>
-          <p class="text-[var(--color-ink-2)] leading-relaxed">
+          <p class="text-[var(--color-ink-2)] leading-relaxed mb-5">
             Running design delivery meant rebuilding the same picture by hand every week.
             Export. Pivot. Chase. Jira's own dashboards are too generic or too heavy to
             set up and none of them speak design ops: no hi-fi commitments, no pods, no
             T-shirt sizing.
+          </p>
+          <p class="text-[var(--color-ink-2)] leading-relaxed">
+            It cost more than time. Designers felt ambushed by Jira dates nobody had
+            looked at since they were set, and the first half of the review went to
+            arguing whose numbers were right instead of unblocking anyone's work.
           </p>
         </div>
 
@@ -443,7 +467,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 02 THE PRD ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">02. The PRD this shipped against</p>
+      <SectionLabel icon="craft">02. The PRD this shipped against</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-2xl">Written before the prototype existed.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         Solo and unassigned, so nobody was going to ask for this document. Wrote it anyway,
@@ -590,7 +614,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 03 LANDSCAPE ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">03. What already exists</p>
+      <SectionLabel icon="systems">03. What already exists</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-3xl">I checked before building anything.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         It mostly exists in pieces. None of the pieces treats the design workflow itself as
@@ -635,7 +659,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 04 THE CEILING OF RULES, the pivot ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">04. Why rules were not enough</p>
+      <SectionLabel icon="judgment">04. Why rules were not enough</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-2xl">
         Eight flags. Every one a symptom, none a cause.
       </h2>
@@ -676,14 +700,15 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 05 THE AI LAYER ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">05. The AI layer</p>
+      <SectionLabel icon="impact">05. The AI layer (prototype)</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-2xl">
         Rules decide what's true. AI explains what it means.
       </h2>
       <p class="cs-lede max-w-2xl mb-12">
         AI never decides whether something is at risk. It reads what the rules have
         already flagged and adds judgement and language on top. That ordering is the whole
-        architecture.
+        architecture. The rule engine below ships and runs weekly; the AI layer is a working
+        prototype on the same live data, with the model call stubbed.
       </p>
 
       <figure class="pipe" data-reveal>
@@ -772,6 +797,44 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
         ))}
       </div>
 
+      <p class="cs-label mb-3">UX &amp; IA trade-offs</p>
+      <p class="cs-lede max-w-2xl mb-6">
+        Three decisions the interface had to get right for a weekly review to actually use this,
+        not just admire it.
+      </p>
+      <div class="layers layers--3 mb-4">
+        {[
+          {
+            c: "#5b7c99",
+            icon: `<path d="M12 3 21 8l-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 16l9 5 9-5"/>`,
+            t: "Progressive disclosure across three views",
+            b: "Overview, Work View and Exec Summary layer the same data by role, so a lead spots delivery risk at a glance without opening every designer's board. Drilling down is always one click away, not the default view.",
+          },
+          {
+            c: "#4f8a7c",
+            icon: `<path d="M7 7.5c-1.8 0-3 1.4-3 3.5v3.5h3.5v-3.5H6c0-1 .7-1.7 1.7-1.7z"/><path d="M15 7.5c-1.8 0-3 1.4-3 3.5v3.5h3.5v-3.5h-1.5c0-1 .7-1.7 1.7-1.7z"/>`,
+            t: "Cited blocks over a chat-first interface",
+            b: "A weekly review is a scan, not a conversation. An inline root-cause block with its citations reads in one pass; a chat window would force a question per ticket. Ask-the-board stays for genuinely open questions, not for facts already on screen.",
+          },
+          {
+            c: "#c17a4a",
+            icon: `<path d="M12 3.4 19 6v5.6c0 4.3-2.9 7.3-7 8.6-4.1-1.3-7-4.3-7-8.6V6l7-2.6z"/><path d="m9 12 2.1 2.1L15.3 9.8"/>`,
+            t: "An approval bar, not an autonomous agent",
+            b: "The write path shows the exact record before anything happens and commits nothing without a click. Jira stays the single system of record; the tool proposes, it never decides.",
+          },
+        ].map(l => (
+          <div class="layer">
+            <div class="layer-head">
+              <span class="mini-icon" style={`--mc: ${l.c}`} aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={l.icon} />
+              </span>
+              <p class="layer-t">{l.t}</p>
+            </div>
+            <p class="card-b">{l.b}</p>
+          </div>
+        ))}
+      </div>
+
       <ScreenGallery
         id="ai-screens"
         screens={[
@@ -810,7 +873,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 06 THE CLOSED LOOP ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">06. Closing the loop</p>
+      <SectionLabel icon="validated">06. Closing the loop</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-3xl">A recommendation nobody measures is just a confident opinion.</h2>
       <p class="cs-lede max-w-2xl mb-10">
         The system could explain a slip and propose a move, then nothing. No record of
@@ -883,7 +946,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 07 WHAT I CHOSE NOT TO BUILD ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">07. What I chose not to build</p>
+      <SectionLabel icon="judgment">07. What I chose not to build</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-3xl">The hard part isn't the AI. It's the data you don't have.</h2>
       <p class="cs-lede max-w-2xl mb-8">
         It is easy to draw a product with a design-health score on it. It is harder to say
@@ -924,7 +987,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 08 HOW IT WAS BUILT ══ -->
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">08. How it was built</p>
+      <SectionLabel icon="craft">08. How it was built</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-2xl">Constraints chosen on purpose.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         No spec, no backend and no budget for tooling. Three decisions I'd defend rather
@@ -999,33 +1062,32 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <!-- ══ 09 OUTCOME AND REFLECTION ══ -->
   <section class="sec-y" data-reveal>
     <div class="container-pg">
-      <p class="cs-label mb-4">09. What it changed</p>
+      <SectionLabel icon="impact">09. What it changed</SectionLabel>
       <h2 class="cs-h2 mb-4 max-w-2xl">An operations problem, solved with a dashboard.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         The dashboard didn't make the weekly rebuild faster. It removed the need for it.
       </p>
 
-      <div class="cards cards--2">
-        <div class="card">
-          <p class="card-k">01</p>
-          <p class="card-t">Slips surface when they happen</p>
-          <p class="card-b">
-            Commitments that move quietly are flagged as they move and not discovered in
-            the review where it's already too late to act.
-          </p>
+      <div class="stat-grid">
+        <div class="stat">
+          <p class="stat-n">[X hrs / week]</p>
+          <p class="stat-l">Saved from manual exports</p>
+          <p class="stat-s">Eliminated the CSV pull and pivot table rebuild before every weekly review.</p>
         </div>
-        <div class="card">
-          <p class="card-k">02</p>
-          <p class="card-t">One version of the number</p>
-          <p class="card-b">
-            The status reported upward and the board designers work from come from the
-            same data so the conversation isn't about whose sheet is right.
-          </p>
+        <div class="stat">
+          <p class="stat-n">[X days earlier]</p>
+          <p class="stat-l">Slips caught before the review</p>
+          <p class="stat-s">Flagged as commitments move, not discovered in the meeting where it's already too late to act.</p>
+        </div>
+        <div class="stat">
+          <p class="stat-n">[X designers / X pods]</p>
+          <p class="stat-l">Working from one shared number</p>
+          <p class="stat-s">Leads and designers read the same board instead of reconciling competing spreadsheets.</p>
         </div>
       </div>
 
       <div class="max-w-2xl mt-20">
-        <p class="cs-label mb-4">Reflection</p>
+        <SectionLabel icon="judgment">Reflection</SectionLabel>
         <h2 class="cs-h2 mb-8">What building it taught me.</h2>
         <div class="space-y-6 text-[var(--color-ink-2)] leading-relaxed">
           <p>

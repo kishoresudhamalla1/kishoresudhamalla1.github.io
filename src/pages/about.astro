@@ -13,6 +13,7 @@
  * ranges because no month-level dates exist for them yet.
  */
 import Base from "../layouts/Base.astro";
+import SectionLabel from "../components/SectionLabel.astro";
 
 const FACTS = [
   { value: "16+", label: "Years in design" },
@@ -27,9 +28,23 @@ const EDUCATION = [
   { name: "IBM", note: "Enterprise Design Thinking · Essentials for AI" },
 ];
 
+// Small, true-to-the-era icon beside each company name: systems for the
+// nine years building a platform, craft for the early hands-on studio work,
+// and film for the years at an animation studio, before product design.
+const ERA_ICON = {
+  systems: { color: "#4f8a7c", path: `<circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17.5" r="2"/><path d="M7.6 8.2 10.4 16M16.4 8.2 13.6 16M8 7h8"/>` },
+  craft: { color: "#c17a4a", path: `<rect x="3.2" y="3.2" width="7.6" height="7.6" rx="1.4"/><rect x="13.2" y="3.2" width="7.6" height="7.6" rx="1.4"/><rect x="3.2" y="13.2" width="7.6" height="7.6" rx="1.4"/><rect x="13.2" y="13.2" width="7.6" height="7.6" rx="1.4"/>` },
+  film: { color: "#6b6ab3", path: `<rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10h18M7 6.5 9.2 10M12.4 6.5l2.2 3.5M17.8 6.5 20 10"/><path d="M10.6 13.1v2.8l2.3-1.4-2.3-1.4z" fill="currentColor" stroke="none"/>` },
+};
+const svg = (icon: keyof typeof ERA_ICON) =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ERA_ICON[icon].path}</svg>`;
+
 const ERAS = [
   {
     place: "Darwinbox",
+    logo: "/images/logos/darwinbox.png",
+    iconColor: ERA_ICON.systems.color,
+    iconSvg: svg("systems"),
     context: "Global HCM platform, used across 120+ countries",
     span: "Sep 2017 – Sep 2026",
     entries: [
@@ -39,8 +54,8 @@ const ERAS = [
         lead: true,
         notes: [
           "Leading <strong>AI-native and agentic experience design</strong> across the platform: defining where the system acts autonomously, where it assists, and where human-in-the-loop approval is required. Designing the permission boundaries, explainability and failure-recovery behaviour around every autonomous action.",
-          "<strong>Contributing hands-on</strong>, not from a distance — mapping the workflow, building the prototype, questioning the interaction, and working the details through with product and engineering until the experience holds up.",
-          "Setting design direction across six product areas — Time Management, Core, Payroll, Benefits, Extensibility and Workflows &amp; Journeys — taking the hardest problem in each myself, and shaping how the platform evolves toward <strong>AI-native experiences</strong>.",
+          "<strong>Contributing hands-on</strong>, not from a distance: mapping the workflow, building the prototype, questioning the interaction, and working the details through with product and engineering until the experience holds up.",
+          "Setting design direction across six product areas, Time Management, Core, Payroll, Benefits, Extensibility and Workflows &amp; Journeys, taking the hardest problem in each myself, and shaping how the platform evolves toward <strong>AI-native experiences</strong>.",
           "Partnering directly with product and engineering leaders on the hardest calls: product direction, system trade-offs and design quality across teams. Mentorship happens inside that work, not as a separate management layer.",
         ],
       },
@@ -73,6 +88,9 @@ const ERAS = [
   },
   {
     place: "WTA Studios",
+    logo: "/images/logos/wta-studios.png",
+    iconColor: ERA_ICON.craft.color,
+    iconSvg: svg("craft"),
     context: "Product design for web and mobile",
     span: "2015 – 2017",
     entries: [
@@ -87,6 +105,8 @@ const ERAS = [
   },
   {
     place: "Earlier roles",
+    iconColor: ERA_ICON.film.color,
+    iconSvg: svg("film"),
     context: "Six years across every medium, before specialising in product",
     span: "2009 – 2015",
     entries: [
@@ -103,7 +123,7 @@ const ERAS = [
 
 const RECOGNITION = [
   "Five Best Contributor of the Quarter awards at Darwinbox",
-  "Best Graphic Designer of the Year — <em>Chhota Bheem and the Curse of Damyaan</em>",
+  "Best Graphic Designer of the Year, <em>Chhota Bheem and the Curse of Damyaan</em>",
   "Presented at the UX roadshow across SEA and MENA",
 ];
 ---
@@ -117,10 +137,10 @@ const RECOGNITION = [
         <h1 class="ab-title">About <em>me.</em></h1>
 
         <p class="ab-bio">
-          I like difficult problems. I've spent most of my career designing
+          <span class="ab-bio-open">I like difficult problems.</span> I've spent most of my career designing
           products where complexity is unavoidable. For the last nine years
           I've worked on Darwinbox, a global HCM platform used across 120+
-          countries — across Time Management, Payroll, Benefits, Journeys,
+          countries, across Time Management, Payroll, Benefits, Journeys,
           Flows, HR Documents, Core HR, Extensibility and AI experiences.
         </p>
         <p class="ab-bio">
@@ -179,7 +199,14 @@ const RECOGNITION = [
           {/* Pins while its own entries scroll past, released by the next era. */}
           <header class="chron-era-head">
             <p class="chron-era-span">{era.span}</p>
-            <h3 class="chron-era-name">{era.place}</h3>
+            <h3 class="chron-era-name">
+              {"logo" in era && era.logo ? (
+                <img class="chron-era-logo" src={era.logo} alt="" width="30" height="30" loading="lazy" />
+              ) : (
+                <span class="chron-era-icon" style={`--c: ${era.iconColor}`} aria-hidden="true" set:html={era.iconSvg} />
+              )}
+              {era.place}
+            </h3>
             <p class="chron-era-ctx">{era.context}</p>
           </header>
 
@@ -334,6 +361,10 @@ const RECOGNITION = [
     color: var(--color-ink-2);
     margin: 0 0 1.25rem;
   }
+  .ab-bio-open {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
 
   .ab-photo { margin: 0; order: -1; width: min(66vw, 240px); }
   .ab-photo img {
@@ -454,6 +485,9 @@ const RECOGNITION = [
     margin: 0 0 0.5rem;
   }
   .chron-era-name {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: clamp(1.5rem, 2.6vw, 1.875rem);
@@ -461,6 +495,20 @@ const RECOGNITION = [
     line-height: 1.1;
     color: var(--color-ink);
     margin: 0;
+  }
+  .chron-era-icon {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 1.875rem; height: 1.875rem; border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--c) 16%, transparent); color: var(--c);
+  }
+  :global(.dark) .chron-era-icon {
+    background: color-mix(in srgb, var(--c) 26%, transparent);
+    color: color-mix(in srgb, var(--c) 85%, white);
+  }
+  .chron-era-icon :global(svg) { width: 1.0625rem; height: 1.0625rem; }
+  .chron-era-logo {
+    flex-shrink: 0; width: 1.875rem; height: 1.875rem; border-radius: 0.5rem;
+    display: block; object-fit: contain;
   }
   .chron-era-ctx {
     margin: 0.4rem 0 0;
