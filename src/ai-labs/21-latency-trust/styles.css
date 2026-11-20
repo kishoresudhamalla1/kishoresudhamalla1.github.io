@@ -1,0 +1,10 @@
+.labs .lt-slider { width: 100%; accent-color: var(--lab-agent); margin: 0.3rem 0 0.5rem; display: block; }
+.labs .lt-marks { justify-content: space-between; font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-ink-3); }
+.labs .lt-tier { margin: 0.8rem 0 0; padding-top: 0.7rem; border-top: 1px solid var(--color-border); }
+
+.labs .lt-wait { display: flex; align-items: center; gap: 0.6rem; }
+.labs .lt-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; font-size: 0.875rem; max-width: 26rem; }
+.labs .lt-steps li { display: flex; align-items: center; gap: 0.6rem; }
+.labs .lt-reassure { margin: 0.7rem 0 0; color: var(--lab-warn); }
+.labs .lt-answer { margin: 0; padding: 0.9rem 1rem; border-radius: 0.6rem; background: var(--lab-ok-soft); color: var(--color-ink); font-size: 0.9375rem; max-width: 28rem; }
+.labs .lt-foot { justify-content: space-between; margin-top: 0.9rem; }

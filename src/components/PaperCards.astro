@@ -38,7 +38,7 @@ const { items, variant = "accordion" } = Astro.props;
                       </div>
                       <p class="wp-title">{p.ptitle}</p>
                       <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
-                      <div class="wp-brief"><p class="wp-bh">The brief.</p><p>{p.pblurb}</p></div>
+                      <div class="wp-brief"><p>{p.pblurb}</p></div>
                     </div>
                     <div class="wp-glare"></div>
                   </div>
@@ -131,7 +131,6 @@ const { items, variant = "accordion" } = Astro.props;
     background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); color: #fff; font-weight: 700;
   }
   .wp-brief { margin-top: 7cqw !important; max-width: 86cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
-  .wp-brief .wp-bh { font-weight: 700; color: rgba(255,255,255,.92); margin-bottom: 1.4cqw; font-size: 3cqw; }
   .wp-glare {
     position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
     background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);

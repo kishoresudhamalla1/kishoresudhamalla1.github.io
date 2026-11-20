@@ -191,8 +191,22 @@ export const DEMOS: DemoMeta[] = [
     Demo: lazy(() => import("./20-message-branching")),
   },
   {
-    slug: "06-editable-outputs",
+    slug: "21-latency-trust",
     n: "13",
+    title: "Latency and trust",
+    cluster: "acting",
+    strap: "The same wait reads as broken, tolerable or fine, depending only on what fills it.",
+    inspired: "Pattern seen in Nielsen Norman Group's response-time thresholds (0.1s, 1s and 10s) and agent SDKs that swap a spinner for named steps as a wait gets longer",
+    notes: {
+      decision: "The feedback shown isn't a design choice made once. It's a function of the wait itself: nothing under a second, a spinner up to four, named steps past that, and an explicit reassurance once a person's attention would otherwise have left.",
+      tradeoff: "Four feedback shapes are more to build and maintain than one spinner for every wait. A spinner on a one second answer is noise, and silence on a twelve second one reads as broken, so one shape for every duration was never actually simpler.",
+      doneWell: "NN/g's thresholds (0.1s, 1s, 10s) are the oldest result in this space and still hold. Modern agent SDKs apply the same idea by naming the call in progress once a wait gets long enough to need it.",
+    },
+    Demo: lazy(() => import("./21-latency-trust")),
+  },
+  {
+    slug: "06-editable-outputs",
+    n: "14",
     title: "Editable outputs",
     cluster: "trusting",
     strap: "AI output is a draft to work on together, not an answer to accept or discard.",
@@ -206,7 +220,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "07-transparency-provenance",
-    n: "14",
+    n: "15",
     title: "Transparency and provenance",
     cluster: "trusting",
     strap: "Cited answers get believed and uncited answers get second guessed.",
@@ -220,7 +234,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "08-failure-recovery",
-    n: "15",
+    n: "16",
     title: "Failure and recovery",
     cluster: "trusting",
     strap: "Most portfolios show the happy path. This shows what happens when it breaks.",
@@ -234,7 +248,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "09-human-handoff",
-    n: "16",
+    n: "17",
     title: "Human handoff",
     cluster: "trusting",
     strap: "The seam between AI and a person should be a relay, not a reset.",
@@ -248,7 +262,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "10-memory-personalization",
-    n: "17",
+    n: "18",
     title: "Memory and personalization",
     cluster: "trusting",
     strap: "Persistent memory is a trust surface, not a feature flag.",
@@ -262,7 +276,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "11-evaluation-observability",
-    n: "18",
+    n: "19",
     title: "Evaluation and observability",
     cluster: "trusting",
     strap: "The part almost nobody designs: how teams ship and maintain agent quality.",
@@ -276,7 +290,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "14-incomplete-responses",
-    n: "19",
+    n: "20",
     title: "Incomplete responses",
     cluster: "trusting",
     strap: "Failure is the easy case to design for. Most incomplete answers aren't failures at all.",
@@ -290,7 +304,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "15-accuracy-communication",
-    n: "20",
+    n: "21",
     title: "Communicating accuracy",
     cluster: "trusting",
     strap: "A blanket low-confidence disclaimer erodes trust in the answers that deserved it least.",
