@@ -11,6 +11,10 @@ export interface PaperItem {
   /** Not finished yet: a small status mark on the sheet, and the hint reads
    *  "Coming soon" instead of implying a case study is there to open. */
   inProgress?: boolean;
+  /** Optional, opt-in: a small cycle button on the sheet itself, so a visitor
+   *  can see one more real state of the product before opening the case
+   *  study. Unused items render exactly as before. */
+  micro?: { label: string; options: { label: string; state: string }[] };
 }
 interface Props {
   items: PaperItem[];
@@ -39,6 +43,15 @@ const { items, variant = "accordion" } = Astro.props;
                       <p class="wp-title">{p.ptitle}</p>
                       <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
                       <div class="wp-brief"><p>{p.pblurb}</p></div>
+                      {p.micro && (
+                        <div class="wp-micro" data-micro data-micro-i="0" data-micro-json={JSON.stringify(p.micro.options)}>
+                          <button type="button" class="wp-micro-btn" data-micro-next aria-label={`Cycle: ${p.micro.label}`}>
+                            <span data-micro-label>{p.micro.label}: {p.micro.options[0].label}</span>
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                          </button>
+                          <p class="wp-micro-state" data-micro-state>{p.micro.options[0].state}</p>
+                        </div>
+                      )}
                     </div>
                     <div class="wp-glare"></div>
                   </div>
@@ -131,6 +144,17 @@ const { items, variant = "accordion" } = Astro.props;
     background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); color: #fff; font-weight: 700;
   }
   .wp-brief { margin-top: 7cqw !important; max-width: 86cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+  .wp-micro { margin-top: 6cqw !important; max-width: 86cqw; position: relative; z-index: 2; }
+  .wp-micro-btn {
+    display: inline-flex; align-items: center; gap: 1.4cqw; font-family: var(--font-sans);
+    font-size: 2.6cqw; font-weight: 600; color: #fff; letter-spacing: 0.01em;
+    padding: 1.4cqw 2.4cqw; border-radius: 999px; cursor: pointer;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3);
+    transition: background-color 160ms ease;
+  }
+  .wp-micro-btn:hover { background: rgba(255,255,255,.2); }
+  .wp-micro-btn svg { flex-shrink: 0; }
+  .wp-micro-state { margin-top: 2.2cqw !important; font-family: var(--font-sans); font-size: 2.5cqw; line-height: 1.4; color: rgba(255,255,255,.6); }
   .wp-glare {
     position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: soft-light; opacity: 0.7;
     background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.55), rgba(255,255,255,0) 70%);
@@ -263,6 +287,28 @@ const { items, variant = "accordion" } = Astro.props;
       s.scene.addEventListener("pointercancel", up);
       // a drag turns the sheet; only a plain click opens the case study
       s.scene.addEventListener("click", (e) => { if (s.moved > 6) e.preventDefault(); });
+
+      // the optional micro-interaction button: cycle its own state without
+      // starting a drag on the sheet behind it or following the card's link.
+      const micro = s.card.querySelector<HTMLElement>("[data-micro]");
+      const btn = micro?.querySelector<HTMLButtonElement>("[data-micro-next]");
+      if (micro && btn) {
+        const options: { label: string; state: string }[] = JSON.parse(micro.dataset.microJson || "[]");
+        const labelEl = btn.querySelector<HTMLElement>("[data-micro-label]")!;
+        const stateEl = micro.querySelector<HTMLElement>("[data-micro-state]")!;
+        const prefix = labelEl.textContent?.split(":")[0] ?? "";
+        const stop = (e: Event) => e.stopPropagation();
+        btn.addEventListener("pointerdown", stop);
+        btn.addEventListener("pointermove", stop);
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const next = (Number(micro.dataset.microI) + 1) % options.length;
+          micro.dataset.microI = String(next);
+          labelEl.textContent = `${prefix}: ${options[next].label}`;
+          stateEl.textContent = options[next].state;
+        });
+      }
     });
 
     // In the accordion only the open card is visible, but tilt now runs over

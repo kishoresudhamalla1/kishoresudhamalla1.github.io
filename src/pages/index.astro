@@ -63,6 +63,17 @@ const QUESTIONS = [
 ---
 
 <Base title="Kishore Sudhamalla | Principal Product Designer">
+  <!-- Reviewing bar: a homepage draft is being compared against this live
+       page. Quiet and neutral on purpose, this page is not itself a draft.
+       Remove this whole block once a decision is made either way. -->
+  <div class="review-bar">
+    <span>Reviewing a homepage draft.</span>
+    <span class="review-toggle" role="tablist" aria-label="Switch version">
+      <span class="review-toggle-i is-current" role="tab" aria-selected="true" aria-current="page">Live</span>
+      <a href="/index-draft" class="review-toggle-i" role="tab" aria-selected="false">Draft</a>
+    </span>
+  </div>
+
   <!-- Hero -->
   <section class="r-hero-wrap">
   <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
@@ -194,6 +205,23 @@ const QUESTIONS = [
 </script>
 
 <style>
+  .review-bar {
+    display: flex; align-items: center; justify-content: center; gap: 0.9rem; flex-wrap: wrap;
+    background: var(--color-surface); border-bottom: 1px solid var(--color-border); color: var(--color-ink-2);
+    font-size: 0.8125rem; font-weight: 600; padding: 0.6rem 1rem;
+  }
+  .review-toggle {
+    display: inline-flex; gap: 0.2rem; padding: 0.2rem; border-radius: 100px;
+    background: var(--color-bg); border: 1px solid var(--color-border);
+  }
+  .review-toggle-i {
+    display: inline-flex; align-items: center; padding: 0.3rem 0.85rem; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600; text-decoration: none; color: inherit; opacity: 0.6;
+    transition: opacity 120ms ease, background-color 120ms ease;
+  }
+  .review-toggle-i:hover { opacity: 0.85; }
+  .review-toggle-i.is-current { opacity: 1; background: var(--color-ink); color: var(--color-bg); }
+
   .r-hero-wrap { position: relative; overflow: hidden; }
   .r-hero-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
   .r-hero-wrap > .r-hero { position: relative; z-index: 1; }
