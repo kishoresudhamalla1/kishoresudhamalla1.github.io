@@ -56,6 +56,28 @@ const IMG = "/images/work/time-management";
     ]}
   />
 
+  <section class="container-pg r-exec" data-reveal>
+    <SectionLabel icon="context">At a glance</SectionLabel>
+    <div class="r-exec-grid">
+      <div>
+        <p class="r-exec-k">Context</p>
+        <p class="r-exec-v">Darwinbox's time, attendance and payroll-adjacent module, used daily across 120+ countries, with no dedicated redesign in eight years.</p>
+      </div>
+      <div>
+        <p class="r-exec-k">Problem</p>
+        <p class="r-exec-v">Eight years of incremental requests had made a powerful module dense. No role, employee, manager or HRBP, had a single view of their own time data, so managers kept re-deriving what needed attention instead of being told.</p>
+      </div>
+      <div>
+        <p class="r-exec-k">My role &amp; the core decisions</p>
+        <p class="r-exec-v">Led design as Senior Manager, UX, with a team of 2 designers, 3 PMs and 2 frontend developers over roughly a year. I set the information architecture and drove the two decisions below it: one shared dashboard framework instead of three separate screens, and a 2-column layout over a 3-column one.</p>
+      </div>
+      <div>
+        <p class="r-exec-k">Outcome</p>
+        <p class="r-exec-v">Shipped and validated with enterprise clients across SEA and MENA before global rollout. The layout pattern was later reused elsewhere on the platform. Darwinbox's Gartner Workforce Management score moved from 2.9 in 2022 to 3.7 in 2026, alongside this and other platform investment, not solely because of it.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="container-pg r-film" data-reveal>
     <SectionLabel icon="film">Film · with sound</SectionLabel>
     <div class="r-film-frame">
@@ -80,6 +102,7 @@ const IMG = "/images/work/time-management";
       </div>
 
       <p>The difficulty was never any single screen:</p>
+
       <ul class="r-point-list">
         <li>Attendance, leave and payroll depend on each other, so every exception, a missed clock-in, an unapproved leave, a roster conflict, sits upstream of a payroll run.</li>
         <li>Eight years of incremental requests had produced a system that was powerful but dense.</li>
@@ -143,6 +166,9 @@ const IMG = "/images/work/time-management";
           </ul>
         </div>
 
+      </div>
+
+      <div class="r-pattern-reuse-wrap">
         <div class="r-decision-prose r-pattern-reuse">
           <p class="r-decision-tag">Beyond this module</p>
           <p class="r-pattern-lead">One layout, reused across the platform.</p>
@@ -258,7 +284,7 @@ const IMG = "/images/work/time-management";
         {[
           { f: "session-studio-tiered", alt: "Presenting the redesigned time dashboard to a client team in a tiered studio space", hero: true, posX: "68%" },
           { f: "session-boardroom-dashboard", alt: "Walking a client team through the manager dashboard in a boardroom" },
-          { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting", posX: "68%" },
+          { f: "session-classroom", alt: "A larger roadshow session presented to client staff in a classroom setting", posX: "85%" },
           { f: "session-manila-boardroom", alt: "A working session reviewing the designs with a client team" },
           { f: "busy-bees-team", alt: "The team at Busy Bees International after a roadshow session" },
         ].map((p) => (
@@ -502,6 +528,21 @@ const IMG = "/images/work/time-management";
 <style>
   /* ── Shared calm-card tokens: flat 3%-ink-tint surface, hairline 7%-ink
        border, no shadows, 420ms hover to 6% / 16%. ── */
+  .r-exec { padding-block: clamp(1.5rem, 4vw, 2.5rem) 0; }
+  .r-exec-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1px;
+    background: var(--color-border); border: 1px solid var(--color-border);
+    border-radius: 1.25rem; overflow: hidden;
+  }
+  @media (min-width: 760px) { .r-exec-grid { grid-template-columns: repeat(2, 1fr); } }
+  .r-exec-grid > div { background: var(--color-bg); padding: 1.5rem 1.6rem; }
+  .r-exec-k {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 0.6rem !important;
+  }
+  .r-exec-v { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 !important; }
+
   .r-film { padding-block: clamp(1.5rem, 4vw, 3rem) 0; }
   .r-film-frame { border: 1px solid var(--color-border); border-radius: 1.25rem; overflow: hidden; background: #000; max-width: 72rem; }
   .r-film-frame video { display: block; width: 100%; height: auto; }
@@ -523,6 +564,7 @@ const IMG = "/images/work/time-management";
     font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem;
   }
   .r-sys-close { font-size: 0.9375rem !important; color: var(--color-ink-3) !important; padding-top: 1.25rem; margin-top: 0.25rem !important; }
+
   .r-sys-note { font-size: 0.875rem !important; color: var(--color-ink-3) !important; }
 
   .r-quick-stats {
@@ -565,6 +607,12 @@ const IMG = "/images/work/time-management";
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
 
+  /* Sits outside .r-decisions (and outside the --measure cap every other
+     field in .r-case-section is held to), so the wide pattern-reuse images
+     below can actually use the full column width instead of being squeezed
+     into prose measure and reading as thumbnails. */
+  .r-pattern-reuse-wrap { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+
   .r-pattern-reuse {
     padding: 1.5rem 1.75rem; border-radius: 1rem;
     background: color-mix(in srgb, var(--color-ink) 4%, var(--color-bg));
@@ -592,9 +640,12 @@ const IMG = "/images/work/time-management";
   .r-decision-visual--wide { max-width: none; }
   /* Match the frame to the screenshots' own aspect ratio instead of a fixed
      height, so there's no letterboxing: the fixed-height + object-fit:contain
-     combo left uneven dead space above/below these wider dashboard shots. */
+     combo left uneven dead space above/below these wider dashboard shots.
+     Both rules target the frame/img directly (not as a descendant of a
+     separate .r-decision-visual, since --wide is applied on the same
+     element) — the old descendant-selector form never matched. */
   .r-decision-visual--wide .r-decision-visual-frame { aspect-ratio: 8 / 5; height: auto; }
-  .r-decision-visual--wide .r-decision-visual img { object-fit: cover; object-position: top center; }
+  .r-decision-visual--wide .r-decision-visual-frame img { object-fit: cover; object-position: top center; }
   .r-decision-visual figure { margin: 0; }
   .r-decision-visual-frame {
     height: 15rem; border-radius: 1.25rem; overflow: hidden; padding: 0.5rem;
@@ -637,14 +688,23 @@ const IMG = "/images/work/time-management";
   .r-craft-compare img, .r-craft-grid video {
     width: 100%; border-radius: 0.75rem; display: block;
   }
+  /* The three dashboard recordings are each their own native aspect ratio,
+     so without a shared ratio the HRBP card rendered visibly shorter than
+     Employee and Manager despite identical column widths. */
+  .r-craft-grid video { aspect-ratio: 4 / 3; object-fit: cover; object-position: top center; }
   .r-craft-compare figcaption, .r-craft-grid figcaption {
     margin-top: 0.5rem; font-size: 0.75rem; color: var(--color-ink-3);
   }
   .r-craft-note { margin-top: 1.5rem; margin-bottom: 0.75rem; }
 
   .r-impact {
-    display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.75rem;
-    align-items: start; margin: 1.5rem 0 2rem; max-width: var(--measure-head);
+    display: grid; grid-template-columns: 1fr; gap: 1.75rem;
+    margin: 1.5rem 0 2rem; max-width: none;
+  }
+  @media (min-width: 900px) {
+    .r-impact { grid-template-columns: repeat(4, 1fr); align-items: stretch; }
+    .r-impact-img { grid-column: span 2; }
+    .r-impact-legend { grid-column: span 2; }
   }
   .r-impact-img {
     position: relative; line-height: 0; padding: 0.5rem; border-radius: 1.25rem;
@@ -678,7 +738,7 @@ const IMG = "/images/work/time-management";
 
   .r-impact-legend {
     margin: 0; padding: 0; list-style: none; counter-reset: impact;
-    display: flex; flex-direction: column; gap: 1.1rem;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 1.1rem;
   }
   .r-impact-legend li {
     counter-increment: impact; position: relative; padding: 0.4rem 0 0.4rem 2rem;
@@ -703,10 +763,6 @@ const IMG = "/images/work/time-management";
     background: #e8604a; border-color: #e8604a; color: #fdfdfb;
   }
   .r-impact-legend b { color: var(--color-ink); font-weight: 600; }
-
-  @media (max-width: 760px) {
-    .r-impact { grid-template-columns: 1fr; }
-  }
 
   .r-outcome-row {
     display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin: 1.5rem 0; max-width: none;
