@@ -43,8 +43,8 @@ const IMG = "/images/work/time-management";
     lede="Time, attendance and payroll-adjacent infrastructure for a platform operating in 120+ countries: daily, compliance-dependent data with zero dedicated redesign investment in eight years."
     meta={[
       { k: "Role", v: "Senior Manager, UX" },
-      { k: "Team", v: "2 designers · 3 PMs · 2 frontend devs" },
-      { k: "Timeline", v: "2023 – 2024" },
+      { k: "Team", v: "2 designers · 2 PMs · 2 frontend devs" },
+      { k: "Timeline", v: "2023 – 24 (Q3)" },
       { k: "Platform", v: "Darwinbox HCM · 120+ countries" },
     ]}
     video={`${IMG}/tm-manager-dashboard`}
@@ -69,7 +69,7 @@ const IMG = "/images/work/time-management";
       </div>
       <div>
         <p class="r-exec-k">My role &amp; the core decisions</p>
-        <p class="r-exec-v">Led design as Senior Manager, UX, with a team of 2 designers, 3 PMs and 2 frontend developers over roughly a year. I set the information architecture and drove the two decisions below it: one shared dashboard framework instead of three separate screens, and a 2-column layout over a 3-column one.</p>
+        <p class="r-exec-v">Led design as Senior Manager, UX, with a team of 2 designers, 2 PMs and 2 frontend developers over roughly a year. I set the information architecture and drove the two decisions below it: one shared dashboard framework instead of three separate screens, and a 2-column layout over a 3-column one.</p>
       </div>
       <div>
         <p class="r-exec-k">Outcome</p>
@@ -124,9 +124,44 @@ const IMG = "/images/work/time-management";
         "If I had a magic wand to change one thing about the Time module,
         I'd add dashboards for employees and managers."
       </blockquote>
-      <p>
-        The real problem was not a missing feature. There was no information layer above the policies, shift rosters and exception queues, no single view that resolved "what do I need to decide right now" for any of the three roles depending on it. Before drawing a screen, we mapped how those data points related, so the dashboard could read the system instead of sitting bolted on top of it.
-      </p>
+      <div class="r-arch-row">
+        <p>
+          The real problem was not a missing feature. There was no information layer above the policies, shift rosters and exception queues, no single view that resolved "what do I need to decide right now" for any of the three roles depending on it. Before drawing a screen, we mapped how those data points related, so the dashboard could read the system instead of sitting bolted on top of it.
+        </p>
+
+        <svg class="r-arch-diagram" viewBox="0 0 640 300" role="img" aria-label="Diagram: raw systems (policies, shift rosters, exception queues, approval chains) feed a unified information and exception layer, which in turn drives the employee, manager and HRBP role views">
+          <defs>
+            <marker id="r-arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" class="r-arch-arrowhead" />
+            </marker>
+          </defs>
+          <text class="r-arch-tier-label" x="0" y="14">Role views</text>
+          <g class="r-arch-node r-arch-node--role"><rect x="0" y="24" width="197" height="48" rx="10" /><text x="98" y="52">Employee</text></g>
+          <g class="r-arch-node r-arch-node--role"><rect x="221" y="24" width="197" height="48" rx="10" /><text x="320" y="52">Manager</text></g>
+          <g class="r-arch-node r-arch-node--role"><rect x="442" y="24" width="198" height="48" rx="10" /><text x="541" y="52">HRBP</text></g>
+
+          <path class="r-arch-link" d="M98,124 L98,76" />
+          <path class="r-arch-link" d="M320,124 L320,76" />
+          <path class="r-arch-link" d="M541,124 L541,76" />
+
+          <rect class="r-arch-label-bg" x="-4" y="102" width="300" height="17" />
+          <text class="r-arch-tier-label" x="0" y="114">Unified information &amp; exception layer</text>
+          <g class="r-arch-node r-arch-node--mid"><rect x="0" y="124" width="640" height="54" rx="10" /><text x="320" y="155">One view: what needs a decision, right now</text></g>
+
+          <path class="r-arch-link" d="M80,228 L80,182" />
+          <path class="r-arch-link" d="M247,228 L247,182" />
+          <path class="r-arch-link" d="M413,228 L413,182" />
+          <path class="r-arch-link" d="M580,228 L580,182" />
+
+          <rect class="r-arch-label-bg" x="-4" y="202" width="120" height="17" />
+          <text class="r-arch-tier-label" x="0" y="214">Raw systems</text>
+          <g class="r-arch-node"><rect x="0" y="228" width="150" height="46" rx="10" /><text x="75" y="255">Policies</text></g>
+          <g class="r-arch-node"><rect x="166" y="228" width="162" height="46" rx="10" /><text x="247" y="255">Shift rosters</text></g>
+          <g class="r-arch-node"><rect x="338" y="228" width="150" height="46" rx="10" /><text x="413" y="255">Exceptions</text></g>
+          <g class="r-arch-node"><rect x="504" y="228" width="136" height="46" rx="10" /><text x="572" y="255">Approvals</text></g>
+        </svg>
+      </div>
+
       <p class="r-sys-note">
         This was also the platform's first ground-up revamp, a pivot from building to listening. So the layout study wasn't scoped to Time Management alone: it was run to settle a pattern every module could reuse.
       </p>
@@ -255,7 +290,7 @@ const IMG = "/images/work/time-management";
       <h2>Taken to enterprise clients across SEA and MENA before rollout.</h2>
       <p>Delivered over roughly a year, with a staff designer and myself hands-on, owning design direction and client validation.</p>
       <ul class="r-point-list r-point-list--tight">
-        <li><b>Team:</b> two frontend developers and three product managers, covering Leave, Attendance, and Scheduling &amp; Timesheets.</li>
+        <li><b>Team:</b> two frontend developers and two product managers, covering Leave and Attendance.</li>
         <li><b>Before global rollout:</b> a UX roadshow across Singapore, the Philippines, Indonesia and Dubai, UAE, presenting the shipped direction to client teams and collecting their reactions in the room.</li>
       </ul>
 
@@ -566,6 +601,38 @@ const IMG = "/images/work/time-management";
   .r-sys-close { font-size: 0.9375rem !important; color: var(--color-ink-3) !important; padding-top: 1.25rem; margin-top: 0.25rem !important; }
 
   .r-sys-note { font-size: 0.875rem !important; color: var(--color-ink-3) !important; }
+
+  .r-arch-row {
+    display: flex; flex-direction: column; gap: 1.75rem;
+    align-items: center; margin: 0 0 1.75rem; max-width: var(--measure-head);
+  }
+  .r-arch-row > p { max-width: var(--measure); margin: 0; }
+  @media (min-width: 900px) {
+    .r-arch-row { flex-direction: row; align-items: center; gap: 2.5rem; max-width: 68rem; }
+    .r-arch-row > p { flex: 1 1 20rem; max-width: none; }
+    .r-arch-row .r-arch-diagram { flex: 1 1 22rem; margin: 0; max-width: 36rem; }
+  }
+  .r-arch-diagram { width: 100%; max-width: 40rem; height: auto; margin: 0.25rem 0 2rem; }
+  .r-arch-label-bg { fill: var(--color-bg); }
+  .r-arch-tier-label {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; fill: var(--color-ink-3);
+  }
+  .r-arch-node rect {
+    fill: color-mix(in srgb, var(--color-ink) 4%, var(--color-bg));
+    stroke: color-mix(in srgb, var(--color-ink) 18%, transparent);
+    stroke-width: 1;
+  }
+  .r-arch-node text {
+    font-family: var(--font-sans); font-size: 15px; font-weight: 600;
+    fill: var(--color-ink-2); text-anchor: middle; dominant-baseline: middle;
+  }
+  .r-arch-node--role rect { fill: color-mix(in srgb, var(--color-ink) 7%, var(--color-bg)); }
+  .r-arch-node--role text { fill: var(--color-ink); }
+  .r-arch-node--mid rect { stroke: color-mix(in srgb, var(--color-ink) 30%, transparent); }
+  .r-arch-node--mid text { fill: var(--color-ink); font-size: 14px; }
+  .r-arch-link { stroke: color-mix(in srgb, var(--color-ink) 24%, transparent); stroke-width: 1.5; marker-end: url(#r-arch-arrow); }
+  .r-arch-arrowhead { fill: color-mix(in srgb, var(--color-ink) 32%, transparent); }
 
   .r-quick-stats {
     display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem;

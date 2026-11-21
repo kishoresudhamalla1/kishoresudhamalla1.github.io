@@ -219,7 +219,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   .tldr {
     border-left: 3px solid var(--color-ink);
     padding: 0.35rem 0 0.35rem 1.6rem;
-    max-width: 44rem;
+    max-width: 42rem;
     display: flex; flex-direction: column; gap: 0.9rem;
   }
   .tldr-k {
@@ -287,7 +287,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
 
   .pipe-cap {
     display: flex; align-items: flex-start; gap: 0.6rem;
-    margin-top: 1.5rem; max-width: 44rem;
+    margin-top: 1.5rem; max-width: 42rem;
     font-size: 0.875rem; line-height: 1.65; color: var(--color-ink-2);
   }
   .pipe-cap-x {
@@ -356,7 +356,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <CaseHero
     eyebrow="Design ops · Systems · AI-native UX"
     title="Turning live Jira boards into clear delivery decisions."
-    lede="I designed and built a system that reads a live Jira board. The Jira sync and deterministic rule engine are shipped and used weekly: that part is done and running. On that same live data, I then added the layer I actually wanted to design: an AI that explains why a commitment moved, cites the records it read, and proposes one action, a working prototype today with the model call stubbed. Nothing writes back without human-in-the-loop approval of the exact change, and the system measures whether the fix held."
+    lede="I designed and built a system that reads a live Jira board. The Jira sync and rule engine are shipped and in weekly use, that part is done. On the same live data, I added what I actually wanted to design: an AI that explains why a commitment moved, cites exactly what it read, and proposes one action. That part is a working prototype, the model call is stubbed. Nothing writes back until a person approves the exact change, and the system checks afterward whether the fix actually worked."
     meta={[
       { k: "Role", v: "UX designer, solo, end to end" },
       { k: "Shipped", v: "Jira sync & rule engine, in daily use. AI layer is a live prototype" },
@@ -615,7 +615,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <section class="sec-y" data-reveal>
     <div class="container-pg">
       <SectionLabel icon="systems">03. What already exists</SectionLabel>
-      <h2 class="cs-h2 mb-4 max-w-3xl">I checked before building anything.</h2>
+      <h2 class="cs-h2 mb-4 max-w-2xl">I checked before building anything.</h2>
       <p class="cs-lede max-w-2xl mb-12">
         It mostly exists in pieces. None of the pieces treats the design workflow itself as
         the unit of analysis. Design Intelligence is not my idea. The DesignOps field has
@@ -874,7 +874,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <section class="bg-[var(--color-surface)] sec-y" data-reveal>
     <div class="container-pg">
       <SectionLabel icon="validated">06. Closing the loop</SectionLabel>
-      <h2 class="cs-h2 mb-4 max-w-3xl">A recommendation nobody measures is just a confident opinion.</h2>
+      <h2 class="cs-h2 mb-4 max-w-2xl">A recommendation nobody measures is just a confident opinion.</h2>
       <p class="cs-lede max-w-2xl mb-10">
         The system could explain a slip and propose a move, then nothing. No record of
         what was decided and no way to know whether it helped. So I built the rest:
@@ -947,7 +947,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/";
   <section class="sec-y" data-reveal>
     <div class="container-pg">
       <SectionLabel icon="judgment">07. What I chose not to build</SectionLabel>
-      <h2 class="cs-h2 mb-4 max-w-3xl">The hard part isn't the AI. It's the data you don't have.</h2>
+      <h2 class="cs-h2 mb-4 max-w-2xl">The hard part isn't the AI. It's the data you don't have.</h2>
       <p class="cs-lede max-w-2xl mb-8">
         It is easy to draw a product with a design-health score on it. It is harder to say
         where that number comes from. I sorted every signal I wanted by whether the data

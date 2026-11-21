@@ -17,10 +17,11 @@
 .labs .al-notes-btn { display: flex; align-items: center; gap: 0.5rem; font: inherit; font-size: 0.875rem; font-weight: 600; background: none; border: 0; color: var(--color-ink); cursor: pointer; padding: 0.2rem 0; }
 .labs .al-chev { display: inline-block; transition: transform var(--dur-fast) var(--ease-enter); }
 .labs .al-chev.is-open { transform: rotate(90deg); }
-.labs .al-notes-body { margin: 0.8rem 0 0; display: grid; gap: 0.2rem; max-width: 42rem; }
-.labs .al-notes-body dt { font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin-top: 0.8rem; }
-.labs .al-notes-body dd { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--color-ink-2); }
-.labs .al-insp { margin: 1rem 0 0; }
+.labs .al-notes-body { margin: 0.8rem 0 0; display: grid; gap: 0.3rem; max-width: 42rem; }
+.labs .al-notes-body dt { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin-top: 1.4rem; }
+.labs .al-notes-body dt:first-child { margin-top: 0; }
+.labs .al-notes-body dd { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--color-ink-2); }
+.labs .al-insp { margin: 1.4rem 0 0; padding-top: 0.8rem; border-top: 1px solid var(--color-border); }
 .labs .al-pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
 .labs .al-pager button { font: inherit; font-size: 0.875rem; background: none; border: 0; color: var(--color-ink-2); cursor: pointer; }
 .labs .al-pager button:hover { color: var(--color-ink); }

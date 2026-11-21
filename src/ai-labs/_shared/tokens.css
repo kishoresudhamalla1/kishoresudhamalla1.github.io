@@ -60,6 +60,11 @@
 .labs .lab-mono { font-family: var(--font-mono); font-size: 0.75rem; }
 .labs .lab-muted { color: var(--color-ink-3); }
 .labs .lab-small { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); }
+/* .lab-small sets its own color, so pairing it with .lab-muted (equal
+   specificity, defined earlier) silently lost the dimmer tone everywhere
+   the two were combined — every muted caption site-wide rendered at full
+   ink-2 instead of ink-3. This combined selector wins regardless of order. */
+.labs .lab-small.lab-muted { color: var(--color-ink-3); }
 
 .labs .lab-panel {
   border: 1px solid var(--color-border); border-radius: var(--lab-r);
