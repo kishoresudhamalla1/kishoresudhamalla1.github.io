@@ -18,6 +18,7 @@ import SignalChain from "../../components/SignalChain.astro";
 import FlowsMorph from "../../components/FlowsMorph.astro";
 import ScreenGallery from "../../components/ScreenGallery.astro";
 import FilmPlayer from "../../components/FilmPlayer.astro";
+import SectionLabel from "../../components/SectionLabel.astro";
 const J = "/images/work/journeys";
 const FL = "/images/work/flows";
 ---
@@ -33,7 +34,12 @@ const FL = "/images/work/flows";
       { k: "Status", v: "Journeys shipped · Playbooks in build" },
       { k: "Platform", v: "Darwinbox HCM" },
     ]}
-    alt="From Flows to Journeys to Playbooks"
+    img={`${J}/journeys-hero.webp`}
+    alt="My Journeys · Functional Training"
+    cards={[
+      { eyebrow: "What it replaced", value: "Guided", label: "One Journey, not scattered Flows", note: "Every step an employee needs, grouped and tracked in one place instead of disconnected requests." },
+      { eyebrow: "Creation framework", value: "3 paths", label: "Template, prompt, or from scratch", note: "What an admin sees instead of a blank page. Other Darwinbox modules later picked up the same pattern." },
+    ]}
   />
 
   <ConfidentialityNotice note="Flows and Journeys are released Darwinbox products. AI Playbooks is in build and confidential, so the screens shown for it further down are an early concept exploration, not the real or final interface, and its scope may continue to change after my time on the project. This case study focuses on product strategy, design decisions and publicly communicable direction." />
@@ -41,7 +47,7 @@ const FL = "/images/work/flows";
   <article class="container-pg r-case">
     <!-- Context -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Context</p>
+      <SectionLabel icon="context">Context</SectionLabel>
       <h2>Flows already existed. The real gap was the experience around them.</h2>
       <p>
         Darwinbox had Flows, which handled standard tasks like approvals, notifications and data updates. They worked fine individually, but they were completely isolated. An employee going through an offboarding or a transfer hit a series of disconnected steps, with nothing connecting them into a single clear experience.
@@ -49,58 +55,52 @@ const FL = "/images/work/flows";
       <p>
         There was also a hidden operational cost. Setting up a flow usually meant having an implementation or Customer Success rep sit with the admin, and every flow was built entirely from scratch. That made flow creation a major bottleneck.
       </p>
-    </section>
-
-    <!-- Complexity -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Complexity</p>
-      <h2>Why this was hard.</h2>
       <p>
-        A guided experience has to serve two very different people at once. Admins need deep flexibility to handle complex company rules, but employees should never see that complexity. They just need a clear next step.
-      </p>
-      <p>
-        Adding AI on top makes it even trickier. The system has to figure out when it is confident enough to suggest something automatically, while ensuring the admin always has final control to review and override whatever the AI proposes.
+        On top of that, a guided experience has to serve two very different people at once. Admins need deep flexibility to handle complex company rules, but employees should never see that complexity, they just need a clear next step. Adding AI only raises the stakes: the system has to know when it is confident enough to suggest something, while the admin keeps final control to review and override.
       </p>
     </section>
 
     <!-- Problem framing -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Problem framing</p>
+      <SectionLabel icon="judgment">Problem framing</SectionLabel>
       <h2>The question changed twice.</h2>
       <p>
         First, we solved how to make guided experiences useful across different workflows. That became Journeys: a guided path for employees, configured by admins on top of existing Flows.
       </p>
       <p>
-        Once Journeys launched, we noticed a new problem: admins still had to build every Journey from scratch, even though the system already had the employee data and patterns to suggest one. The question shifted
-        from <em>"how do we help an admin build a better Journey?"</em> to
-        <em>"why should they have to build it manually at all?"</em>
-        That is what Playbooks solves.
+        Once Journeys launched, we noticed a new problem: admins still had to build every Journey from scratch, even though the system already had the employee data and patterns to suggest one. The question shifted.
       </p>
+      <blockquote class="r-pullquote">From "how do we help an admin build a better Journey?" to "why should they have to build it manually at all?"</blockquote>
+      <p>That second question is what Playbooks solves.</p>
     </section>
 
     <!-- Creation framework -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Framework</p>
+      <SectionLabel icon="craft">Framework</SectionLabel>
       <h2>Replacing blank pages with a smart creation schema.</h2>
       <p>
-        Before this, clicking "Create Journey" meant building everything manually, field by field.
+        Before this, clicking "Create Journey" meant building everything manually, field by field. We fixed that by splitting the initial blank page into three choices:
       </p>
+
+      <div class="r-schema-grid">
+        <ul class="r-schema-list">
+          <li><strong>Predefined templates:</strong> battle-tested Darwinbox defaults admins can use right away.</li>
+          <li><strong>Prompt-driven creation:</strong> describing what you need in plain English and letting the system spin up a starting structure.</li>
+          <li><strong>From scratch:</strong> the old manual builder, kept as a fallback instead of the default.</li>
+        </ul>
+        <figure class="r-schema-shot">
+          <img src={`${J}/templates.webp`} alt="The Templates tab showing a grid of predefined Journey templates by category and task count, with a Create from scratch option at the side" loading="lazy" />
+        </figure>
+      </div>
+
       <p>
-        We fixed that by splitting the initial blank page into three choices:
-      </p>
-      <ul class="r-schema-list">
-        <li><strong>Predefined templates:</strong> battle-tested Darwinbox defaults admins can use right away.</li>
-        <li><strong>Prompt-driven creation:</strong> describing what you need in plain English and letting the system spin up a starting structure.</li>
-        <li><strong>From scratch:</strong> the old manual builder, kept as a fallback instead of the default.</li>
-      </ul>
-      <p>
-        This killed the configuration bottleneck. Admins could get a usable draft going instantly without needing a support call, which drastically sped up setup for enterprise clients. Better yet, other Darwinbox modules adopted the exact same three-way pattern.
+        That ended the back-and-forth with support. Admins could get a usable draft going on their own, and a few other Darwinbox modules later picked up the same three-way pattern.
       </p>
     </section>
 
     <!-- Key design decisions -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Key design decisions</p>
+      <SectionLabel icon="judgment">Key design decisions</SectionLabel>
       <h2>The core decision behind Playbooks.</h2>
 
       <div class="r-decisions">
@@ -120,40 +120,12 @@ const FL = "/images/work/flows";
       </div>
     </section>
 
-    <!-- System: the evolution model -->
-    <section class="r-case-section" data-reveal>
-      <p class="r-case-label">System</p>
-      <h2>The evolution, as a model.</h2>
-      <p>
-        Seen end to end, this is not three separate projects. It is one architecture getting progressively more proactive:
-      </p>
-      <ol class="r-evo-list">
-        <li><strong>Flows:</strong> handled isolated transactional steps.</li>
-        <li><strong>Journeys:</strong> connected those steps into a guided experience with a generative creation path.</li>
-        <li><strong>Signals &amp; Playbooks:</strong> extends that same generative path from prompted creation to proactive system signals.</li>
-      </ol>
-      <FlowsMorph />
-
-      <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
-      <SignalChain />
-
-      <p class="r-concept-label">Concept &middot; final design may change</p>
-      <div class="r-concept-film">
-        <FilmPlayer
-          src={`${J}/playbooks-concept/playbooks-walkthrough-remotion.mp4`}
-          poster={`${J}/playbooks-concept/playbooks-walkthrough-poster.jpg`}
-          label="A walkthrough of the Signals and Playbooks concept: the live signal canvas, drilling into a Flight Risk signal, asking the AI direct questions about it, the AI recommending a Playbook with its reasoning steps shown, the admin initiating it, and then refining the live Playbook by asking for a change in plain English"
-        />
-      </div>
-      <p class="r-concept-note">An internal concept exploration, not shipped product. Names and data shown are placeholders.</p>
-    </section>
-
     <!-- Craft -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Craft</p>
-      <h2>The work.</h2>
+      <SectionLabel icon="craft">Craft</SectionLabel>
+      <h2>The work, in the order it was built.</h2>
       <p>
-        For admins, Journeys is a configuration surface for choosing which steps, guidance and resources make up a given process. For employees it is a single guided view of what to do and why it matters, instead of a disconnected task list. These are the released screens: the five steps an admin works through to configure a Journey, and the view the employee gets.
+        For admins, Journeys is a configuration surface: choosing which steps, guidance and resources make up a process. For employees, it's one guided view of what to do and why, not a disconnected task list.
       </p>
 <p class="r-sub-label">Flows: where it started</p>
       <figure class="r-video">
@@ -167,7 +139,7 @@ const FL = "/images/work/flows";
           </video>
         </div>
         <figcaption>
-          <strong>My Flows:</strong> every request an employee has started or is involved in, filterable by status and groupable by flow or category. Opening one shows each stage, who it is assigned to and who acted. Each flow is correct on its own, and nothing connects them into one experience.
+          <strong>My Flows:</strong> every request an employee is part of. Each one correct on its own, but nothing connects them into one experience.
         </figcaption>
       </figure>
 
@@ -227,33 +199,73 @@ const FL = "/images/work/flows";
       />
     </section>
 
+    <!-- System: the evolution model, and where it's headed next -->
+    <section class="r-case-section" data-reveal>
+      <SectionLabel icon="systems">System</SectionLabel>
+      <h2>What comes next: the same model, made proactive.</h2>
+      <p>
+        Seen end to end, this is not three separate projects. It is one architecture getting progressively more proactive:
+      </p>
+      <ol class="r-evo-list">
+        <li><strong>Flows:</strong> handled isolated transactional steps.</li>
+        <li><strong>Journeys:</strong> connected those steps into a guided experience with a generative creation path.</li>
+        <li><strong>Signals &amp; Playbooks:</strong> extends that same generative path from prompted creation to proactive system signals. This is the AI-native layer, still in build.</li>
+      </ol>
+      <FlowsMorph />
+
+      <p class="r-evo-chain-label">The emerging interaction model for Playbooks:</p>
+      <SignalChain />
+
+      <p class="r-concept-label">Concept &middot; final design may change</p>
+      <div class="r-concept-film">
+        <FilmPlayer
+          src={`${J}/playbooks-concept/playbooks-walkthrough-remotion.mp4`}
+          poster={`${J}/playbooks-concept/playbooks-walkthrough-poster.jpg`}
+          label="A walkthrough of the Signals and Playbooks concept: the live signal canvas, drilling into a Flight Risk signal, asking the AI direct questions about it, the AI recommending a Playbook with its reasoning steps shown, the admin initiating it, and then refining the live Playbook by asking for a change in plain English"
+        />
+      </div>
+      <p class="r-concept-note">An internal concept exploration, not shipped product. Names and data shown are placeholders.</p>
+    </section>
+
     <!-- Collaboration -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Collaboration</p>
+      <SectionLabel icon="context">Collaboration</SectionLabel>
       <h2>How this got built.</h2>
       <p>
-        Led as Senior Manager, UX Design, owning the direction from Flows through Journeys to Playbooks. The core team was small and cross-functional: one junior designer and me on design, one product manager, one member of the Center of Excellence, and three developers. I worked with product leadership to define the Journeys-to-Playbooks direction, with the CoE partner on the rollout and enablement side, and with the developers on the Flows engine and the emerging AI recommendation layer.
+        Led as Senior Manager, UX Design, across Flows, Journeys and Playbooks. The core team was small: one junior designer and me on design, one PM, one person from the Center of Excellence, and three developers. I set the direction with product leadership, worked with the CoE partner on rollout, and partnered with the developers on the Flows engine and the AI recommendation layer.
       </p>
     </section>
 
     <!-- Outcome -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Outcome</p>
+      <SectionLabel icon="impact">Outcome</SectionLabel>
       <h2>What shipped, and the adoption problem that came after.</h2>
+
+      <div class="r-before-after">
+        <div>
+          <p class="r-ba-k">Before</p>
+          <p class="r-ba-v">A disconnected task list. Admins rebuilding the same setup from scratch for every flow.</p>
+        </div>
+        <div>
+          <p class="r-ba-k">After</p>
+          <p class="r-ba-v">An engaging, guided Journey. A usable draft in minutes, not a support call.</p>
+        </div>
+      </div>
+
       <p>
-        Journeys launched successfully and is actively used by clients, replacing boring task lists with engaging workflows that visibly boosted module adoption and cut implementation overhead.
+        Journeys shipped and is actively used by clients: engaging workflows instead of a flat task list, with real adoption and less implementation overhead.
       </p>
       <p>
-        Shipping it was not the finish line. Once it was live, many clients did not actually know how to use it, the same gap we saw with Time Management. We ran client roadshows there too: walking them through what Journeys could do and turning the feature on right there with them in the room. That hands-on enablement turned Journeys into a core value driver instead of a forgotten feature.
+        Shipping it wasn't the finish line. Once it was live, many clients didn't actually know how to use it, the same gap we saw with Time Management. We ran client roadshows there too: walking through what Journeys could do and turning the feature on with them, in the room. That's what made it stick instead of sitting unused.
       </p>
     </section>
 
     <!-- Reflection -->
     <section class="r-case-section" data-reveal>
-      <p class="r-case-label">Reflection</p>
+      <SectionLabel icon="judgment">Reflection</SectionLabel>
       <h2>What this work was really about.</h2>
       <p>
-        The best part of this project was not just drawing screens for Journeys. It was shifting the mindset from <em>"how do we help admins build things faster"</em> to <em>"why do they need to build them at all,"</em> and staying involved after launch to make sure the work actually drove results. That is what hiring managers look for: designers who treat adoption and rollout as part of the design problem itself.
+        The best part of this project was not drawing screens for Journeys. It was shifting the mindset from <em>"how do we help admins build things faster"</em> to <em>"why do they need to build them at all,"</em> and staying involved after launch to make sure the work actually drove results, not just shipped.
       </p>
     </section>
   </article>
@@ -280,6 +292,42 @@ const FL = "/images/work/flows";
   .r-case-section em { color: var(--color-ink); font-style: italic; }
 
   .r-decisions { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+
+  .r-pullquote {
+    max-width: var(--measure); margin: 1.75rem 0 1.75rem; padding: 0 0 0 1.25rem;
+    border-left: 2px solid var(--color-ink); font-family: var(--font-display);
+    font-weight: 600; font-style: italic; letter-spacing: -0.01em;
+    font-size: clamp(1.125rem, 2.1vw, 1.4375rem); line-height: 1.45; color: var(--color-ink);
+  }
+
+  .r-schema-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    max-width: var(--measure); margin: 0 0 1.25rem;
+  }
+  @media (min-width: 720px) {
+    .r-schema-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; max-width: none; }
+  }
+  .r-schema-shot {
+    margin: 0; border: 1px solid var(--color-border); border-radius: 0.875rem;
+    overflow: hidden; background: var(--color-surface);
+  }
+  .r-schema-shot img { display: block; width: 100%; height: auto; }
+
+  .r-before-after {
+    display: grid; grid-template-columns: 1fr; gap: 1px; margin: 0 0 1.75rem;
+    background: var(--color-border); border: 1px solid var(--color-border);
+    border-radius: 0.875rem; overflow: hidden; max-width: var(--measure);
+  }
+  @media (min-width: 560px) {
+    .r-before-after { grid-template-columns: 1fr 1fr; }
+  }
+  .r-before-after > div { background: var(--color-bg); padding: 1.1rem 1.25rem; }
+  .r-ba-k {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 0.5rem !important;
+  }
+  .r-ba-v { font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink); margin: 0 !important; }
 
   .r-schema-list { margin: 0 0 1.25rem; padding: 0; list-style: none; }
   .r-schema-list li {

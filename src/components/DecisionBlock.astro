@@ -1,21 +1,28 @@
 ---
 /**
- * One "key design decision" per the brief's structure: Problem, Options
- * considered, Decision, Why, Trade-offs, Result. Seniority is meant to show
- * through the decision itself, not through adjectives — so this stays a
- * plain record, no badges or scorekeeping.
+ * One "key design decision": Problem, Options considered (shown as a
+ * side-by-side comparison with the chosen path marked), then Why / Trade-offs
+ * / Result as plain stacked text, always visible, nothing to click. Seniority
+ * shows through the decision itself, not adjectives, so this stays a record
+ * of reasoning, not a scorecard, and the reviewer never has to interrupt
+ * reading to interact with it.
  */
 interface Props {
   number: string;
   title?: string;
   problem: string;
   options: string[];
+  /** Index into `options` that was chosen. Defaults to the last option,
+   *  since that's how every decision on this site is currently written:
+   *  the rejected path(s) first, the chosen one last. */
+  chosenIndex?: number;
   decision: string;
   why: string;
   tradeoffs: string;
   result: string;
 }
-const { number, title, problem, options, decision, why, tradeoffs, result } = Astro.props;
+const { number, title, problem, options, chosenIndex, decision, why, tradeoffs, result } = Astro.props;
+const chosen = chosenIndex ?? options.length - 1;
 ---
 
 <div class="dblock">
@@ -29,9 +36,21 @@ const { number, title, problem, options, decision, why, tradeoffs, result } = As
 
   <div class="dblock-field">
     <p class="dblock-k">Options considered</p>
-    <ul class="dblock-options">
-      {options.map((o) => <li>{o}</li>)}
-    </ul>
+    <div class="dblock-options">
+      {options.map((o, i) => (
+        <div class={`dblock-opt${i === chosen ? " is-chosen" : ""}`}>
+          <p class="dblock-opt-tag">
+            {i === chosen ? (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                Chosen
+              </>
+            ) : "Not chosen"}
+          </p>
+          <p class="dblock-opt-v">{o}</p>
+        </div>
+      ))}
+    </div>
   </div>
 
   <div class="dblock-field">
@@ -84,15 +103,28 @@ const { number, title, problem, options, decision, why, tradeoffs, result } = As
     max-width: var(--measure);
   }
   .dblock-decision { color: var(--color-ink); font-weight: 600; }
+
   .dblock-options {
-    margin: 0; padding: 0; list-style: none; max-width: var(--measure);
-    display: flex; flex-direction: column; gap: 0.5rem;
+    display: grid; grid-template-columns: 1fr; gap: 0.875rem; max-width: var(--measure);
   }
-  .dblock-options li {
-    font-size: 1rem; line-height: 1.6; color: var(--color-ink-2);
-    padding-left: 1.1rem; position: relative;
+  @media (min-width: 640px) {
+    .dblock-options { grid-template-columns: 1fr 1fr; align-items: stretch; }
   }
-  .dblock-options li::before {
-    content: "–"; position: absolute; left: 0; color: var(--color-ink-3);
+  .dblock-opt {
+    padding: 1rem 1.1rem; border-radius: 0.75rem; border: 1px solid var(--color-border);
+    background: var(--color-surface);
   }
+  .dblock-opt.is-chosen {
+    border-color: color-mix(in srgb, #4f8a7c 55%, var(--color-border));
+    background: color-mix(in srgb, #4f8a7c 7%, var(--color-surface));
+  }
+  .dblock-opt-tag {
+    display: flex; align-items: center; gap: 0.35rem;
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3);
+    margin: 0 0 0.5rem !important;
+  }
+  .dblock-opt.is-chosen .dblock-opt-tag { color: #4f8a7c; }
+  .dblock-opt-v { font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink-2); margin: 0 !important; }
+  .dblock-opt.is-chosen .dblock-opt-v { color: var(--color-ink); }
 </style>
