@@ -78,16 +78,18 @@ const FL = "/images/work/flows";
     <section class="r-case-section" data-reveal>
       <SectionLabel icon="craft">Framework</SectionLabel>
       <h2>Replacing blank pages with a smart creation schema.</h2>
-      <p class="r-schema-intro">
-        Before this, clicking "Create Journey" meant building everything manually, field by field. We fixed that by splitting the initial blank page into three choices:
-      </p>
 
       <div class="r-schema-grid">
-        <ul class="r-schema-list">
-          <li><strong>Predefined templates:</strong> battle-tested Darwinbox defaults admins can use right away.</li>
-          <li><strong>Prompt-driven creation:</strong> describing what you need in plain English and letting the system spin up a starting structure.</li>
-          <li><strong>From scratch:</strong> the old manual builder, kept as a fallback instead of the default.</li>
-        </ul>
+        <div class="r-schema-text">
+          <p class="r-schema-intro">
+            Before this, clicking "Create Journey" meant building everything manually, field by field. We fixed that by splitting the initial blank page into three choices:
+          </p>
+          <ul class="r-schema-list">
+            <li><strong>Predefined templates:</strong> battle-tested Darwinbox defaults admins can use right away.</li>
+            <li><strong>Prompt-driven creation:</strong> describing what you need in plain English and letting the system spin up a starting structure.</li>
+            <li><strong>From scratch:</strong> the old manual builder, kept as a fallback instead of the default.</li>
+          </ul>
+        </div>
         <figure class="r-schema-shot">
           <img src={`${J}/templates.webp`} alt="The Templates tab showing a grid of predefined Journey templates by category and task count, with a Create from scratch option at the side" loading="lazy" />
         </figure>
@@ -303,7 +305,6 @@ const FL = "/images/work/flows";
     font-size: clamp(1.125rem, 2.1vw, 1.4375rem); line-height: 1.45; color: var(--color-ink);
   }
 
-  .r-case-section > .r-schema-intro { max-width: 30rem; }
   .r-schema-grid {
     display: grid; grid-template-columns: 1fr; gap: 1.5rem;
     max-width: var(--measure); margin: 0 0 1.25rem;
@@ -311,6 +312,7 @@ const FL = "/images/work/flows";
   @media (min-width: 720px) {
     .r-schema-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; max-width: none; }
   }
+  .r-schema-text { max-width: 30rem; }
   .r-schema-shot {
     margin: 0; border: 1px solid var(--color-border); border-radius: 0.875rem;
     overflow: hidden; background: var(--color-surface);
