@@ -41,7 +41,6 @@ const { items, variant = "accordion" } = Astro.props;
                         {p.inProgress && <span class="wp-status">In progress</span>}
                       </div>
                       <p class="wp-title">{p.ptitle}</p>
-                      <ul class="wp-tags">{p.tags.map((t) => <li>{t}</li>)}</ul>
                       <div class="wp-brief"><p>{p.pblurb}</p></div>
                       {p.micro && (
                         <div class="wp-micro" data-micro data-micro-i="0" data-micro-json={JSON.stringify(p.micro.options)}>
@@ -106,7 +105,7 @@ const { items, variant = "accordion" } = Astro.props;
     font-family: var(--font-display); font-weight: 650; letter-spacing: -0.04em; line-height: 0.8;
     font-size: 42cqw; white-space: nowrap; color: rgba(242, 242, 240, 0.09);
   }
-  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 2.75rem 0 4.5rem; }
+  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 1.5rem 0 3.5rem; }
   .wp-sway { animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused); }
   .wp-tilt { transform-style: preserve-3d; will-change: transform; }
 
@@ -131,19 +130,8 @@ const { items, variant = "accordion" } = Astro.props;
     padding: 1cqw 2.4cqw; border-radius: 999px; white-space: nowrap;
     border: 1px solid rgba(240, 178, 85, 0.4); color: #f0b255; background: rgba(240, 178, 85, 0.12);
   }
-  .wp-title { font-size: 10.2cqw; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; color: #fff; margin: 0 0 8cqw !important; }
-  .wp-tags {
-    list-style: none; padding: 0; margin: 0 0 6cqw !important; display: flex; flex-wrap: wrap; gap: 1.6cqw;
-    font-family: var(--font-sans); font-size: 2.7cqw; font-weight: 600; letter-spacing: 0.01em; line-height: 1.3;
-  }
-  .wp-tags li {
-    padding: 1.1cqw 2.6cqw; border-radius: 999px; white-space: nowrap;
-    border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.72);
-  }
-  .wp-tags li:first-child {
-    background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); color: #fff; font-weight: 700;
-  }
-  .wp-brief { margin-top: 7cqw !important; max-width: 86cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
+  .wp-title { font-size: 10.2cqw; font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; color: #fff; margin: 0 0 7cqw !important; }
+  .wp-brief { margin-top: 0 !important; max-width: 86cqw; font-family: var(--font-sans); font-size: 2.7cqw; line-height: 1.5; color: rgba(255,255,255,.66); }
   .wp-micro { margin-top: 6cqw !important; max-width: 86cqw; position: relative; z-index: 2; }
   .wp-micro-btn {
     display: inline-flex; align-items: center; gap: 1.4cqw; font-family: var(--font-sans);
@@ -223,7 +211,7 @@ const { items, variant = "accordion" } = Astro.props;
     .work-row--grid .work-card {
       /* flex-grow: 0, or a card alone on the last row (the third) stretches
          to fill the whole line instead of staying the other two's width. */
-      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 28rem;
+      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 24rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
