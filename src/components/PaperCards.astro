@@ -106,7 +106,7 @@ const { items, variant = "accordion" } = Astro.props;
     font-family: var(--font-display); font-weight: 650; letter-spacing: -0.04em; line-height: 0.8;
     font-size: 42cqw; white-space: nowrap; color: rgba(242, 242, 240, 0.09);
   }
-  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 1.5rem 0 3.5rem; }
+  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 3.5rem 0 3.75rem; }
   .wp-sway { animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused); }
   .wp-tilt { transform-style: preserve-3d; will-change: transform; }
 
@@ -223,7 +223,7 @@ const { items, variant = "accordion" } = Astro.props;
     .work-row--grid .work-card {
       /* flex-grow: 0, or a card alone on the last row (the third) stretches
          to fill the whole line instead of staying the other two's width. */
-      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 24rem;
+      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 26rem;
     }
   }
   @media (prefers-reduced-motion: reduce) {
