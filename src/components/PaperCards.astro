@@ -106,12 +106,12 @@ const { items, variant = "accordion" } = Astro.props;
     font-family: var(--font-display); font-weight: 650; letter-spacing: -0.04em; line-height: 0.8;
     font-size: 42cqw; white-space: nowrap; color: rgba(242, 242, 240, 0.09);
   }
-  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 3rem 0 3.25rem; }
+  .wp-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1500px; padding: 2.75rem 0 3.5rem; }
   .wp-sway { animation: wp-sway 9s ease-in-out infinite; animation-play-state: var(--play, paused); }
   .wp-tilt { transform-style: preserve-3d; will-change: transform; }
 
   .wp-sheet {
-    position: relative; width: min(46cqh, 80cqw); aspect-ratio: 0.74; container: sheet / inline-size;
+    position: relative; width: min(57.7cqh, 86cqw); aspect-ratio: 0.74; container: sheet / inline-size;
     border-radius: 1rem;
     background: linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1));
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -223,8 +223,13 @@ const { items, variant = "accordion" } = Astro.props;
     .work-row--grid .work-card {
       /* flex-grow: 0, or a card alone on the last row (the third) stretches
          to fill the whole line instead of staying the other two's width. */
-      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 26rem;
+      flex: 0 1 calc(50% - 0.625rem); width: calc(50% - 0.625rem); min-width: 16rem; height: 32rem;
     }
+    /* The sheet is taller than the space its own stage padding leaves, so a
+       centered grid item ignores that padding and overflows upward into the
+       kicker label above. A fixed top margin on the sway wrapper forces a
+       real gap no matter how the sheet's own size changes. */
+    .work-row--grid .wp-sway { margin-top: 1.5rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .work-card, .work-card-label, .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint { transition: none; }
