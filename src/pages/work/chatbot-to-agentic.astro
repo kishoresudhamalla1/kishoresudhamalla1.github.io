@@ -1,18 +1,28 @@
 ---
 /**
- * Chatbot → Agentic AI → AI-native experiences.
+ * Chatbot → Agentic AI → AI-native experiences. Case study 03.
  *
- * Genuinely not started yet, not a confidential finished project standing
- * in behind a placeholder. Says so plainly instead of dressing up an empty
- * page with a fake "conceptual illustration" and a confidentiality notice
- * implying there's real, withheld work here.
+ * Genuinely not started yet. Draft template only: the headings below are
+ * the agreed structure, each with a TODO for Kishore to fill with real
+ * content. Not linked from the homepage or nav, and noindexed, until it's
+ * written. Keep this honest framing, don't dress it up as finished work.
  */
 import Base from "../../layouts/Base.astro";
+
+const SECTIONS = [
+  { h: "Stakes", todo: "TODO: what was actually on the line here (business, user, or personal) if this went wrong or didn't happen." },
+  { h: "What changed from chatbot to agent", todo: "TODO: the concrete before/after. What could the chatbot not do that the agent can, and why that's a real product shift and not just a label change." },
+  { h: "Five-question framework applied", todo: "TODO: walk through \"what does it know / what can it decide / what should it do / when should a person be involved / how do we know it worked\" for this specific product, with specifics, not the generic framing already on the homepage." },
+  { h: "Options rejected and why", todo: "TODO: at least one real alternative you considered and didn't ship, and the reasoning, matching the Decision-block format used on the other two case studies." },
+  { h: "Human-oversight moments", todo: "TODO: the exact point(s) where a person reviews, approves, or can override the agent, and what happens if they don't." },
+  { h: "Outcome", todo: "TODO: what shipped (if anything) and any real evidence of it working. If there's no metric, write the honest \"what I couldn't measure and how I'd know\" version instead, same as the other two case studies." },
+  { h: "What I'd do differently", todo: "TODO: the judgment/reflection section, same role as \"Judgment\" on Time Management." },
+];
 ---
 
-<Base title="Chatbot → Agentic AI → AI-native experiences | Kishore Sudhamalla">
+<Base title="Chatbot → Agentic AI → AI-native experiences | Kishore Sudhamalla" noindex={true}>
   <article class="container-pg stub">
-    <p class="stub-label">Case study 03 · Coming soon</p>
+    <p class="stub-label">Case study 03 · Draft template, not published</p>
     <h1>Chatbot → Agentic AI → AI-native experiences</h1>
     <p class="stub-tag">Exploring what changes when AI moves from answering questions to getting work done.</p>
     <p class="stub-p">
@@ -27,6 +37,15 @@ import Base from "../../layouts/Base.astro";
         This one doesn't have a finished story to tell yet, so I'd rather hold it than publish a placeholder dressed up as a case study. Check back in a few weeks, or email me if you'd like to talk through the thinking sooner.
       </p>
       <a class="stub-soon-link" href="mailto:build@kishoresudhamalla.com">build@kishoresudhamalla.com</a>
+    </div>
+
+    <div class="stub-outline">
+      {SECTIONS.map((s) => (
+        <section class="stub-section">
+          <h2>{s.h}</h2>
+          <p class="stub-todo">{s.todo}</p>
+        </section>
+      ))}
     </div>
   </article>
 </Base>
@@ -59,4 +78,16 @@ import Base from "../../layouts/Base.astro";
     text-decoration: underline; text-underline-offset: 3px; width: fit-content;
   }
   .stub-soon-link:hover { color: var(--color-ink-2); }
+
+  .stub-outline { margin-top: 3rem; border-top: 1px solid var(--color-border); padding-top: 2rem; }
+  .stub-section { margin-bottom: 1.75rem; }
+  .stub-section h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.125rem;
+    letter-spacing: -0.015em; color: var(--color-ink); margin: 0 0 0.5rem;
+  }
+  .stub-todo {
+    font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.6;
+    color: var(--color-ink-3); margin: 0; padding: 0.75rem 1rem;
+    border-left: 2px solid var(--color-border); background: var(--color-surface);
+  }
 </style>
