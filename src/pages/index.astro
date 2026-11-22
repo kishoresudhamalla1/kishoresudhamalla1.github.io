@@ -64,36 +64,42 @@ const WORK = [
 ];
 
 const QUESTIONS = [
-  { q: "What does the system know?", preview: "It reads the ticket's changelog, the comment thread and the current policy. Nothing more." },
+  { q: "What does the agent know?", preview: "It reads the ticket's changelog, the comment thread and the current policy. Nothing more." },
   { q: "What can it decide?", preview: "It can flag a risk and suggest a reason. It never changes a date or a status itself." },
   { q: "What should it do?", preview: "Write one sentence explaining the risk, cite exactly what it read, then stop." },
-  { q: "When should a person be involved?", preview: "Before anything writes back to Jira. Every time, no exceptions." },
+  { q: "When should a human step in?", preview: "Before anything writes back to Jira. Every time, no exceptions." },
   { q: "How do we know it worked?", preview: "It checks its own advice against what actually happened, and says so when it was wrong." },
+];
+const STATS = [
+  { n: "16+", l: "Years in design" },
+  { n: "9", l: "Years at Darwinbox" },
+  { n: "120+", l: "Countries served" },
 ];
 ---
 
-<Base title="Kishore Sudhamalla | Principal Product Designer" description="Darwinbox's first designer. I design how AI agents know when to ask a person, from core platform to its agentic AI products.">
+<Base title="Kishore Sudhamalla | Principal Product Designer" description="Founding designer at Darwinbox. I design complex enterprise products and AI experiences that make work simpler.">
   <!-- Hero -->
   <section class="r-hero-wrap">
   <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
   <div class="container-pg r-hero">
-    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer · Enterprise AI Agents</p>
+    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
     <h1 class="r-h1 enter" style="--tier:0">
-      I design how
-      <span class="r-h1-accent">AI agents know when to ask a person.</span>
+      I design complex enterprise products
+      <span class="r-h1-accent">and AI experiences that make work simpler.</span>
     </h1>
 
     <p class="r-lede enter" style="--tier:1">
-      Darwinbox's first designer. I helped take it from one country to a global unicorn, then led UX for its agentic AI platform.
+      Founding designer at Darwinbox. I helped shape its product foundations as it grew from an early-market startup into a global enterprise platform serving 120+ countries. More recently, I've been exploring how agentic AI can change the way people work.
     </p>
 
-    <p class="r-hero-proof enter" style="--tier:1">
-      Led UX across Darwinbox's core platform and its agentic AI products (Darwin Sense, Super Agent, AI Hub), used by 1.6M+ people in 120+ countries.
-    </p>
-
-    <p class="r-hero-facts enter" style="--tier:1">
-      16+ years in design · 11 in product design · AI-native product design
-    </p>
+    <div class="r-stats enter" style="--tier:1">
+      {STATS.map((s) => (
+        <div class="r-stat">
+          <p class="r-stat-n">{s.n}</p>
+          <p class="r-stat-l">{s.l}</p>
+        </div>
+      ))}
+    </div>
 
     <div class="r-cta-row enter" style="--tier:2">
       <a href="#work" class="r-btn r-btn-primary">View my work</a>
@@ -102,11 +108,18 @@ const QUESTIONS = [
   </div>
   </section>
 
-  <!-- Framework intro -->
-  <section class="container-pg r-framework" data-reveal>
-    <p class="r-framework-text">
-      Every agent I design answers five questions: what the system knows, what it can decide, what it should do, when a person should step in, and how we know it worked.
-    </p>
+  <!-- Signature design philosophy: Agentic UX -->
+  <section class="container-pg r-philosophy" data-reveal>
+    <SectionLabel icon="systems">Agentic UX</SectionLabel>
+    <p class="r-philosophy-intro">Every agentic experience I design starts with five questions:</p>
+    <ol class="r-philosophy-grid">
+      {QUESTIONS.map((item, i) => (
+        <li class="r-philosophy-item">
+          <span class="r-philosophy-n">{String(i + 1).padStart(2, "0")}</span>
+          <p class="r-philosophy-q">{item.q}</p>
+        </li>
+      ))}
+    </ol>
   </section>
 
   <!-- Selected work -->
@@ -388,9 +401,14 @@ const QUESTIONS = [
     font-size: clamp(1rem, 1.5vw, 1.125rem); line-height: 1.6;
     color: var(--color-ink-2); max-width: var(--measure); margin: 0 0 1.25rem;
   }
-  .r-hero-proof {
-    font-size: 0.9375rem; line-height: 1.5; font-weight: 500;
-    color: var(--color-ink); max-width: var(--measure); margin: 0 0 1.5rem;
+  .r-stats { display: flex; flex-wrap: wrap; gap: clamp(1.5rem, 4vw, 3rem); margin: 0 0 1.75rem; }
+  .r-stat-n {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em;
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem); line-height: 1; color: var(--color-ink); margin: 0 0 0.3rem;
+  }
+  .r-stat-l {
+    font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--color-ink-3); margin: 0;
   }
   .r-cta-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0; }
   .r-btn {
@@ -404,10 +422,25 @@ const QUESTIONS = [
   .r-btn-ghost { border: 1px solid var(--color-border); color: var(--color-ink); }
   .r-btn-ghost:hover { border-color: var(--color-ink-3); }
 
-  .r-framework { padding-block: 0 clamp(1.5rem, 4vw, 2.5rem); }
-  .r-framework-text {
-    max-width: var(--measure); font-size: 1rem; line-height: 1.6;
-    color: var(--color-ink-2); margin: 0;
+  .r-philosophy { padding-block: clamp(2rem, 5vw, 3rem) clamp(2.5rem, 5vw, 4rem); }
+  .r-philosophy-intro {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(1.25rem, 2.4vw, 1.625rem); line-height: 1.3; color: var(--color-ink);
+    max-width: var(--measure-head); margin: 0 0 clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+  .r-philosophy-grid {
+    list-style: none; margin: 0; padding: 0; display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1px;
+    background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.75rem; overflow: hidden;
+  }
+  .r-philosophy-item { background: var(--color-bg); padding: 1.5rem 1.25rem; }
+  .r-philosophy-n {
+    display: block; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.06em; color: var(--color-ink-3); margin: 0 0 0.9rem;
+  }
+  .r-philosophy-q {
+    font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em;
+    font-size: 1.0625rem; line-height: 1.35; color: var(--color-ink); margin: 0;
   }
 
   .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
@@ -424,11 +457,6 @@ const QUESTIONS = [
     text-decoration: none; border-bottom: 1px solid var(--color-border);
   }
   .r-text-link:hover { border-color: var(--color-ink); }
-
-  .r-hero-facts {
-    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.04em;
-    color: var(--color-ink-3); margin: 0 0 1.75rem;
-  }
 
   .r-prose { padding-block: clamp(2rem, 5vw, 3.5rem); }
   .r-prose > * { max-width: var(--measure); }
