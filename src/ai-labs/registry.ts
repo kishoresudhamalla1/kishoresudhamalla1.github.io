@@ -149,8 +149,22 @@ export const DEMOS: DemoMeta[] = [
     Demo: lazy(() => import("./17-background-agents")),
   },
   {
-    slug: "18-subagent-delegation",
+    slug: "22-autonomy-budgets",
     n: "10",
+    title: "Autonomy budgets",
+    cluster: "acting",
+    strap: "An unattended run needs its own edge, not just a person's patience, to stop at.",
+    inspired: "Pattern seen in Claude Code and Devin, which cap a long-running or background task by actions taken or time spent and check back in before going further",
+    notes: {
+      decision: "The budget is shown as two numbers the whole time it runs, actions used and time left, not hidden until it's spent. Hitting either one stops the run and asks for more, the same shape as any other approval, rather than failing silently or running forever.",
+      tradeoff: "A visible budget is one more thing to explain up front, next to a plan or an approval tier. Without it, \"unattended\" quietly means \"unbounded\", and the only backstop is someone noticing and cancelling the run by hand.",
+      doneWell: "Claude Code and Devin both run long tasks against an explicit cap and pause for a check-in at the edge of it, instead of assuming a person is watching the whole time.",
+    },
+    Demo: lazy(() => import("./22-autonomy-budgets")),
+  },
+  {
+    slug: "18-subagent-delegation",
+    n: "11",
     title: "Sub-agent delegation",
     cluster: "acting",
     strap: "Delegating a piece of the work is not the same shape as a persistent team of named specialists.",
@@ -164,7 +178,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "19-async-notifications",
-    n: "11",
+    n: "12",
     title: "Async notifications",
     cluster: "acting",
     strap: "A finished run that only shows up if you happen to be looking isn't actually asynchronous.",
@@ -178,7 +192,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "20-message-branching",
-    n: "12",
+    n: "13",
     title: "Message editing and branching",
     cluster: "acting",
     strap: "Editing something you already sent should fork the conversation, not erase what it already produced.",
@@ -192,7 +206,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "21-latency-trust",
-    n: "13",
+    n: "14",
     title: "Latency and trust",
     cluster: "acting",
     strap: "The same wait reads as broken, tolerable or fine, depending only on what fills it.",
@@ -206,7 +220,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "06-editable-outputs",
-    n: "14",
+    n: "15",
     title: "Editable outputs",
     cluster: "trusting",
     strap: "AI output is a draft to work on together, not an answer to accept or discard.",
@@ -220,7 +234,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "07-transparency-provenance",
-    n: "15",
+    n: "16",
     title: "Transparency and provenance",
     cluster: "trusting",
     strap: "Cited answers get believed and uncited answers get second guessed.",
@@ -234,7 +248,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "08-failure-recovery",
-    n: "16",
+    n: "17",
     title: "Failure and recovery",
     cluster: "trusting",
     strap: "Most portfolios show the happy path. This shows what happens when it breaks.",
@@ -248,7 +262,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "09-human-handoff",
-    n: "17",
+    n: "18",
     title: "Human handoff",
     cluster: "trusting",
     strap: "The seam between AI and a person should be a relay, not a reset.",
@@ -262,7 +276,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "10-memory-personalization",
-    n: "18",
+    n: "19",
     title: "Memory and personalization",
     cluster: "trusting",
     strap: "Persistent memory is a trust surface, not a feature flag.",
@@ -276,7 +290,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "11-evaluation-observability",
-    n: "19",
+    n: "20",
     title: "Evaluation and observability",
     cluster: "trusting",
     strap: "The part almost nobody designs: how teams ship and maintain agent quality.",
@@ -290,7 +304,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "14-incomplete-responses",
-    n: "20",
+    n: "21",
     title: "Incomplete responses",
     cluster: "trusting",
     strap: "Failure is the easy case to design for. Most incomplete answers aren't failures at all.",
@@ -304,7 +318,7 @@ export const DEMOS: DemoMeta[] = [
   },
   {
     slug: "15-accuracy-communication",
-    n: "21",
+    n: "22",
     title: "Communicating accuracy",
     cluster: "trusting",
     strap: "A blanket low-confidence disclaimer erodes trust in the answers that deserved it least.",

@@ -1,0 +1,32 @@
+.labs .ab-goal { margin-bottom: 1.1rem; }
+.labs .ab-budget {
+  display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.1rem;
+  padding: 0.85rem 0.95rem; border: 1px solid var(--color-border); border-radius: 0.6rem; background: var(--color-surface);
+}
+.labs .ab-budget-row { display: flex; align-items: center; justify-content: space-between; font-size: 0.8125rem; color: var(--color-ink-2); }
+.labs .ab-budget-k { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); }
+.labs .ab-bar { height: 0.45rem; border-radius: 100px; background: var(--color-border); overflow: hidden; }
+.labs .ab-bar-fill { height: 100%; border-radius: inherit; background: var(--lab-agent); transition: width var(--dur-normal) var(--ease-enter); }
+.labs .ab-bar-fill.is-full { background: var(--lab-warn); }
+
+.labs .ab-steps { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.labs .ab-step {
+  display: flex; align-items: center; gap: 0.65rem; padding: 0.6rem 0.75rem;
+  border: 1px solid var(--color-border); border-radius: 0.6rem; font-size: 0.875rem;
+  transition: border-color var(--dur-fast) var(--ease-enter), background-color var(--dur-fast) var(--ease-enter);
+}
+.labs .ab-step--active { border-color: var(--lab-agent); background: var(--lab-agent-soft); }
+.labs .ab-step--waiting { border-color: var(--lab-warn); background: var(--lab-warn-soft); }
+
+.labs .ab-card {
+  margin-bottom: 1rem; border: 1px solid var(--lab-warn); background: var(--lab-warn-soft); border-radius: 0.7rem;
+  padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.7rem;
+}
+.labs .ab-card-h { display: flex; align-items: center; gap: 0.5rem; color: var(--lab-warn); }
+.labs .ab-card-h strong { font-size: 0.9375rem; color: var(--color-ink); }
+
+.labs .ab-controls { margin-top: 0.25rem; }
+.labs .ab-result { margin: 1rem 0 0; font-size: 0.9rem; padding: 0.75rem 0.95rem; border-radius: 0.6rem; background: var(--lab-ok-soft); }
+
+.labs .ab-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.labs .ab-log li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8125rem; flex-wrap: wrap; }
