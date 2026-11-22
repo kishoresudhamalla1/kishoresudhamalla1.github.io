@@ -78,7 +78,7 @@ const FL = "/images/work/flows";
     <section class="r-case-section" data-reveal>
       <SectionLabel icon="craft">Framework</SectionLabel>
       <h2>Replacing blank pages with a smart creation schema.</h2>
-      <p>
+      <p class="r-schema-intro">
         Before this, clicking "Create Journey" meant building everything manually, field by field. We fixed that by splitting the initial blank page into three choices:
       </p>
 
@@ -303,12 +303,13 @@ const FL = "/images/work/flows";
     font-size: clamp(1.125rem, 2.1vw, 1.4375rem); line-height: 1.45; color: var(--color-ink);
   }
 
+  .r-case-section > .r-schema-intro { max-width: 30rem; }
   .r-schema-grid {
     display: grid; grid-template-columns: 1fr; gap: 1.5rem;
     max-width: var(--measure); margin: 0 0 1.25rem;
   }
   @media (min-width: 720px) {
-    .r-schema-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; max-width: none; }
+    .r-schema-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; max-width: none; }
   }
   .r-schema-shot {
     margin: 0; border: 1px solid var(--color-border); border-radius: 0.875rem;
