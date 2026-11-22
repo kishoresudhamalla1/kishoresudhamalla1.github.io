@@ -14,39 +14,30 @@ import SectionLabel from "../components/SectionLabel.astro";
 const WORK = [
   {
     n: "01",
-    short: "Agentic AI platform",
-    word: "AGENT", l1: "Agentic AI.", l2: "In build.", ptitle: "From Chatbot to Agent.",
-    pblurb: "How we decided when the agent acts and when a person approves.",
-    kicker: "01 — Agentic AI · Enterprise platform",
-    title: "Agentic AI platform: from chatbot to agent",
-    tags: ["Agentic AI", "Human oversight", "Enterprise UX"],
-    href: "/work/chatbot-to-agentic",
-    featured: false,
-    inProgress: true,
-  },
-  {
-    n: "02",
     short: "Flows to Playbooks",
     word: "PLAYBOOKS", l1: "Product strategy.", l2: "Journeys shipped.", ptitle: "Orchestrating Moments That Matter.",
     pblurb: "The AI proposes a plan and the admin approves it before anything runs. We looked at letting the AI act on its own with a review afterward, and rejected it. A person should decide before the change happens, not after.",
-    kicker: "02 — Product strategy · Web app",
+    kicker: "01 — Product strategy · Web app",
     title: "From Flows → Journeys → AI Playbooks",
     tags: ["Product strategy", "Workflow design", "AI-native experiences"],
     href: "/work/flows-journeys-playbooks",
     featured: false,
   },
   {
-    n: "03",
+    n: "02",
     short: "Time Management",
     word: "TIME", l1: "Enterprise HCM.", l2: "2023 to 2024.", ptitle: "Redesigning Global Time Management.",
     pblurb: "One dashboard framework, configured per role, for 1.6M+ end users across 120+ countries. The same screen adapts for an employee, a manager or an HR admin, showing only what each person needs to see. Shipped and in daily use.",
-    kicker: "03 — Enterprise HCM · Web app",
+    kicker: "02 — Enterprise HCM · Web app",
     title: "Time Management",
     tags: ["Product design", "Systems thinking", "Enterprise UX"],
     href: "/work/time-management",
     featured: true,
   },
 ];
+// Case study 03 (chatbot-to-agentic) is intentionally not shown here: it's
+// still just a draft outline, not a written case study. The page itself
+// still exists at /work/chatbot-to-agentic (noindex, unlinked).
 
 const QUESTIONS = [
   { q: "What does the agent know?", preview: "It reads the ticket's changelog, the comment thread and the current policy. Nothing more." },
