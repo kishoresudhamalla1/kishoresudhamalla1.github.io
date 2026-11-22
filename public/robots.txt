@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /work/chatbot-to-agentic
+Disallow: /thinking
+
+Sitemap: https://kishoresudhamalla.com/sitemap.xml
