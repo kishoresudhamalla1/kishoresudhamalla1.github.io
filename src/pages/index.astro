@@ -14,27 +14,21 @@ import SectionLabel from "../components/SectionLabel.astro";
 const WORK = [
   {
     n: "01",
-    short: "Time Management",
-    word: "TIME", l1: "Enterprise HCM.", l2: "2023 to 2024.", ptitle: "Redesigning Global Time Management.",
-    pblurb: "Shipped and in daily use across 120+ countries. I redesigned it from the ground up for employees, managers and HR teams.",
-    kicker: "01 — Enterprise HCM · Web app",
-    title: "Time Management",
-    tags: ["Product design", "Systems thinking", "Enterprise UX"],
-    href: "/work/time-management",
-    featured: true,
-    micro: {
-      label: "View as",
-      options: [
-        { label: "Employee", state: "Sees their own attendance, leave balance and team calendar. Nothing about anyone else." },
-        { label: "Manager", state: "Sees the same screen, scoped to their reportees, plus who's overworking and who's about to run out of leave." },
-      ],
-    },
+    short: "Agentic AI platform",
+    word: "AGENT", l1: "Agentic AI.", l2: "In build.", ptitle: "From Chatbot to Agent.",
+    pblurb: "How we decided when the agent acts and when a person approves.",
+    kicker: "01 — Agentic AI · Enterprise platform",
+    title: "Agentic AI platform: from chatbot to agent",
+    tags: ["Agentic AI", "Human oversight", "Enterprise UX"],
+    href: "/work/chatbot-to-agentic",
+    featured: false,
+    inProgress: true,
   },
   {
     n: "02",
     short: "Flows to Playbooks",
     word: "PLAYBOOKS", l1: "Product strategy.", l2: "Journeys shipped.", ptitle: "Orchestrating Moments That Matter.",
-    pblurb: "Journeys shipped and adopted by clients. How a single task grew into a guided journey, then into playbooks an AI can help run.",
+    pblurb: "AI proposes, the admin approves. Why we rejected AI acting directly with after-the-fact review.",
     kicker: "02 — Product strategy · Web app",
     title: "From Flows → Journeys → AI Playbooks",
     tags: ["Product strategy", "Workflow design", "AI-native experiences"],
@@ -49,10 +43,25 @@ const WORK = [
       ],
     },
   },
+  {
+    n: "03",
+    short: "Time Management",
+    word: "TIME", l1: "Enterprise HCM.", l2: "2023 to 2024.", ptitle: "Redesigning Global Time Management.",
+    pblurb: "One dashboard framework, configured per role, for 1.6M+ end users.",
+    kicker: "03 — Enterprise HCM · Web app",
+    title: "Time Management",
+    tags: ["Product design", "Systems thinking", "Enterprise UX"],
+    href: "/work/time-management",
+    featured: true,
+    micro: {
+      label: "View as",
+      options: [
+        { label: "Employee", state: "Sees their own attendance, leave balance and team calendar. Nothing about anyone else." },
+        { label: "Manager", state: "Sees the same screen, scoped to their reportees, plus who's overworking and who's about to run out of leave." },
+      ],
+    },
+  },
 ];
-// Case study 03 (chatbot-to-agentic) is intentionally not shown here:
-// the brief said only finished case studies should appear on the homepage.
-// The page itself still exists at /work/chatbot-to-agentic (noindex, unlinked).
 
 const QUESTIONS = [
   { q: "What does the system know?", preview: "It reads the ticket's changelog, the comment thread and the current policy. Nothing more." },
@@ -63,27 +72,27 @@ const QUESTIONS = [
 ];
 ---
 
-<Base title="Kishore Sudhamalla | Principal Product Designer" description="Founding Product Designer at Darwinbox. I turn complex ideas, systems and workflows into products that feel intuitive and intelligent, and bring the same thinking to AI-native experiences.">
+<Base title="Kishore Sudhamalla | Principal Product Designer" description="Darwinbox's first designer. I design how AI agents know when to ask a person, from core platform to its agentic AI products.">
   <!-- Hero -->
   <section class="r-hero-wrap">
   <div class="r-hero-grid" data-cursor-grid aria-hidden="true"></div>
   <div class="container-pg r-hero">
-    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer</p>
+    <p class="r-eyebrow enter" style="--tier:0">Principal Product Designer · Enterprise AI Agents</p>
     <h1 class="r-h1 enter" style="--tier:0">
-      I turn complex ideas, systems and workflows into
-      <span class="r-h1-accent">products that feel intuitive and intelligent.</span>
+      I design how
+      <span class="r-h1-accent">AI agents know when to ask a person.</span>
     </h1>
 
     <p class="r-lede enter" style="--tier:1">
-      I bring the same thinking to AI: designing experiences that make it clear what AI knows, what it can do, and when a person should step in.
+      Darwinbox's first designer. I helped take it from one country to a global unicorn, then led UX for its agentic AI platform.
     </p>
 
     <p class="r-hero-proof enter" style="--tier:1">
-      Founding Product Designer at Darwinbox, where I later led the redesign of Time Management for 1.6M+ end users across 120+ countries.
+      Led UX across Darwinbox's core platform and its agentic AI products (Darwin Sense, Super Agent, AI Hub), used by 1.6M+ people in 120+ countries.
     </p>
 
     <p class="r-hero-facts enter" style="--tier:1">
-      16+ years in design · 11 years in product design · AI-native product design
+      16+ years in design · 11 in product design · AI-native product design
     </p>
 
     <div class="r-cta-row enter" style="--tier:2">
@@ -91,6 +100,13 @@ const QUESTIONS = [
       <a href="/ai-lab" class="r-btn r-btn-ghost">Explore AI Lab</a>
     </div>
   </div>
+  </section>
+
+  <!-- Framework intro -->
+  <section class="container-pg r-framework" data-reveal>
+    <p class="r-framework-text">
+      Every agent I design answers five questions: what the system knows, what it can decide, what it should do, when a person should step in, and how we know it worked.
+    </p>
   </section>
 
   <!-- Selected work -->
@@ -387,6 +403,12 @@ const QUESTIONS = [
   .r-btn-primary:hover { opacity: 0.85; }
   .r-btn-ghost { border: 1px solid var(--color-border); color: var(--color-ink); }
   .r-btn-ghost:hover { border-color: var(--color-ink-3); }
+
+  .r-framework { padding-block: 0 clamp(1.5rem, 4vw, 2.5rem); }
+  .r-framework-text {
+    max-width: var(--measure); font-size: 1rem; line-height: 1.6;
+    color: var(--color-ink-2); margin: 0;
+  }
 
   .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
 
