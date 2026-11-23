@@ -85,18 +85,28 @@
   @media (pointer: coarse) {
     html[data-theme="vivid"]:not(.dark) body { background-attachment: scroll; }
   }
-  html[data-theme="vivid"]:not(.dark) .r-btn-primary,
-  html[data-theme="vivid"]:not(.dark) .wp-tags li:first-child {
-    background: var(--color-accent);
-    color: #fff;
-  }
-  html[data-theme="vivid"]:not(.dark) a:not(.r-btn):hover { color: var(--color-accent); }
-
   ::selection {
     background: var(--color-ink);
     color: var(--color-bg);
   }
 }
+
+/* Unlayered on purpose: component styles (e.g. Astro scoped <style> blocks)
+ * are also unlayered, so a rule inside @layer base can never beat them no
+ * matter how specific it is. These need to win over .r-btn-primary and
+ * .wp-tags, so they have to sit outside the layer. */
+html[data-theme="vivid"]:not(.dark) .r-btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+html[data-theme="vivid"]:not(.dark) .r-btn-primary:hover { opacity: 0.88; }
+html[data-theme="vivid"]:not(.dark) .wp-tags li:first-child {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: transparent;
+}
+html[data-theme="vivid"]:not(.dark) .r-stat-n { color: var(--color-accent); }
+html[data-theme="vivid"]:not(.dark) a:not(.r-btn):hover { color: var(--color-accent); }
 
 /* ─── Typography ─────────────────────────────────────────────────────────── */
 @layer utilities {
