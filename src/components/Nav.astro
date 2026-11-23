@@ -5,6 +5,7 @@
  * anyone who types the URL directly.
  */
 import { DarkModeToggle } from "./DarkModeToggle.tsx";
+import { DraftThemeToggle } from "./DraftThemeToggle.tsx";
 
 const items = [
   { href: "/#work", label: "Work" },
@@ -23,6 +24,7 @@ const items = [
     </nav>
     <div class="r-nav-right">
       <a href="/resume" class="r-nav-resume">Résumé</a>
+      <DraftThemeToggle client:load />
       <DarkModeToggle client:load />
     </div>
   </div>

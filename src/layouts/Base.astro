@@ -99,6 +99,9 @@ const {
         document.addEventListener("astro:after-swap", function () {
           document.documentElement.classList.add("js");
           window.__navSwapAt = performance.now();
+          try {
+            if (localStorage.getItem("theme-draft") === "vivid") document.documentElement.setAttribute("data-theme", "vivid");
+          } catch (e) {}
         });
         document.addEventListener("astro:after-swap", apply);
         setInterval(apply, 60000);
@@ -106,6 +109,18 @@ const {
           if (!document.hidden) apply();
         });
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", apply);
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        // Draft "vivid" light theme, independent of the day/night dark-mode
+        // schedule above. Manual only, no auto-switching: it just remembers
+        // the visitor's last choice. Has no effect while dark mode is on
+        // (the CSS is scoped to :not(.dark)).
+        try {
+          var draft = localStorage.getItem("theme-draft");
+          if (draft === "vivid") document.documentElement.setAttribute("data-theme", "vivid");
+        } catch (e) {}
       })();
     </script>
     <script is:inline>
