@@ -70,7 +70,7 @@ const STATS = [
     </h1>
 
     <p class="r-lede enter" style="--tier:1">
-      Founding designer at Darwinbox. I helped shape its product foundations as it grew from an early-market startup into a global enterprise platform serving 120+ countries. More recently, I've been exploring how agentic AI can change the way people work.
+      Founding designer at Darwinbox. I helped shape its product foundations as it grew from an early-market startup into a global enterprise platform serving 120+ countries. Today, I design and prototype AI-native enterprise systems, multi-agent workflows, and runtime governance.
     </p>
 
     <div class="r-stats enter" style="--tier:1">
@@ -179,15 +179,34 @@ const STATS = [
       </div>
     </div>
 
-    <a href="/ai-lab" class="r-lab-card">
-      <h3>Design Ops</h3>
-      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean and help designers decide what to do next?</p>
-      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval and verification.</p>
-      <div class="work-card-tags">
-        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+    <div class="r-lab-cards">
+      <div class="r-lab-card">
+        <h3>Design Ops</h3>
+        <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean and help designers decide what to do next?</p>
+        <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval and verification.</p>
+        <div class="work-card-tags">
+          <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
+        </div>
+        <div class="r-lab-card-links">
+          <a href="/work/design-ops" class="r-text-link">View case study &amp; live prototype →</a>
+        </div>
       </div>
-      <span class="r-text-link">Explore AI Lab →</span>
-    </a>
+
+      <div class="r-lab-card">
+        <h3>Agent Control Plane</h3>
+        <p class="r-lab-q">Agents can read a contract. They should not hold the approve button. Can a workbench catch an overspend or a privacy conflict before it happens, live?</p>
+        <p>A human-in-the-loop governance layer that pauses risky agent actions, explains why, and lets a leader apply a fix in one click instead of a dead-end block.</p>
+        <div class="work-card-tags">
+          <span>Enterprise SaaS</span><span>AI Governance</span><span>Systems Architecture</span><span>Live prototype</span>
+        </div>
+        <div class="r-lab-card-links">
+          <a href="/work/agent-control-plane" class="r-text-link">View case study →</a>
+          <a href={PROTOTYPE_URL} class="r-text-link" target="_blank" rel="noopener noreferrer">Try live prototype ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="/ai-lab" class="r-text-link r-lab-all">Explore AI Lab →</a>
   </section>
 
   <!-- Let's talk -->
@@ -489,10 +508,16 @@ const STATS = [
   }
   .r-signal-reset:hover { color: var(--color-ink-2); }
 
+  .r-lab-cards {
+    display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-top: 1.5rem;
+  }
+  @media (min-width: 760px) {
+    .r-lab-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
   .r-lab-card {
-    display: block; max-width: var(--measure); margin-top: 1.5rem; padding: 1.75rem;
+    display: block; padding: 1.75rem;
     border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
-    text-decoration: none; color: inherit; transition: border-color var(--dur-micro) var(--ease-enter);
+    transition: border-color var(--dur-micro) var(--ease-enter);
   }
   .r-lab-card:hover { border-color: var(--color-ink-3); }
   .r-lab-card h3 {
@@ -502,6 +527,8 @@ const STATS = [
   .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
   .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
   .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+  .r-lab-card-links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+  .r-lab-all { display: inline-block; margin-top: 1.5rem; }
 
   .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
   .r-talk-head {
