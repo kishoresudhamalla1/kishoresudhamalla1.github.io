@@ -91,22 +91,30 @@ export function BeforeAfterShowcase({ beforeSrc, afterSrc, pins }: Props) {
           <WireframeFinal />
         )}
 
-        {pins.map((p, i) => (
-          <button
-            type="button"
-            key={i}
-            className="bas-pin"
-            style={{ left: `${p.x}%`, top: `${p.y}%` }}
-            onPointerDown={(e) => e.stopPropagation()}
-            onPointerEnter={() => setActivePin(i)}
-            onPointerLeave={() => setActivePin((cur) => (cur === i ? null : cur))}
-            onClick={(e) => { e.stopPropagation(); setActivePin((cur) => (cur === i ? null : i)); }}
-            aria-label={`Pin ${i + 1}: ${p.label}`}
-          >
-            {i + 1}
-            {activePin === i && <span className="bas-tip">{p.label}</span>}
-          </button>
-        ))}
+        {pins.map((p, i) => {
+          // Flip the tooltip below the pin when there's no room above (it
+          // would otherwise escape the frame and overlap the copy above
+          // the section), and pull it off-center near the left/right edges
+          // so it never runs past the frame itself.
+          const tipSide = p.y < 20 ? "bas-tip--below" : "bas-tip--above";
+          const tipAlign = p.x < 20 ? "bas-tip--left" : p.x > 80 ? "bas-tip--right" : "bas-tip--center";
+          return (
+            <button
+              type="button"
+              key={i}
+              className="bas-pin"
+              style={{ left: `${p.x}%`, top: `${p.y}%` }}
+              onPointerDown={(e) => e.stopPropagation()}
+              onPointerEnter={() => setActivePin(i)}
+              onPointerLeave={() => setActivePin((cur) => (cur === i ? null : cur))}
+              onClick={(e) => { e.stopPropagation(); setActivePin((cur) => (cur === i ? null : i)); }}
+              aria-label={`Pin ${i + 1}: ${p.label}`}
+            >
+              {i + 1}
+              {activePin === i && <span className={`bas-tip ${tipSide} ${tipAlign}`}>{p.label}</span>}
+            </button>
+          );
+        })}
       </div>
 
       {/* Labels live outside both clipped layers so they never overlap the
