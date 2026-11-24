@@ -84,22 +84,34 @@ const EVOLUTION = [
     n: "01",
     title: "Layout and hierarchy",
     sub: "From dashboard clutter to exception-first triage",
-    draft: "A generic admin table treating every agent action with equal visual weight, causing executive alert fatigue.",
-    final: "An exception-first triage flow separating high-risk human gates from safe, silent background automation (REQ-843).",
+    draftTag: "Generic data table",
+    draft: "Every agent action got equal visual weight. Resulted in executive alert fatigue and high cognitive load.",
+    finalTag: "Exception-first triage",
+    final: "A triage flow separating high-risk human gates (REQ-842) from safe, silent automation (REQ-843).",
+    principle: "Signal-to-noise ratio",
+    impact: "Cut executive triage time from 15 minutes to under 2",
   },
   {
     n: "02",
     title: "Information architecture",
     sub: "From disruptive modals to inline drawers",
-    draft: "Blocking pop-up modals for compliance warnings, hiding the surrounding budget context and forcing a context switch.",
-    final: "A right-hand contextual evidence drawer ([DPA §4.2]) that surfaces legal proof without breaking queue flow.",
+    draftTag: "Blocking modal",
+    draft: "A pop-up for compliance warnings. Hid the surrounding budget context and forced a jarring context switch.",
+    finalTag: "Inline evidence drawer",
+    final: "A right-hand drawer ([DPA §4.2]) that surfaces legal proof beside the decision card, queue still in view.",
+    principle: "Contextual continuity",
+    impact: "Removed multi-tab switching for compliance review",
   },
   {
     n: "03",
     title: "Action model",
     sub: "From dead-end rejections to one-click steering",
-    draft: "Standard binary \"Approve / Reject\" buttons that stalled team velocity.",
-    final: "Pre-calculated remediation toggles (\"Enforce EU-Only Data Scope\") that recalculate the pre-flight diff live before execution.",
+    draftTag: "Approve / reject",
+    draft: "A standard binary choice. Resulted in team friction, stalled projects and dead-end admin blocks.",
+    finalTag: "Remediation toggles",
+    final: "Pre-calculated fixes (\"Enforce EU-Only Data Scope\") that recalculate the pre-flight diff live before release.",
+    principle: "Remediation over restriction",
+    impact: "Kept velocity high without loosening InfoSec review",
   },
 ];
 ---
@@ -241,10 +253,10 @@ const EVOLUTION = [
 
     <!-- 5b. Evolution of the control plane -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="judgment">Iteration &amp; craft</SectionLabel>
+      <SectionLabel icon="judgment">Design evolution &amp; craft</SectionLabel>
       <h2>Turning raw AI output into executive-ready software.</h2>
       <p class="aw-tight">
-        The first generation of code or wireframes is always too noisy. It treats every piece of data equally. Here's how I steered the design from Claude's initial draft to the final production architecture.
+        AI tools generate functional code instantly. Executive-grade UX still takes editorial judgment. Here's how I steered the system across three architectural shifts, balancing speed with enterprise governance.
       </p>
 
       <div class="aw-evo">
@@ -257,15 +269,34 @@ const EVOLUTION = [
                 <p class="aw-evo-sub">{e.sub}</p>
               </div>
             </div>
-            <div class="aw-evo-rows">
-              <div class="aw-evo-row aw-evo-row--draft">
-                <p class="aw-evo-row-k">Draft 1</p>
-                <p class="aw-evo-row-v">{e.draft}</p>
+
+            <div class="aw-evo-split">
+              <div class="aw-evo-col aw-evo-col--draft">
+                <div class="aw-evo-col-head">
+                  <span class="aw-evo-badge aw-evo-badge--draft">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 2.7 17a1.8 1.8 0 0 0 1.5 2.7h15.6a1.8 1.8 0 0 0 1.5-2.7L13.7 3.9a1.8 1.8 0 0 0-3.4 0Z"/></svg>
+                    Draft 1
+                  </span>
+                  <span class="aw-evo-state">{e.draftTag}</span>
+                </div>
+                <p class="aw-evo-body">{e.draft}</p>
               </div>
-              <div class="aw-evo-row aw-evo-row--final">
-                <p class="aw-evo-row-k">Final design</p>
-                <p class="aw-evo-row-v">{e.final}</p>
+
+              <div class="aw-evo-col aw-evo-col--final">
+                <div class="aw-evo-col-head">
+                  <span class="aw-evo-badge aw-evo-badge--final">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>
+                    Final design
+                  </span>
+                  <span class="aw-evo-state aw-evo-state--final">{e.finalTag}</span>
+                </div>
+                <p class="aw-evo-body">{e.final}</p>
               </div>
+            </div>
+
+            <div class="aw-evo-foot">
+              <span class="aw-evo-foot-item"><b>Principle</b> {e.principle}</span>
+              <span class="aw-evo-foot-item aw-evo-foot-item--impact"><b>Impact</b> {e.impact}</span>
             </div>
           </div>
         ))}
@@ -415,21 +446,50 @@ const EVOLUTION = [
   /* 5. Hotspot inspector section spacing handled in work-interactive.css */
 
   /* 5b. Evolution of the control plane */
-  .aw-evo { display: flex; flex-direction: column; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
-  .aw-evo-card { background: var(--color-bg); padding: 1.5rem 1.6rem; }
-  .aw-evo-head { display: flex; gap: 1rem; margin-bottom: 1.1rem; }
+  .aw-evo { display: flex; flex-direction: column; gap: 1.5rem; max-width: none; }
+  .aw-evo-card {
+    padding: 1.75rem 1.75rem 1.5rem; border: 1px solid var(--color-border); border-radius: 1rem;
+    background: var(--color-bg);
+  }
+  .aw-evo-head { display: flex; gap: 1rem; margin-bottom: 1.4rem; }
   .aw-evo-n { flex-shrink: 0; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--color-ink-3); line-height: 1.5; }
   .aw-evo-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.25rem; }
   .aw-evo-sub { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0; }
-  .aw-evo-rows { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.6rem; overflow: hidden; }
-  @media (min-width: 640px) { .aw-evo-rows { grid-template-columns: 1fr 1fr; } }
-  .aw-evo-row { padding: 1rem 1.1rem; background: var(--color-bg); }
-  .aw-evo-row--draft { opacity: 0.72; }
-  .aw-evo-row--final { background: var(--color-surface); }
-  .aw-evo-row-k { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.5rem; }
-  .aw-evo-row--final .aw-evo-row-k { color: #4f8a7c; }
-  .aw-evo-row-v { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
-  .aw-evo-row--final .aw-evo-row-v { color: var(--color-ink); }
+
+  .aw-evo-split { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.1rem; }
+  @media (min-width: 640px) { .aw-evo-split { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+
+  .aw-evo-col { border-radius: 0.75rem; padding: 1.1rem 1.25rem; border: 1px solid var(--color-border); }
+  .aw-evo-col--draft { background: var(--color-surface); opacity: 0.82; }
+  .aw-evo-col--final {
+    background: color-mix(in srgb, #4f8a7c 6%, var(--color-surface));
+    border-color: color-mix(in srgb, #4f8a7c 42%, var(--color-border));
+    box-shadow: 0 0 0 1px color-mix(in srgb, #4f8a7c 14%, transparent), 0 10px 28px -18px color-mix(in srgb, #4f8a7c 55%, transparent);
+  }
+
+  .aw-evo-col-head { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .aw-evo-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 0.25rem 0.55rem; border-radius: 999px;
+  }
+  .aw-evo-badge--draft { color: #a37a3a; background: color-mix(in srgb, #c17a4a 16%, transparent); }
+  .aw-evo-badge--final { color: #4f8a7c; background: color-mix(in srgb, #4f8a7c 16%, transparent); }
+  :global(.dark) .aw-evo-badge--draft { color: #e0ac6c; }
+  :global(.dark) .aw-evo-badge--final { color: #7fb8a8; }
+
+  .aw-evo-state {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; color: var(--color-ink-3);
+    padding: 0.2rem 0.5rem; border-radius: 0.35rem; border: 1px dashed var(--color-border);
+  }
+  .aw-evo-state--final { color: var(--color-ink); border-style: solid; border-color: color-mix(in srgb, #4f8a7c 35%, var(--color-border)); }
+  .aw-evo-body { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .aw-evo-col--final .aw-evo-body { color: var(--color-ink); }
+
+  .aw-evo-foot { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border); }
+  .aw-evo-foot-item { font-size: 0.8125rem; color: var(--color-ink-2); }
+  .aw-evo-foot-item b { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); margin-right: 0.45rem; }
+  .aw-evo-foot-item--impact b { color: #4f8a7c; }
 
   /* 6. Reusable pattern cards */
   .aw-patterns { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
