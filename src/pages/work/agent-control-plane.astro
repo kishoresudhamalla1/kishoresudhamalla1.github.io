@@ -874,37 +874,23 @@ const PINS: Pin[] = [
   .aw-tstage:nth-child(2) .aw-tconnector { transition-delay: 430ms; }
   @media (prefers-reduced-motion: reduce) { .aw-tconnector { transition: none; } }
 
-  /* NOW: the live stage. Solid node, filled icon colour, plus an actual
-     glowing halo (blurred, breathing light) rather than just a hard ring,
-     so it reads as "live" at a glance. A small white dot sits on top like
-     a status indicator. */
+  /* NOW: the live stage. Solid node sitting in a big soft blurred green
+     orb that breathes, like light bleeding out from behind it, rather
+     than a hard pulse ring. Just the glow, nothing else on top of it. */
   .aw-tstage--now .aw-tnode {
     position: relative; background: #4f8a7c; border-color: #4f8a7c;
-    animation: aw-tnode-glow 2.4s ease-in-out infinite;
   }
   .aw-tstage--now .aw-tnode::before {
-    content: ""; position: absolute; inset: -0.5rem; border-radius: 50%; z-index: -1;
-    background: radial-gradient(circle, color-mix(in srgb, #4f8a7c 55%, transparent) 0%, transparent 70%);
-    animation: aw-tnode-halo 2.4s ease-in-out infinite;
-  }
-  .aw-tstage--now .aw-tnode::after {
-    content: ""; position: absolute; top: -0.15rem; right: -0.15rem; width: 0.55rem; height: 0.55rem;
-    border-radius: 50%; background: #7fcbb4; border: 2px solid var(--color-bg);
-    animation: aw-tnode-dot 2.4s ease-in-out infinite;
+    content: ""; position: absolute; inset: -1.25rem; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, color-mix(in srgb, #4f8a7c 65%, transparent) 0%, color-mix(in srgb, #4f8a7c 25%, transparent) 45%, transparent 75%);
+    filter: blur(6px);
+    animation: aw-tnode-halo 2.6s ease-in-out infinite;
   }
   .aw-tstage--now .aw-tnode-icon { color: #fff; }
   .aw-tstage--now .aw-tconnector { background: linear-gradient(90deg, #4f8a7c, color-mix(in srgb, #2e63e0 70%, var(--color-border))); }
-  @keyframes aw-tnode-glow {
-    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 20%, transparent), 0 0 18px 2px color-mix(in srgb, #4f8a7c 35%, transparent); }
-    50% { box-shadow: 0 0 0 6px color-mix(in srgb, #4f8a7c 10%, transparent), 0 0 28px 6px color-mix(in srgb, #4f8a7c 45%, transparent); }
-  }
   @keyframes aw-tnode-halo {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0.9; transform: scale(1.18); }
-  }
-  @keyframes aw-tnode-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
+    0%, 100% { opacity: 0.55; transform: scale(0.92); }
+    50% { opacity: 1; transform: scale(1.12); }
   }
 
   /* NEXT: committed, not live yet. Outlined in the accent colour. */
@@ -942,9 +928,7 @@ const PINS: Pin[] = [
   .aw-footer-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0; max-width: 36rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    .aw-tstage--now .aw-tnode,
-    .aw-tstage--now .aw-tnode::before,
-    .aw-tstage--now .aw-tnode::after { animation: none; }
+    .aw-tstage--now .aw-tnode::before { animation: none; }
   }
 </style>
 
