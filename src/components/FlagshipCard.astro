@@ -69,6 +69,9 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
   }
   .fc-visual:hover { opacity: 0.92; }
+  /* Anchor to the top-left on every breakpoint, mobile's `cover` included,
+     so "Governance Queue" / the app's own left edge never gets cropped. */
+  .fc-visual :global(.shot-ph--filled img) { object-position: left top; }
   /* On mobile (stacked, no stretch) the figure keeps its own 16/9 ratio; on
      desktop its box fills whatever height the text column establishes, but
      the screenshot itself stays uncropped inside it (object-fit: contain) -
