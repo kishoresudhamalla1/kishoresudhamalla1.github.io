@@ -91,14 +91,16 @@
 
 /* ── BeforeAfterShowcase ───────────────────────────────────────────────── */
 .bas-frame {
-  position: relative; width: 100%; aspect-ratio: 16 / 9.35;
+  position: relative; width: 100%; aspect-ratio: 2000 / 1132;
   border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden;
   background: var(--color-surface); cursor: ew-resize; touch-action: none; user-select: none;
 }
 .bas-layer { position: absolute; inset: 0; }
-/* `contain`, not `cover`: nothing of either screenshot gets cropped. Both
-   source images are already full-resolution exports, so no upscaling blur. */
-.bas-layer img { display: block; width: 100%; height: 100%; object-fit: contain; background: var(--color-surface); image-rendering: auto; }
+/* `contain`, not `cover`: nothing of either screenshot gets cropped. The
+   frame ratio matches the "after" export almost exactly and both images
+   anchor to the top, so the two screenshots' nav bars land on the same
+   row instead of drifting apart when each gets centered independently. */
+.bas-layer img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: top; background: var(--color-surface); image-rendering: auto; }
 .bas-layer.is-animating { transition: clip-path 650ms cubic-bezier(0.65, 0, 0.35, 1); }
 .bas-wire { display: block; width: 100%; height: 100%; }
 
@@ -153,7 +155,14 @@
 
 .bas-handle { position: absolute; top: 0; bottom: 0; z-index: 4; transform: translateX(-50%); pointer-events: none; }
 .bas-handle.is-animating { transition: left 650ms cubic-bezier(0.65, 0, 0.35, 1); }
-.bas-handle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.15), 0 0 24px rgba(0,0,0,0.35); }
+.bas-handle-line {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%);
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    -10px 0 24px -6px rgba(0, 0, 0, 0.55),
+    10px 0 24px -6px rgba(0, 0, 0, 0.55);
+}
 .bas-handle-thumb {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 2.25rem; height: 2.25rem; border-radius: 50%; background: #fff; color: #1b1a16;
