@@ -21,19 +21,23 @@ import { BeforeAfterShowcase } from "../../components/work/BeforeAfterShowcase.t
 const PROTOTYPE_URL = "/demo/agent-control-plane/index.html";
 const IMG = "/images/work/agent-control-plane";
 
+const ICONS = {
+  flame: `<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>`,
+  shieldAlert: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M12 8v4"/><path d="M12 16h.01"/>`,
+  bellRing: `<path d="M6 8a6 6 0 0 1 12 0c0 4.5 1.4 6 2.74 7.33A1 1 0 0 1 20 17H4a1 1 0 0 1-.74-1.67C4.6 14 6 12.5 6 8Z"/><path d="M10.27 21a2 2 0 0 0 3.46 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/>`,
+  checkCircle: `<path d="M21.8 10A10 10 0 1 1 17 3.34"/><path d="m9 11 3 3L22 4"/>`,
+  layers: `<path d="m12.83 2.18 8 3.6a1 1 0 0 1 0 1.83l-8 3.6a2 2 0 0 1-1.66 0l-8-3.6a1 1 0 0 1 0-1.83l8-3.6a2 2 0 0 1 1.66 0Z"/><path d="m22 17.65-9.17 4.12a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.12a2 2 0 0 1-1.66 0L2 12.65"/>`,
+  sliders: `<path d="M4 21v-7"/><path d="M4 10V3"/><path d="M12 21v-9"/><path d="M12 8V3"/><path d="M20 21v-5"/><path d="M20 12V3"/><path d="M1 14h6"/><path d="M9 8h6"/><path d="M17 16h6"/>`,
+  fileCheck: `<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/>`,
+  gitCompare: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/>`,
+  scale: `<path d="M16 16h6"/><path d="M8 16H2"/><path d="M12 3v18"/><path d="M3 7h3l3 9-4.5 0z" /><path d="M15 7h3l3 9-4.5 0z"/>`,
+  network: `<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4"/><path d="M12 12H5v4"/><path d="M12 12h7v4"/>`,
+};
+
 const RISKS = [
-  {
-    k: "Unbudgeted capital burn",
-    v: "An agent provisioning compute or renewing contracts without spend caps can blow a quarter's budget in seconds.",
-  },
-  {
-    k: "Cross-border regulatory fines",
-    v: "Routing EU customer telemetry to a US server breaks GDPR residency law, exposing the company to multi-million-dollar penalties.",
-  },
-  {
-    k: "Executive alert fatigue",
-    v: "Fifty context-free \"approve or reject\" Slack pings a day train VP and InfoSec leaders to rubber-stamp risk.",
-  },
+  { icon: ICONS.flame, color: "#c17a4a", stat: "200ms", k: "Unbudgeted capital burn", v: "Autonomous API renewals blow quarterly caps before finance notices." },
+  { icon: ICONS.shieldAlert, color: "#2e63e0", stat: "€20M+", k: "Cross-border GDPR exposure", v: "Routing EU telemetry to US servers triggers immediate regulatory fines." },
+  { icon: ICONS.bellRing, color: "#b8604f", stat: "50+/day", k: "Executive alert fatigue", v: "Context-free Slack pings train leaders to blindly rubber-stamp risk." },
 ];
 
 const COMPETITORS = [
@@ -67,30 +71,39 @@ const COMPETITORS = [
   },
 ];
 
-const PRINCIPLES = [
+interface PrincipleTag {
+  kind: "pill" | "split" | "toggle" | "mono";
+  text?: string;
+  parts?: string[];
+}
+const PRINCIPLES: { n: string; icon: string; title: string; rule: string; tag: PrincipleTag }[] = [
   {
     n: "01",
-    tag: "REQ-843",
+    icon: ICONS.checkCircle,
     title: "Silence for safe work",
-    body: "Routine renewals within budget auto-execute silently. Only interrupt humans when a threshold breaks.",
+    rule: "Safe renewals run unseen; humans only see broken thresholds.",
+    tag: { kind: "pill", text: "REQ-843 · Auto-Executed" },
   },
   {
     n: "02",
-    tag: "No bare approve",
+    icon: ICONS.layers,
     title: "Context over rubber-stamps",
-    body: "Never render a standalone \"Approve\" button. Pair every dollar figure with its compliance impact.",
+    rule: "Never approve blind. Pair every dollar with its legal proof.",
+    tag: { kind: "split", parts: ["+$12k Cap", "GDPR §4.2"] },
   },
   {
     n: "03",
-    tag: "No dead ends",
+    icon: ICONS.sliders,
     title: "Fixes over hard stops",
-    body: "A blocked message stalls teams. Every policy trigger calculates a safe alternative on the spot.",
+    rule: "Every policy trigger computes a safe fix on the spot.",
+    tag: { kind: "toggle", text: "Enforce EU-Only Scope" },
   },
   {
     n: "04",
-    tag: "Every override",
+    icon: ICONS.fileCheck,
     title: "Proof by default",
-    body: "Every human override, cap change or region reroute writes an immutable audit receipt automatically.",
+    rule: "Every override or cap edit writes a tamper-proof receipt.",
+    tag: { kind: "mono", text: "LOG #9921 · Immutable" },
   },
 ];
 
@@ -159,14 +172,16 @@ const PINS: Pin[] = [
       <SectionLabel icon="impact">01 &middot; The enterprise risk</SectionLabel>
       <h2>When software acts on its own, a 200ms mistake costs millions.</h2>
       <p class="aw-tight">
-        Traditional SaaS waited for humans to click buttons. Autonomous agents execute at machine speed, exposing three operational failures.
+        Traditional SaaS waited for humans to click buttons. Autonomous agents execute at machine speed.
       </p>
 
-      <div class="aw-risk">
+      <div class="aw-stat-strip">
         {RISKS.map((r) => (
-          <div class="aw-risk-card">
-            <p class="aw-risk-k">{r.k}</p>
-            <p class="aw-risk-v">{r.v}</p>
+          <div class="aw-stat">
+            <svg class="aw-stat-icon" style={`color:${r.color}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={r.icon} />
+            <p class="aw-stat-num">{r.stat}</p>
+            <p class="aw-stat-k">{r.k}</p>
+            <p class="aw-stat-v">{r.v}</p>
           </div>
         ))}
       </div>
@@ -214,18 +229,34 @@ const PINS: Pin[] = [
       <div class="aw-principles">
         {PRINCIPLES.map((p) => (
           <div class="aw-pcard">
-            <div class="aw-pcard-head">
+            <div class="aw-pcard-top">
+              <svg class="aw-pcard-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={p.icon} />
               <span class="aw-pcard-n">{p.n}</span>
-              <span class="aw-pcard-tag">{p.tag}</span>
             </div>
             <h3 class="aw-pcard-title">{p.title}</h3>
-            <p class="aw-pcard-body">{p.body}</p>
+
+            {p.tag.kind === "pill" && <span class="aw-mtag aw-mtag--good">{p.tag.text}</span>}
+            {p.tag.kind === "split" && (
+              <span class="aw-mtag-split">
+                <span class="aw-mtag">{p.tag.parts![0]}</span>
+                <span class="aw-mtag">{p.tag.parts![1]}</span>
+              </span>
+            )}
+            {p.tag.kind === "toggle" && (
+              <span class="aw-mtag-toggle">
+                <span class="aw-mtag-toggle-switch"><span class="aw-mtag-toggle-dot" /></span>
+                {p.tag.text}
+              </span>
+            )}
+            {p.tag.kind === "mono" && <span class="aw-mtag aw-mtag--mono">{p.tag.text}</span>}
+
+            <p class="aw-pcard-rule">{p.rule}</p>
           </div>
         ))}
       </div>
 
       <p class="aw-tight aw-arch-intro">
-        Global enterprises run across dozens of jurisdictions. A central Policies engine parses regional laws and department budgets into live pre-flight checks.
+        A central Policies engine parses regional law and department budgets into live pre-flight checks.
       </p>
 
       <div class="aw-arch" role="img" aria-label="Architecture diagram: Finance rules and country policies feed into a Control Plane Interceptor, which branches into Auto-Execute or Pause and Steer">
@@ -349,40 +380,54 @@ const PINS: Pin[] = [
 
       <div class="aw-patterns">
         <div class="aw-pattern">
-          <p class="aw-pattern-k">The pre-flight diff</p>
-          <div class="aw-pattern-mini">
-            <span class="aw-pattern-chip aw-pattern-chip--bad">$42k</span>
-            <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-chip aw-pattern-chip--good">$21k</span>
+          <div class="aw-pattern-head">
+            <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.gitCompare} />
+            <p class="aw-pattern-k">The pre-flight diff</p>
           </div>
-          <div class="aw-pattern-mini">
-            <span class="aw-pattern-chip aw-pattern-chip--bad">US-East</span>
-            <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-chip aw-pattern-chip--good">EU-Frankfurt</span>
+          <div class="aw-diff-table">
+            <div class="aw-diff-row">
+              <span class="aw-diff-label">Spend</span>
+              <span class="aw-diff-from">$42,000</span>
+              <span class="aw-diff-arrow">&rarr;</span>
+              <span class="aw-diff-to">$21,000</span>
+            </div>
+            <div class="aw-diff-row">
+              <span class="aw-diff-label">Region</span>
+              <span class="aw-diff-from">US-East</span>
+              <span class="aw-diff-arrow">&rarr;</span>
+              <span class="aw-diff-to">EU-Frankfurt</span>
+            </div>
           </div>
-          <p class="aw-pattern-body">A before-vs-after impact table, shown before an agent commits an irreversible action.</p>
+          <p class="aw-pattern-body">Shown before any irreversible action.</p>
         </div>
 
         <div class="aw-pattern">
-          <p class="aw-pattern-k">Confidence escalation tiers</p>
+          <div class="aw-pattern-head">
+            <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.scale} />
+            <p class="aw-pattern-k">Confidence escalation tiers</p>
+          </div>
           <div class="aw-pattern-conf">
             <span class="aw-pattern-conf-tag">REQ-844</span>
             <span class="aw-pattern-conf-score">61%</span>
           </div>
           <div class="aw-pattern-conf-bar"><div class="aw-pattern-conf-bar-fill" style="width:61%"></div></div>
-          <p class="aw-pattern-body">Redacted contract clauses route to legal counsel with the missing terms highlighted, not auto-approved.</p>
+          <span class="aw-mtag aw-mtag--warn">[REDACTED §7.3]</span>
+          <p class="aw-pattern-body">Routes to legal, never auto-approved.</p>
         </div>
 
         <div class="aw-pattern">
-          <p class="aw-pattern-k">Living agent pipeline</p>
-          <div class="aw-pattern-chain">
-            <span class="aw-pattern-node">Procurement</span>
-            <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-node">Finance</span>
-            <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-node aw-pattern-node--flag">InfoSec</span>
+          <div class="aw-pattern-head">
+            <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.network} />
+            <p class="aw-pattern-k">Living agent pipeline</p>
           </div>
-          <p class="aw-pattern-body">The exact sub-agent chain stays visible, so it's clear which agent raised which flag.</p>
+          <div class="aw-pattern-chain">
+            <span class="aw-pattern-node aw-pattern-node--ok">&check; Procurement</span>
+            <span class="aw-pattern-arrow">&rarr;</span>
+            <span class="aw-pattern-node aw-pattern-node--ok">&check; Finance</span>
+            <span class="aw-pattern-arrow">&rarr;</span>
+            <span class="aw-pattern-node aw-pattern-node--flag">! InfoSec Block</span>
+          </div>
+          <p class="aw-pattern-body">Pinpoints exactly which agent raised the flag.</p>
         </div>
       </div>
     </section>
@@ -444,12 +489,24 @@ const PINS: Pin[] = [
   }
   .aw-tight { max-width: 34rem !important; margin-bottom: 1.5rem !important; }
 
-  /* 01. Enterprise risk matrix */
-  .aw-risk { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
-  @media (min-width: 760px) { .aw-risk { grid-template-columns: repeat(3, 1fr); } }
-  .aw-risk-card { background: var(--color-bg); padding: 1.4rem 1.5rem; }
-  .aw-risk-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.6rem; }
-  .aw-risk-v { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  /* 01. Enterprise risk: big-number + icon stat strip, no boxed cards */
+  .aw-stat-strip {
+    display: grid; grid-template-columns: 1fr; max-width: none;
+    border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 760px) { .aw-stat-strip { grid-template-columns: repeat(3, 1fr); } }
+  .aw-stat {
+    padding: 1.5rem 1.75rem; border-top: 1px solid var(--color-border);
+  }
+  .aw-stat:first-child { border-top: none; }
+  @media (min-width: 760px) {
+    .aw-stat { border-top: none; border-left: 1px solid var(--color-border); }
+    .aw-stat:first-child { border-left: none; }
+  }
+  .aw-stat-icon { width: 1.5rem; height: 1.5rem; margin-bottom: 1rem; }
+  .aw-stat-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.25rem); letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.5rem; }
+  .aw-stat-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.5rem; }
+  .aw-stat-v { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
 
   /* 02. Competitive landscape grid + core problem callout */
   .aw-compete { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; margin-bottom: 1.5rem; }
@@ -476,19 +533,37 @@ const PINS: Pin[] = [
   .aw-core-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-ink); margin: 0 0 0.9rem; max-width: 42rem; }
   .aw-core-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0; max-width: 42rem; }
 
-  /* 3. Design principles 2x2 */
+  /* 03. Principle + micro-UI strip (a column rhythm, not boxed cards,
+     deliberately different from section 01's row strip and section 02's
+     bordered grid). */
   .aw-arch-intro { margin-top: 2rem !important; }
-  .aw-principles { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
-  @media (min-width: 640px) { .aw-principles { grid-template-columns: 1fr 1fr; } }
-  .aw-pcard { background: var(--color-bg); padding: 1.4rem 1.5rem; }
-  .aw-pcard-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
-  .aw-pcard-n { font-family: var(--font-mono); font-size: 1.125rem; font-weight: 700; color: var(--color-ink-3); }
-  .aw-pcard-tag {
-    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.04em;
-    padding: 0.25rem 0.55rem; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-ink-3);
+  .aw-principles { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: none; }
+  @media (min-width: 640px) { .aw-principles { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .aw-principles { grid-template-columns: repeat(4, 1fr); } }
+  .aw-pcard { padding: 1.4rem 1.4rem 0; border-top: 2px solid var(--color-ink); }
+  .aw-pcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .aw-pcard-icon { width: 1.375rem; height: 1.375rem; color: var(--color-ink-2); }
+  .aw-pcard-n { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-3); }
+  .aw-pcard-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.85rem; }
+  .aw-pcard-rule { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0.85rem 0 0; }
+
+  /* micro-UI tags shared by principles + pattern cards */
+  .aw-mtag {
+    display: inline-flex; align-items: center; font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+    padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 1px solid var(--color-border); color: var(--color-ink-2); background: var(--color-surface);
   }
-  .aw-pcard-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.5rem; }
-  .aw-pcard-body { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .aw-mtag--good { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); background: color-mix(in srgb, #4f8a7c 8%, var(--color-surface)); }
+  .aw-mtag--warn { color: #c17a4a; border-color: color-mix(in srgb, #c17a4a 40%, var(--color-border)); background: color-mix(in srgb, #c17a4a 8%, var(--color-surface)); margin-top: 0.75rem; }
+  .aw-mtag--mono { letter-spacing: 0.02em; }
+  .aw-mtag-split { display: inline-flex; gap: 0.4rem; flex-wrap: wrap; }
+  .aw-mtag-toggle {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    font-size: 0.8125rem; font-weight: 500; color: var(--color-ink);
+  }
+  .aw-mtag-toggle-switch {
+    position: relative; width: 1.75rem; height: 1rem; border-radius: 999px; background: #4f8a7c; flex-shrink: 0;
+  }
+  .aw-mtag-toggle-dot { position: absolute; top: 0.1rem; right: 0.1rem; width: 0.8rem; height: 0.8rem; border-radius: 50%; background: #fff; }
 
   /* 4. Architecture diagram */
   .aw-arch { display: flex; align-items: center; gap: 0; max-width: none; overflow-x: auto; padding: 0.5rem 0; }
@@ -542,31 +617,38 @@ const PINS: Pin[] = [
   .aw-embed-frame { position: relative; width: 100%; aspect-ratio: 16 / 10; background: var(--color-surface); }
   .aw-embed-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-  /* 6. Reusable pattern cards */
+  /* 07. Reusable pattern cards: tactile mini UI widgets, boxed grid (this
+     one deliberately keeps the bordered-card look, since neither
+     neighbouring section uses it). */
   .aw-patterns { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
   @media (min-width: 760px) { .aw-patterns { grid-template-columns: repeat(3, 1fr); } }
   .aw-pattern { background: var(--color-bg); padding: 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .aw-pattern-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.4rem; }
+  .aw-pattern-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.3rem; }
+  .aw-pattern-icon { width: 1.125rem; height: 1.125rem; color: var(--color-ink-3); flex-shrink: 0; }
+  .aw-pattern-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0; }
   .aw-pattern-body { font-size: 0.8125rem; line-height: 1.55; color: var(--color-ink-2); margin: 0.5rem 0 0; }
-  .aw-pattern-mini { display: flex; align-items: center; gap: 0.5rem; }
-  .aw-pattern-chip {
-    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
-    padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 1px solid var(--color-border);
-  }
-  .aw-pattern-chip--bad { color: #b8604f; border-color: color-mix(in srgb, #b8604f 40%, var(--color-border)); background: color-mix(in srgb, #b8604f 8%, var(--color-surface)); }
-  .aw-pattern-chip--good { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); background: color-mix(in srgb, #4f8a7c 8%, var(--color-surface)); }
-  .aw-pattern-arrow { color: var(--color-ink-3); font-size: 0.8125rem; }
+
+  .aw-diff-table { display: flex; flex-direction: column; gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.5rem; overflow: hidden; }
+  .aw-diff-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.7rem; background: var(--color-surface); font-family: var(--font-mono); font-size: 0.75rem; }
+  .aw-diff-label { color: var(--color-ink-3); flex-shrink: 0; width: 3.2rem; }
+  .aw-diff-from { color: var(--color-ink-3); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--color-ink-3) 50%, transparent); }
+  .aw-diff-arrow { color: var(--color-ink-3); }
+  .aw-diff-to { color: #4f8a7c; font-weight: 700; }
+
   .aw-pattern-conf { display: flex; align-items: baseline; justify-content: space-between; }
   .aw-pattern-conf-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); }
   .aw-pattern-conf-score { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: #c17a4a; }
   .aw-pattern-conf-bar { height: 0.35rem; border-radius: 999px; background: var(--color-border); overflow: hidden; }
   .aw-pattern-conf-bar-fill { height: 100%; border-radius: 999px; background: #c17a4a; }
+
   .aw-pattern-chain { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+  .aw-pattern-arrow { color: var(--color-ink-3); font-size: 0.8125rem; }
   .aw-pattern-node {
     font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; color: var(--color-ink-2);
     padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 1px solid var(--color-border); background: var(--color-surface);
   }
-  .aw-pattern-node--flag { color: #b8604f; border-color: color-mix(in srgb, #b8604f 40%, var(--color-border)); }
+  .aw-pattern-node--ok { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); }
+  .aw-pattern-node--flag { color: #b8604f; border-color: color-mix(in srgb, #b8604f 40%, var(--color-border)); background: color-mix(in srgb, #b8604f 8%, var(--color-surface)); }
 
   /* 7. Builder note footer card */
   .aw-footer-card {
