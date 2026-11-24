@@ -212,7 +212,10 @@ const STATS = [
   // reload keeps your last choice without a flash of the other variant.
   try {
     var stored = localStorage.getItem("theme-variant");
-    if (stored === "new") document.documentElement.setAttribute("data-theme-variant", "new");
+    if (stored === "new") {
+      document.documentElement.setAttribute("data-theme-variant", "new");
+      document.documentElement.classList.remove("dark");
+    }
   } catch (e) {}
 </script>
 

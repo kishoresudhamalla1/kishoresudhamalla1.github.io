@@ -11,6 +11,7 @@ export function ThemeCompareToggle() {
   useEffect(() => {
     const stored = document.documentElement.getAttribute("data-theme-variant");
     if (stored === "new" || stored === "old") setVariant(stored);
+    if (stored === "new") document.documentElement.classList.remove("dark");
   }, []);
 
   const set = (next: "old" | "new") => {
@@ -20,6 +21,19 @@ export function ThemeCompareToggle() {
       localStorage.setItem("theme-variant", next);
     } catch {
       // ignore
+    }
+    // The New pilot is a light-only aesthetic. A handful of components have
+    // their own hardcoded .dark-specific rules (e.g. the AI Lab signal
+    // card), which fight gold.css's light tokens if the site's own
+    // day/night system had already put .dark on <html>. Rather than patch
+    // every such rule individually, just turn dark mode off while "new" is
+    // active, and hand control back to the site's own theme logic
+    // (window.__theme.apply, exposed by Base.astro) when switching back.
+    const theme = (window as any).__theme;
+    if (next === "new") {
+      document.documentElement.classList.remove("dark");
+    } else if (theme?.apply) {
+      theme.apply();
     }
   };
 
