@@ -186,6 +186,24 @@ const PINS: Pin[] = [
   title="Runtime Governance for Enterprise AI Agents | Kishore Sudhamalla"
   description="How I designed a human-in-the-loop Agent Control Plane that stops budget overruns and regional compliance breaches before they happen."
 >
+  <!-- Progress rail: which of the 8 sections is in view, click to jump -->
+  <nav class="aw-rail" aria-label="Case study sections">
+    {[
+      { id: "s-risk", label: "01 Enterprise risk" },
+      { id: "s-landscape", label: "02 Competitive landscape" },
+      { id: "s-systems", label: "03 Systems thinking" },
+      { id: "s-craft", label: "04 Interaction craft" },
+      { id: "s-evolution", label: "05 Visual evolution" },
+      { id: "s-product", label: "06 Working product" },
+      { id: "s-patterns", label: "07 Scalable patterns" },
+      { id: "s-vision", label: "08 Future vision" },
+    ].map((s) => (
+      <a href={`#${s.id}`} class="aw-rail-dot" data-rail-target={s.id} aria-label={s.label}>
+        <span class="aw-rail-tip">{s.label}</span>
+      </a>
+    ))}
+  </nav>
+
   <!-- 1. Hero + early interactive proof -->
   <section class="container-pg aw-hero" data-reveal>
     <p class="aw-eyebrow"><span class="aw-rule"></span>Flagship case study &middot; AI governance &amp; enterprise SaaS</p>
@@ -203,6 +221,9 @@ const PINS: Pin[] = [
     <figure class="aw-hero-shot">
       <div class="aw-hero-frame">
         <img src={`${IMG}/hero.png`} alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2" />
+        <span class="aw-hero-live" style="left:42%; top:15%" aria-hidden="true">
+          <span class="aw-hero-live-dot" />
+        </span>
       </div>
       <figcaption class="aw-hero-caption">REQ-842 paused at the Human Gate: $42,000 over budget, GDPR §4.2 conflict.</figcaption>
     </figure>
@@ -210,7 +231,7 @@ const PINS: Pin[] = [
 
   <article class="container-pg r-case">
     <!-- 01. The enterprise risk -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-risk" class="r-case-section" data-reveal>
       <SectionLabel icon="impact">01 &middot; The enterprise risk</SectionLabel>
       <h2>When software acts on its own, a 200ms mistake costs millions.</h2>
       <p class="aw-tight">
@@ -230,7 +251,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 02. Competitive landscape -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-landscape" class="r-case-section" data-reveal>
       <SectionLabel icon="context">02 &middot; Competitive landscape</SectionLabel>
       <h2>Existing tools were built for developers or slow human tickets, not autonomous agents.</h2>
       <p class="aw-tight">
@@ -269,7 +290,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 03. Systems thinking -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-systems" class="r-case-section" data-reveal>
       <SectionLabel icon="systems">03 &middot; Systems thinking</SectionLabel>
       <h2>Four rules, and the pipeline that enforces them.</h2>
 
@@ -347,7 +368,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 04. Interactive UI teardown -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-craft" class="r-case-section" data-reveal>
       <SectionLabel icon="craft">04 &middot; Interaction craft</SectionLabel>
       <h2>Anatomy of the decision workspace.</h2>
       <p class="aw-tight">Click a pin to open the decision behind it.</p>
@@ -361,7 +382,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 05. Visual evolution: before/after slider -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-evolution" class="r-case-section" data-reveal>
       <SectionLabel icon="judgment">05 &middot; Visual evolution</SectionLabel>
       <h2>Steering raw AI output into executive-grade craft.</h2>
       <p class="aw-tight">Drag the slider to inspect how I restructured hierarchy, removed blocking modals, and added live remediation.</p>
@@ -394,7 +415,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 06. Working product: live prototype -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-product" class="r-case-section" data-reveal>
       <SectionLabel icon="film">06 &middot; Working product</SectionLabel>
       <h2>Test the live Agent Control Plane.</h2>
 
@@ -421,7 +442,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 07. Reusable patterns + builder note -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-patterns" class="r-case-section" data-reveal>
       <SectionLabel icon="validated">07 &middot; Scalable patterns</SectionLabel>
       <h2>Reusable primitives for AI-native enterprise software.</h2>
 
@@ -480,7 +501,7 @@ const PINS: Pin[] = [
     </section>
 
     <!-- 08. Future vision and roadmap -->
-    <section class="r-case-section" data-reveal>
+    <section id="s-vision" class="r-case-section" data-reveal>
       <SectionLabel icon="systems">08 &middot; Future vision</SectionLabel>
       <h2>Scaling from single-request gates to living global policy engines.</h2>
       <p class="aw-tight">
@@ -545,8 +566,7 @@ const PINS: Pin[] = [
   .aw-chip b { color: var(--color-ink); font-weight: 600; margin-right: 0.3rem; }
 
   .aw-hero-shot { margin: 0.5rem 0 0; }
-  .aw-hero-frame { border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
-  .aw-hero-frame { overflow: hidden; }
+  .aw-hero-frame { position: relative; border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
   .aw-hero-frame img {
     display: block; width: 100%; height: auto;
     animation: aw-hero-zoom 1.4s var(--ease-enter) both;
@@ -557,6 +577,48 @@ const PINS: Pin[] = [
   }
   @media (prefers-reduced-motion: reduce) { .aw-hero-frame img { animation: none; } }
   .aw-hero-caption { margin: 0.9rem 0 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); }
+
+  /* A small "this is live" tell over the Blocked status in the hero shot,
+     the same breathing-dot language as the timeline's NOW node. */
+  .aw-hero-live { position: absolute; width: 0; height: 0; }
+  .aw-hero-live-dot {
+    position: absolute; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: #b8604f; box-shadow: 0 0 0 0 rgba(184, 96, 79, 0.55);
+    animation: aw-hero-live-ping 2s ease-out infinite;
+  }
+  @keyframes aw-hero-live-ping {
+    0% { box-shadow: 0 0 0 0 rgba(184, 96, 79, 0.55); }
+    70% { box-shadow: 0 0 0 9px rgba(184, 96, 79, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(184, 96, 79, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .aw-hero-live-dot { animation: none; } }
+
+  /* Progress rail: a thin fixed strip of dots down the right edge marking
+     which of the 8 sections is in view. Desktop only; there's no room
+     for it once the layout narrows, and the page is short enough on
+     mobile that it adds little. */
+  .aw-rail {
+    display: none;
+  }
+  @media (min-width: 1240px) {
+    .aw-rail {
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      position: fixed; right: 1.75rem; top: 50%; transform: translateY(-50%); z-index: 40;
+    }
+  }
+  .aw-rail-dot {
+    position: relative; display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--color-border); transition: background-color 200ms ease, transform 200ms ease;
+  }
+  .aw-rail-dot:hover, .aw-rail-dot:focus-visible { transform: scale(1.3); background: var(--color-ink-3); }
+  .aw-rail-dot.is-active { background: var(--color-ink); transform: scale(1.4); }
+  .aw-rail-tip {
+    position: absolute; right: calc(100% + 0.75rem); top: 50%; transform: translateY(-50%);
+    white-space: nowrap; font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+    color: #fff; background: #111110; padding: 0.35rem 0.6rem; border-radius: 0.4rem;
+    opacity: 0; pointer-events: none; transition: opacity 160ms ease;
+  }
+  .aw-rail-dot:hover .aw-rail-tip, .aw-rail-dot:focus-visible .aw-rail-tip { opacity: 1; }
 
   .r-case { padding-block: 0 clamp(4rem, 8vw, 6rem); }
   .r-case-section > :is(p, h2, h3, .r-decisions) { max-width: var(--measure); }
@@ -877,3 +939,33 @@ const PINS: Pin[] = [
     .aw-tstage--now .aw-tnode::after { animation: none; }
   }
 </style>
+
+<script>
+  // Progress rail: highlight the dot for whichever of the 8 sections is
+  // most in view. One observer, re-bound on each page load since this is
+  // a single long page (no view-transition re-entry concern here, but the
+  // pattern matches the rest of the site's astro:page-load convention).
+  function initRail() {
+    const dots = document.querySelectorAll<HTMLAnchorElement>("[data-rail-target]");
+    if (!dots.length) return;
+    const map = new Map<string, HTMLAnchorElement>();
+    dots.forEach((d) => map.set(d.dataset.railTarget!, d));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const dot = map.get(entry.target.id);
+          if (!dot) return;
+          dot.classList.toggle("is-active", entry.isIntersecting);
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+    map.forEach((_, id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+  initRail();
+  document.addEventListener("astro:page-load", initRail);
+</script>
