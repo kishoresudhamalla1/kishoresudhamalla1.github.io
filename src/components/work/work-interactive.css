@@ -1,0 +1,76 @@
+/* Shared styles for the agent-control-plane case study's interactive React
+   islands (ProtoTabs, HotspotInspector). Scoped by class prefix, not CSS
+   modules, to match the rest of the site's plain-CSS convention. */
+
+/* ── ProtoTabs ─────────────────────────────────────────────────────────── */
+.pt { max-width: none; }
+.pt-tabs { display: flex; gap: 0.4rem; margin-bottom: 0.75rem; }
+.pt-tab {
+  font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.55rem 0.9rem; border-radius: 0.5rem; border: 1px solid var(--color-border);
+  background: var(--color-surface); color: var(--color-ink-3); cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+.pt-tab:hover { color: var(--color-ink); }
+.pt-tab[aria-selected="true"] { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
+
+.pt-stage { border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
+.pt-bar {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem;
+  padding: 0.65rem 1rem; border-bottom: 1px solid var(--color-border); background: var(--color-surface);
+}
+.pt-bar-text { font-size: 0.8125rem; color: var(--color-ink-2); }
+.pt-bar-text code {
+  font-family: var(--font-mono); font-size: 0.75rem; padding: 0.1rem 0.35rem;
+  border-radius: 0.3rem; background: var(--color-border); color: var(--color-ink);
+}
+.pt-open { display: inline-flex; align-items: center; gap: 0.35rem; flex-shrink: 0; font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); text-decoration: none; }
+.pt-open:hover { color: var(--color-ink-2); }
+.pt-frame { position: relative; width: 100%; aspect-ratio: 16 / 10; background: var(--color-surface); }
+.pt-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.pt-shot { background: var(--color-surface); }
+.pt-shot img { display: block; width: 100%; height: auto; }
+
+/* ── HotspotInspector ──────────────────────────────────────────────────── */
+.hs { display: grid; grid-template-columns: 1fr; gap: 1.25rem; max-width: none; }
+@media (min-width: 860px) { .hs { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); align-items: start; } }
+
+.hs-shot { position: relative; border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
+.hs-shot img { display: block; width: 100%; height: auto; }
+.hs-pin {
+  position: absolute; width: 1.75rem; height: 1.75rem; margin: -0.875rem 0 0 -0.875rem;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(13,13,12,0.88); color: #fff;
+  font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  box-shadow: 0 6px 16px -6px rgba(0,0,0,0.5);
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+.hs-pin:hover { transform: scale(1.08); }
+.hs-pin[aria-pressed="true"] { background: #2e63e0; border-color: #2e63e0; color: #fff; }
+
+.hs-panel {
+  border: 1px solid var(--color-border); border-radius: 0.875rem; padding: 1.5rem;
+  background: var(--color-surface);
+}
+.hs-panel-tag {
+  font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.6rem;
+}
+.hs-panel-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.75rem; }
+.hs-panel-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
+.hs-panel-body:last-child { margin-bottom: 0; }
+.hs-panel-tradeoff {
+  padding: 0.85rem 1rem; border-radius: 0.6rem; background: var(--color-bg); border: 1px solid var(--color-border);
+}
+.hs-panel-tradeoff-k { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.4rem; }
+.hs-panel-tradeoff-v { font-size: 0.8125rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+
+.hs-dots { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.hs-dot {
+  width: 1.75rem; height: 1.75rem; border-radius: 50%; border: 1px solid var(--color-border);
+  background: var(--color-bg); color: var(--color-ink-3); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.hs-dot[aria-pressed="true"] { background: var(--color-ink); color: var(--color-bg); border-color: var(--color-ink); }
