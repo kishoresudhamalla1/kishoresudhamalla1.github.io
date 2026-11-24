@@ -1,18 +1,26 @@
 import { useState } from "react";
 import "./work-interactive.css";
 
+interface Annotation {
+  x: number; // percent
+  y: number; // percent
+  side: "left" | "right";
+  label: string;
+}
+
 interface Props {
   prototypeUrl: string;
   screenshotSrc: string;
   screenshotAlt: string;
+  annotations: Annotation[];
 }
 
 /**
- * Hero tab switcher: the live embedded prototype, or a static annotated
- * screenshot for anyone who'd rather scan than click. Two tabs, one visible
- * stage, no page navigation involved.
+ * Hero tab switcher: the live embedded prototype, or a static screenshot
+ * with real callouts over it, for anyone who'd rather scan than click.
+ * Two tabs, one visible stage, no page navigation involved.
  */
-export function ProtoTabs({ prototypeUrl, screenshotSrc, screenshotAlt }: Props) {
+export function ProtoTabs({ prototypeUrl, screenshotSrc, screenshotAlt, annotations }: Props) {
   const [tab, setTab] = useState<0 | 1>(0);
 
   return (
@@ -45,6 +53,16 @@ export function ProtoTabs({ prototypeUrl, screenshotSrc, screenshotAlt }: Props)
         ) : (
           <div className="pt-shot">
             <img src={screenshotSrc} alt={screenshotAlt} loading="lazy" />
+            {annotations.map((a, i) => (
+              <div
+                key={i}
+                className={`pt-note pt-note--${a.side}`}
+                style={{ left: `${a.x}%`, top: `${a.y}%` }}
+              >
+                <span className="pt-note-dot" aria-hidden="true" />
+                <span className="pt-note-label">{a.label}</span>
+              </div>
+            ))}
           </div>
         )}
       </div>
