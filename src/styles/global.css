@@ -63,50 +63,11 @@
     .dark body { background-attachment: scroll; }
   }
 
-  /* ─── Draft: "vivid" light theme ──────────────────────────────────────
-   * Manual preview only (see Base.astro's theme-draft script), never auto-
-   * selected, and scoped to :not(.dark) so it never touches dark mode.
-   * Warmer, cream-tinted surfaces and a blue/pink accent pair instead of
-   * flat ink-on-white, inspired by dineshrevunuru.com's palette. */
-  html[data-theme="vivid"]:not(.dark) body {
-    --color-bg:      #fffdf9;
-    --color-surface: #f6f1e8;
-    --color-ink:     #1b1a16;
-    --color-ink-2:   #5c564a;
-    --color-ink-3:   #6f6a5c;  /* WCAG AA: 4.9:1 on bg, 4.5:1 on surface */
-    --color-border:  #e9e0d0;
-    --color-accent:  #2e63e0;  /* brand blue: links, primary CTA */
-    --color-accent-2: #d44f82; /* warm pink: secondary emphasis */
-    background-color: var(--color-bg);
-    background-image: radial-gradient(ellipse 90% 40% at 18% -8%, rgba(228, 86, 132, 0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 35% at 100% 0%, rgba(46, 99, 224, 0.07) 0%, transparent 60%);
-    background-attachment: fixed;
-  }
-  @media (pointer: coarse) {
-    html[data-theme="vivid"]:not(.dark) body { background-attachment: scroll; }
-  }
   ::selection {
     background: var(--color-ink);
     color: var(--color-bg);
   }
 }
-
-/* Unlayered on purpose: component styles (e.g. Astro scoped <style> blocks)
- * are also unlayered, so a rule inside @layer base can never beat them no
- * matter how specific it is. These need to win over .r-btn-primary and
- * .wp-tags, so they have to sit outside the layer. */
-html[data-theme="vivid"]:not(.dark) .r-btn-primary {
-  background: var(--color-accent);
-  color: #fff;
-}
-html[data-theme="vivid"]:not(.dark) .r-btn-primary:hover { opacity: 0.88; }
-html[data-theme="vivid"]:not(.dark) .wp-tags li:first-child {
-  background: var(--color-accent);
-  color: #fff;
-  border-color: transparent;
-}
-html[data-theme="vivid"]:not(.dark) .r-stat-n { color: var(--color-accent); }
-html[data-theme="vivid"]:not(.dark) a:not(.r-btn):hover { color: var(--color-accent); }
 
 /* ─── Typography ─────────────────────────────────────────────────────────── */
 @layer utilities {
