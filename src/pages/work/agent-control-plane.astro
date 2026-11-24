@@ -45,29 +45,29 @@ const ICONS = {
 
 const ROADMAP = [
   {
-    phase: "NOW", phaseLabel: "Phase 01 · Automated regulatory sync",
+    phase: "NOW", phaseLabel: "Phase 01 · Automatic EU law updates",
     icon: ICONS.globe,
-    headline: "Live European policy ingestion",
-    copy: "Parses EU AI Act and GDPR updates into runtime guardrails. No manual legal rewrites.",
+    headline: "Automatic EU law updates",
+    copy: "Turns new EU AI Act and GDPR updates into live safety checks, without waiting for lawyers to rewrite rules by hand.",
   },
   {
-    phase: "NEXT", phaseLabel: "Phase 02 · Policy sandbox and simulation",
+    phase: "NEXT", phaseLabel: "Phase 02 · Safe policy testing",
     icon: ICONS.flaskConical,
-    headline: "Pre-flight impact replay",
-    copy: "Test a new spend cap or regional rule against 90 days of real agent traffic first.",
+    headline: "Safe policy testing",
+    copy: "Lets finance leaders test a new spending cap against 90 days of past bot activity before turning it on.",
   },
   {
-    phase: "FUTURE", phaseLabel: "Phase 03 · Multi-agent swarm governance",
+    phase: "FUTURE", phaseLabel: "Phase 03 · Multi-bot spending limits",
     icon: ICONS.gitBranch,
-    headline: "Cross-agent delegation boundaries",
-    copy: "A procurement agent spawning sub-agents inherits the same budget and privacy ceiling.",
+    headline: "Multi-bot spending limits",
+    copy: "When one AI bot hires helper bots, all of them stay under the same budget and privacy ceiling.",
   },
 ];
 
 const RISKS = [
-  { icon: ICONS.flame, color: "#c17a4a", stat: "200ms", k: "Unbudgeted capital burn", v: "Autonomous API renewals blow quarterly caps before finance notices." },
-  { icon: ICONS.shieldAlert, color: "#2e63e0", stat: "€20M+", k: "Cross-border GDPR exposure", v: "Routing EU telemetry to US servers triggers immediate regulatory fines." },
-  { icon: ICONS.bellRing, color: "#b8604f", stat: "50+/day", k: "Executive alert fatigue", v: "Context-free Slack pings train leaders to blindly rubber-stamp risk." },
+  { icon: ICONS.flame, color: "#c17a4a", stat: "$12k+", k: "Silent overspend", v: "Bots renew contracts in milliseconds, before finance ever sees the bill." },
+  { icon: ICONS.shieldAlert, color: "#2e63e0", stat: "€20M+", k: "Privacy fines", v: "Sending EU customer data to a US server breaks the law immediately." },
+  { icon: ICONS.bellRing, color: "#b8604f", stat: "50+/day", k: "Blind approvals", v: "Flooding leaders with context-free Slack pings forces rubber-stamping." },
 ];
 
 const COMPETITORS = [
@@ -78,8 +78,8 @@ const COMPETITORS = [
       { name: "LangSmith", icon: ICONS.flaskConical },
       { name: "Weights & Biases", icon: ICONS.scale },
     ],
-    does: "Debug token latency, prompt chains and model drift for engineers.",
-    blindSpot: "Unreadable to a VP of Finance or InfoSec lead checking contract caps or GDPR residency.",
+    does: "Show AI engineers raw code traces and token speeds.",
+    blindSpot: "A finance leader cannot read code logs to check if a contract is over budget.",
   },
   {
     n: "02",
@@ -88,8 +88,8 @@ const COMPETITORS = [
       { name: "Coupa", icon: ICONS.cart },
       { name: "Vanta", icon: ICONS.shieldCheck },
     ],
-    does: "Manage manual purchase tickets and periodic compliance checklists.",
-    blindSpot: "Built for multi-day workflows. Too slow to intercept a 200ms agent transaction.",
+    does: "Track slow purchase orders and annual security checklists.",
+    blindSpot: "Built for human timelines of days or weeks, not bots buying software in seconds.",
   },
   {
     n: "03",
@@ -98,8 +98,8 @@ const COMPETITORS = [
       { name: "Slack", icon: ICONS.messageSquare },
       { name: "Microsoft Teams", icon: ICONS.users },
     ],
-    does: "Route binary approve or reject webhook alerts into a team channel.",
-    blindSpot: "Strips away budget and legal context, training leaders to rubber-stamp risk.",
+    does: "Send simple \"approve or reject\" alerts into busy chat channels.",
+    blindSpot: "Hides budget and legal risk, training busy executives to click Approve without looking.",
   },
   {
     n: "04",
@@ -108,8 +108,8 @@ const COMPETITORS = [
       { name: "Okta", icon: ICONS.key },
       { name: "AWS IAM", icon: ICONS.lock },
     ],
-    does: "Enforce static allow or deny rules for system access.",
-    blindSpot: "Hard blocks stall launches. Cannot steer an agent to reroute data or cap spend.",
+    does: "Enforce rigid \"yes or no\" system permissions.",
+    blindSpot: "Hard blocks stall teams. They cannot guide a bot to fix a mistake on the fly.",
   },
 ];
 
@@ -122,29 +122,29 @@ const PRINCIPLES: { n: string; icon: string; title: string; rule: string; tag: P
   {
     n: "01",
     icon: ICONS.checkCircle,
-    title: "Silence for safe work",
-    rule: "Safe renewals run unseen; humans only see broken thresholds.",
+    title: "Stay quiet when things are safe",
+    rule: "Routine renewals within budget (REQ-843) run automatically. Only interrupt humans when a rule breaks.",
     tag: { kind: "pill", text: "REQ-843 · Auto-Executed" },
   },
   {
     n: "02",
     icon: ICONS.layers,
-    title: "Context over rubber-stamps",
-    rule: "Never approve blind. Pair every dollar with its legal proof.",
+    title: "Never ask for a blind \"Approve\"",
+    rule: "Always show the dollar impact right next to the legal proof, on one screen.",
     tag: { kind: "split", parts: ["+$12k Cap", "GDPR §4.2"] },
   },
   {
     n: "03",
     icon: ICONS.sliders,
-    title: "Fixes over hard stops",
-    rule: "Every policy trigger computes a safe fix on the spot.",
+    title: "Offer fixes, not dead-end errors",
+    rule: "Instead of just blocking a deal, calculate a safe option, like capping a pilot at six months or keeping data in Europe.",
     tag: { kind: "toggle", text: "Enforce EU-Only Scope" },
   },
   {
     n: "04",
     icon: ICONS.fileCheck,
-    title: "Proof by default",
-    rule: "Every override or cap edit writes a tamper-proof receipt.",
+    title: "Leave a clear paper trail",
+    rule: "Every human edit or override automatically saves a permanent receipt for auditors.",
     tag: { kind: "mono", text: "LOG #9921 · Immutable" },
   },
 ];
@@ -168,14 +168,14 @@ const PINS: Pin[] = [
     x: 76, y: 48,
     tag: "[DPA §4.2]",
     title: "Inline evidence drawer",
-    body: "Clicking [DPA §4.2] slides open a right-hand drawer with the exact vendor telemetry clause, no modal, no lost context.",
+    body: "Clicking [DPA §4.2] slides open a right-hand drawer with the exact vendor data clause, no modal, no lost context.",
     tradeoff: "I rejected a blocking modal here. It hid the budget numbers the approver needed to see at the same time.",
   },
   {
     x: 24, y: 53,
     tag: "Steer panel",
     title: "Live steering toggles",
-    body: "Toggling \"Enforce EU-Only Data Scope\" or \"6-Month Pilot Cap\" recalculates the pre-flight diff in real time.",
+    body: "Toggling \"Enforce EU-Only Data Scope\" or \"6-Month Pilot Cap\" updates the dollar and legal impact in real time.",
     tradeoff: "Dead-end rejections stall launches. A pre-calculated fix lets the approver clear the block without a follow-up meeting.",
   },
 ];
@@ -183,8 +183,8 @@ const PINS: Pin[] = [
 ---
 
 <Base
-  title="Runtime Governance for Enterprise AI Agents | Kishore Sudhamalla"
-  description="How I designed a human-in-the-loop Agent Control Plane that stops budget overruns and regional compliance breaches before they happen."
+  title="Stopping AI Agents Before They Overspend or Break Privacy Laws | Kishore Sudhamalla"
+  description="AI agents can buy software and move customer data in milliseconds. I designed a human checkpoint that catches budget overruns and privacy conflicts in real time."
 >
   <!-- Progress rail: which of the 8 sections is in view, click to jump -->
   <nav class="aw-rail" aria-label="Case study sections">
@@ -207,9 +207,9 @@ const PINS: Pin[] = [
   <!-- 1. Hero + early interactive proof -->
   <section class="container-pg aw-hero" data-reveal>
     <p class="aw-eyebrow"><span class="aw-rule"></span>Flagship case study &middot; AI governance &amp; enterprise SaaS</p>
-    <h1 class="aw-title">Runtime Governance for Enterprise AI Agents</h1>
+    <h1 class="aw-title">Stopping AI Agents Before They Overspend or Break Privacy Laws</h1>
     <p class="aw-lede">
-      Autonomous agents can sign contracts and move customer data in milliseconds. I designed the human-in-the-loop control plane that catches budget overruns and GDPR violations before execution.
+      AI agents can buy software and move customer data in milliseconds. I designed a human checkpoint that catches budget overruns and privacy conflicts in real time, giving leaders a one-click fix instead of a dead-end block.
     </p>
 
     <div class="aw-meta-strip">
@@ -232,10 +232,10 @@ const PINS: Pin[] = [
   <article class="container-pg r-case">
     <!-- 01. The enterprise risk -->
     <section id="s-risk" class="r-case-section" data-reveal>
-      <SectionLabel icon="impact">01 &middot; The enterprise risk</SectionLabel>
-      <h2>When software acts on its own, a 200ms mistake costs millions.</h2>
-      <p class="aw-tight">
-        Traditional SaaS waited for humans to click buttons. Autonomous agents execute at machine speed.
+      <SectionLabel icon="impact">01 &middot; The human stakes</SectionLabel>
+      <h2>When software acts on its own, one blind click costs millions.</h2>
+      <p class="aw-story">
+        Meet Dana Okafor, VP of Finance. Before lunch, an AI procurement bot asks her to approve a $42,000 VectorScale contract. Hidden in the fine print: it blows her Q4 budget by $12,000 and sends European customer data to a US server. In a normal Slack ping, Dana sees none of this.
       </p>
 
       <div class="aw-stat-strip">
@@ -252,10 +252,10 @@ const PINS: Pin[] = [
 
     <!-- 02. Competitive landscape -->
     <section id="s-landscape" class="r-case-section" data-reveal>
-      <SectionLabel icon="context">02 &middot; Competitive landscape</SectionLabel>
-      <h2>Existing tools were built for developers or slow human tickets, not autonomous agents.</h2>
+      <SectionLabel icon="context">02 &middot; Why existing tools fail</SectionLabel>
+      <h2>Existing tools were built for engineers or slow paper trails, not fast-moving AI.</h2>
       <p class="aw-tight">
-        Before designing the control plane, I audited four tool categories enterprises stitch together today. Every one breaks down once software acts autonomously.
+        Before designing this, I looked at four tool categories companies already use. Every one breaks down once software starts acting on its own.
       </p>
 
       <div class="aw-compete">
@@ -271,9 +271,12 @@ const PINS: Pin[] = [
               ))}
             </div>
             <p class="aw-compete-cat">{c.category}</p>
-            <p class="aw-compete-does">{c.does}</p>
+            <div>
+              <p class="aw-compete-does-k">What it does</p>
+              <p class="aw-compete-does">{c.does}</p>
+            </div>
             <div class="aw-compete-blind">
-              <p class="aw-compete-blind-k">The blind spot</p>
+              <p class="aw-compete-blind-k">Why it fails</p>
               <p class="aw-compete-blind-v">{c.blindSpot}</p>
             </div>
           </div>
@@ -281,18 +284,18 @@ const PINS: Pin[] = [
       </div>
 
       <div class="aw-core">
-        <p class="aw-core-badge">The core problem</p>
-        <h3 class="aw-core-title">Enterprises lack a runtime layer that turns legal and financial rules into live, steerable guardrails.</h3>
+        <p class="aw-core-badge">The missing piece</p>
+        <h3 class="aw-core-title">Companies are forced to choose between turning AI off or letting it run unchecked.</h3>
         <p class="aw-core-body">
-          Today, companies choose between shutting agents off completely or letting them spend and move data unchecked. The Agent Control Plane closes that gap: pausing high-risk actions in real time and giving leaders one-click fixes before execution.
+          I designed the missing middle layer: a workspace that pauses risky actions, explains the exact money and legal trade-offs in plain English, and lets leaders adjust the deal before it goes through.
         </p>
       </div>
     </section>
 
     <!-- 03. Systems thinking -->
     <section id="s-systems" class="r-case-section" data-reveal>
-      <SectionLabel icon="systems">03 &middot; Systems thinking</SectionLabel>
-      <h2>Four rules, and the pipeline that enforces them.</h2>
+      <SectionLabel icon="systems">03 &middot; How I framed the solution</SectionLabel>
+      <h2>Four simple rules, before I drew a single screen.</h2>
 
       <div class="aw-principles">
         {PRINCIPLES.map((p) => (
@@ -324,7 +327,7 @@ const PINS: Pin[] = [
       </div>
 
       <p class="aw-tight aw-arch-intro">
-        A central Policies engine parses regional law and department budgets into live pre-flight checks.
+        Behind the scenes, one system turns local laws and department budgets into live checks, run before anything executes.
       </p>
 
       <div class="aw-arch" role="img" aria-label="Architecture diagram: Finance rules and country policies feed into a Control Plane Interceptor, which branches into Auto-Execute or Pause and Steer">
@@ -383,33 +386,33 @@ const PINS: Pin[] = [
 
     <!-- 05. Visual evolution: before/after slider -->
     <section id="s-evolution" class="r-case-section" data-reveal>
-      <SectionLabel icon="judgment">05 &middot; Visual evolution</SectionLabel>
-      <h2>Steering raw AI output into executive-grade craft.</h2>
-      <p class="aw-tight">Drag the slider to inspect how I restructured hierarchy, removed blocking modals, and added live remediation.</p>
+      <SectionLabel icon="judgment">05 &middot; How I steered Claude Code</SectionLabel>
+      <h2>How I steered AI output from cluttered logs to calm software.</h2>
+      <p class="aw-tight">AI builds fast, but its first instinct is to dump every piece of data onto the screen. Drag the slider to see how I stripped away 14 rows of engineering clutter, replaced blocking pop-ups with a slide-over drawer, and added live fix toggles.</p>
 
       <BeforeAfterShowcase
         client:visible
         beforeSrc="/images/acp-draft-1.png"
         afterSrc="/images/acp-final.webp"
         pins={[
-          { x: 35, y: 9, label: "Exception-first queue: separated safe auto-runs from human gates." },
-          { x: 89, y: 52, label: "Inline evidence drawer: replaced blocking modal with zero-switch DPA proof." },
-          { x: 49, y: 54, label: "Live steering toggles: turned dead-end blocks into 1-click fixes." },
+          { x: 35, y: 9, label: "Sorts the risky requests from the safe ones automatically." },
+          { x: 89, y: 52, label: "Shows the legal proof in a slide-over panel instead of a blocking pop-up." },
+          { x: 49, y: 54, label: "Turns a dead-end rejection into a one-click fix." },
         ]}
       />
 
       <div class="bas-delta">
         <div class="bas-delta-col">
-          <p class="bas-delta-k">Hierarchy</p>
-          <p class="bas-delta-v"><span class="bas-delta-from">14 equal-weight rows</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">3 priority triage tiers</span></p>
+          <p class="bas-delta-k">Screen layout</p>
+          <p class="bas-delta-v"><span class="bas-delta-from">14 dense log rows</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">3 clear priority groups</span></p>
         </div>
         <div class="bas-delta-col">
-          <p class="bas-delta-k">Compliance flow</p>
-          <p class="bas-delta-v"><span class="bas-delta-from">Blocking modal</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">Inline evidence drawer</span></p>
+          <p class="bas-delta-k">Reading contracts</p>
+          <p class="bas-delta-v"><span class="bas-delta-from">Blocking pop-up window</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">Slide-over proof drawer</span></p>
         </div>
         <div class="bas-delta-col">
-          <p class="bas-delta-k">Resolution</p>
-          <p class="bas-delta-v"><span class="bas-delta-from">Binary reject button</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">Live remediation toggles</span></p>
+          <p class="bas-delta-k">Fixing mistakes</p>
+          <p class="bas-delta-v"><span class="bas-delta-from">Dead-end Reject button</span><span class="bas-delta-arrow">&rarr;</span><span class="bas-delta-to">One-click fix toggles</span></p>
         </div>
       </div>
     </section>
@@ -422,7 +425,7 @@ const PINS: Pin[] = [
       <div class="aw-steps">
         <span class="aw-step"><span class="aw-step-n">1</span>Click <code>REQ-842</code> in the queue</span>
         <span class="aw-step-arrow" aria-hidden="true">&rarr;</span>
-        <span class="aw-step"><span class="aw-step-n">2</span>Click <code>[DPA §4.2]</code> to inspect vendor telemetry</span>
+        <span class="aw-step"><span class="aw-step-n">2</span>Click <code>[DPA §4.2]</code> to inspect the vendor's data clause</span>
         <span class="aw-step-arrow" aria-hidden="true">&rarr;</span>
         <span class="aw-step"><span class="aw-step-n">3</span>Toggle remediation fixes to clear the block</span>
       </div>
@@ -443,14 +446,14 @@ const PINS: Pin[] = [
 
     <!-- 07. Reusable patterns + builder note -->
     <section id="s-patterns" class="r-case-section" data-reveal>
-      <SectionLabel icon="validated">07 &middot; Scalable patterns</SectionLabel>
-      <h2>Reusable primitives for AI-native enterprise software.</h2>
+      <SectionLabel icon="validated">07 &middot; Reusable building blocks</SectionLabel>
+      <h2>Three UI patterns any AI product team can reuse.</h2>
 
       <div class="aw-patterns">
         <div class="aw-pattern">
           <div class="aw-pattern-head">
             <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.gitCompare} />
-            <p class="aw-pattern-k">The pre-flight diff</p>
+            <p class="aw-pattern-k">Before-and-after impact check</p>
           </div>
           <div class="aw-diff-table">
             <div class="aw-diff-row">
@@ -466,46 +469,46 @@ const PINS: Pin[] = [
               <span class="aw-diff-to">EU-Frankfurt</span>
             </div>
           </div>
-          <p class="aw-pattern-body">Shown before any irreversible action.</p>
+          <p class="aw-pattern-body">Shows the exact financial and privacy change before money leaves the account.</p>
         </div>
 
         <div class="aw-pattern">
           <div class="aw-pattern-head">
             <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.scale} />
-            <p class="aw-pattern-k">Confidence escalation tiers</p>
+            <p class="aw-pattern-k">Low-confidence legal routing</p>
           </div>
           <div class="aw-pattern-conf">
-            <span class="aw-pattern-conf-tag">REQ-844</span>
+            <span class="aw-pattern-conf-tag">REQ-844 &middot; how certain</span>
             <span class="aw-pattern-conf-score">61%</span>
           </div>
           <div class="aw-pattern-conf-bar"><div class="aw-pattern-conf-bar-fill" style="width:61%"></div></div>
           <span class="aw-mtag aw-mtag--warn">[REDACTED §7.3]</span>
-          <p class="aw-pattern-body">Routes to legal, never auto-approved.</p>
+          <p class="aw-pattern-body">Flags missing contract text automatically and routes it to Legal instead of guessing.</p>
         </div>
 
         <div class="aw-pattern">
           <div class="aw-pattern-head">
             <svg class="aw-pattern-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS.network} />
-            <p class="aw-pattern-k">Living agent pipeline</p>
+            <p class="aw-pattern-k">Step-by-step bot handoff</p>
           </div>
           <div class="aw-pattern-chain">
-            <span class="aw-pattern-node aw-pattern-node--ok">&check; Procurement</span>
+            <span class="aw-pattern-node aw-pattern-node--ok">&check; Buying Bot</span>
             <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-node aw-pattern-node--ok">&check; Finance</span>
+            <span class="aw-pattern-node aw-pattern-node--ok">&check; Finance Bot</span>
             <span class="aw-pattern-arrow">&rarr;</span>
-            <span class="aw-pattern-node aw-pattern-node--flag">! InfoSec Block</span>
+            <span class="aw-pattern-node aw-pattern-node--flag">! Security Flag</span>
           </div>
-          <p class="aw-pattern-body">Pinpoints exactly which agent raised the flag.</p>
+          <p class="aw-pattern-body">Shows which AI helper triggered a warning, so teams know who to fix.</p>
         </div>
       </div>
     </section>
 
     <!-- 08. Future vision and roadmap -->
     <section id="s-vision" class="r-case-section" data-reveal>
-      <SectionLabel icon="systems">08 &middot; Future vision</SectionLabel>
-      <h2>Scaling from single-request gates to living global policy engines.</h2>
+      <SectionLabel icon="systems">08 &middot; Where this goes next</SectionLabel>
+      <h2>Growing from single approvals to global policy automation.</h2>
       <p class="aw-tight">
-        Enterprise governance can't rely on static rules once laws and agent swarms shift weekly. Here's how this scales.
+        Rules that stay fixed in a document don't survive a world where both laws and AI bots change every week. Here's how this grows to keep up.
       </p>
 
       <div class="aw-timeline">
@@ -532,7 +535,7 @@ const PINS: Pin[] = [
         <p class="aw-footer-k">Builder note</p>
         <h3 class="aw-footer-title">Why I built this in code, not just Figma.</h3>
         <p class="aw-footer-body">
-          Static artboards cannot test alert fatigue, drawer timing or multi-factor state math. Pairing Figma systems architecture with working code in Claude Code let me stress-test real edge cases and ship an interaction model ready for production.
+          Static Figma frames cannot show how annoying 50 alerts feel, or whether a slide-over drawer actually saves time. Building a working prototype in Claude Code let me test real numbers, break my own assumptions, and prove the interaction worked before handing it off.
         </p>
       </div>
     </section>
@@ -568,7 +571,7 @@ const PINS: Pin[] = [
   .aw-hero-shot { margin: 0.5rem 0 0; }
   .aw-hero-frame { position: relative; border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
   .aw-hero-frame img {
-    display: block; width: 100%; height: auto;
+    display: block; width: 100%; height: auto; object-fit: cover; object-position: top;
     animation: aw-hero-zoom 1.4s var(--ease-enter) both;
   }
   @keyframes aw-hero-zoom {
@@ -633,6 +636,14 @@ const PINS: Pin[] = [
   }
   .aw-tight { max-width: 34rem !important; margin-bottom: 1.5rem !important; }
 
+  /* Editorial prose for the story beats (Dana Okafor, etc.): left-aligned,
+     a little larger and more generous than the standard paragraph, so a
+     human moment reads differently from a system description. */
+  .aw-story {
+    max-width: 38rem !important; font-size: 1.0625rem !important; line-height: 1.6 !important;
+    color: var(--color-ink) !important; margin-bottom: 2rem !important;
+  }
+
   /* Staggered child reveal: the section itself already fades up as one
      block via [data-reveal]; these grids additionally stagger their own
      items a beat apart once the parent section is revealed, so a row of
@@ -696,6 +707,7 @@ const PINS: Pin[] = [
   /* Fixed height, not line-clamped text: keeps the blind-spot divider at
      the same shelf in every card regardless of how many lines "does"
      wraps to (the actual cause of the uneven row the review flagged). */
+  .aw-compete-does-k { font-family: var(--font-mono); font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.35rem; }
   .aw-compete-does { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; min-height: 3.6rem; }
   .aw-compete-blind { padding-top: 0.7rem; border-top: 1px dashed var(--color-border); margin-top: auto; }
   .aw-compete-blind-k { font-family: var(--font-mono); font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #b8604f; margin: 0 0 0.35rem; }
