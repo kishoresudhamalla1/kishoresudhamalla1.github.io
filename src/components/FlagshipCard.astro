@@ -42,7 +42,7 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     </div>
     <ShotPlaceholder
       src={shotSrc}
-      ratio="16 / 9"
+      ratio="2000 / 861"
       alt="Agent Control Plane's Governance Queue showing three AI spend requests awaiting review"
       label={"Screenshot, Agent Control Plane's Governance Queue\n/public/images/work/agent-control-plane/flagship-queue.webp"}
     />
@@ -58,10 +58,11 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
   }
   @media (min-width: 760px) {
     /* Text column leads (matches the "how I work" / AI Lab split below it),
-       the visual trails on the right. align-items: stretch (not center) so
-       both columns share the exact same height - the image fills it rather
-       than floating at its own aspect ratio next to a taller text block. */
-    .fc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem; padding: 2rem; align-items: stretch; }
+       the visual trails on the right. align-items: center, not stretch - the
+       screenshot is a wide 2.3:1 shot, so stretching its frame to the full
+       (much taller) text-column height just left a huge empty band under it.
+       It keeps its own aspect ratio and centers next to the text instead. */
+    .fc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem; padding: 2rem; align-items: center; }
   }
   .fc-visual {
     display: flex; flex-direction: column; border-radius: 0.875rem; overflow: hidden;
@@ -69,22 +70,10 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
   }
   .fc-visual:hover { opacity: 0.92; }
-  /* Anchor to the top-left on every breakpoint, mobile's `cover` included,
-     so "Governance Queue" / the app's own left edge never gets cropped. */
+  /* Anchor to the top-left, so "Governance Queue" / the app's own left edge
+     never gets cropped if the frame's width ever runs narrower than the
+     screenshot's own ratio. */
   .fc-visual :global(.shot-ph--filled img) { object-position: left top; }
-  /* On mobile (stacked, no stretch) the figure keeps its own 16/9 ratio; on
-     desktop its box fills whatever height the text column establishes, but
-     the screenshot itself stays uncropped inside it (object-fit: contain) -
-     this shot is much wider than the box stretch created, and `cover` was
-     zooming into the middle of it, cutting off half the UI on every side. */
-  @media (min-width: 760px) {
-    .fc-visual :global(.shot-ph--filled) {
-      aspect-ratio: auto; flex: 1; min-height: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: color-mix(in srgb, var(--color-ink) 4%, var(--color-surface));
-    }
-    .fc-visual :global(.shot-ph--filled img) { width: 100%; height: 100%; object-fit: contain; }
-  }
   .fc-chrome {
     display: flex; align-items: center; gap: 0.4rem;
     padding: 0.6rem 0.8rem;
