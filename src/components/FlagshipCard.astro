@@ -1,0 +1,94 @@
+---
+/**
+ * Flagship case study card for the top of "Selected work". Deliberately a
+ * different shape from PaperCards' glass sheets below it: a flat, full-width
+ * editorial card, so the flagship project reads as distinct rather than just
+ * "card number zero" in the same accordion.
+ */
+import ShotPlaceholder from "./ShotPlaceholder.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  href: string;
+  prototypeHref?: string;
+  shotSrc?: string;
+}
+const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
+---
+
+<article class="fc">
+  <a href={href} class="fc-visual" aria-hidden="true" tabindex="-1">
+    <ShotPlaceholder
+      src={shotSrc}
+      ratio="16 / 9"
+      alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2"
+      label={"Hero screenshot, Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate (Budget + GDPR §4.2)\n/public/images/work/agent-control-plane/hero.png"}
+    />
+  </a>
+
+  <div class="fc-body">
+    <p class="fc-badge">Flagship case study &middot; Live interactive prototype</p>
+    <h3 class="fc-title"><a href={href}>{title}</a></h3>
+    <p class="fc-desc">{description}</p>
+    <ul class="fc-tags">{tags.map((t) => <li>{t}</li>)}</ul>
+    <div class="fc-actions">
+      <a href={href} class="fc-btn">Read case study</a>
+      {prototypeHref && (
+        <a href={prototypeHref} class="fc-proto" target="_blank" rel="noopener noreferrer">
+          Try live prototype
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .fc {
+    display: grid; grid-template-columns: 1fr; gap: 1.5rem;
+    padding: 1.5rem; margin-bottom: 1.5rem;
+    border: 1px solid var(--color-border); border-radius: 1.25rem;
+    background: var(--color-surface);
+  }
+  @media (min-width: 760px) {
+    .fc { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 2rem; padding: 2rem; align-items: center; }
+  }
+  .fc-visual { display: block; border-radius: 0.875rem; transition: opacity var(--dur-micro, 160ms) var(--ease-enter); }
+  .fc-visual:hover { opacity: 0.92; }
+
+  .fc-badge {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent, var(--color-ink));
+    margin: 0 0 0.75rem;
+  }
+  .fc-title { margin: 0 0 0.75rem; }
+  .fc-title a {
+    font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em;
+    font-size: clamp(1.375rem, 2.6vw, 1.75rem); color: var(--color-ink); text-decoration: none;
+  }
+  .fc-title a:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .fc-desc { font-size: 0.9375rem; line-height: 1.65; color: var(--color-ink-2); margin: 0 0 1.1rem; max-width: 42rem; }
+
+  .fc-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.5rem; padding: 0; }
+  .fc-tags li {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.01em; color: var(--color-ink-2);
+    padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid var(--color-border);
+  }
+
+  .fc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
+  .fc-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.8rem 1.6rem; border-radius: 100px;
+    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    background: var(--color-ink); color: var(--color-bg);
+    transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
+  }
+  .fc-btn:hover { opacity: 0.85; }
+  .fc-proto {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.875rem; font-weight: 600; color: var(--color-ink); text-decoration: none;
+  }
+  .fc-proto:hover { color: var(--color-ink-2); }
+</style>

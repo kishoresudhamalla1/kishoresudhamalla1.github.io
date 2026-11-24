@@ -9,7 +9,12 @@
  */
 import Base from "../layouts/Base.astro";
 import PaperCards from "../components/PaperCards.astro";
+import FlagshipCard from "../components/FlagshipCard.astro";
 import SectionLabel from "../components/SectionLabel.astro";
+
+// Deployed Agent Control Plane prototype. Also used on the case study page's
+// "Try live prototype" / embed.
+const PROTOTYPE_URL = "/demo/agent-control-plane/index.html";
 
 const WORK = [
   {
@@ -87,6 +92,15 @@ const STATS = [
   <!-- Selected work -->
   <section id="work" class="container-pg r-work" data-reveal>
     <SectionLabel icon="craft">Selected work</SectionLabel>
+
+    <FlagshipCard
+      title="Runtime Governance for Enterprise AI Agents"
+      description="Designing a human-in-the-loop Agent Control Plane that intercepts risky AI actions, surfaces budget and GDPR residency conflicts in real time, and lets enterprise leaders steer execution without slowing down teams."
+      tags={["Enterprise SaaS", "AI Governance", "Systems Architecture", "Live Prototype"]}
+      href="/work/agent-control-plane"
+      prototypeHref={PROTOTYPE_URL}
+      shotSrc="/images/work/agent-control-plane/hero-workbench.webp"
+    />
 
     <PaperCards items={WORK} variant="grid" />
   </section>
