@@ -11,11 +11,6 @@ import Base from "../layouts/Base.astro";
 import PaperCards from "../components/PaperCards.astro";
 import FlagshipCard from "../components/FlagshipCard.astro";
 import SectionLabel from "../components/SectionLabel.astro";
-import { ThemeCompareToggle } from "../components/ThemeCompareToggle.tsx";
-// Homepage-only redesign pilot, scoped under [data-theme-variant="new"].
-// See gold.css's header comment: remove this import (or flip the toggle
-// to "old") to fully revert, zero other files touched.
-import "../styles/gold.css";
 
 // Deployed Agent Control Plane prototype. Also used on the case study page's
 // "Try live prototype" / embed.
@@ -204,20 +199,7 @@ const STATS = [
     </div>
   </section>
 
-  <ThemeCompareToggle client:load />
 </Base>
-
-<script is:inline>
-  // Pre-paint restore for the homepage-only old/new compare toggle, so a
-  // reload keeps your last choice without a flash of the other variant.
-  try {
-    var stored = localStorage.getItem("theme-variant");
-    if (stored === "new") {
-      document.documentElement.setAttribute("data-theme-variant", "new");
-      document.documentElement.classList.remove("dark");
-    }
-  } catch (e) {}
-</script>
 
 <script>
   import { initCursorGrid } from "../lib/cursorGrid";
