@@ -487,16 +487,19 @@ const PINS: Pin[] = [
         Enterprise governance can't rely on static rules once laws and agent swarms shift weekly. Here's how this scales.
       </p>
 
-      <div class="aw-roadmap">
-        {ROADMAP.map((r) => (
-          <div class="aw-horizon">
-            <div class="aw-horizon-top">
-              <svg class="aw-horizon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={r.icon} />
-              <span class={`aw-phase aw-phase--${r.phase.toLowerCase()}`}>{r.phase}</span>
+      <div class="aw-timeline">
+        {ROADMAP.map((r, i) => (
+          <div class={`aw-tstage aw-tstage--${r.phase.toLowerCase()}`}>
+            <div class="aw-tstage-head">
+              <div class="aw-tnode">
+                <svg class="aw-tnode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={r.icon} />
+              </div>
+              {i < ROADMAP.length - 1 && <span class="aw-tconnector" aria-hidden="true" />}
             </div>
-            <p class="aw-horizon-tag">{r.phaseLabel}</p>
-            <h3 class="aw-horizon-title">{r.headline}</h3>
-            <p class="aw-horizon-copy">{r.copy}</p>
+            <span class={`aw-phase aw-phase--${r.phase.toLowerCase()}`}>{r.phase}</span>
+            <p class="aw-tstage-tag">{r.phaseLabel}</p>
+            <h3 class="aw-tstage-title">{r.headline}</h3>
+            <p class="aw-tstage-copy">{r.copy}</p>
           </div>
         ))}
       </div>
@@ -726,32 +729,64 @@ const PINS: Pin[] = [
   .aw-pattern-node--ok { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); }
   .aw-pattern-node--flag { color: #b8604f; border-color: color-mix(in srgb, #b8604f 40%, var(--color-border)); background: color-mix(in srgb, #b8604f 8%, var(--color-surface)); }
 
-  /* 08. Future vision: 3-horizon roadmap strip, divided by hairlines (a
-     third distinct rhythm: 01 is a row strip, 03 an unboxed column grid,
-     07 a bordered card grid, this one a column strip with a top rule). */
-  .aw-roadmap {
-    display: grid; grid-template-columns: 1fr; max-width: none;
-    border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+  /* 08. Future vision: an actual connected timeline, not a card grid.
+     Each stage draws its own "incoming" connector on the node's right
+     edge, spanning the full width of its own column, so three equal
+     columns concatenate into one continuous track with no gaps. */
+  .aw-timeline { display: flex; flex-direction: column; max-width: none; }
+  @media (min-width: 760px) { .aw-timeline { flex-direction: row; } }
+
+  .aw-tstage { flex: 1; padding: 0 1.75rem 0 0; }
+  .aw-tstage-head { position: relative; height: 2.75rem; margin-bottom: 1.1rem; }
+  .aw-tnode {
+    position: relative; z-index: 2; width: 2.75rem; height: 2.75rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: var(--color-bg); border: 1.5px solid var(--color-border);
   }
-  @media (min-width: 760px) { .aw-roadmap { grid-template-columns: repeat(3, 1fr); } }
-  .aw-horizon { padding: 1.5rem 1.75rem; border-top: 1px solid var(--color-border); }
-  .aw-horizon:first-child { border-top: none; }
-  @media (min-width: 760px) {
-    .aw-horizon { border-top: none; border-left: 1px solid var(--color-border); }
-    .aw-horizon:first-child { border-left: none; }
+  .aw-tnode-icon { width: 1.25rem; height: 1.25rem; color: var(--color-ink-3); }
+  .aw-tconnector {
+    position: absolute; top: 50%; left: 2.75rem; right: -1.75rem; height: 1px;
+    transform: translateY(-50%); background: var(--color-border); z-index: 1;
   }
-  .aw-horizon-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .aw-horizon-icon { width: 1.375rem; height: 1.375rem; color: var(--color-ink-2); }
+
+  /* NOW: the live stage. Solid node, filled icon colour, a soft pulse ring
+     so it reads as "in motion" rather than just another list item. */
+  .aw-tstage--now .aw-tnode {
+    background: #4f8a7c; border-color: #4f8a7c;
+    box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 18%, transparent);
+    animation: aw-tnode-pulse 2.6s ease-in-out infinite;
+  }
+  .aw-tstage--now .aw-tnode-icon { color: #fff; }
+  .aw-tstage--now .aw-tconnector { background: linear-gradient(90deg, #4f8a7c, color-mix(in srgb, #2e63e0 70%, var(--color-border))); }
+  @keyframes aw-tnode-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 18%, transparent); }
+    50% { box-shadow: 0 0 0 7px color-mix(in srgb, #4f8a7c 8%, transparent); }
+  }
+
+  /* NEXT: committed, not live yet. Outlined in the accent colour. */
+  .aw-tstage--next .aw-tnode { border-color: #2e63e0; }
+  .aw-tstage--next .aw-tnode-icon { color: #2e63e0; }
+  .aw-tstage--next .aw-tconnector { background-image: linear-gradient(90deg, color-mix(in srgb, #2e63e0 60%, var(--color-border)) 0 6px, transparent 6px 12px); background-size: 12px 1px; background-color: transparent; }
+
+  /* FUTURE: a vision, drawn dashed to say so. */
+  .aw-tstage--future .aw-tnode { border-style: dashed; }
+
   .aw-phase {
-    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em;
+    display: inline-block; font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em;
     padding: 0.25rem 0.55rem; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-ink-3);
+    margin-bottom: 0.9rem;
   }
   .aw-phase--now { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); background: color-mix(in srgb, #4f8a7c 8%, var(--color-surface)); }
   .aw-phase--next { color: #2e63e0; border-color: color-mix(in srgb, #2e63e0 40%, var(--color-border)); background: color-mix(in srgb, #2e63e0 8%, var(--color-surface)); }
   .aw-phase--future { color: var(--color-ink-3); }
-  .aw-horizon-tag { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-ink-3); margin: 0 0 0.6rem; }
-  .aw-horizon-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.5rem; }
-  .aw-horizon-copy { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
+  .aw-tstage-tag { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-ink-3); margin: 0 0 0.6rem; }
+  .aw-tstage-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.5rem; }
+  .aw-tstage-copy { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
+
+  @media (max-width: 759px) {
+    .aw-tstage { padding: 0 0 2rem; }
+    .aw-tconnector { display: none; }
+  }
 
   /* 7. Builder note footer card */
   .aw-footer-card {
@@ -761,4 +796,8 @@ const PINS: Pin[] = [
   .aw-footer-k { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.75rem; }
   .aw-footer-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.75rem; }
   .aw-footer-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0; max-width: 36rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .aw-tstage--now .aw-tnode { animation: none; }
+  }
 </style>
