@@ -62,6 +62,19 @@
   transition: transform 160ms ease, background-color 160ms ease;
 }
 .hs-pin:hover { transform: scale(1.08); }
+/* Pop in one after another instead of all four appearing at once with
+   the hotspot image. */
+.r-case-section:not(.revealed) .hs-pin { opacity: 0; transform: scale(0.4); }
+.r-case-section.revealed .hs-pin { opacity: 1; transform: scale(1); transition: opacity 360ms var(--ease-enter), transform 360ms var(--ease-enter); }
+.r-case-section.revealed .hs-pin:hover { transform: scale(1.08); }
+.hs-pin:nth-of-type(1) { transition-delay: 150ms !important; }
+.hs-pin:nth-of-type(2) { transition-delay: 300ms !important; }
+.hs-pin:nth-of-type(3) { transition-delay: 450ms !important; }
+.hs-pin:nth-of-type(4) { transition-delay: 600ms !important; }
+@media (prefers-reduced-motion: reduce) {
+  .r-case-section:not(.revealed) .hs-pin { opacity: 1; transform: none; }
+  .hs-pin { transition: none !important; }
+}
 .hs-pin[aria-pressed="true"] { background: #2e63e0; border-color: #2e63e0; color: #fff; }
 
 .hs-panel {

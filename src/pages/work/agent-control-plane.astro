@@ -863,8 +863,16 @@ const PINS: Pin[] = [
   .aw-tnode-icon { width: 1.25rem; height: 1.25rem; color: var(--color-ink-3); }
   .aw-tconnector {
     position: absolute; top: 50%; left: 2.75rem; right: -1.75rem; height: 1px;
-    transform: translateY(-50%); background: var(--color-border); z-index: 1;
+    transform: translateY(-50%) scaleX(0); transform-origin: left center; background: var(--color-border); z-index: 1;
+    transition: transform 700ms var(--ease-enter);
   }
+  /* The track draws itself left to right as the section reveals, a beat
+     behind each node's own fade-up. */
+  .r-case-section:not(.revealed) .aw-tconnector { transform: translateY(-50%) scaleX(0); }
+  .r-case-section.revealed .aw-tconnector { transform: translateY(-50%) scaleX(1); }
+  .aw-tstage:nth-child(1) .aw-tconnector { transition-delay: 260ms; }
+  .aw-tstage:nth-child(2) .aw-tconnector { transition-delay: 430ms; }
+  @media (prefers-reduced-motion: reduce) { .aw-tconnector { transition: none; } }
 
   /* NOW: the live stage. Solid node, filled icon colour, plus an actual
      glowing halo (blurred, breathing light) rather than just a hard ring,
