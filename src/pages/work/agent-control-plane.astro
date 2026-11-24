@@ -546,7 +546,16 @@ const PINS: Pin[] = [
 
   .aw-hero-shot { margin: 0.5rem 0 0; }
   .aw-hero-frame { border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
-  .aw-hero-frame img { display: block; width: 100%; height: auto; }
+  .aw-hero-frame { overflow: hidden; }
+  .aw-hero-frame img {
+    display: block; width: 100%; height: auto;
+    animation: aw-hero-zoom 1.4s var(--ease-enter) both;
+  }
+  @keyframes aw-hero-zoom {
+    from { transform: scale(1.035); }
+    to { transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) { .aw-hero-frame img { animation: none; } }
   .aw-hero-caption { margin: 0.9rem 0 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); }
 
   .r-case { padding-block: 0 clamp(4rem, 8vw, 6rem); }
@@ -561,6 +570,27 @@ const PINS: Pin[] = [
     font-size: 1rem; line-height: 1.7; color: var(--color-ink-2); margin: 0 0 1.25rem;
   }
   .aw-tight { max-width: 34rem !important; margin-bottom: 1.5rem !important; }
+
+  /* Staggered child reveal: the section itself already fades up as one
+     block via [data-reveal]; these grids additionally stagger their own
+     items a beat apart once the parent section is revealed, so a row of
+     cards reads as "arriving" left to right instead of popping as a slab. */
+  .aw-stat, .aw-compete-card, .aw-pcard, .aw-pattern, .aw-tstage {
+    transition: opacity 500ms var(--ease-enter), transform 500ms var(--ease-enter);
+  }
+  .r-case-section:not(.revealed) .aw-stat,
+  .r-case-section:not(.revealed) .aw-compete-card,
+  .r-case-section:not(.revealed) .aw-pcard,
+  .r-case-section:not(.revealed) .aw-pattern,
+  .r-case-section:not(.revealed) .aw-tstage {
+    opacity: 0; transform: translateY(10px);
+  }
+  .aw-stat:nth-child(2), .aw-compete-card:nth-child(2), .aw-pcard:nth-child(2), .aw-pattern:nth-child(2), .aw-tstage:nth-child(2) { transition-delay: 90ms; }
+  .aw-stat:nth-child(3), .aw-compete-card:nth-child(3), .aw-pcard:nth-child(3), .aw-pattern:nth-child(3), .aw-tstage:nth-child(3) { transition-delay: 180ms; }
+  .aw-compete-card:nth-child(4), .aw-pcard:nth-child(4) { transition-delay: 270ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .aw-stat, .aw-compete-card, .aw-pcard, .aw-pattern, .aw-tstage { transition: none; }
+  }
 
   /* 01. Enterprise risk: big-number + icon stat strip, no boxed cards */
   .aw-stat-strip {
@@ -585,7 +615,12 @@ const PINS: Pin[] = [
   .aw-compete { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; margin-bottom: 1.5rem; }
   @media (min-width: 560px) { .aw-compete { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 960px) { .aw-compete { grid-template-columns: repeat(4, 1fr); } }
-  .aw-compete-card { background: var(--color-bg); padding: 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .aw-compete-card {
+    background: var(--color-bg); padding: 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.7rem;
+    transition: opacity 500ms var(--ease-enter), transform 500ms var(--ease-enter), background-color 160ms ease;
+    position: relative; z-index: 1;
+  }
+  .aw-compete-card:hover { background: var(--color-surface); z-index: 2; }
   .aw-compete-n { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; color: var(--color-ink-3); margin: 0; }
   .aw-compete-logos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
   .aw-compete-logo {
@@ -619,9 +654,14 @@ const PINS: Pin[] = [
   .aw-principles { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: none; }
   @media (min-width: 640px) { .aw-principles { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .aw-principles { grid-template-columns: repeat(4, 1fr); } }
-  .aw-pcard { padding: 1.4rem 1.4rem 0; border-top: 2px solid var(--color-ink); }
+  .aw-pcard {
+    padding: 1.4rem 1.4rem 0; border-top: 2px solid var(--color-ink);
+    transition: opacity 500ms var(--ease-enter), transform 500ms var(--ease-enter), border-top-color 160ms ease;
+  }
+  .aw-pcard:hover { border-top-color: #2e63e0; }
+  .aw-pcard:hover .aw-pcard-icon { color: #2e63e0; }
   .aw-pcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .aw-pcard-icon { width: 1.375rem; height: 1.375rem; color: var(--color-ink-2); }
+  .aw-pcard-icon { width: 1.375rem; height: 1.375rem; color: var(--color-ink-2); transition: color 160ms ease; }
   .aw-pcard-n { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--color-ink-3); }
   .aw-pcard-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.85rem; }
   .aw-pcard-rule { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0.85rem 0 0; }
@@ -659,6 +699,15 @@ const PINS: Pin[] = [
   .aw-arch-node--good { border-color: color-mix(in srgb, #4f8a7c 45%, var(--color-border)); background: color-mix(in srgb, #4f8a7c 8%, var(--color-surface)); }
   .aw-arch-node--warn { border-color: color-mix(in srgb, #c17a4a 45%, var(--color-border)); background: color-mix(in srgb, #c17a4a 8%, var(--color-surface)); }
   .aw-arch-wires { width: 2.5rem; height: 6rem; color: var(--color-ink-3); flex-shrink: 0; }
+  .aw-arch-wires path {
+    stroke-dasharray: 110; stroke-dashoffset: 110;
+    transition: stroke-dashoffset 900ms var(--ease-enter);
+  }
+  .aw-arch-wires--in path { transition-delay: 150ms; }
+  .aw-arch-wires--out path { transition-delay: 450ms; }
+  .r-case-section:not(.revealed) .aw-arch-wires path { stroke-dashoffset: 110; }
+  .r-case-section.revealed .aw-arch-wires path { stroke-dashoffset: 0; }
+  @media (prefers-reduced-motion: reduce) { .aw-arch-wires path { transition: none; stroke-dashoffset: 0; } }
 
   /* 5. Hotspot inspector section spacing handled in work-interactive.css */
 
@@ -701,7 +750,11 @@ const PINS: Pin[] = [
      neighbouring section uses it). */
   .aw-patterns { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
   @media (min-width: 760px) { .aw-patterns { grid-template-columns: repeat(3, 1fr); } }
-  .aw-pattern { background: var(--color-bg); padding: 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .aw-pattern {
+    background: var(--color-bg); padding: 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;
+    transition: opacity 500ms var(--ease-enter), transform 500ms var(--ease-enter), background-color 160ms ease;
+  }
+  .aw-pattern:hover { background: var(--color-surface); }
   .aw-pattern-head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.3rem; }
   .aw-pattern-icon { width: 1.125rem; height: 1.125rem; color: var(--color-ink-3); flex-shrink: 0; }
   .aw-pattern-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0; }
@@ -718,7 +771,9 @@ const PINS: Pin[] = [
   .aw-pattern-conf-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); }
   .aw-pattern-conf-score { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: #c17a4a; }
   .aw-pattern-conf-bar { height: 0.35rem; border-radius: 999px; background: var(--color-border); overflow: hidden; }
-  .aw-pattern-conf-bar-fill { height: 100%; border-radius: 999px; background: #c17a4a; }
+  .aw-pattern-conf-bar-fill { height: 100%; border-radius: 999px; background: #c17a4a; transition: width 900ms var(--ease-enter) 200ms; }
+  .r-case-section:not(.revealed) .aw-pattern-conf-bar-fill { width: 0 !important; }
+  @media (prefers-reduced-motion: reduce) { .aw-pattern-conf-bar-fill { transition: none; } }
 
   .aw-pattern-chain { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
   .aw-pattern-arrow { color: var(--color-ink-3); font-size: 0.8125rem; }
@@ -749,18 +804,37 @@ const PINS: Pin[] = [
     transform: translateY(-50%); background: var(--color-border); z-index: 1;
   }
 
-  /* NOW: the live stage. Solid node, filled icon colour, a soft pulse ring
-     so it reads as "in motion" rather than just another list item. */
+  /* NOW: the live stage. Solid node, filled icon colour, plus an actual
+     glowing halo (blurred, breathing light) rather than just a hard ring,
+     so it reads as "live" at a glance. A small white dot sits on top like
+     a status indicator. */
   .aw-tstage--now .aw-tnode {
-    background: #4f8a7c; border-color: #4f8a7c;
-    box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 18%, transparent);
-    animation: aw-tnode-pulse 2.6s ease-in-out infinite;
+    position: relative; background: #4f8a7c; border-color: #4f8a7c;
+    animation: aw-tnode-glow 2.4s ease-in-out infinite;
+  }
+  .aw-tstage--now .aw-tnode::before {
+    content: ""; position: absolute; inset: -0.5rem; border-radius: 50%; z-index: -1;
+    background: radial-gradient(circle, color-mix(in srgb, #4f8a7c 55%, transparent) 0%, transparent 70%);
+    animation: aw-tnode-halo 2.4s ease-in-out infinite;
+  }
+  .aw-tstage--now .aw-tnode::after {
+    content: ""; position: absolute; top: -0.15rem; right: -0.15rem; width: 0.55rem; height: 0.55rem;
+    border-radius: 50%; background: #7fcbb4; border: 2px solid var(--color-bg);
+    animation: aw-tnode-dot 2.4s ease-in-out infinite;
   }
   .aw-tstage--now .aw-tnode-icon { color: #fff; }
   .aw-tstage--now .aw-tconnector { background: linear-gradient(90deg, #4f8a7c, color-mix(in srgb, #2e63e0 70%, var(--color-border))); }
-  @keyframes aw-tnode-pulse {
-    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 18%, transparent); }
-    50% { box-shadow: 0 0 0 7px color-mix(in srgb, #4f8a7c 8%, transparent); }
+  @keyframes aw-tnode-glow {
+    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, #4f8a7c 20%, transparent), 0 0 18px 2px color-mix(in srgb, #4f8a7c 35%, transparent); }
+    50% { box-shadow: 0 0 0 6px color-mix(in srgb, #4f8a7c 10%, transparent), 0 0 28px 6px color-mix(in srgb, #4f8a7c 45%, transparent); }
+  }
+  @keyframes aw-tnode-halo {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.18); }
+  }
+  @keyframes aw-tnode-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
 
   /* NEXT: committed, not live yet. Outlined in the accent colour. */
@@ -798,6 +872,8 @@ const PINS: Pin[] = [
   .aw-footer-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0; max-width: 36rem; }
 
   @media (prefers-reduced-motion: reduce) {
-    .aw-tstage--now .aw-tnode { animation: none; }
+    .aw-tstage--now .aw-tnode,
+    .aw-tstage--now .aw-tnode::before,
+    .aw-tstage--now .aw-tnode::after { animation: none; }
   }
 </style>
