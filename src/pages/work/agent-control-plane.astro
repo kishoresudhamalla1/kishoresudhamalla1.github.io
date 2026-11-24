@@ -57,7 +57,7 @@ const ROADMAP = [
     copy: "Lets finance leaders test a new spending cap against 90 days of past bot activity before turning it on.",
   },
   {
-    phase: "FUTURE", phaseLabel: "Phase 03 · Multi-bot spending limits",
+    phase: "FUTURE", phaseLabel: "Phase 03 · Multi-bot limits",
     icon: ICONS.gitBranch,
     headline: "Multi-bot spending limits",
     copy: "When one AI bot hires helper bots, all of them stay under the same budget and privacy ceiling.",
@@ -522,7 +522,6 @@ const PINS: Pin[] = [
             </div>
             <span class={`aw-phase aw-phase--${r.phase.toLowerCase()}`}>{r.phase}</span>
             <p class="aw-tstage-tag">{r.phaseLabel}</p>
-            <h3 class="aw-tstage-title">{r.headline}</h3>
             <p class="aw-tstage-copy">{r.copy}</p>
           </div>
         ))}

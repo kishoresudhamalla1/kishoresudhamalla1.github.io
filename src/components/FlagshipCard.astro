@@ -43,8 +43,8 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     <ShotPlaceholder
       src={shotSrc}
       ratio="16 / 9"
-      alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2"
-      label={"Hero screenshot, Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate (Budget + GDPR §4.2)\n/public/images/work/agent-control-plane/hero.png"}
+      alt="Agent Control Plane's Governance Queue showing three AI spend requests awaiting review"
+      label={"Screenshot, Agent Control Plane's Governance Queue\n/public/images/work/agent-control-plane/flagship-queue.webp"}
     />
   </a>
 </article>
@@ -58,15 +58,23 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
   }
   @media (min-width: 760px) {
     /* Text column leads (matches the "how I work" / AI Lab split below it),
-       the visual trails on the right. */
-    .fc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem; padding: 2rem; align-items: center; }
+       the visual trails on the right. align-items: stretch (not center) so
+       both columns share the exact same height - the image fills it rather
+       than floating at its own aspect ratio next to a taller text block. */
+    .fc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem; padding: 2rem; align-items: stretch; }
   }
   .fc-visual {
-    display: block; border-radius: 0.875rem; overflow: hidden;
+    display: flex; flex-direction: column; border-radius: 0.875rem; overflow: hidden;
     border: 1px solid var(--color-border);
     transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
   }
   .fc-visual:hover { opacity: 0.92; }
+  /* On mobile (stacked, no stretch) the figure keeps its own 16/9 ratio; on
+     desktop it fills whatever height the text column establishes. */
+  @media (min-width: 760px) {
+    .fc-visual :global(.shot-ph--filled) { aspect-ratio: auto; flex: 1; min-height: 0; }
+    .fc-visual :global(.shot-ph--filled img) { height: 100%; }
+  }
   .fc-chrome {
     display: flex; align-items: center; gap: 0.4rem;
     padding: 0.6rem 0.8rem;
@@ -98,11 +106,11 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid var(--color-border);
   }
 
-  .fc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+  .fc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
   .fc-btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
-    padding: 0.8rem 1.6rem; border-radius: 100px;
-    font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+    padding: 0.55rem 1.1rem; border-radius: 100px;
+    font-size: 0.8125rem; font-weight: 500; text-decoration: none;
     background: var(--color-ink); color: var(--color-bg);
     transition: opacity var(--dur-micro, 160ms) var(--ease-enter), border-color var(--dur-micro, 160ms) var(--ease-enter);
   }
