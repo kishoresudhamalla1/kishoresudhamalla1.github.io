@@ -19,15 +19,6 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
 ---
 
 <article class="fc">
-  <a href={href} class="fc-visual" aria-hidden="true" tabindex="-1">
-    <ShotPlaceholder
-      src={shotSrc}
-      ratio="16 / 9"
-      alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2"
-      label={"Hero screenshot, Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate (Budget + GDPR §4.2)\n/public/images/work/agent-control-plane/hero.png"}
-    />
-  </a>
-
   <div class="fc-body">
     <p class="fc-badge">Flagship case study &middot; Live interactive prototype</p>
     <h3 class="fc-title"><a href={href}>{title}</a></h3>
@@ -36,13 +27,26 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     <div class="fc-actions">
       <a href={href} class="fc-btn">Read case study</a>
       {prototypeHref && (
-        <a href={prototypeHref} class="fc-proto" target="_blank" rel="noopener noreferrer">
+        <a href={prototypeHref} class="fc-btn fc-btn-ghost" target="_blank" rel="noopener noreferrer">
           Try live prototype
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
         </a>
       )}
     </div>
   </div>
+
+  <a href={href} class="fc-visual" aria-hidden="true" tabindex="-1">
+    <div class="fc-chrome">
+      <span class="fc-dot"></span><span class="fc-dot"></span><span class="fc-dot"></span>
+      <span class="fc-chrome-url">agent-control-plane.app</span>
+    </div>
+    <ShotPlaceholder
+      src={shotSrc}
+      ratio="16 / 9"
+      alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2"
+      label={"Hero screenshot, Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate (Budget + GDPR §4.2)\n/public/images/work/agent-control-plane/hero.png"}
+    />
+  </a>
 </article>
 
 <style>
@@ -53,10 +57,27 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     background: var(--color-surface);
   }
   @media (min-width: 760px) {
-    .fc { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 2rem; padding: 2rem; align-items: center; }
+    /* Text column leads (matches the "how I work" / AI Lab split below it),
+       the visual trails on the right. */
+    .fc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem; padding: 2rem; align-items: center; }
   }
-  .fc-visual { display: block; border-radius: 0.875rem; transition: opacity var(--dur-micro, 160ms) var(--ease-enter); }
+  .fc-visual {
+    display: block; border-radius: 0.875rem; overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
+  }
   .fc-visual:hover { opacity: 0.92; }
+  .fc-chrome {
+    display: flex; align-items: center; gap: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    background: color-mix(in srgb, var(--color-ink) 5%, var(--color-surface));
+    border-bottom: 1px solid var(--color-border);
+  }
+  .fc-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--color-border); }
+  .fc-chrome-url {
+    margin-left: 0.5rem; font-family: var(--font-mono); font-size: 0.6875rem;
+    letter-spacing: 0.02em; color: var(--color-ink-3);
+  }
 
   .fc-badge {
     font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600;
@@ -77,18 +98,17 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid var(--color-border);
   }
 
-  .fc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
+  .fc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
   .fc-btn {
-    display: inline-flex; align-items: center; justify-content: center;
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
     padding: 0.8rem 1.6rem; border-radius: 100px;
     font-size: 0.875rem; font-weight: 500; text-decoration: none;
     background: var(--color-ink); color: var(--color-bg);
-    transition: opacity var(--dur-micro, 160ms) var(--ease-enter);
+    transition: opacity var(--dur-micro, 160ms) var(--ease-enter), border-color var(--dur-micro, 160ms) var(--ease-enter);
   }
   .fc-btn:hover { opacity: 0.85; }
-  .fc-proto {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-size: 0.875rem; font-weight: 600; color: var(--color-ink); text-decoration: none;
+  .fc-btn-ghost {
+    background: none; border: 1px solid var(--color-border); color: var(--color-ink);
   }
-  .fc-proto:hover { color: var(--color-ink-2); }
+  .fc-btn-ghost:hover { opacity: 1; border-color: var(--color-ink-3); }
 </style>
