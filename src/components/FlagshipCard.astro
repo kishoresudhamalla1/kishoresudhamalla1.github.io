@@ -70,10 +70,17 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
   }
   .fc-visual:hover { opacity: 0.92; }
   /* On mobile (stacked, no stretch) the figure keeps its own 16/9 ratio; on
-     desktop it fills whatever height the text column establishes. */
+     desktop its box fills whatever height the text column establishes, but
+     the screenshot itself stays uncropped inside it (object-fit: contain) -
+     this shot is much wider than the box stretch created, and `cover` was
+     zooming into the middle of it, cutting off half the UI on every side. */
   @media (min-width: 760px) {
-    .fc-visual :global(.shot-ph--filled) { aspect-ratio: auto; flex: 1; min-height: 0; }
-    .fc-visual :global(.shot-ph--filled img) { height: 100%; }
+    .fc-visual :global(.shot-ph--filled) {
+      aspect-ratio: auto; flex: 1; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: color-mix(in srgb, var(--color-ink) 4%, var(--color-surface));
+    }
+    .fc-visual :global(.shot-ph--filled img) { width: 100%; height: 100%; object-fit: contain; }
   }
   .fc-chrome {
     display: flex; align-items: center; gap: 0.4rem;
