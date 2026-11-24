@@ -32,7 +32,31 @@ const ICONS = {
   gitCompare: `<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/>`,
   scale: `<path d="M16 16h6"/><path d="M8 16H2"/><path d="M12 3v18"/><path d="M3 7h3l3 9-4.5 0z" /><path d="M15 7h3l3 9-4.5 0z"/>`,
   network: `<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4"/><path d="M12 12H5v4"/><path d="M12 12h7v4"/>`,
+  globe: `<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20"/><path d="M12 2a14.5 14.5 0 0 1 0 20"/><path d="M2 12h20"/>`,
+  flaskConical: `<path d="M10 2v6.3a2 2 0 0 1-.3 1L4.2 18a2 2 0 0 0 1.7 3h12.2a2 2 0 0 0 1.7-3l-5.5-8.7a2 2 0 0 1-.3-1V2"/><path d="M8.5 2h7"/><path d="M7 15h10"/>`,
+  gitBranch: `<circle cx="6" cy="4.5" r="2.5"/><circle cx="6" cy="19.5" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M6 7v10"/><path d="M6 9a8 8 0 0 0 8 8"/><path d="M18 11.5V9"/>`,
 };
+
+const ROADMAP = [
+  {
+    phase: "NOW", phaseLabel: "Phase 01 · Automated regulatory sync",
+    icon: ICONS.globe,
+    headline: "Live European policy ingestion",
+    copy: "Parses EU AI Act and GDPR updates into runtime guardrails. No manual legal rewrites.",
+  },
+  {
+    phase: "NEXT", phaseLabel: "Phase 02 · Policy sandbox and simulation",
+    icon: ICONS.flaskConical,
+    headline: "Pre-flight impact replay",
+    copy: "Test a new spend cap or regional rule against 90 days of real agent traffic first.",
+  },
+  {
+    phase: "FUTURE", phaseLabel: "Phase 03 · Multi-agent swarm governance",
+    icon: ICONS.gitBranch,
+    headline: "Cross-agent delegation boundaries",
+    copy: "A procurement agent spawning sub-agents inherits the same budget and privacy ceiling.",
+  },
+];
 
 const RISKS = [
   { icon: ICONS.flame, color: "#c17a4a", stat: "200ms", k: "Unbudgeted capital burn", v: "Autonomous API renewals blow quarterly caps before finance notices." },
@@ -432,6 +456,29 @@ const PINS: Pin[] = [
       </div>
     </section>
 
+    <!-- 08. Future vision and roadmap -->
+    <section class="r-case-section" data-reveal>
+      <SectionLabel icon="systems">08 &middot; Future vision</SectionLabel>
+      <h2>Scaling from single-request gates to living global policy engines.</h2>
+      <p class="aw-tight">
+        Enterprise governance can't rely on static rules once laws and agent swarms shift weekly. Here's how this scales.
+      </p>
+
+      <div class="aw-roadmap">
+        {ROADMAP.map((r) => (
+          <div class="aw-horizon">
+            <div class="aw-horizon-top">
+              <svg class="aw-horizon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={r.icon} />
+              <span class={`aw-phase aw-phase--${r.phase.toLowerCase()}`}>{r.phase}</span>
+            </div>
+            <p class="aw-horizon-tag">{r.phaseLabel}</p>
+            <h3 class="aw-horizon-title">{r.headline}</h3>
+            <p class="aw-horizon-copy">{r.copy}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
     <!-- 7. Builder note -->
     <section class="r-case-section" data-reveal>
       <div class="aw-footer-card">
@@ -649,6 +696,33 @@ const PINS: Pin[] = [
   }
   .aw-pattern-node--ok { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); }
   .aw-pattern-node--flag { color: #b8604f; border-color: color-mix(in srgb, #b8604f 40%, var(--color-border)); background: color-mix(in srgb, #b8604f 8%, var(--color-surface)); }
+
+  /* 08. Future vision: 3-horizon roadmap strip, divided by hairlines (a
+     third distinct rhythm: 01 is a row strip, 03 an unboxed column grid,
+     07 a bordered card grid, this one a column strip with a top rule). */
+  .aw-roadmap {
+    display: grid; grid-template-columns: 1fr; max-width: none;
+    border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);
+  }
+  @media (min-width: 760px) { .aw-roadmap { grid-template-columns: repeat(3, 1fr); } }
+  .aw-horizon { padding: 1.5rem 1.75rem; border-top: 1px solid var(--color-border); }
+  .aw-horizon:first-child { border-top: none; }
+  @media (min-width: 760px) {
+    .aw-horizon { border-top: none; border-left: 1px solid var(--color-border); }
+    .aw-horizon:first-child { border-left: none; }
+  }
+  .aw-horizon-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .aw-horizon-icon { width: 1.375rem; height: 1.375rem; color: var(--color-ink-2); }
+  .aw-phase {
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em;
+    padding: 0.25rem 0.55rem; border-radius: 999px; border: 1px solid var(--color-border); color: var(--color-ink-3);
+  }
+  .aw-phase--now { color: #4f8a7c; border-color: color-mix(in srgb, #4f8a7c 40%, var(--color-border)); background: color-mix(in srgb, #4f8a7c 8%, var(--color-surface)); }
+  .aw-phase--next { color: #2e63e0; border-color: color-mix(in srgb, #2e63e0 40%, var(--color-border)); background: color-mix(in srgb, #2e63e0 8%, var(--color-surface)); }
+  .aw-phase--future { color: var(--color-ink-3); }
+  .aw-horizon-tag { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-ink-3); margin: 0 0 0.6rem; }
+  .aw-horizon-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.5rem; }
+  .aw-horizon-copy { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
 
   /* 7. Builder note footer card */
   .aw-footer-card {
