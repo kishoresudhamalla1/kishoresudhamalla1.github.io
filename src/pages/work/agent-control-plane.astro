@@ -13,7 +13,6 @@
  */
 import Base from "../../layouts/Base.astro";
 import SectionLabel from "../../components/SectionLabel.astro";
-import { ProtoTabs } from "../../components/work/ProtoTabs.tsx";
 import { HotspotInspector, type Pin } from "../../components/work/HotspotInspector.tsx";
 import { BeforeAfterShowcase } from "../../components/work/BeforeAfterShowcase.tsx";
 
@@ -21,6 +20,52 @@ import { BeforeAfterShowcase } from "../../components/work/BeforeAfterShowcase.t
 // public/demo/agent-control-plane/.
 const PROTOTYPE_URL = "/demo/agent-control-plane/index.html";
 const IMG = "/images/work/agent-control-plane";
+
+const RISKS = [
+  {
+    k: "Unbudgeted capital burn",
+    v: "An agent provisioning compute or renewing contracts without spend caps can blow a quarter's budget in seconds.",
+  },
+  {
+    k: "Cross-border regulatory fines",
+    v: "Routing EU customer telemetry to a US server breaks GDPR residency law, exposing the company to multi-million-dollar penalties.",
+  },
+  {
+    k: "Executive alert fatigue",
+    v: "Fifty context-free \"approve or reject\" Slack pings a day train VP and InfoSec leaders to rubber-stamp risk.",
+  },
+];
+
+const COMPETITORS = [
+  {
+    n: "01",
+    category: "LLM observability",
+    logos: ["LangSmith", "Weights & Biases"],
+    does: "Debug token latency, prompt chains and model drift for engineers.",
+    blindSpot: "Unreadable to a VP of Finance or InfoSec lead checking contract caps or GDPR residency.",
+  },
+  {
+    n: "02",
+    category: "Procurement & compliance",
+    logos: ["Coupa", "Vanta"],
+    does: "Manage manual purchase tickets and periodic compliance checklists.",
+    blindSpot: "Built for multi-day workflows. Too slow to intercept a 200ms agent transaction.",
+  },
+  {
+    n: "03",
+    category: "ChatOps notifications",
+    logos: ["Slack", "Microsoft Teams"],
+    does: "Route binary approve or reject webhook alerts into a team channel.",
+    blindSpot: "Strips away budget and legal context, training leaders to rubber-stamp risk.",
+  },
+  {
+    n: "04",
+    category: "Identity & access gateways",
+    logos: ["Okta", "AWS IAM"],
+    does: "Enforce static allow or deny rules for system access.",
+    blindSpot: "Hard blocks stall launches. Cannot steer an agent to reroute data or cap spend.",
+  },
+];
 
 const PRINCIPLES = [
   {
@@ -91,7 +136,7 @@ const PINS: Pin[] = [
     <p class="aw-eyebrow"><span class="aw-rule"></span>Flagship case study &middot; AI governance &amp; enterprise SaaS</p>
     <h1 class="aw-title">Runtime Governance for Enterprise AI Agents</h1>
     <p class="aw-lede">
-      Autonomous agents can sign contracts and move customer data in milliseconds. I designed the control plane that catches budget overruns and GDPR violations before execution.
+      Autonomous agents can sign contracts and move customer data in milliseconds. I designed the human-in-the-loop control plane that catches budget overruns and GDPR violations before execution.
     </p>
 
     <div class="aw-meta-strip">
@@ -100,53 +145,71 @@ const PINS: Pin[] = [
       <span class="aw-chip"><b>Buyers</b> VP Finance &amp; InfoSec</span>
     </div>
 
-    <div class="aw-proto-tabs">
-      <ProtoTabs
-        client:load
-        prototypeUrl={PROTOTYPE_URL}
-        screenshotSrc={`${IMG}/hero.png`}
-        screenshotAlt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2"
-        annotations={[
-          { x: 41, y: 7, side: "right", label: "Triage filters: high-stakes, routine, low-confidence" },
-          { x: 12, y: 25, side: "right", label: "Living agent pipeline: which sub-agent raised the flag" },
-          { x: 50, y: 16, side: "right", label: "REQ-842: budget and GDPR conflict, one card" },
-          { x: 56, y: 40, side: "left", label: "Auto-approve threshold, set per request" },
-          { x: 56, y: 58, side: "left", label: "Pre-calculated fixes, not a dead end" },
-        ]}
-      />
-    </div>
+    <figure class="aw-hero-shot">
+      <div class="aw-hero-frame">
+        <img src={`${IMG}/hero.png`} alt="Agent Control Plane showing REQ-842 (VectorScale AI Enterprise) paused at Human Gate, Budget + GDPR §4.2" />
+      </div>
+      <figcaption class="aw-hero-caption">REQ-842 paused at the Human Gate: $42,000 over budget, GDPR §4.2 conflict.</figcaption>
+    </figure>
   </section>
 
   <article class="container-pg r-case">
-    <!-- 2. The core tension -->
+    <!-- 01. The enterprise risk -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="context">The blind spot</SectionLabel>
-      <h2>Agents move at machine speed. Enterprise approvals do not.</h2>
+      <SectionLabel icon="impact">01 &middot; The enterprise risk</SectionLabel>
+      <h2>When software acts on its own, a 200ms mistake costs millions.</h2>
+      <p class="aw-tight">
+        Traditional SaaS waited for humans to click buttons. Autonomous agents execute at machine speed, exposing three operational failures.
+      </p>
 
-      <div class="aw-contrast">
-        <div class="aw-contrast-col aw-contrast-col--muted">
-          <p class="aw-contrast-k">Why current tools fail</p>
-          <ul class="aw-contrast-list">
-            <li>Developer observability (LangSmith) is unreadable to finance leads.</li>
-            <li>Slack "approve / reject" pings cause alert fatigue and blind rubber-stamping.</li>
-            <li>Post-mortem audit logs run after European data has already crossed borders.</li>
-          </ul>
-        </div>
-        <div class="aw-contrast-col aw-contrast-col--bold">
-          <p class="aw-contrast-k">The control plane shift</p>
-          <ul class="aw-contrast-list">
-            <li>Pre-flight interception halts high-risk actions before spend occurs.</li>
-            <li>Zero-context-switch evidence drawers pair legal citations with budget deltas.</li>
-            <li>Actionable steering replaces dead ends with one-click Frankfurt reroutes.</li>
-          </ul>
-        </div>
+      <div class="aw-risk">
+        {RISKS.map((r) => (
+          <div class="aw-risk-card">
+            <p class="aw-risk-k">{r.k}</p>
+            <p class="aw-risk-v">{r.v}</p>
+          </div>
+        ))}
       </div>
     </section>
 
-    <!-- 3. Design principles -->
+    <!-- 02. Competitive landscape -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="judgment">How I framed the system</SectionLabel>
-      <h2>Four rules that governed every pixel.</h2>
+      <SectionLabel icon="context">02 &middot; Competitive landscape</SectionLabel>
+      <h2>Existing tools were built for developers or slow human tickets, not autonomous agents.</h2>
+      <p class="aw-tight">
+        Before designing the control plane, I audited four tool categories enterprises stitch together today. Every one breaks down once software acts autonomously.
+      </p>
+
+      <div class="aw-compete">
+        {COMPETITORS.map((c) => (
+          <div class="aw-compete-card">
+            <p class="aw-compete-n">{c.n}</p>
+            <div class="aw-compete-logos">
+              {c.logos.map((l) => <span class="aw-compete-logo">{l}</span>)}
+            </div>
+            <p class="aw-compete-cat">{c.category}</p>
+            <p class="aw-compete-does">{c.does}</p>
+            <div class="aw-compete-blind">
+              <p class="aw-compete-blind-k">The blind spot</p>
+              <p class="aw-compete-blind-v">{c.blindSpot}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="aw-core">
+        <p class="aw-core-badge">The core problem</p>
+        <h3 class="aw-core-title">Enterprises lack a runtime layer that turns legal and financial rules into live, steerable guardrails.</h3>
+        <p class="aw-core-body">
+          Today, companies choose between shutting agents off completely or letting them spend and move data unchecked. The Agent Control Plane closes that gap: pausing high-risk actions in real time and giving leaders one-click fixes before execution.
+        </p>
+      </div>
+    </section>
+
+    <!-- 03. Systems thinking -->
+    <section class="r-case-section" data-reveal>
+      <SectionLabel icon="systems">03 &middot; Systems thinking</SectionLabel>
+      <h2>Four rules, and the pipeline that enforces them.</h2>
 
       <div class="aw-principles">
         {PRINCIPLES.map((p) => (
@@ -160,13 +223,8 @@ const PINS: Pin[] = [
           </div>
         ))}
       </div>
-    </section>
 
-    <!-- 4. Systems architecture -->
-    <section class="r-case-section" data-reveal>
-      <SectionLabel icon="systems">Systems thinking</SectionLabel>
-      <h2>Turning static legal PDFs into runtime guardrails.</h2>
-      <p class="aw-tight">
+      <p class="aw-tight aw-arch-intro">
         Global enterprises run across dozens of jurisdictions. A central Policies engine parses regional laws and department budgets into live pre-flight checks.
       </p>
 
@@ -210,9 +268,9 @@ const PINS: Pin[] = [
       </div>
     </section>
 
-    <!-- 5. Interactive UI teardown -->
+    <!-- 04. Interactive UI teardown -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="craft">Interaction craft</SectionLabel>
+      <SectionLabel icon="craft">04 &middot; Interaction craft</SectionLabel>
       <h2>Anatomy of the decision workspace.</h2>
       <p class="aw-tight">Click a pin to open the decision behind it.</p>
 
@@ -224,9 +282,9 @@ const PINS: Pin[] = [
       />
     </section>
 
-    <!-- 5b. Visual evolution: before/after slider -->
+    <!-- 05. Visual evolution: before/after slider -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="judgment">Visual evolution &middot; draft 1 to production</SectionLabel>
+      <SectionLabel icon="judgment">05 &middot; Visual evolution</SectionLabel>
       <h2>Steering raw AI output into executive-grade craft.</h2>
       <p class="aw-tight">Drag the slider to inspect how I restructured hierarchy, removed blocking modals, and added live remediation.</p>
 
@@ -257,9 +315,36 @@ const PINS: Pin[] = [
       </div>
     </section>
 
-    <!-- 6. Edge cases + reusable patterns -->
+    <!-- 06. Working product: live prototype -->
     <section class="r-case-section" data-reveal>
-      <SectionLabel icon="validated">Scalable patterns</SectionLabel>
+      <SectionLabel icon="film">06 &middot; Working product</SectionLabel>
+      <h2>Test the live Agent Control Plane.</h2>
+
+      <div class="aw-steps">
+        <span class="aw-step"><span class="aw-step-n">1</span>Click <code>REQ-842</code> in the queue</span>
+        <span class="aw-step-arrow" aria-hidden="true">&rarr;</span>
+        <span class="aw-step"><span class="aw-step-n">2</span>Click <code>[DPA §4.2]</code> to inspect vendor telemetry</span>
+        <span class="aw-step-arrow" aria-hidden="true">&rarr;</span>
+        <span class="aw-step"><span class="aw-step-n">3</span>Toggle remediation fixes to clear the block</span>
+      </div>
+
+      <div class="aw-embed">
+        <div class="aw-embed-bar">
+          <span class="aw-embed-label">Agent Control Plane: Enterprise Spend &amp; Compliance Governance</span>
+          <a href={PROTOTYPE_URL} target="_blank" rel="noopener noreferrer" class="aw-embed-open">
+            Open fullscreen
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+        <div class="aw-embed-frame">
+          <iframe src={PROTOTYPE_URL} title="Agent Control Plane live prototype" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07. Reusable patterns + builder note -->
+    <section class="r-case-section" data-reveal>
+      <SectionLabel icon="validated">07 &middot; Scalable patterns</SectionLabel>
       <h2>Reusable primitives for AI-native enterprise software.</h2>
 
       <div class="aw-patterns">
@@ -341,7 +426,10 @@ const PINS: Pin[] = [
   }
   .aw-chip b { color: var(--color-ink); font-weight: 600; margin-right: 0.3rem; }
 
-  .aw-proto-tabs { margin-top: 0.5rem; }
+  .aw-hero-shot { margin: 0.5rem 0 0; }
+  .aw-hero-frame { border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; background: var(--color-surface); }
+  .aw-hero-frame img { display: block; width: 100%; height: auto; }
+  .aw-hero-caption { margin: 0.9rem 0 0; font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-3); }
 
   .r-case { padding-block: 0 clamp(4rem, 8vw, 6rem); }
   .r-case-section > :is(p, h2, h3, .r-decisions) { max-width: var(--measure); }
@@ -356,19 +444,40 @@ const PINS: Pin[] = [
   }
   .aw-tight { max-width: 34rem !important; margin-bottom: 1.5rem !important; }
 
-  /* 2. Core tension contrast */
-  .aw-contrast { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
-  @media (min-width: 720px) { .aw-contrast { grid-template-columns: 1fr 1fr; } }
-  .aw-contrast-col { padding: 1.5rem 1.6rem; background: var(--color-bg); }
-  .aw-contrast-col--muted { opacity: 0.72; }
-  .aw-contrast-col--bold { background: var(--color-surface); }
-  .aw-contrast-k { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 1rem; }
-  .aw-contrast-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
-  .aw-contrast-list li { position: relative; padding-left: 1.1rem; font-size: 0.9375rem; line-height: 1.55; color: var(--color-ink-2); }
-  .aw-contrast-list li::before { content: "–"; position: absolute; left: 0; color: var(--color-ink-3); }
-  .aw-contrast-col--bold .aw-contrast-list li { color: var(--color-ink); }
+  /* 01. Enterprise risk matrix */
+  .aw-risk { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
+  @media (min-width: 760px) { .aw-risk { grid-template-columns: repeat(3, 1fr); } }
+  .aw-risk-card { background: var(--color-bg); padding: 1.4rem 1.5rem; }
+  .aw-risk-k { font-size: 0.9375rem; font-weight: 600; color: var(--color-ink); margin: 0 0 0.6rem; }
+  .aw-risk-v { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+
+  /* 02. Competitive landscape grid + core problem callout */
+  .aw-compete { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; margin-bottom: 1.5rem; }
+  @media (min-width: 560px) { .aw-compete { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 960px) { .aw-compete { grid-template-columns: repeat(4, 1fr); } }
+  .aw-compete-card { background: var(--color-bg); padding: 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .aw-compete-n { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; color: var(--color-ink-3); margin: 0; }
+  .aw-compete-logos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .aw-compete-logo {
+    font-family: var(--font-display); font-weight: 700; font-size: 0.75rem; letter-spacing: -0.01em;
+    padding: 0.3rem 0.6rem; border-radius: 0.4rem; border: 1px solid var(--color-border); color: var(--color-ink-2);
+  }
+  .aw-compete-cat { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-3); margin: 0; }
+  .aw-compete-does { font-size: 0.8125rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
+  .aw-compete-blind { margin-top: auto; padding-top: 0.7rem; border-top: 1px dashed var(--color-border); }
+  .aw-compete-blind-k { font-family: var(--font-mono); font-size: 0.5625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #b8604f; margin: 0 0 0.35rem; }
+  .aw-compete-blind-v { font-size: 0.75rem; line-height: 1.5; color: var(--color-ink-2); margin: 0; }
+
+  .aw-core {
+    max-width: none; padding: 1.75rem 2rem; border: 1px solid var(--color-border); border-radius: 0.875rem;
+    background: color-mix(in srgb, #2e63e0 5%, var(--color-surface));
+  }
+  .aw-core-badge { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #2e63e0; margin: 0 0 0.9rem; }
+  .aw-core-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; letter-spacing: -0.01em; line-height: 1.35; color: var(--color-ink); margin: 0 0 0.9rem; max-width: 42rem; }
+  .aw-core-body { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0; max-width: 42rem; }
 
   /* 3. Design principles 2x2 */
+  .aw-arch-intro { margin-top: 2rem !important; }
   .aw-principles { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
   @media (min-width: 640px) { .aw-principles { grid-template-columns: 1fr 1fr; } }
   .aw-pcard { background: var(--color-bg); padding: 1.4rem 1.5rem; }
@@ -402,6 +511,36 @@ const PINS: Pin[] = [
   /* 5b. Visual evolution slider spacing handled in work-interactive.css;
      .bas-delta here just needs to sit flush under .bas-frame. */
   .aw-tight + :global(.bas-frame) { margin-top: 0.5rem; }
+
+  /* 06. Working product: walkthrough steps + embed */
+  .aw-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 0 0 1.5rem; max-width: none; }
+  .aw-step {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8125rem; color: var(--color-ink-2);
+    padding: 0.55rem 0.9rem; border-radius: 0.5rem; border: 1px solid var(--color-border); background: var(--color-surface);
+  }
+  .aw-step code {
+    font-family: var(--font-mono); font-size: 0.75rem; padding: 0.1rem 0.35rem;
+    border-radius: 0.3rem; background: var(--color-border); color: var(--color-ink);
+  }
+  .aw-step-n {
+    flex-shrink: 0; width: 1.25rem; height: 1.25rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 700;
+    background: var(--color-ink); color: var(--color-bg);
+  }
+  .aw-step-arrow { color: var(--color-ink-3); flex-shrink: 0; }
+
+  .aw-embed { max-width: none; border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
+  .aw-embed-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 0.7rem 1rem; border-bottom: 1px solid var(--color-border); background: var(--color-surface);
+  }
+  .aw-embed-label { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.04em; color: var(--color-ink-3); }
+  .aw-embed-open { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); text-decoration: none; }
+  .aw-embed-open:hover { color: var(--color-ink-2); }
+  .aw-embed-frame { position: relative; width: 100%; aspect-ratio: 16 / 10; background: var(--color-surface); }
+  .aw-embed-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
   /* 6. Reusable pattern cards */
   .aw-patterns { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }

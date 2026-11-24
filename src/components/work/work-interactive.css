@@ -128,7 +128,7 @@
 }
 
 .bas-handle { position: absolute; top: 0; bottom: 0; z-index: 4; transform: translateX(-50%); pointer-events: none; }
-.bas-handle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+.bas-handle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.15), 0 0 24px rgba(0,0,0,0.35); }
 .bas-handle-thumb {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   width: 2.25rem; height: 2.25rem; border-radius: 50%; background: #fff; color: #1b1a16;
