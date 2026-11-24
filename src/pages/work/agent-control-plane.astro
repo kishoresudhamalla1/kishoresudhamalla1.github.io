@@ -45,7 +45,7 @@ const ICONS = {
 
 const ROADMAP = [
   {
-    phase: "NOW", phaseLabel: "Phase 01 · Automatic EU law updates",
+    phase: "NOW", phaseLabel: "Phase 01 · Regulatory sync",
     icon: ICONS.globe,
     headline: "Automatic EU law updates",
     copy: "Turns new EU AI Act and GDPR updates into live safety checks, without waiting for lawyers to rewrite rules by hand.",
@@ -189,14 +189,14 @@ const PINS: Pin[] = [
   <!-- Progress rail: which of the 8 sections is in view, click to jump -->
   <nav class="aw-rail" aria-label="Case study sections">
     {[
-      { id: "s-risk", label: "01 Enterprise risk" },
-      { id: "s-landscape", label: "02 Competitive landscape" },
-      { id: "s-systems", label: "03 Systems thinking" },
+      { id: "s-risk", label: "01 Human stakes" },
+      { id: "s-landscape", label: "02 Why existing tools fail" },
+      { id: "s-systems", label: "03 How I framed it" },
       { id: "s-craft", label: "04 Interaction craft" },
-      { id: "s-evolution", label: "05 Visual evolution" },
+      { id: "s-evolution", label: "05 How I steered AI" },
       { id: "s-product", label: "06 Working product" },
-      { id: "s-patterns", label: "07 Scalable patterns" },
-      { id: "s-vision", label: "08 Future vision" },
+      { id: "s-patterns", label: "07 Building blocks" },
+      { id: "s-vision", label: "08 Where this goes next" },
     ].map((s) => (
       <a href={`#${s.id}`} class="aw-rail-dot" data-rail-target={s.id} aria-label={s.label}>
         <span class="aw-rail-tip">{s.label}</span>
