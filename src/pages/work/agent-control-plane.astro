@@ -78,6 +78,30 @@ const PINS: Pin[] = [
     tradeoff: "Dead-end rejections stall launches. A pre-calculated fix lets the approver clear the block without a follow-up meeting.",
   },
 ];
+
+const EVOLUTION = [
+  {
+    n: "01",
+    title: "Layout and hierarchy",
+    sub: "From dashboard clutter to exception-first triage",
+    draft: "A generic admin table treating every agent action with equal visual weight, causing executive alert fatigue.",
+    final: "An exception-first triage flow separating high-risk human gates from safe, silent background automation (REQ-843).",
+  },
+  {
+    n: "02",
+    title: "Information architecture",
+    sub: "From disruptive modals to inline drawers",
+    draft: "Blocking pop-up modals for compliance warnings, hiding the surrounding budget context and forcing a context switch.",
+    final: "A right-hand contextual evidence drawer ([DPA §4.2]) that surfaces legal proof without breaking queue flow.",
+  },
+  {
+    n: "03",
+    title: "Action model",
+    sub: "From dead-end rejections to one-click steering",
+    draft: "Standard binary \"Approve / Reject\" buttons that stalled team velocity.",
+    final: "Pre-calculated remediation toggles (\"Enforce EU-Only Data Scope\") that recalculate the pre-flight diff live before execution.",
+  },
+];
 ---
 
 <Base
@@ -213,6 +237,39 @@ const PINS: Pin[] = [
         imageAlt="Agent Control Plane workspace with the evidence drawer open, four numbered hotspots over the triage queue, risk card, evidence drawer and steering panel"
         pins={PINS}
       />
+    </section>
+
+    <!-- 5b. Evolution of the control plane -->
+    <section class="r-case-section" data-reveal>
+      <SectionLabel icon="judgment">Iteration &amp; craft</SectionLabel>
+      <h2>Turning raw AI output into executive-ready software.</h2>
+      <p class="aw-tight">
+        The first generation of code or wireframes is always too noisy. It treats every piece of data equally. Here's how I steered the design from Claude's initial draft to the final production architecture.
+      </p>
+
+      <div class="aw-evo">
+        {EVOLUTION.map((e) => (
+          <div class="aw-evo-card">
+            <div class="aw-evo-head">
+              <span class="aw-evo-n">{e.n}</span>
+              <div>
+                <h3 class="aw-evo-title">{e.title}</h3>
+                <p class="aw-evo-sub">{e.sub}</p>
+              </div>
+            </div>
+            <div class="aw-evo-rows">
+              <div class="aw-evo-row aw-evo-row--draft">
+                <p class="aw-evo-row-k">Draft 1</p>
+                <p class="aw-evo-row-v">{e.draft}</p>
+              </div>
+              <div class="aw-evo-row aw-evo-row--final">
+                <p class="aw-evo-row-k">Final design</p>
+                <p class="aw-evo-row-v">{e.final}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
 
     <!-- 6. Edge cases + reusable patterns -->
@@ -356,6 +413,23 @@ const PINS: Pin[] = [
   .aw-arch-wires { width: 2.5rem; height: 6rem; color: var(--color-ink-3); flex-shrink: 0; }
 
   /* 5. Hotspot inspector section spacing handled in work-interactive.css */
+
+  /* 5b. Evolution of the control plane */
+  .aw-evo { display: flex; flex-direction: column; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
+  .aw-evo-card { background: var(--color-bg); padding: 1.5rem 1.6rem; }
+  .aw-evo-head { display: flex; gap: 1rem; margin-bottom: 1.1rem; }
+  .aw-evo-n { flex-shrink: 0; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--color-ink-3); line-height: 1.5; }
+  .aw-evo-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; letter-spacing: -0.01em; color: var(--color-ink); margin: 0 0 0.25rem; }
+  .aw-evo-sub { font-size: 0.8125rem; color: var(--color-ink-3); margin: 0; }
+  .aw-evo-rows { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.6rem; overflow: hidden; }
+  @media (min-width: 640px) { .aw-evo-rows { grid-template-columns: 1fr 1fr; } }
+  .aw-evo-row { padding: 1rem 1.1rem; background: var(--color-bg); }
+  .aw-evo-row--draft { opacity: 0.72; }
+  .aw-evo-row--final { background: var(--color-surface); }
+  .aw-evo-row-k { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.5rem; }
+  .aw-evo-row--final .aw-evo-row-k { color: #4f8a7c; }
+  .aw-evo-row-v { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0; }
+  .aw-evo-row--final .aw-evo-row-v { color: var(--color-ink); }
 
   /* 6. Reusable pattern cards */
   .aw-patterns { display: grid; grid-template-columns: 1fr; gap: 1px; max-width: none; background: var(--color-border); border: 1px solid var(--color-border); border-radius: 0.875rem; overflow: hidden; }
