@@ -56,6 +56,17 @@ const { title, description, tags, href, prototypeHref, shotSrc } = Astro.props;
     border: 1px solid var(--color-border); border-radius: 1.25rem;
     background: var(--color-surface);
   }
+  /* In dark mode, pick up the same dark-glass treatment as the paper cards
+     below (PaperCards.astro's .wp-sheet) instead of the plain flat surface
+     token, so the flagship card reads as part of the same family instead of
+     a visually different card type. Light mode is untouched - there the
+     paper cards are deliberately always-dark regardless of theme, while this
+     card correctly follows the light surface token. */
+  :global(.dark) .fc {
+    background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03) 55%, rgba(255,255,255,.07)), #08080a;
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 34px 70px -28px rgba(0,0,0,.65), inset 0 1px 0 rgba(255,255,255,.08);
+  }
   @media (min-width: 760px) {
     /* Text column leads (matches the "how I work" / AI Lab split below it),
        the visual trails on the right. align-items: center, not stretch - the
