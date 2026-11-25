@@ -56,6 +56,13 @@ const STATS = [
   { n: "9", l: "Years at Darwinbox" },
   { n: "120+", l: "Countries served" },
 ];
+
+// The AI Lab section's cards: just enough to choose where to go. The AI Lab page has the full story for each.
+const LAB = [
+  { k: "Built · In daily use", title: "Design Ops", blurb: "Rules decide what's true. AI explains it, and writes back only once a person approves.", href: "/work/design-ops" },
+  { k: "Interactive prototype", title: "Agent Control Plane", blurb: "Where a person decides before an agent spends money or moves data.", href: "/work/agent-control-plane" },
+  { k: "Interactive · Simulated", title: "22 agent UX patterns", blurb: "Twenty-two moments between people and AI, each one you can click through.", href: "/ai-lab/patterns" },
+];
 ---
 
 <Base title="Kishore Sudhamalla | Principal Product Designer" description="Founding designer at Darwinbox. I design complex enterprise products and AI experiences that make work simpler.">
@@ -179,15 +186,18 @@ const STATS = [
       </div>
     </div>
 
-    <a href="/ai-lab" class="r-lab-card">
-      <h3>Design Ops</h3>
-      <p class="r-lab-q">What if a design operations dashboard could understand the signals, explain what they mean and help designers decide what to do next?</p>
-      <p>I built a working system that connects product data, deterministic rules, AI interpretation, recommendations, human approval and verification.</p>
-      <div class="work-card-tags">
-        <span>AI prototyping</span><span>Product systems</span><span>Claude Code</span><span>Human-in-the-loop design</span>
-      </div>
-      <span class="r-text-link">Explore AI Lab →</span>
-    </a>
+    <ul class="r-lab-cards" aria-label="More from the AI Lab">
+      {LAB.map((c) => (
+        <li>
+          <a href={c.href} class="r-lab-card">
+            <span class="r-lab-k">{c.k}</span>
+            <h3>{c.title}</h3>
+            <p>{c.blurb}</p>
+            <span class="r-lab-go">Explore <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- Let's talk -->
@@ -401,18 +411,6 @@ const STATS = [
 
   .r-work { padding-block: clamp(2rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem); }
 
-  .work-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .work-card-tags span {
-    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-ink-2);
-    background: color-mix(in srgb, var(--color-ink) 8%, transparent);
-    border-radius: 100px; padding: 0.5rem 1rem;
-  }
-
-  .r-text-link {
-    font-size: 0.875rem; font-weight: 500; color: var(--color-ink);
-    text-decoration: none; border-bottom: 1px solid var(--color-border);
-  }
-  .r-text-link:hover { border-color: var(--color-ink); }
 
   .r-prose { padding-block: clamp(2rem, 5vw, 3.5rem); }
   .r-prose > * { max-width: var(--measure); }
@@ -489,19 +487,31 @@ const STATS = [
   }
   .r-signal-reset:hover { color: var(--color-ink-2); }
 
+  /* Three compact cards side by side; each one is a single link. */
+  .r-lab-cards { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 1rem; }
+  @media (min-width: 800px) { .r-lab-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .r-lab-cards li { display: flex; }
   .r-lab-card {
-    display: block; max-width: var(--measure); margin-top: 1.5rem; padding: 1.75rem;
-    border: 1px solid var(--color-border); border-radius: 1.25rem; background: var(--color-surface);
-    text-decoration: none; color: inherit; transition: border-color var(--dur-micro) var(--ease-enter);
+    display: flex; flex-direction: column; width: 100%; padding: 1.25rem;
+    border: 1px solid var(--color-border); border-radius: 1rem; background: var(--color-surface);
+    text-decoration: none; color: inherit;
+    transition: border-color var(--dur-micro) var(--ease-enter), transform var(--dur-micro) var(--ease-enter);
   }
-  .r-lab-card:hover { border-color: var(--color-ink-3); }
+  .r-lab-card:hover { border-color: var(--color-ink-3); transform: translateY(-2px); }
+  .r-lab-card:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  .r-lab-k {
+    font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-ink-3); margin: 0 0 0.6rem;
+  }
   .r-lab-card h3 {
-    font-family: var(--font-display); font-weight: 700; font-size: 1.375rem;
-    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.75rem;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.125rem;
+    letter-spacing: -0.02em; color: var(--color-ink); margin: 0 0 0.4rem;
   }
-  .r-lab-q { font-weight: 600; color: var(--color-ink) !important; }
-  .r-lab-card p { font-size: 0.9375rem; line-height: 1.6; color: var(--color-ink-2); margin: 0 0 1rem; }
-  .r-lab-card .work-card-tags { margin-bottom: 1.25rem; }
+  .r-lab-card p { font-size: 0.875rem; line-height: 1.55; color: var(--color-ink-2); margin: 0 0 1.1rem; }
+  .r-lab-go { margin-top: auto; font-size: 0.8125rem; font-weight: 600; color: var(--color-ink); }
+  .r-lab-go span { display: inline-block; transition: transform var(--dur-micro) var(--ease-enter); }
+  .r-lab-card:hover .r-lab-go span { transform: translateX(3px); }
+  @media (prefers-reduced-motion: reduce) { .r-lab-card, .r-lab-go span { transition: none; } .r-lab-card:hover { transform: none; } }
 
   .r-talk { padding: clamp(4rem, 9vw, 7rem) 0; border-top: 1px solid var(--color-border); }
   .r-talk-head {
