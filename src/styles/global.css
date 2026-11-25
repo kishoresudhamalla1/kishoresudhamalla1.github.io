@@ -11,7 +11,12 @@
      which is the only reason a separate display face was needed. A second
      neo-grotesque alongside Inter reads as inconsistency, not hierarchy. */
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* The small tracked labels ("SELECTED WORK", "01 / 2025") and figures used to be a monospace face. They are now
+     Inter too: set apart by size, uppercase and spacing, not by a second typeface. The token keeps its old name so
+     the ~100 places that use it did not need touching. Digits are tabular (see below) so figures still line up. */
+  --font-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Real code (file contents in the lab demos) is the one place a monospace is still right: the system's own. */
+  --font-code: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Pure white light palette */
   --color-bg:       #ffffff;
@@ -278,8 +283,8 @@ body::before {
 
 /* ─── Display type ────────────────────────────────────────────────────────
  * One family, two optical sizes. Inter's `opsz` axis is requested in the font
- * link, so headlines get the display cut automatically; JetBrains Mono stays
- * reserved for the small tracked labels ("SELECTED WORK", "01 / 2025").
+ * link, so headlines get the display cut automatically. The small tracked labels
+ * ("SELECTED WORK", "01 / 2025") are Inter as well, with tabular figures.
  */
 h1, h2, h3,
 .text-display, .text-display-sm, .cs-h2, .r-name {
@@ -289,7 +294,13 @@ h1, h2, h3,
 .text-label, .cs-label, .land-h, .card-k, .split-k, .layer-n, .r-section-label {
   font-family: var(--font-mono);
   font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
+
+/* Anything that was set in the old monospace keeps figures aligned. */
+[class*="label"], .mono { font-variant-numeric: tabular-nums; }
+pre, code, kbd, samp { font-family: var(--font-code); }
+
 
 /* ─── Wordmark ────────────────────────────────────────────────────────────
  * Sentence case rather than the previous all-caps tracking, with a small
