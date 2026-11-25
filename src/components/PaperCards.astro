@@ -168,6 +168,46 @@ const { items, variant = "accordion" } = Astro.props;
   .wp-word, .wp-word-v, .wp-sheet, .wp-kick, .wp-hint {
     transition: opacity 480ms var(--wp-ease, cubic-bezier(0.65, 0, 0.35, 1));
   }
+
+  /* ── Light mode ──────────────────────────────────────────────────────────
+     Everything above was built white-on-dark: the scene, the sheet's glass
+     and every text color inside it assume a near-black background. These
+     cards used to stay dark regardless of theme, which read as inconsistent
+     next to the Flagship card above (white in light mode, matching dark
+     glass in dark mode). Swap the same structure to a light glass instead,
+     built from the theme's own ink/surface tokens, so both follow the
+     site's theme the same way. */
+  :global(html:not(.dark)) .work-card { background: var(--color-surface); }
+  :global(html:not(.dark)) .wp-scene {
+    color: var(--color-ink);
+    background: radial-gradient(120% 90% at 50% 0%, var(--color-bg) 0%, var(--color-surface) 62%);
+  }
+  :global(html:not(.dark)) .wp-word,
+  :global(html:not(.dark)) .wp-word-v { color: color-mix(in srgb, var(--color-ink) 7%, transparent); }
+  :global(html:not(.dark)) .wp-sheet {
+    background: linear-gradient(145deg, color-mix(in srgb, var(--color-ink) 6%, transparent), color-mix(in srgb, var(--color-ink) 2%, transparent) 55%, color-mix(in srgb, var(--color-ink) 5%, transparent)), var(--color-bg);
+    border-color: var(--color-border);
+    box-shadow: 0 34px 70px -24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.7), inset 0 0 0 1px rgba(0,0,0,.03);
+  }
+  :global(html:not(.dark)) .wp-sheet::before { border-color: color-mix(in srgb, var(--color-ink) 10%, transparent); }
+  :global(html:not(.dark)) .wp-n,
+  :global(html:not(.dark)) .wp-title { color: var(--color-ink); }
+  :global(html:not(.dark)) .wp-tags li { border-color: var(--color-border); color: var(--color-ink-2); }
+  :global(html:not(.dark)) .wp-tags li:first-child {
+    background: color-mix(in srgb, var(--color-ink) 8%, transparent); border-color: var(--color-ink-3); color: var(--color-ink);
+  }
+  :global(html:not(.dark)) .wp-brief { color: var(--color-ink-2); }
+  :global(html:not(.dark)) .wp-micro-btn {
+    color: var(--color-ink); background: color-mix(in srgb, var(--color-ink) 6%, transparent); border-color: var(--color-border);
+  }
+  :global(html:not(.dark)) .wp-micro-btn:hover { background: color-mix(in srgb, var(--color-ink) 10%, transparent); }
+  :global(html:not(.dark)) .wp-micro-state { color: var(--color-ink-2); }
+  :global(html:not(.dark)) .wp-glare {
+    mix-blend-mode: overlay;
+    background: radial-gradient(55% 55% at var(--gx, 30%) var(--gy, 18%), rgba(255,255,255,.8), rgba(255,255,255,0) 70%);
+  }
+  :global(html:not(.dark)) .wp-kick { color: var(--color-ink); }
+  :global(html:not(.dark)) .wp-hint { color: var(--color-ink-3); }
   @keyframes wp-sway {
     0%, 100% { transform: translateY(0) rotateX(2deg) rotateY(-5deg); }
     50% { transform: translateY(-1.2%) rotateX(-2deg) rotateY(5deg); }
